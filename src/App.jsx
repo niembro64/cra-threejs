@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import Three from './components/Three';
+import MyThree from './components/MyComponent';
+
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <Three />
+      <MyThree />
     </div>
   );
 }
