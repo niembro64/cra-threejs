@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import { useEffect, useRef } from 'react';
 import React from 'react';
@@ -11,6 +12,19 @@ const MyThree: React.FC<MyThreeProps> = () => {
   useEffect(() => {
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene();
+    const loader = new GLTFLoader();
+
+    loader.load(
+      './assets/niemblender.glb',
+      (gltf) => {
+        scene.add(gltf.scene);
+      },
+      undefined,
+      (error) => {
+        console.error(error);
+      }
+    );
+
     var camera: any = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
