@@ -36,8 +36,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     // document.body.appendChild( renderer.domElement );
     // use ref as a mount point of the Three.js scene instead of the document.body
-    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-    const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
+    const geometry = new THREE.TorusGeometry(150, 100, 128, 128, Math.PI * 2);
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const torus = new THREE.Mesh(geometry, material);
 
     scene.add(torus);
@@ -55,9 +55,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
       refContainer.current.appendChild(renderer.domElement);
     var animate = function () {
       requestAnimationFrame(animate);
-      torus.rotation.x += 0.003;
-      torus.rotation.y += 0.001;
-      torus.rotation.z += 0.002;
+      torus.rotation.x += 0.00093;
+      torus.rotation.y += 0.0007;
+      torus.rotation.z += 0.001;
       renderer.render(scene, camera);
     };
     animate();
