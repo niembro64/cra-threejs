@@ -57,7 +57,7 @@ export const projects: Project[] = [
     stack: ['HTML', 'CSS', 'JavaScript'],
     stackIcon: null,
     description: ['Showcase of Control'],
-    bullets: null,
+    bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
     dbImage: null,
     icon: null,
     gif: null,

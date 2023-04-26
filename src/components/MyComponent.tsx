@@ -14,6 +14,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const scrollPosition = useRef(0);
   const scrollPositionAverage = useRef(0);
 
+  // const [ballState, setBallState] = useState<any | null>(null);
+
   useEffect(() => {
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene();
@@ -123,6 +125,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     var animate = function () {
       requestAnimationFrame(animate);
+
+      // setBallState(ball.rotation);
 
       scrollPositionAverage.current =
         percentKeepMouse * scrollPositionAverage.current +
@@ -240,6 +244,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
             );
           })}
         </div>
+        {/* {ballState !== null && (
+          <div className="spin-info">
+            <div className="x-rotation">
+              {'x-rotation: ' + Math.round(ballState.x * 100) / 100}
+            </div>
+          </div>
+        )} */}
       </div>
     </div>
   );
