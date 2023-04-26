@@ -139,7 +139,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Media',
-    url: 'https://media.niembro64.com',
+    url: 'http://media.niembro64.com/wordpress/',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
     description: ['Showcase of Original Music'],

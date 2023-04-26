@@ -208,7 +208,7 @@
   font-size: 3vw;
   margin-top: 20vh;
   margin-right: 8vw;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   transform-origin: bottom right;
   // transform: rotate(-90deg);
@@ -258,7 +258,8 @@
   left: 0;
   margin: 5px;
   color: rgba(255, 255, 255, 0.5);
-  animation: fadeIn 1s ease-in-out both, flash 5s ease-in-out infinite;
+  animation: fadeIn 1s ease-in-out both,
+    flash_description 5s ease-in-out infinite;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -294,8 +295,8 @@ $bullet-count: 10;
   position: relative;
   font-size: 2vw;
   margin: 5px;
-  color: rgba(255, 255, 255, 0.5);
-  animation: fadeIn 1s ease-in-out both, flash 5s ease-in-out infinite;
+  color: rgba(255, 0, 255, 0.5);
+  animation: fadeIn 1s ease-in-out both, flash_languages 5s ease-in-out infinite;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   // border: 3px dashed lime;
 }
@@ -317,17 +318,47 @@ $stack-count: 10;
   }
 }
 
-@keyframes flash {
+@keyframes flash_description {
   0% {
+    color: rgba(230, 200, 230, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     filter: blur(0px);
   }
   80% {
+    color: rgba(230, 200, 230, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     filter: blur(0px);
   }
   90% {
-    filter: blur(2px);
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    filter: blur(0px);
   }
   100% {
+    color: rgba(230, 200, 230, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    filter: blur(0px);
+  }
+}
+@keyframes flash_languages {
+  0% {
+    color: rgba(200, 255, 255, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    filter: blur(0px);
+  }
+  80% {
+    color: rgba(200, 255, 255, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    filter: blur(0px);
+  }
+  90% {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    filter: blur(0px);
+  }
+  100% {
+    color: rgba(200, 255, 255, 0.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     filter: blur(0px);
   }
 }
