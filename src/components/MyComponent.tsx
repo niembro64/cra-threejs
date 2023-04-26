@@ -39,14 +39,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     var renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // document.body.appendChild( renderer.domElement );
-    // use ref as a mount point of the Three.js scene instead of the document.body
-    // const geometry = new THREE.BoxGeometry(150, 100, 128, 128, Math.PI * 2);
-    // const geometry = new THREE.TorusGeometry(150, 100, 128, 128, Math.PI * 2);
-    // const geometry = new THREE.TorusKnotGeometry(90, 50, 1280, 1280, Math.PI * 2);
-    // const geometry = new THREE.SphereGeometry(90, 50, 1280, 1280, Math.PI * 2);
-    // const geometry = new THREE.CylinderGeometry(90, 90, 1280, 1280, Math.PI * 2);
-    // const geometry = new THREE.ConeGeometry(90, 1280, 1280, 1280, Math.PI * 2);
+
     const globalX = 0;
     const geometry = new THREE.IcosahedronGeometry(90, 1);
 
@@ -63,19 +56,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
     const pointLight2 = new THREE.PointLight(0xff00ff);
     pointLight2.position.set(0 + globalX, -400, -100);
 
-    // const pointLight = new THREE.PointLight(0x00ffff);
-    // pointLight.position.set(-600, 100, -300);
-    // const pointLight2 = new THREE.PointLight(0xff00ff);
-    // pointLight2.position.set(-200, -200, -100);
-    // const pointLight3 = new THREE.PointLight(0xffff00);
-    // pointLight2.position.set(0, 0, -1000);
     const ambientLight = new THREE.AmbientLight(0xffffff);
     ambientLight.intensity = 0;
     pointLight.intensity = 1;
-    // pointLight3.intensity = 1;
     scene.add(pointLight);
     scene.add(pointLight2);
-    // scene.add(pointLight3);
     scene.add(ambientLight);
 
     // Create a function to convert screen coordinates to 3D scene coordinates
@@ -137,9 +122,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     var animate = function () {
       requestAnimationFrame(animate);
-      // torus.rotation.x += x;
-      // torus.rotation.y += y;
-      // torus.rotation.z += z;
 
       mousePositionPrev.current.x =
         percentKeepMouse * mousePositionPrev.current.x +
@@ -151,21 +133,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
-      // torus.position.z = mousePositionPrev.current.z;
-
       const date = Date.now();
-
-      // pointLight.position.x += 10 * Math.sin(date * y);
-      // pointLight.position.y += 10 * Math.sin(date * x);
-      // // pointLight.position.z += 10 * Math.sin(date * z);
-
-      // pointLight2.position.x += 10 * Math.sin(date * x);
-      // pointLight2.position.y += 10 * Math.sin(date * y);
-      // pointLight2.position.z += 10 * Math.sin(date * z);
-
-      // pointLight3.position.x += 10 * Math.sin(date * z);
-      // pointLight3.position.y += 10 * Math.sin(date * x);
-      // pointLight3.position.z += 10 * Math.sin(date * y);
 
       ball.rotation.x =
         percentKeep * ball.rotation.x +
@@ -188,7 +156,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
   return (
     <div className="top">
       <div className="three" ref={refContainer} />
-      {/* <div ref={boyRef} className="boy"></div> */}
       <div className="projects-top">
         <div className="projects-scroller">
           {projects.map((project, index) => {
