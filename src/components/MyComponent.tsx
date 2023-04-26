@@ -184,11 +184,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
   return (
     <div className="top">
       <div className="three" ref={refContainer} />
-      <div ref={boyRef} className="boy"></div>
+      {/* <div ref={boyRef} className="boy"></div> */}
       {projects.map((project, index) => {
         return (
           <div key={index} className="project">
-            <div className="project-title">{project.title}</div>
+            <div className="project-title">{project.title.toUpperCase()}</div>
             <div className="project-description">{project.description}</div>
 
             <div className="project-bullet-container">
