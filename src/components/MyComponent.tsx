@@ -189,7 +189,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
                 <div className={'project-title'} id={project.title}>
                   {project.title.toUpperCase()}
                 </div>
-                <div className="project-description">{project.description}</div>
+                <div
+                  id={
+                    hoverCurr === project.title
+                      ? 'project-description-hover'
+                      : ''
+                  }
+                  className="project-description"
+                >
+                  {project.description}
+                </div>
                 <video
                   className="project-video"
                   src={
@@ -202,15 +211,17 @@ const MyThree: React.FC<MyThreeProps> = () => {
                   muted
                   loop
                 ></video>
-                <div className="project-bullet-container">
-                  {project.bullets?.map((bullet, index) => {
-                    return (
-                      <div key={index} className="project-bullet">
-                        {bullet}
-                      </div>
-                    );
-                  })}
-                </div>
+                {hoverCurr !== project.title && (
+                  <div className="project-bullet-container">
+                    {project.bullets?.map((bullet, index) => {
+                      return (
+                        <div key={index} className="project-bullet">
+                          {"·" + " " + bullet}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}

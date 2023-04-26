@@ -107,7 +107,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-
 }
 
 .projects-scroller {
@@ -152,7 +151,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(200, 200, 200, 1);
   text-shadow: 0 0 30px rgba(255, 255, 255, 1);
   filter: blur(0px);
   transition: filter 0.5s ease-in-out;
@@ -160,6 +159,7 @@
 }
 
 #project-hover > .project-title {
+  color: rgba(255, 255, 255, 0.4);
   // text-shadow: 0 0 30px white;
   transition: filter 0.5s ease-in-out;
   filter: blur(5px);
@@ -187,13 +187,32 @@
   font-size: 22vw;
 }
 
+#Media {
+  font-size: 25vw;
+}
+
+#project-description-hover {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+
 .project-description {
   position: absolute;
+  top: 0;
+  right: 0;
+  // height: 20%;
+  // width: 100%;
   align-self: flex-end;
   font-size: large;
   font-size: 3vw;
-  margin-top: 8vh;
-  color: rgba(255, 255, 255, 0.3);
+  margin-top: 20vh;
+  margin-right: 8vw;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  transform-origin: bottom right;
+  // transform: rotate(-90deg);
+  overflow: show;
+  transition: opacity 2s ease-in-out;
 }
 
 .project-video {
@@ -219,26 +238,36 @@
 // }
 .project-bullet-container {
   position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  // margin-top: 2vh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
+  z-index: 1;
 }
 
 .project-bullet {
-  position: absolute;
+  position: relative;
+  font-size: 2vw;
   top: 0;
   left: 0;
   margin: 5px;
-  color: white;
-  // use Fade In
-  animation: fadeIn 1s ease-in-out;
+  color: rgba(255, 255, 255, 0.5);
+  animation: fadeIn 1s ease-in-out both;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-$bullet-count: 4; // set the number of bullets
+$bullet-count: 10;
 
 @for $i from 1 through $bullet-count {
-  .project-bullet-container:nth-child(#{$i}) {
+  .project-bullet:nth-child(#{$i}) {
     animation-delay: $i * 0.5s;
   }
 }
