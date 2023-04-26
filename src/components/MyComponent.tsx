@@ -181,9 +181,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, []);
 
   return (
-    <div ref={refContainer}>
+    <>
+      <div className="three" ref={refContainer}/>
       <div ref={boyRef} className="boy"></div>
-    </div>
+    </>
   );
 };
 
