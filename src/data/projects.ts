@@ -14,6 +14,7 @@ export interface Project {
   name: ProjectName;
   url: string;
   stack: string[] | null;
+  stackIcon: string | null;
   description: string[] | null;
   bullets: string[] | null;
   dbImage: string | null;
@@ -28,6 +29,7 @@ export const projects: Project[] = [
     name: 'Resume',
     url: 'https://ericniemeyer.com',
     stack: ['Three.JS', 'React', 'TypeScript'],
+    stackIcon: null,
     description: ['3D Animation'],
     bullets: null,
     dbImage: null,
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     name: 'Home',
     url: 'https://niembro64.com',
     stack: ['Phaser3', 'React', 'TypeScript'],
+    stackIcon: null,
     description: ['Platforms Built From Rendered React Page'],
     bullets: null,
     dbImage: null,
@@ -52,6 +55,7 @@ export const projects: Project[] = [
     name: 'Design',
     url: 'https://design.niembro64.com',
     stack: ['HTML', 'CSS', 'JavaScript'],
+    stackIcon: null,
     description: ['Front-End Exercies in the Web Standard'],
     bullets: null,
     dbImage: null,
@@ -64,6 +68,7 @@ export const projects: Project[] = [
     name: 'Smashed',
     url: 'https://smashed.niembro64.com',
     stack: ['Phaser3', 'React', 'TypeScript', 'MongoDB'],
+    stackIcon: null,
     description: ['Showcasing HTML5 Gaming'],
     bullets: [
       'Best Experience with 4 USB SNES Controllers',
@@ -79,6 +84,7 @@ export const projects: Project[] = [
     name: 'Pirates',
     url: 'https://pirates.niembro64.com',
     stack: ['Phaser3', 'React', 'MongoDB'],
+    stackIcon: null,
     description: ['Exercise in Form Validation'],
     bullets: [
       'Both Front-End and Back-End Validation',
@@ -96,6 +102,7 @@ export const projects: Project[] = [
     name: 'Events',
     url: 'https://events.niembro64.com',
     stack: ['C#, ASP.NET Core', 'MySQL'],
+    stackIcon: null,
     description: ['Exercise in Tidiness'],
     bullets: [
       'EF Core LINQ ORM (SQL)',
@@ -113,6 +120,7 @@ export const projects: Project[] = [
     name: 'Shows',
     url: 'https://shows.niembro64.com',
     stack: ['Python', 'Flask', 'MySQL'],
+    stackIcon: null,
     description: ['Exercise in Simplicity'],
     bullets: [
       'SQL Query String Composition Method, No ORM',
@@ -131,6 +139,7 @@ export const projects: Project[] = [
     name: 'Media',
     url: 'https://media.niembro64.com',
     stack: ['WordPress', 'CloudFlare', 'Synology'],
+    stackIcon: null,
     description: ['Showcase of Media Original Art'],
     bullets: ['Classical Music', 'Electronic Music', ' Visual Art'],
     dbImage: null,
