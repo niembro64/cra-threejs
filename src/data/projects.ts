@@ -20,7 +20,7 @@ export interface Project {
   dbImage: string | null;
   icon: string | null;
   gif: string | null;
-  video: string | null;
+  video: boolean;
   platforms: Platform;
 }
 
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: false,
     platforms: 'both',
   },
   {
@@ -48,7 +48,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: false,
     platforms: 'both',
   },
   {
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'desktop',
   },
   {
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'desktop',
   },
   {
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'both',
   },
   {
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'both',
   },
   {
@@ -132,7 +132,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'both',
   },
   {
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     dbImage: null,
     icon: null,
     gif: null,
-    video: null,
+    video: true,
     platforms: 'both',
   },
 ];

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react';
-import { projects } from '../data/projects';
+import { Title, projects } from '../data/projects';
 
 export interface MyThreeProps {}
 
@@ -47,19 +47,21 @@ const MyThree: React.FC<MyThreeProps> = () => {
     // const geometry = new THREE.SphereGeometry(90, 50, 1280, 1280, Math.PI * 2);
     // const geometry = new THREE.CylinderGeometry(90, 90, 1280, 1280, Math.PI * 2);
     // const geometry = new THREE.ConeGeometry(90, 1280, 1280, 1280, Math.PI * 2);
+    const globalX = 0;
     const geometry = new THREE.IcosahedronGeometry(90, 1);
 
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-    const torus = new THREE.Mesh(geometry, material);
+    const ball = new THREE.Mesh(geometry, material);
 
-    scene.add(torus);
+    scene.add(ball);
+    ball.position.x = 0 + globalX;
 
     camera.position.z = 150;
 
     const pointLight = new THREE.PointLight(0x00ffff);
-    pointLight.position.set(0, 400, -100);
+    pointLight.position.set(0 + globalX, 400, -100);
     const pointLight2 = new THREE.PointLight(0xff00ff);
-    pointLight2.position.set(0, -400, -100);
+    pointLight2.position.set(0 + globalX, -400, -100);
 
     // const pointLight = new THREE.PointLight(0x00ffff);
     // pointLight.position.set(-600, 100, -300);
@@ -165,21 +167,23 @@ const MyThree: React.FC<MyThreeProps> = () => {
       // pointLight3.position.y += 10 * Math.sin(date * x);
       // pointLight3.position.z += 10 * Math.sin(date * y);
 
-      torus.rotation.x =
-        percentKeep * torus.rotation.x +
+      ball.rotation.x =
+        percentKeep * ball.rotation.x +
         (1 - percentKeep) *
           (20 * Math.sin(date * x) + mousePositionPrev.current.x);
-      torus.rotation.y =
-        percentKeep * torus.rotation.y +
+      ball.rotation.y =
+        percentKeep * ball.rotation.y +
         (1 - percentKeep) *
           (20 * Math.sin(date * y) + mousePositionPrev.current.y);
-      torus.rotation.z =
-        percentKeep * torus.rotation.z +
+      ball.rotation.z =
+        percentKeep * ball.rotation.z +
         (1 - percentKeep) * (20 * Math.sin(date * z));
       renderer.render(scene, camera);
     };
     animate();
   }, []);
+
+  const [hoverCurr, setHoverCurr] = useState<Title | null>(null);
 
   return (
     <div className="top">
@@ -187,10 +191,33 @@ const MyThree: React.FC<MyThreeProps> = () => {
       {/* <div ref={boyRef} className="boy"></div> */}
       {projects.map((project, index) => {
         return (
-          <div key={index} className="project">
-            <div className="project-title">{project.title.toUpperCase()}</div>
+          <div
+            key={index}
+            id={hoverCurr === project.title ? 'project-hover' : ''}
+            className={'project'}
+          >
+            <div
+              className="project-overlay"
+              onMouseEnter={(element) => {
+                setHoverCurr(project.title);
+              }}
+              onMouseLeave={(element) => {
+                setHoverCurr(null);
+              }}
+            ></div>
+            <div className={'project-title'} id={project.title}>
+              {project.title.toUpperCase()}
+            </div>
             <div className="project-description">{project.description}</div>
-
+            <video
+              className="project-video"
+              src={
+                process.env.PUBLIC_URL + '/videos2/' + project.title + '.mp4'
+              }
+              autoPlay
+              muted
+              loop
+            ></video>
             <div className="project-bullet-container">
               {project.bullets?.map((bullet, index) => {
                 return (

@@ -71,6 +71,8 @@
   z-index: 0;
 
   direction: rtl;
+  background-color: black;
+  cursor: grab;
 }
 
 .top div {
@@ -89,7 +91,7 @@
 .three {
   position: fixed;
   top: 0;
-  left: 0;
+  left: -50%;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -98,21 +100,70 @@
 
 .project {
   position: relative;
-  width: 100%;
-  height: 300px;
-  /* border: 3px dashed lime; */
+  width: 0.7 * 100vw;
+  height: 0.7 * (9 / 16) * 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .project-title {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  position: relative;
-  font-size: 10vw;
-  align-self: flex-end;
-  color: rgba(255, 255, 255, 0.05);
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  font-size: 20vw;
+  mix-blend-mode: multiply;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+  filter: blur(0px);
+  transition: filter 0.5s ease-in-out;
+  // box-shadow: inset 0 0 0 10px black;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#project-hover > .project-title {
+  // text-shadow: 0 0 30px white;
+  transition: filter 0.5s ease-in-out;
+  filter: blur(5px);
+  box-shadow: inset 0 0 0 10px black;
+}
+// .project:hover > .project-title {
+//   // text-shadow: 0 0 30px white;
+//   transition: filter 0.5s ease-in-out;
+//   filter: blur(5px);
+// }
+
+#Design {
+  font-size: 23vw;
+}
+
+#Smashed {
+  font-size: 17vw;
+}
+
+#Events {
+  font-size: 22vw;
+}
+
+#Shows {
+  font-size: 22vw;
 }
 
 .project-description {
@@ -124,6 +175,27 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
+.project-video {
+  position: absolute;
+  margin-top: 8vh;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  // mix-blend-mode: luminosity;
+  // mix-blend-mode: screen;
+
+  filter: blur(10px) brightness(0.5);
+  transition: filter 0.5s ease-in-out;
+}
+
+#project-hover > .project-video {
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+}
+// .project:hover > .project-video {
+//   transition: filter 0.5s ease-in-out;
+//   filter: blur(0px);
+// }
 .project-bullet-container {
   position: relative;
   display: flex;
