@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import { useEffect, useRef } from 'react';
 import React from 'react';
+import { projects } from '../data/projects';
 
 export interface MyThreeProps {}
 
@@ -181,10 +182,28 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, []);
 
   return (
-    <>
-      <div className="three" ref={refContainer}/>
+    <div className="top">
+      <div className="three" ref={refContainer} />
       <div ref={boyRef} className="boy"></div>
-    </>
+      {projects.map((project, index) => {
+        return (
+          <div key={index} className="project">
+            <div className="project-title">{project.title}</div>
+            <div className="project-description">{project.description}</div>
+
+            <div className="project-bullet-container">
+              {project.bullets?.map((bullet, index) => {
+                return (
+                  <div key={index} className="project-bullet">
+                    {bullet}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

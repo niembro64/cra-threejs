@@ -1,4 +1,4 @@
-export type ProjectName =
+export type Title =
   | 'Resume'
   | 'Home'
   | 'Design'
@@ -11,7 +11,7 @@ export type ProjectName =
 export type Platform = 'desktop' | 'mobile' | 'both';
 
 export interface Project {
-  name: ProjectName;
+  title: Title;
   url: string;
   stack: string[] | null;
   stackIcon: string | null;
@@ -26,7 +26,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: 'Resume',
+    title: 'Resume',
     url: 'https://ericniemeyer.com',
     stack: ['Three.JS', 'React', 'TypeScript'],
     stackIcon: null,
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     platforms: 'both',
   },
   {
-    name: 'Home',
+    title: 'Home',
     url: 'https://niembro64.com',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     platforms: 'both',
   },
   {
-    name: 'Design',
+    title: 'Design',
     url: 'https://design.niembro64.com',
     stack: ['HTML', 'CSS', 'JavaScript'],
     stackIcon: null,
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     platforms: 'desktop',
   },
   {
-    name: 'Smashed',
+    title: 'Smashed',
     url: 'https://smashed.niembro64.com',
     stack: ['Phaser3', 'React', 'TypeScript', 'MongoDB'],
     stackIcon: null,
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     platforms: 'desktop',
   },
   {
-    name: 'Pirates',
+    title: 'Pirates',
     url: 'https://pirates.niembro64.com',
     stack: ['Phaser3', 'React', 'MongoDB'],
     stackIcon: null,
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     platforms: 'both',
   },
   {
-    name: 'Events',
+    title: 'Events',
     url: 'https://events.niembro64.com',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     stackIcon: null,
@@ -117,7 +117,7 @@ export const projects: Project[] = [
     platforms: 'both',
   },
   {
-    name: 'Shows',
+    title: 'Shows',
     url: 'https://shows.niembro64.com',
     stack: ['Python', 'Flask', 'MySQL'],
     stackIcon: null,
@@ -136,7 +136,7 @@ export const projects: Project[] = [
     platforms: 'both',
   },
   {
-    name: 'Media',
+    title: 'Media',
     url: 'https://media.niembro64.com',
     stack: ['WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
