@@ -9,10 +9,10 @@ export interface MyThreeProps {}
 
 const MyThree: React.FC<MyThreeProps> = () => {
   const refContainer = useRef<any>(null);
-  const boyRef = useRef<any>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
   const mousePositionPrev = useRef(new THREE.Vector3());
   const scrollPosition = useRef(0);
+  const scrollPositionAverage = useRef(0);
 
   useEffect(() => {
     // === THREE.JS CODE START ===
@@ -93,19 +93,20 @@ const MyThree: React.FC<MyThreeProps> = () => {
     // Add wheel event listener
     const onWheel = (event: WheelEvent) => {
       // Normalize wheel movement (inverted)
-      const wheelDelta = -event.deltaY * 0.01;
+      const wheelDelta = event.deltaY * 0.01;
 
       // Accumulate wheel movement to control the Z position
       scrollPosition.current += wheelDelta;
+      console.log(scrollPosition.current);
 
       // Clamp the scrollPosition to a range suitable for controlling the Z position
-      const scrollRange = { min: -6000, max: 0 };
-      scrollPosition.current = Math.max(
-        Math.min(scrollPosition.current, scrollRange.max),
-        scrollRange.min
-      );
+      // const scrollRange = { min: -6000, max: 0 };
+      // scrollPosition.current = Math.max(
+      //   Math.min(scrollPosition.current, scrollRange.max),
+      //   scrollRange.min
+      // );
 
-      boyRef.current.style.transform = `translateX(${scrollPosition.current}px)`;
+      // boyRef.current.style.transform = `translateX(${scrollPosition.current}px)`;
     };
 
     window.addEventListener('wheel', onWheel);
@@ -118,10 +119,21 @@ const MyThree: React.FC<MyThreeProps> = () => {
     let z = 0.0001;
 
     const percentKeep = 0.99995;
-    const percentKeepMouse = 0.99;
+    const percentKeepMouse = 0.9;
 
     var animate = function () {
       requestAnimationFrame(animate);
+
+      scrollPositionAverage.current =
+        percentKeepMouse * scrollPositionAverage.current +
+        (1 - percentKeepMouse) * scrollPosition.current;
+
+      // console.log(scrollPositionAverage.current);
+
+      ball.rotation.z =
+        (percentKeepMouse * ball.position.z +
+          (1 - percentKeepMouse) * scrollPositionAverage.current) *
+        0.1;
 
       mousePositionPrev.current.x =
         percentKeepMouse * mousePositionPrev.current.x +
