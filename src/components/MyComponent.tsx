@@ -185,6 +185,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
                   onMouseLeave={(element) => {
                     setHoverCurr(null);
                   }}
+                  onClick={() => {
+                    window.open(project.url, '_blank');
+                  }}
                 ></div>
                 <div className={'project-title'} id={project.title}>
                   {project.title.toUpperCase()}
@@ -216,7 +219,18 @@ const MyThree: React.FC<MyThreeProps> = () => {
                     {project.bullets?.map((bullet, index) => {
                       return (
                         <div key={index} className="project-bullet">
-                          {"·" + " " + bullet}
+                          {'·' + ' ' + bullet}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {hoverCurr !== project.title && (
+                  <div className="project-stack-container">
+                    {project.stack?.map((stack, index) => {
+                      return (
+                        <div key={index} className="project-stack">
+                          {stack}
                         </div>
                       );
                     })}

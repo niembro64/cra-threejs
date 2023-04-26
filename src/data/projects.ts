@@ -67,10 +67,12 @@ export const projects: Project[] = [
   {
     title: 'Smashed',
     url: 'https://smashed.niembro64.com',
-    stack: ['Phaser3', 'React', 'TypeScript', 'MongoDB'],
+    stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
     stackIcon: null,
     description: ['Showcase of HTML5 Gaming'],
     bullets: [
+      'Rules-Based Bots',
+      'Neural-Network Bots',
       'Best Experience with 4 USB SNES Controllers',
       'Two Players on Single Keyboard Also Possible',
     ],
@@ -83,7 +85,7 @@ export const projects: Project[] = [
   {
     title: 'Pirates',
     url: 'https://pirates.niembro64.com',
-    stack: ['Phaser3', 'React', 'MongoDB'],
+    stack: ['React', 'Express', 'MongoDB'],
     stackIcon: null,
     description: ['Exercise in Form Validation'],
     bullets: [
@@ -105,8 +107,8 @@ export const projects: Project[] = [
     stackIcon: null,
     description: ['Exercise in Tidiness'],
     bullets: [
-      'Data Validation',
       'CRUD Operations',
+      'Data Validation',
       'MVC Design Pattern',
       'EF Core LINQ ORM (SQL)',
     ],
@@ -138,10 +140,15 @@ export const projects: Project[] = [
   {
     title: 'Media',
     url: 'https://media.niembro64.com',
-    stack: ['WordPress', 'CloudFlare', 'Synology'],
+    stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
     description: ['Showcase of Original Music'],
-    bullets: [' Visual Art', 'Classical Music', 'Electronic Music'],
+    bullets: [
+      ' Visual Art',
+      'Classical Music',
+      'Electronic Music',
+      'All Media Original',
+    ],
     dbImage: null,
     icon: null,
     gif: null,
