@@ -97,15 +97,46 @@
   overflow: hidden;
   z-index: -1;
 }
+.projects-top {
+  position: relative;
+  width: 100%;
+  // height: 100%;
+  z-index: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+}
+
+.projects-scroller {
+  position: relative;
+  width: 70%;
+  height: 100%;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 2;
+  cursor: pointer;
+}
 
 .project {
   position: relative;
   width: 0.7 * 100vw;
   height: 0.7 * (9 / 16) * 100vw;
+  justify-self: flex-end;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   overflow: hidden;
 }
 
@@ -121,21 +152,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
   text-shadow: 0 0 30px rgba(255, 255, 255, 1);
   filter: blur(0px);
   transition: filter 0.5s ease-in-out;
   // box-shadow: inset 0 0 0 10px black;
-}
-
-.project-overlay {
-  position: absolute;
-  top: 25%;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  z-index: 2;
-  cursor: pointer;
 }
 
 #project-hover > .project-title {
@@ -184,13 +205,13 @@
   // mix-blend-mode: luminosity;
   // mix-blend-mode: screen;
 
-  filter: blur(10px) brightness(0.5);
+  filter: blur(3px) brightness(0.5);
   transition: filter 0.5s ease-in-out;
 }
 
 #project-hover > .project-video {
   transition: filter 0.5s ease-in-out;
-  filter: blur(0px);
+  filter: blur(0px) brightness(1);
 }
 // .project:hover > .project-video {
 //   transition: filter 0.5s ease-in-out;

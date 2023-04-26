@@ -189,47 +189,54 @@ const MyThree: React.FC<MyThreeProps> = () => {
     <div className="top">
       <div className="three" ref={refContainer} />
       {/* <div ref={boyRef} className="boy"></div> */}
-      {projects.map((project, index) => {
-        return (
-          <div
-            key={index}
-            id={hoverCurr === project.title ? 'project-hover' : ''}
-            className={'project'}
-          >
-            <div
-              className="project-overlay"
-              onMouseEnter={(element) => {
-                setHoverCurr(project.title);
-              }}
-              onMouseLeave={(element) => {
-                setHoverCurr(null);
-              }}
-            ></div>
-            <div className={'project-title'} id={project.title}>
-              {project.title.toUpperCase()}
-            </div>
-            <div className="project-description">{project.description}</div>
-            <video
-              className="project-video"
-              src={
-                process.env.PUBLIC_URL + '/videos2/' + project.title + '.mp4'
-              }
-              autoPlay
-              muted
-              loop
-            ></video>
-            <div className="project-bullet-container">
-              {project.bullets?.map((bullet, index) => {
-                return (
-                  <div key={index} className="project-bullet">
-                    {bullet}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+      <div className="projects-top">
+        <div className="projects-scroller">
+          {projects.map((project, index) => {
+            return (
+              <div
+                key={index}
+                id={hoverCurr === project.title ? 'project-hover' : ''}
+                className={'project'}
+              >
+                <div
+                  className="project-overlay"
+                  onMouseEnter={(element) => {
+                    setHoverCurr(project.title);
+                  }}
+                  onMouseLeave={(element) => {
+                    setHoverCurr(null);
+                  }}
+                ></div>
+                <div className={'project-title'} id={project.title}>
+                  {project.title.toUpperCase()}
+                </div>
+                <div className="project-description">{project.description}</div>
+                <video
+                  className="project-video"
+                  src={
+                    process.env.PUBLIC_URL +
+                    '/videos2/' +
+                    project.title +
+                    '.mp4'
+                  }
+                  autoPlay
+                  muted
+                  loop
+                ></video>
+                <div className="project-bullet-container">
+                  {project.bullets?.map((bullet, index) => {
+                    return (
+                      <div key={index} className="project-bullet">
+                        {bullet}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
