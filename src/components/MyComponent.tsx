@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Title, projects } from '../data/projects';
+import usePageHeight from './usePageHeight';
 
 export interface MyThreeProps {}
 
@@ -13,6 +14,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const mousePositionPrev = useRef(new THREE.Vector3());
   const scrollPosition = useRef(0);
   const scrollPositionAverage = useRef(0);
+
+  const pageHeight = usePageHeight();
 
   // const [ballState, setBallState] = useState<any | null>(null);
 
