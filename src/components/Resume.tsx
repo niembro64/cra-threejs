@@ -26,17 +26,53 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Venturetec</h4>
           <p className="job-title">
-            Software Engineer - Developed Websites, Apps, & Web Games
+            Software Engineer | Developed Websites, Apps, & Web Games
           </p>
           <p>Stamford, Connecticut (Office & Remote)</p>
           <p>May 2022 - Today</p>
-
           <ul>
-            <li>Client: AudienceAI</li>
-            ...
-            <li>Client: SLP (Spray-Foam Loyalty Program)</li>
+            <li>
+              Client: AudienceAI
+              <ul>
+                <li>Lead Engineer: Design & implementation of AI comedy app</li>
+                <li>Recurrent Neural Networks, Natural Language Processing</li>
+                <li>FFT, MFCCs, React Native, Express, AWS S3</li>
+              </ul>
+            </li>
+            <li>
+              Client: The Games Agency & McGraw Hill Educational Publishing
+              <ul>
+                <li>
+                  Implemented puzzles, sticker books, & reading-reaction games
+                  for young learners.
+                </li>
+                <li>Phaser 3, Angular 2+, Angular Material Drag & Drop</li>
+              </ul>
+            </li>
+            <li>
+              Client: Redleaf
+              <ul>
+                <li>Implemented business website</li>
+                <li>Angular 2+, TypeScript, Bootstrap, Express</li>
+              </ul>
+            </li>
+            <li>
+              Client: Punchey (Payment Processor)
+              <ul>
+                <li>Maintenance & new features</li>
+                <li>React Native CLI, iOS & Android</li>
+              </ul>
+            </li>
+            <li>
+              Client: SLP (Spray-Foam Loyalty Program)
+              <ul>
+                <li>Maintenance & new features</li>
+                <li>React Native CLI, Typescript, Django, SQL</li>
+              </ul>
+            </li>
           </ul>
         </div>
+
         <div className="job">
           <h4>Rockwell Automation</h4>
           <p className="job-title">
