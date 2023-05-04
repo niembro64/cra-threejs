@@ -119,14 +119,14 @@
 .resume-name {
   // font-family: 'PixelOperator-Bold', 'Roboto', sans-serif;
   font-size: 4vw;
-  margin-bottom: 1vw;
+  // margin-bottom: 1vw;
 }
 
 button {
   // position: fixed;
   min-width: 25vw;
   font-size: 2vw;
-  margin-bottom: 1vw;
+  // margin-bottom: 1vw;
   background-color: black;
   color: white;
   border: 1px solid white;
@@ -484,6 +484,7 @@ header {
 header h1 {
   margin-top: 10vh;
   margin-bottom: 10vh;
+  font-size: 10vh;
   // margin-bottom: 10vh;
 }
 
@@ -556,8 +557,9 @@ ul {
 }
 
 .gif {
-  width: 60%;
-  height: 100%;
+  width: 40%;
+  // height: 100px;
   object-fit: cover;
   image-rendering: pixelated;
+  margin-bottom: 2vh;
 }

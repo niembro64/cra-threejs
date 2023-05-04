@@ -8,8 +8,9 @@ export const Resume: React.FC<ResumeProps> = () => {
   return (
     <body>
       <header>
-        {/* <h1>Eric Michael Niemeyer</h1> */}
-        <h2>Computer Engr., Web Dev., & Game Dev.</h2>
+        <h1>Eric Michael Niemeyer</h1>
+        <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
+        <h2>Computer Engineer, Web Developer, & Game Developer</h2>
         <p>Stamford, Connecticut</p>
         <p>
           Email:{' '}
