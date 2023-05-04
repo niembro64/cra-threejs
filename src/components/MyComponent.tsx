@@ -259,6 +259,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
       </div>
       <div className="projects-top">
         <div className="projects-scroller">
+          <div className="pre">
+            <h1>PRE STUFF</h1>
+          </div>
           {projects.map((project, index) => {
             return (
               <div
@@ -330,10 +333,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
+          <div className="post">
+            <h1>POST STUFF</h1>
+          </div>
         </div>
-        <div className="post"></div>
       </div>
-      <h1>POST STUFF</h1>
     </div>
   );
 };
