@@ -457,17 +457,6 @@ $stack-count: 10;
   z-index: 1;
 }
 
-.pre {
-  width: 100%;
-  // height: 20vh;
-  background-color: black;
-}
-.post {
-  width: 100%;
-  height: 20vh;
-  background-color: black;
-}
-
 /////////////////////////////////////
 ///
 ///
@@ -561,7 +550,7 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 6vw;
+  font-size: 10vw;
 }
 
 .gif {
@@ -570,4 +559,22 @@ ul {
   object-fit: cover;
   image-rendering: pixelated;
   margin-bottom: 2vh;
+}
+
+.pre {
+  width: 100%;
+  // height: 20vh;
+  background-color: black;
+}
+
+.post {
+  width: 100%;
+  height: 70vh;
+  background-color: black;
+}
+
+.last {
+  // height: 80vh;
+  // margin-bottom: 80vh;
+  margin-top: 50vh;
 }

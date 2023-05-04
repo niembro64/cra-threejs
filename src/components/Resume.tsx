@@ -246,10 +246,6 @@ export const Resume: React.FC<ResumeProps> = () => {
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>
-      <h1 className="demo-projects">Projects</h1>
-      <h1 className="demo">
-        All Demos, Games, and Music are My Original Content.
-      </h1>
     </body>
   );
 };

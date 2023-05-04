@@ -242,7 +242,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     <div className="top" ref={topElementRef}>
       <div className="three" ref={refContainer} />
       <div className="resume">
-    
         {/* <h3>niemeyer.eric@gmail.com</h3> */}
         <h1 className="resume-name">Eric Niemeyer</h1>
         <button
@@ -264,6 +263,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
           <div className="pre">
             {/* <h1>PRE STUFF</h1> */}
             <Resume />
+            <h1 className="demo-projects">Demos</h1>
+            <h1 className="demo">
+              All Projects, Games, and Music are My Original Content.
+            </h1>
           </div>
           {projects.map((project, index) => {
             return (
@@ -337,8 +340,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
             );
           })}
           <div className="post">
-            <h1>Resume</h1>
-            <p>This website was built with ReactTS, THREE.js, and SCSS</p>
+            {/* <h1>Resume</h1> */}
+            <h1 className="last">
+              This website was built with Yarn, ReactTS, THREE.js, and SCSS
+            </h1>
           </div>
         </div>
       </div>
