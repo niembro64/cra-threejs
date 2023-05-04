@@ -220,13 +220,15 @@ const MyThree: React.FC<MyThreeProps> = () => {
                 ></video>
                 {hoverCurr !== project.title && (
                   <div className="project-bullet-container">
-                    {project.bullets?.map((bullet, index) => {
-                      return (
-                        <div key={index} className="project-bullet">
-                          {'·' + ' ' + bullet}
-                        </div>
-                      );
-                    })}
+                    <div className="project-bullet-wrapper">
+                      {project.bullets?.map((bullet, index) => {
+                        return (
+                          <div key={index} className="project-bullet">
+                            {'· ' + bullet}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
                 {hoverCurr !== project.title && (
