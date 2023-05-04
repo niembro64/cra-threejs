@@ -104,10 +104,17 @@
 
 .resume {
   position: fixed;
-  top: 43%;
+  top: 35%;
   left: 0;
-  padding-left: 2%;
+  padding: 1%;
   z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  // border: 3px dashed lime;
 }
 .resume-name {
   // font-family: 'PixelOperator-Bold', 'Roboto', sans-serif;
@@ -452,11 +459,105 @@ $stack-count: 10;
 
 .pre {
   width: 100%;
-  height: 20vh;
+  // height: 20vh;
   background-color: black;
 }
 .post {
   width: 100%;
   height: 20vh;
   background-color: black;
+}
+
+/////////////////////////////////////
+///
+///
+header {
+  // background-color: #4CAF50;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  // border-bottom: 5px solid #333;
+}
+
+header h1 {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  // margin-bottom: 10vh;
+}
+
+header h2 {
+  margin-bottom: 15px;
+}
+
+header p {
+  margin-bottom: 5px;
+}
+
+section {
+  padding: 20px;
+
+  margin-bottom: 10vh;
+}
+
+h3 {
+  border-bottom: 2px solid #333;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.job {
+  margin-bottom: 20px;
+}
+
+.job-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+.pic {
+  width: 100%;
+  height: 40vh;
+}
+
+.horiz-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demo {
+  width: 100%;
+  // height: 30vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.demo-projects {
+  margin-top: 10vh;
+  width: 100%;
+  // height: 60vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 6vw;
+}
+
+.gif {
+  width: 60%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
 }

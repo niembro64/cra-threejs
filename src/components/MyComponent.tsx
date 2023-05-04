@@ -6,6 +6,7 @@ import React from 'react';
 import { Title, projects } from '../data/projects';
 import usePageHeight from './usePageHeight';
 import CopyEmail from './CopyEmail';
+import { Resume } from './Resume';
 
 export interface MyThreeProps {}
 
@@ -241,6 +242,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     <div className="top" ref={topElementRef}>
       <div className="three" ref={refContainer} />
       <div className="resume">
+        <img className='gif' src="/videos2/smashed_small.gif" alt="asdf" />
         <h1 className="resume-name">Eric Niemeyer</h1>
         {/* <h3>niemeyer.eric@gmail.com</h3> */}
         <button
@@ -260,7 +262,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
       <div className="projects-top">
         <div className="projects-scroller">
           <div className="pre">
-            <h1>PRE STUFF</h1>
+            {/* <h1>PRE STUFF</h1> */}
+            <Resume />
           </div>
           {projects.map((project, index) => {
             return (
@@ -334,7 +337,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
             );
           })}
           <div className="post">
-            <h1>POST STUFF</h1>
+            <h1>Resume</h1>
+            <p>This website was built with ReactTS, THREE.js, and SCSS</p>
           </div>
         </div>
       </div>
