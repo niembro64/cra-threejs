@@ -252,7 +252,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
           }}
           onClick={copyToClipboard}
         >
-          {!showEmail ? email : 'Copy Email'}
+          {showEmail ? email : 'Copy Email'}
         </button>
         {/* <CopyEmail email={email} /> */}
         <h3>Stamford, CT</h3>
@@ -331,14 +331,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
             );
           })}
         </div>
-        {/* {ballState !== null && (
-          <div className="spin-info">
-            <div className="x-rotation">
-              {'x-rotation: ' + Math.round(ballState.x * 100) / 100}
-            </div>
-          </div>
-        )} */}
+        <div className="post"></div>
       </div>
+      <h1>POST STUFF</h1>
     </div>
   );
 };
