@@ -208,7 +208,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         </div>
       </section>
       <section>
-        <h3>Other Technical Skills & Hobbies</h3>
+        <h3>Other Technical Skills</h3>
         <ul>
           <li>Recurrent Neural Networks</li>
           <li>HTML5 2D Game Development, 3D Animations</li>
