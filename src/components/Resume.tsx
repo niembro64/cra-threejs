@@ -186,7 +186,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         </div>
       </section>
       <section>
-        <h3>Code Familiarity</h3>
+        <h3>Code</h3>
         <div className="languages">
           <h4>Languages</h4>
           <ul>
