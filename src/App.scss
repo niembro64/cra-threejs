@@ -62,6 +62,8 @@
 * {
   scrollbar-color: white black;
   scrollbar-width: thin;
+
+  overflow: hidden;
 }
 
 .top {
@@ -73,6 +75,7 @@
   direction: rtl;
   background-color: black;
   cursor: grab;
+  overflow: visible;
 }
 
 .top div {
@@ -98,6 +101,44 @@
   overflow: hidden;
   z-index: -1;
 }
+
+.resume {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  padding-left: 2%;
+  z-index: 1;
+}
+.resume-name {
+  // font-family: 'PixelOperator-Bold', 'Roboto', sans-serif;
+  font-size: 4vw;
+  margin-bottom: 1vw;
+}
+
+button {
+  // position: fixed;
+  min-width: 25vw;
+  font-size: 2vw;
+  margin-bottom: 1vw;
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 0.5vw;
+  cursor: pointer;
+}
+
+// button:hover {
+//   background-color: white;
+//   color: black;
+// }
+
+button:active {
+  background-color: black;
+  color: rgb(0, 255, 255);
+  border: 1px solid rgb(255, 0, 255);
+}
+
 .projects-top {
   position: relative;
   width: 100%;
@@ -114,6 +155,7 @@
   position: relative;
   width: 70%;
   height: 100%;
+  border: 3px dashed orange;
 }
 
 .project-overlay {

@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Title, projects } from '../data/projects';
 import usePageHeight from './usePageHeight';
+import CopyEmail from './CopyEmail';
 
 export interface MyThreeProps {}
 
@@ -14,12 +15,41 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const mousePositionPrev = useRef(new THREE.Vector3());
   const scrollPosition = useRef(0);
   const scrollPositionAverage = useRef(0);
+  const [pageHeight, setPageHeight] = useState(0);
+  const [hoverCurr, setHoverCurr] = useState<Title | null>(null);
+  const topElementRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number>(0);
 
-  const pageHeight = usePageHeight();
+  useEffect(() => {
+    const updatePageHeight = () => {
+      const documentHeight =
+        document.documentElement.getBoundingClientRect().height;
+      setPageHeight(documentHeight);
+    };
+
+    // Update the page height initially
+    updatePageHeight();
+
+    // Add a listener for window resize events
+    window.addEventListener('resize', updatePageHeight);
+
+    // Cleanup the listener when the component is unmounted
+    return () => {
+      window.removeEventListener('resize', updatePageHeight);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('pageHeight', pageHeight);
+  }, [pageHeight]);
 
   // const [ballState, setBallState] = useState<any | null>(null);
 
   useEffect(() => {
+    if (height === 0 || pageHeight === 0) {
+      return;
+    }
+
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene();
     const loader = new GLTFLoader();
@@ -98,11 +128,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
     // Add wheel event listener
     const onWheel = (event: WheelEvent) => {
       // Normalize wheel movement (inverted)
-      const wheelDelta = event.deltaY * 0.01;
+      const wheelDelta = event.deltaY * 0.3;
 
-      // Accumulate wheel movement to control the Z position
       scrollPosition.current += wheelDelta;
-      console.log(scrollPosition.current);
+      // scrollPosition.current = Math.min(
+      //   scrollPosition.current,
+      //   height,
+      //   pageHeight
+      // );
+      // scrollPosition.current = Math.max(scrollPosition.current, 0);
+      console.log('scrollPosition.current', scrollPosition.current);
 
       // Clamp the scrollPosition to a range suitable for controlling the Z position
       // const scrollRange = { min: -6000, max: 0 };
@@ -119,9 +154,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
     refContainer.current &&
       refContainer.current.appendChild(renderer.domElement);
 
-    let x = 0.000093;
-    let y = 0.00007;
-    let z = 0.0001;
+    let x = 0.0093;
+    let y = 0.007;
+    let z = 0.001;
 
     const percentKeep = 0.99995;
     const percentKeepMouse = 0.9;
@@ -168,13 +203,60 @@ const MyThree: React.FC<MyThreeProps> = () => {
       renderer.render(scene, camera);
     };
     animate();
+  }, [height, pageHeight]);
+
+  // print height
+  useEffect(() => {
+    console.log('height', height);
+  }, [height]);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (topElementRef.current) {
+        setHeight(topElementRef.current.offsetHeight);
+      }
+    };
+
+    updateHeight(); // Update height initially
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
   }, []);
 
-  const [hoverCurr, setHoverCurr] = useState<Title | null>(null);
+  const email = 'niemeyer.eric@gmail.com';
+  const [showEmail, setShowEmail] = useState(false);
+
+  const copyToClipboard = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      console.log('Email copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy email: ', err);
+    }
+  }, [email]);
 
   return (
-    <div className="top">
+    <div className="top" ref={topElementRef}>
       <div className="three" ref={refContainer} />
+      <div className="resume">
+        <h1 className="resume-name">Eric Niemeyer</h1>
+        {/* <h3>niemeyer.eric@gmail.com</h3> */}
+        <button
+          onMouseEnter={() => {
+            setShowEmail(true);
+          }}
+          onMouseLeave={() => {
+            setShowEmail(false);
+          }}
+          onClick={copyToClipboard}
+        >
+          {!showEmail ? email : 'Copy Email'}
+        </button>
+        {/* <CopyEmail email={email} /> */}
+        <h3>Stamford, CT</h3>
+      </div>
       <div className="projects-top">
         <div className="projects-scroller">
           {projects.map((project, index) => {
