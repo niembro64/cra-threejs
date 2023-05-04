@@ -127,7 +127,8 @@ button {
   min-width: 25vw;
   font-size: 2vw;
   margin-bottom: 1vw;
-  background-color: black;
+  background-color: rgb(29, 0, 29);
+  // background-color: black;
   color: white;
   border: 1px solid white;
   border-radius: 5px;
@@ -137,12 +138,12 @@ button {
 
 button:hover {
   // background-color: white;
-  background-color: rgb(17, 0, 17);
+  background-color: rgb(49, 0, 49);
   // color: black;
 }
 
 button:active {
-  background-color: rgb(54, 0, 54);
+  background-color: rgb(87, 0, 87);
   color: rgb(0, 255, 255);
   border: 1px solid rgb(255, 0, 255);
 }
@@ -162,6 +163,11 @@ button:active {
 .projects-scroller {
   position: relative;
   width: 70%;
+  height: 100%;
+}
+.projects-scroller-mobile {
+  position: relative;
+  width: 100%;
   height: 100%;
 }
 
@@ -577,6 +583,6 @@ ul {
 .last {
   // height: 80vh;
   // margin-bottom: 80vh;
+  font-size: 2vw;
   margin-top: 50vh;
 }
-

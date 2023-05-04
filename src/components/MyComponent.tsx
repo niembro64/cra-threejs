@@ -10,6 +10,8 @@ import { Resume } from './Resume';
 
 export interface MyThreeProps {}
 
+export const mobile: boolean = window.innerWidth < 1000;
+
 const MyThree: React.FC<MyThreeProps> = () => {
   const refContainer = useRef<any>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
@@ -22,6 +24,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
+    console.log('window.innerWidth', window.innerWidth);
     const updatePageHeight = () => {
       const documentHeight =
         document.documentElement.getBoundingClientRect().height;
@@ -240,26 +243,30 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
   return (
     <div className="top" ref={topElementRef}>
-      <div className="three" ref={refContainer} />
-      <div className="resume">
-        {/* <h3>niemeyer.eric@gmail.com</h3> */}
-        <h1 className="resume-name">Eric Niemeyer</h1>
-        <button
-          onMouseEnter={() => {
-            setShowEmail(true);
-          }}
-          onMouseLeave={() => {
-            setShowEmail(false);
-          }}
-          onClick={copyToClipboard}
-        >
-          {showEmail ? email : 'Copy Email'}
-        </button>
-        {/* <CopyEmail email={email} /> */}
-        <p>Stamford, Connecticut</p>
-      </div>
+      {!mobile && <div className="three" ref={refContainer} />}
+      {!mobile && (
+        <div className="resume">
+          {/* <h3>niemeyer.eric@gmail.com</h3> */}
+          <h1 className="resume-name">Eric Niemeyer</h1>
+          <button
+            onMouseEnter={() => {
+              setShowEmail(true);
+            }}
+            onMouseLeave={() => {
+              setShowEmail(false);
+            }}
+            onClick={copyToClipboard}
+          >
+            {showEmail ? email : 'Copy Email'}
+          </button>
+          {/* <CopyEmail email={email} /> */}
+          <p>Stamford, Connecticut</p>
+        </div>
+      )}
       <div className="projects-top">
-        <div className="projects-scroller">
+        <div
+          className={!mobile ? 'projects-scroller' : 'projects-scroller-mobile'}
+        >
           <div className="pre">
             {/* <h1>PRE STUFF</h1> */}
             <Resume />
@@ -341,9 +348,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
           })}
           <div className="post">
             {/* <h1>Resume</h1> */}
-            <h1 className="last">
+            <p className="last">
               This website was built with Yarn, ReactTS, THREE.js, and SCSS
-            </h1>
+            </p>
           </div>
         </div>
       </div>
