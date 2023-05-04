@@ -129,7 +129,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Daegu Science High School</h4>
           <p className="job-title">
-            ESL & Science Instructor | 대구과학고등학교 영재고
+            ESL & Science Instructor - 대구과학고등학교 영재고
           </p>
           <p>Daegu, South Korea</p>
           <p>2013 - 2017</p>
