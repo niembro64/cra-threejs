@@ -1,0 +1,422 @@
+:root {
+  --cA1: rgb(57, 89, 89);
+  --cA2: rgba(57, 89, 89, 0.3);
+
+  --cB1: rgb(101, 96, 46);
+  --cB2: rgba(101, 96, 46, 0.3);
+
+  --cC1: rgb(69, 56, 122);
+  --cC2: rgba(69, 56, 122, 0.1);
+
+  --chover: rgba(255, 0, 170, 0.158);
+
+  --bg: rgb(236, 236, 236);
+  --fg: rgb(0, 0, 0);
+  --bordercolor: rgba(47, 42, 42, 0.33);
+  --borderradius: 3px;
+  --borderpix: 1px;
+}
+
+* {
+  font-family: sans-serif;
+  padding: 0px;
+  margin: 0px;
+
+  /* border-color: var(--bordercolor);
+  border-radius: var(--borderradius);
+  border: solid; */
+}
+
+.flashes {
+  width: auto;
+  font-style: italic;
+}
+.flashesli {
+  margin: 0px 0px 0px 20px;
+  color: rgb(155, 0, 0);
+  font-size: smaller;
+}
+
+body {
+  width: 100%; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: var(--bg); */
+}
+
+input[type="button"],
+select,
+option {
+  padding: 5px 5px;
+  margin: 3px;
+  color: var(--fg);
+  background-color: var(--bg);
+  border-color: var(--bordercolor);
+  border-radius: var(--borderradius);
+  border: solid;
+}
+
+input[type="submit"] {
+  /* width: 80px; */
+  /* padding: 10px 10px; */
+  /* margin: 5px; */
+  border-radius: var(--borderradius);
+}
+
+input[type="submit"]:hover {
+  background-color: var(--chover);
+  color: black;
+  border-color: var(--bordercolor);
+}
+
+input[type="submit"]:active {
+  background-color: var(--bg);
+}
+
+.unit {
+  /* flex: 1; */
+  width: 47%;
+  height: 100%;
+  border-color: var(--bordercolor);
+  background: var(--bg);
+  border-radius: var(--borderradius);
+  border-style: solid;
+  flex-direction: column;
+  /* padding: 0px 0px 15px 0px;
+  margin: 0px 10px 10px 10px; */
+}
+
+h1 {
+  width: auto;
+  background: rgba(255, 255, 255, 0);
+  /* margin: 15px;  */
+
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  width: auto;
+  background: var(--bg);
+  padding: 10px 15px;
+  margin: 0px 0px;
+  display: flex;
+  align-items: center;
+}
+
+h4 {
+  width: auto;
+  /* background: var(--bg); */
+  padding: 0;
+  margin: 2px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+}
+
+.r {
+  background-image: linear-gradient(
+    var(--cA2),
+    rgba(255, 255, 0, 0),
+    rgba(0, 0, 0, 0)
+  );
+  /* border-color: var(--bordercolor); */
+}
+.l {
+  background-image: linear-gradient(
+    var(--cB2),
+    rgba(255, 255, 0, 0),
+    rgba(255, 255, 0, 0)
+  );
+  /* border-color: var(--bordercolor); */
+}
+.rbutton {
+  width: 50%;
+  background-color: var(--cA1);
+  border-color: var(--bordercolor);
+  color: white;
+  padding: 10px 3px;
+  margin: 10px 10px 10px 20px;
+}
+.lbutton {
+  width: 50%;
+  background-color: var(--cB1);
+  border-color: var(--bordercolor);
+  color: white;
+  padding: 10px 3px;
+  margin: 10px 10px 10px 20px;
+}
+.xbutton {
+  background-color: var(--cC1);
+  border-color: var(--bordercolor);
+  color: white;
+  width: auto;
+  padding: 10px 3px;
+  margin: 5px 3px;
+  border-radius: var(--borderradius);
+}
+.ybutton {
+  height: 30px;
+  background-color: var(--cC1);
+  border-color: var(--bordercolor);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+}
+
+input,
+textarea {
+  background-color: white;
+  /* background-color: var(--bg); */
+  border-color: var(--bordercolor);
+  padding: 5px;
+  margin: 0px 20px 5px 20px;
+  border-radius: var(--borderradius);
+  border-style: solid;
+}
+
+label {
+  padding: 0px 20px 3px 20px;
+}
+
+form {
+  /* width: 60%; */
+  /* width: 500px;  */
+  display: flex;
+  flex-direction: column;
+  /* border: solid;
+  border-color: var(--bordercolor);
+  border-radius: var(--borderradius); */
+}
+
+#main {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+  /* border: solid;
+  border-radius: var(--borderradius);
+  border-color: var(--bordercolor); */
+  flex-wrap: wrap;
+}
+
+#top {
+  width: 100%;
+
+  background-color: var(--bg);
+  border: solid;
+  border-radius: var(--borderradius);
+  border-color: var(--bordercolor);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0px 0px 5px 0px;
+
+  /* position: fixed; */
+  /* top: 0; */
+  /* left: 0; */
+  /* z-index: 999; */
+  /* width: 100%; */
+  height: auto;
+}
+#toplower {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#tl {
+  /* flex: 2; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: solid;
+  border-color: var(--bordercolor);
+  border-radius: var(--borderradius); */
+}
+
+#tr {
+  /* flex: 3; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* border: solid;
+  border-color: var(--bordercolor);
+  border-radius: var(--borderradius); */
+}
+
+#rightacct {
+  display: flex;
+  width: 100px;
+  text-align: right;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  /* align-items: center; */
+}
+
+.x {
+  background-color: var(--bg);
+}
+
+.ybuttonlike {
+  background-color: rgb(0, 85, 255);
+
+  height: 30px;
+  border-color: var(--bordercolor);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+  font-size: large;
+}
+.ybuttonlike1 {
+  background-color: rgba(0, 85, 255, 0);
+
+  height: 30px;
+  border-color: rgba(255, 255, 255, 0);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+  font-size: large;
+}
+.ybuttonview {
+  background-color: rgb(175, 105, 0);
+
+  height: 30px;
+  border-color: var(--bordercolor);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+  font-size: large;
+}
+.ybuttonedit {
+  background-color: rgb(8, 99, 0);
+
+  height: 30px;
+  border-color: var(--bordercolor);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+  font-size: large;
+}
+.ybuttondelete {
+  background-color: rgb(163, 0, 0);
+
+  height: 30px;
+  border-color: var(--bordercolor);
+  color: white;
+  width: 100%;
+  padding: 0px 3px;
+  margin: 1px 5px 1px 5px;
+  border-radius: var(--borderradius);
+  font-size: large;
+}
+
+#show_row {
+  width: 98%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg);
+  /* padding: 0px 10px; */
+  /* margin: 3px; */
+  border: solid;
+  border-color: var(--bordercolor);
+  border-radius: var(--borderradius);
+  font-size: x-large;
+}
+
+#ll {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  border: solid;
+  border-radius: var(--borderradius);
+  border-color: var(--bordercolor);
+}
+
+#rr {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  /* padding: 5px 20px 5px 20px; */
+  /* margin: 5px 20px 5px 20px; */
+  border: solid;
+  border-radius: var(--borderradius);
+  border-color: var(--bordercolor);
+}
+
+table {
+  border: solid;
+  border-color: var(--bordercolor);
+  /* border-radius: var(--borderradius); */
+  width: 98%;
+  border-collapse: collapse;
+}
+
+th {
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--cC1);
+  border: solid;
+  border-color: var(--cC1);
+  color: white;
+}
+td {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* border: solid;
+  border-color: var(--bordercolor); */
+}
+
+/* .fit {
+  white-space: nowrap;
+  width: 500px;
+} */
+
+@media only screen and (max-width: 700px) {
+  #goaway {
+    position: fixed;
+    left: -1000px;
+  }
+}
+
+/* @media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+} */
+
+#allprojects {
+  margin: 0px 0px 0px 15px;
+}
+
+#allprojectsbutton {
+  padding: 0px 5px 0px 5px;
+}
+
+#title {
+  overflow-wrap: break-word;
+
+}
+
+.table-fit {
+  width: 1px;
+}
