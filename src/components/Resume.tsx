@@ -26,7 +26,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Venturetec</h4>
           <p className="job-title">
-            Software Engineer | Developed Websites, Apps, & Web Games
+            Software Engineer - Developed Websites, Mobile Apps, & Web Games
           </p>
           <p>Stamford, Connecticut (Office & Remote)</p>
           <p>May 2022 - Today</p>
@@ -76,22 +76,58 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Rockwell Automation</h4>
           <p className="job-title">
-            Software Engineer II - Designed & Impl. Machine Execution Systems
-            (MES)
+            Software Engineer II - Designed & Implemented Machine Execution
+            Systems (MES)
           </p>
           <p>St. Louis, Missouri (Office & Remote)</p>
           <p>Dec 2018 - May 2022</p>
-
           <ul>
-            <li>Client: Lucid Motors (Casa Grande, AZ)</li>
-            ...
-            <li>Client: Maple Leaf Foods (Shelbyville, IN)</li>
+            <li>
+              Client: Lucid Motors (Casa Grande, AZ)
+              <ul>
+                <li>Configured MES on-site in production environment</li>
+                <li>
+                  Integrated 3rd-party components into a system of systems
+                </li>
+                <li>Debugged & wrote scripts for configuring connectivity</li>
+              </ul>
+            </li>
+            <li>
+              Client: 3M Incinerator Facility (Cottage Grove, MN)
+              <ul>
+                <li>Managed a small development team</li>
+                <li>Maintained requirements, schedule</li>
+              </ul>
+            </li>
+            <li>
+              Client: Cooper Tires (Texarkana, AR)
+              <ul>
+                <li>Documented Customer Requirements</li>
+              </ul>
+            </li>
+            <li>
+              Client: Continental Tire (Mt. Vernon, IL)
+              <ul>
+                <li>
+                  Maintained legacy system, Java, Pnuts, code tracking, Jira
+                </li>
+              </ul>
+            </li>
+            <li>
+              Client: Maple Leaf Foods (Shelbyville, IN)
+              <ul>
+                <li>
+                  Supported Business Layer of Industrial Processes, DBs,
+                  Connectivity, Reports
+                </li>
+                <li>Built VBA management system</li>
+              </ul>
+            </li>
           </ul>
         </div>
+
         <div className="job">
-          <h4>
-            Daegu Science High School | Korea | Gifted Students High School
-          </h4>
+          <h4>Daegu Science High School</h4>
           <p className="job-title">
             ESL & Science Instructor | 대구과학고등학교 영재고
           </p>
@@ -107,10 +143,9 @@ export const Resume: React.FC<ResumeProps> = () => {
             </li>
           </ul>
         </div>
+
         <div className="job">
-          <h4>
-            A.C.L.E. | Italy | Associazione Culturale Linguistica Educational
-          </h4>
+          <h4>A.C.L.E.</h4>
           <p className="job-title">ESL Lead Instructor</p>
           <p>Sanremo, Italy</p>
           <p>2008 - 2013</p>
@@ -130,21 +165,38 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>Dec 2018</p>
           <ul>
             <li>Major in Computer Engineering</li>
-            ...
+            <ul>
+              <li>
+                Digital Design, PSpice, Circuits, PCB Design, Microcontrollers
+              </li>
+              <li>Digital Signal Processing, Signal Communication</li>
+            </ul>
+            <li>Minor in Computer Science</li>
+            <ul>
+              <li>Data Structures & Algorithms, OS Design, Linux</li>
+            </ul>
             <li>Minor in Mathematics</li>
+            <ul>
+              <li>
+                Calculus 3, Differential Equations, Discrete Mathematics, Engr
+                Statistics
+              </li>
+            </ul>
           </ul>
         </div>
       </section>
       <section>
-        <h3>Languages & Frameworks</h3>
+        <h3>Code Familiarity</h3>
         <div className="languages">
+          <h4>Languages</h4>
           <ul>
             <li>TypeScript, JavaScript, Python, Java, C#, C++, C</li>
-            ...
+            <li>MIPS/x86 Assembly Language, Verilog, Matlab</li>
             <li>SQL Certified (MTA), MongoDB NoSQL, HTML, CSS, SCSS</li>
           </ul>
         </div>
         <div className="frameworks">
+          <h4>Frameworks</h4>
           <ul>
             <li>
               React, React-Native, Angular 2, Flask, Django, ASP.NET, Express
@@ -156,25 +208,41 @@ export const Resume: React.FC<ResumeProps> = () => {
         <h3>Other Technical Skills & Hobbies</h3>
         <ul>
           <li>Recurrent Neural Networks</li>
-          ...
+          <li>HTML5 2D Game Development, 3D Animations</li>
+          <li>Audio Engineering & Audio Production</li>
+          <li>
+            Video Production, Image Manipulation, Adobe Creative Suite, etc.
+          </li>
+          <li>Personal Home Server Rack</li>
+          <ul>
+            <li>
+              Servers, Networking, Raspberry Pi Cluster, Arduino, Crypto Mining,
+              Network Storage
+            </li>
+          </ul>
+          <li>PCB Design & Repair (Electronics)</li>
+          <li>Excel Expert</li>
+          <li>ROM Hacking (Retro Games)</li>
           <li>Wedding DJ, Concert Violinist, Composer</li>
         </ul>
       </section>
       <section>
         <h3>Human Languages</h3>
         <ul>
-          <li>Italian: Conversational | Lived in Italy | Italian Girlfriend</li>
-          <li>Spanish: Intermediate | International Experiences</li>
-          <li>Korean: Basic | Lived in Korea</li>
+          <li>English: Native</li>
+          <li>Italian: Conversational, Lived in Italy, Italian Girlfriend</li>
+          <li>Spanish: Intermediate, International Experiences</li>
+          <li>Korean: Basic, Lived in Korea</li>
         </ul>
       </section>
+
       <section className="horiz-section">
         <section>
           <h4>React-Native Development</h4>
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>
-          <h4>WFH Battle Station</h4>
+          <h4>Work From Home Setup</h4>
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>
