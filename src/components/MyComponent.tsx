@@ -244,6 +244,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
       <div className="resume">
     
         {/* <h3>niemeyer.eric@gmail.com</h3> */}
+        <h1 className="resume-name">Eric Niemeyer</h1>
         <button
           onMouseEnter={() => {
             setShowEmail(true);
@@ -255,7 +256,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
         >
           {showEmail ? email : 'Copy Email'}
         </button>
-        <h1 className="resume-name">Eric Niemeyer</h1>
         {/* <CopyEmail email={email} /> */}
         <p>Stamford, Connecticut</p>
       </div>

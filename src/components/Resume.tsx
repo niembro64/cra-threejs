@@ -134,17 +134,17 @@ export const Resume: React.FC<ResumeProps> = () => {
       </section>
       <section className="horiz-section">
         <section>
-          <h3>React Native Development</h3>
+          <h4>React-Native Development</h4>
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>
-          <h3>WFH Battle Station</h3>
+          <h4>WFH Battle Station</h4>
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>
       <h1 className="demo-projects">Projects</h1>
       <h1 className="demo">
-        All Demo Projects, Games, and Music are Original Content.
+        All Demos, Games, and Music are My Original Content.
       </h1>
     </body>
   );
