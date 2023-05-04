@@ -10,7 +10,7 @@ import { Resume } from './Resume';
 
 export interface MyThreeProps {}
 
-export const mobile: boolean = window.innerWidth < 1000;
+export const mobile: boolean = window.innerWidth < 1200;
 
 const MyThree: React.FC<MyThreeProps> = () => {
   const refContainer = useRef<any>(null);
@@ -269,6 +269,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
         >
           <div className="pre">
             {/* <h1>PRE STUFF</h1> */}
+         
             <Resume />
             <h1 className="demo-projects">Demos</h1>
             <h1 className="demo">

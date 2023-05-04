@@ -1,6 +1,7 @@
 // new component for Resume.tsx
 
 import React from 'react';
+import { mobile } from './MyComponent';
 
 interface ResumeProps {}
 
@@ -8,6 +9,7 @@ export const Resume: React.FC<ResumeProps> = () => {
   return (
     <body>
       <header>
+        {mobile && <p>This Website is Meant for Desktop</p>}
         <h1>Eric Michael Niemeyer</h1>
         <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
         <h2>Computer Engineer, Web Developer, & Game Developer</h2>
@@ -242,7 +244,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>
-          <h4>Work From Home Setup</h4>
+          <h4>Work-From-Home Setup</h4>
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>
