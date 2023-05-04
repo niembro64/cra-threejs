@@ -269,7 +269,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
         >
           <div className="pre">
             {/* <h1>PRE STUFF</h1> */}
-         
+
             <Resume />
             <h1 className="demo-projects">Demos</h1>
             <h1 className="demo">
@@ -298,15 +298,28 @@ const MyThree: React.FC<MyThreeProps> = () => {
                 <div className={'project-title'} id={project.title}>
                   {project.title.toUpperCase()}
                 </div>
-                <div
-                  id={
-                    hoverCurr === project.title
-                      ? 'project-description-hover'
-                      : ''
-                  }
-                  className="project-description"
-                >
-                  {project.description}
+                <div className="project-title-wrapper">
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      // '/videos2/' +
+                      '/' +
+                      project.icon
+                    }
+                    id={hoverCurr === project.title ? 'project-icon-hover' : ''}
+                    className="project-icon"
+                    alt="project-icon"
+                  />
+                  <div
+                    id={
+                      hoverCurr === project.title
+                        ? 'project-description-hover'
+                        : ''
+                    }
+                    className="project-description"
+                  >
+                    {project.description}
+                  </div>
                 </div>
                 <video
                   className="project-video"
@@ -347,11 +360,33 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
+          {/* <h1>Resume</h1> */}
+          <div className="sette-wrapper">
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                // '/videos2/' +
+                '/sette.jpeg'
+              }
+              // id={hoverCurr === project.title ? 'project-icon-hover' : ''}
+              className="sette-icon"
+              alt="project-icon"
+            />
+            <p className="last">Hand-written for piano</p>
+          </div>
           <div className="post">
-            {/* <h1>Resume</h1> */}
-            <p className="last">
-              This website was built with Yarn, ReactTS, THREE.js, and SCSS
-            </p>
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                // '/videos2/' +
+                '/kirby.png'
+              }
+              // id={hoverCurr === project.title ? 'project-icon-hover' : ''}
+              className="kirby"
+              alt="project-icon"
+            />
+            <p className="last">This website was built with:</p>
+            <p className="last">Yarn, ReactTS, THREE.js, and SCSS</p>
           </div>
         </div>
       </div>
