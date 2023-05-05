@@ -71,7 +71,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     var camera: any = new THREE.PerspectiveCamera(
       75,
-      window.innerWidth / window.innerHeight,
+      mobile
+        ? window.innerWidth / window.innerHeight
+        : window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
@@ -79,7 +81,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const globalX = 0;
+    const globalX = mobile ? -50 : 0;
     const geometry = new THREE.IcosahedronGeometry(90, 1);
 
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
