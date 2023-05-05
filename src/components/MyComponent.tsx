@@ -298,9 +298,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
                 <div
                   className="project-overlay"
                   onMouseEnter={(element) => {
+                    console.log('hovering', project.title);
                     setHoverCurr(project.title);
                   }}
                   onMouseLeave={(element) => {
+                    console.log('leaving', project.title);
                     setHoverCurr(null);
                   }}
                   onClick={() => {

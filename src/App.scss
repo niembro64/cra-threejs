@@ -211,8 +211,10 @@ button:active {
   left: 0;
   width: 100%;
   height: 50%;
-  z-index: 2;
   cursor: pointer;
+
+  border: 3px dashed lime;
+  z-index: 4;
 }
 
 .project {
@@ -226,7 +228,7 @@ button:active {
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 30px 30px black;
-  z-index: -1;
+  z-index: 1;
 }
 
 .project-icon {
@@ -252,6 +254,10 @@ button:active {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  z-index: 1;
+
+  border: 3px dashed lime;
 }
 
 .project-title {
@@ -290,6 +296,8 @@ button:active {
   align-items: center;
   color: rgba(200, 200, 200, 1);
   text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+
+  // border: 3px dashed lime;
 
   filter: blur(0px);
   transition: filter 0.5s ease-in-out;
@@ -553,7 +561,7 @@ $stack-count: 10;
 
 /////////////////////////////////////
 
-body {
+.body {
   width: 100%;
   margin: 0;
   padding: 0;
