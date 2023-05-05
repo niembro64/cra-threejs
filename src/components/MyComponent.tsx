@@ -243,6 +243,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
   return (
     <div className="top" ref={topElementRef}>
+      <div className="black-boy"></div>
       {!mobile && <div className="three" ref={refContainer} />}
       {!mobile && (
         <div className="resume">
