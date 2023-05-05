@@ -71,9 +71,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     var camera: any = new THREE.PerspectiveCamera(
       75,
-      mobile
-        ? window.innerWidth / window.innerHeight
-        : window.innerWidth / window.innerHeight,
+      window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
@@ -131,6 +129,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     // Add touchmove event listener
     const onTouchMove = (event: TouchEvent) => {
+      console.log('event.touches[0]', event.touches[0]);
       const touch = event.touches[0];
       const scenePosition = getScenePositionFromScreen(
         touch.clientX,
