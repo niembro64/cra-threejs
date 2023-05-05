@@ -135,7 +135,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
         touch.clientX,
         touch.clientY
       );
+
       mousePositionCurr.current = scenePosition;
+
+      const distanceTravelled = mousePositionCurr.current.distanceTo(
+        mousePositionPrev.current
+      );
+
+      console.log('distanceTravelled', distanceTravelled);
+
+      scrollPosition.current += distanceTravelled * 0.03;
     };
 
     window.addEventListener('mousemove', onMouseMove);
@@ -144,7 +153,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     // Add wheel event listener
     const onWheel = (event: WheelEvent) => {
       // Normalize wheel movement (inverted)
-      const wheelDelta = event.deltaY * 0.3;
+      const wheelDelta = event.deltaY * 0.1;
 
       scrollPosition.current += wheelDelta;
       // scrollPosition.current = Math.min(
@@ -175,7 +184,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     let z = 0.001;
 
     const percentKeep = 0.99995;
-    const percentKeepMouse = 0.9;
+    const percentKeepMouse = 0.95;
 
     var animate = function () {
       requestAnimationFrame(animate);
