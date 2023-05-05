@@ -244,7 +244,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
   return (
     <div className="top" ref={topElementRef}>
       <div className="black-boy"></div>
-      {!mobile && <div className="three" ref={refContainer} />}
+      {true && <div className="three" ref={refContainer} />}
       {!mobile && (
         <div className="resume">
           {/* <h3>niemeyer.eric@gmail.com</h3> */}
@@ -273,9 +273,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
             <Resume />
             <h1 className="demo-projects">Demos</h1>
-            <h1 className="demo">
-             Click a Demo to Navigate to it!
-            </h1>
+            <h1 className="demo">Click a Demo to Navigate to it!</h1>
             <h1 className="demo">
               All Projects, Games, and Music are My Original Content.
             </h1>

@@ -9,7 +9,7 @@ export const Resume: React.FC<ResumeProps> = () => {
   return (
     <body>
       <header>
-        {mobile && <p>Best Website Experience is on Desktop</p>}
+        {/* {mobile && <p>Best Website Experience is on Desktop</p>} */}
         {/* <h3 className="name-resume">Resume</h3> */}
         <h1>Eric Michael Niemeyer</h1>
         <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
