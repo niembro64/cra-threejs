@@ -10,7 +10,7 @@ export const Resume: React.FC<ResumeProps> = () => {
     <body>
       <header>
         {mobile && <p>This Website is Meant for Desktop</p>}
-        <h3 className='name-resume'>Resume</h3>
+        <h3 className="name-resume">Resume</h3>
         <h1>Eric Michael Niemeyer</h1>
         <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
         <h2>Computer Engineer, Web Developer, & Game Developer</h2>
@@ -126,6 +126,42 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <li>Built VBA management system</li>
               </ul>
             </li>
+          </ul>
+        </div>
+
+        <div className="job">
+          <h4>Republic of Korea Ultimate</h4>
+          <p className="job-title">
+            Executive Manager - Managed 35-Team National Sports League
+          </p>
+          <p>South Korea</p>
+          <p>2015 - 2017</p>
+          <ul>
+            <li>Managed Money</li>
+            <ul>
+              <li>Budgeted $100k/Season Funds</li>
+              <li>Field Fees</li>
+              <li>Equipment</li>
+            </ul>
+            <li>Managed Materials</li>
+            <ul>
+              <li>Uniforms</li>
+              <li>Merchandise</li>
+              <li>Field Equipment</li>
+            </ul>
+            <li>Managed Schedules</li>
+            <ul>
+              <li>35 Teams from Around the Whole Country</li>
+              <li>Each Team to play Every Other Team Twice per Season</li>
+              <li>Coordination with National Train Schedules</li>
+            </ul>
+            <li>Managed People</li>
+            <ul>
+              <li>Korean Secretary</li>
+              <li>Managed Roster-Zoning-Pools</li>
+              <li>Board Meetings</li>
+              <li>Captains Meetings</li>
+            </ul>
           </ul>
         </div>
 
