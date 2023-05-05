@@ -297,7 +297,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
               <p className="demo-projects-p">
                 All Projects, Games, and Music are Original
               </p>
-              <p className="demo-projects-p">Click a Demo to Navigate to it!</p>
+              <p className="demo-projects-p">Click a Demo!</p>
             </div>
           </div>
           {projects.map((project, index) => {
