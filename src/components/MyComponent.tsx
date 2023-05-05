@@ -273,6 +273,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
             <Resume />
             <h1 className="demo-projects">Demos</h1>
             <h1 className="demo">
+             Click a Demo to Navigate to it!
+            </h1>
+            <h1 className="demo">
               All Projects, Games, and Music are My Original Content.
             </h1>
           </div>

@@ -9,8 +9,8 @@ export const Resume: React.FC<ResumeProps> = () => {
   return (
     <body>
       <header>
-        {mobile && <p>This Website is Meant for Desktop</p>}
-        <h3 className="name-resume">Resume</h3>
+        {mobile && <p>Best Website Experience is on Desktop</p>}
+        {/* <h3 className="name-resume">Resume</h3> */}
         <h1>Eric Michael Niemeyer</h1>
         <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
         <h2>Computer Engineer, Web Developer, and Game Developer</h2>
@@ -43,9 +43,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              <h1>
-                Client: The Games Agency & McGraw Hill Educational Publishing
-              </h1>
+              <h1>Client: The Games Agency & McGraw-Hill</h1>
               <ul>
                 <li>
                   Implemented puzzles, sticker books, & reading-reaction games
@@ -201,22 +199,22 @@ export const Resume: React.FC<ResumeProps> = () => {
       <section>
         <h3>Education</h3>
         <div className="education">
-          <h4>B.S. Computer Engineering | Honors | 3.73 GPA</h4>
+          <h4>B.S. Computer Engineering - Honors 3.73 GPA</h4>
           <p>Southern Illinois University Edwardsville (SIUE)</p>
           <p>Dec 2018</p>
           <ul>
-            <li>Major in Computer Engineering</li>
+            <h1>Major in Computer Engineering</h1>
             <ul>
               <li>
                 Digital Design, PSpice, Circuits, PCB Design, Microcontrollers
               </li>
               <li>Digital Signal Processing, Signal Communication</li>
             </ul>
-            <li>Minor in Computer Science</li>
+            <h1>Minor in Computer Science</h1>
             <ul>
               <li>Data Structures & Algorithms, OS Design, Linux</li>
             </ul>
-            <li>Minor in Mathematics</li>
+            <h1>Minor in Mathematics</h1>
             <ul>
               <li>
                 Calculus 3, Differential Equations, Discrete Mathematics, Engr
@@ -279,7 +277,7 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <section className="horiz-section">
         <section>
-          <h4>React-Native Development</h4>
+          <h4>Android & iOS Development</h4>
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>

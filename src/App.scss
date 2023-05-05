@@ -523,9 +523,7 @@ $stack-count: 10;
 }
 
 /////////////////////////////////////
-///
-///
-///
+
 body {
   width: 100%;
   margin: 0;
@@ -542,24 +540,39 @@ header {
   // border-bottom: 5px solid #333;
 }
 
+h1 {
+  text-shadow: 0 0 8px rgba(200, 255, 255, 0.609);
+}
+
 header h1 {
   margin-top: 10vh;
   margin-bottom: 10vh;
   font-size: 10vh;
   // margin-bottom: 10vh;
+  // color: rgb(255, 200, 255);
 }
 
-li > h1 {
-  font-size: 23px;
+li {
+  text-shadow: 0 0 3px rgba(200, 255, 255, 1);
+}
+
+li > h1,
+ul > h1 {
+  // font-size: calc(18px + 0.8vw);
+  font-size: calc(20px);
+  color: rgb(200, 255, 255);
+  text-shadow: 0 0 5px rgba(255, 255, 200, 0.405);
   // margin-bottom: 10vh;
 }
 
 header h2 {
   margin-bottom: 15px;
+  text-shadow: 0 0 5px rgba(200, 255, 255, 1);
 }
 
-header p {
+p {
   margin-bottom: 5px;
+  text-shadow: 0 0 3px rgba(200, 255, 255, 1);
 }
 
 section {
@@ -573,11 +586,15 @@ h3 {
   border-bottom: 2px solid #333;
   margin-bottom: 10px;
   padding-bottom: 5px;
+  // color: rgb(255, 200, 255);
+  text-shadow: 0 0 5px rgba(200, 255, 255, 1);
 }
 
 h4 {
   font-size: 4vh;
   border-bottom: 2px solid #333;
+  color: rgb(255, 255, 200);
+  text-shadow: 0 0 5px rgba(200, 255, 255, 1);
   margin-bottom: 10px;
   padding-bottom: 5px;
 }
@@ -619,6 +636,8 @@ ul {
   justify-content: center;
   align-items: center;
   font-size: calc(5vw + 30px);
+  color: rgb(255, 200, 255);
+  text-shadow: 0 0 5px rgba(200, 255, 255, 1);
 }
 
 .demo {
