@@ -244,7 +244,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
   return (
     <div className="top" ref={topElementRef}>
       <div className="black-boy"></div>
-      {true && <div className="three" ref={refContainer} />}
+      {!mobile && <div className="three" ref={refContainer} />}
+      {mobile && <div className="three-mobile" ref={refContainer} />}
       {!mobile && (
         <div className="resume">
           {/* <h3>niemeyer.eric@gmail.com</h3> */}
