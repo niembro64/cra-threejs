@@ -277,11 +277,11 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <section className="horiz-section">
         <section>
-          <h4>Android & iOS Development</h4>
+          <h4>Android & iOS Dev</h4>
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>
-          <h4>Work-From-Home Setup</h4>
+          <h4>WFH Setup</h4>
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>

@@ -285,10 +285,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
             <Resume />
             <h1 className="demo-projects">Demos</h1>
-            <h1 className="demo">Click a Demo to Navigate to it!</h1>
-            <h1 className="demo">
-              All Projects, Games, and Music are My Original Content.
-            </h1>
+            <p>All Projects, Games, and Music are Original</p>
+            <p>Click a Demo to Navigate to it!</p>
           </div>
           {projects.map((project, index) => {
             return (
@@ -309,17 +307,15 @@ const MyThree: React.FC<MyThreeProps> = () => {
                     window.open(project.url, '_blank');
                   }}
                 ></div>
-                <div className={'project-title'} id={project.title}>
+                <div
+                  className={mobile ? 'project-title-mobile' : 'project-title'}
+                  id={project.title}
+                >
                   {project.title.toUpperCase()}
                 </div>
                 <div className="project-title-wrapper">
                   <img
-                    src={
-                      process.env.PUBLIC_URL +
-                      // '/videos2/' +
-                      '/' +
-                      project.icon
-                    }
+                    src={process.env.PUBLIC_URL + '/' + project.icon}
                     id={hoverCurr === project.title ? 'project-icon-hover' : ''}
                     className="project-icon"
                     alt="project-icon"
