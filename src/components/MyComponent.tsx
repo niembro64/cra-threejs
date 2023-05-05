@@ -12,6 +12,8 @@ export interface MyThreeProps {}
 
 export const mobile: boolean = window.innerWidth < 1200;
 
+export const __DEV__ = process.env.NODE_ENV === 'development';
+
 const MyThree: React.FC<MyThreeProps> = () => {
   const refContainer = useRef<any>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
@@ -24,7 +26,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
-    console.log('window.innerWidth', window.innerWidth);
+    __DEV__ && console.log('window.innerWidth', window.innerWidth);
     const updatePageHeight = () => {
       const documentHeight =
         document.documentElement.getBoundingClientRect().height;
@@ -44,7 +46,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, []);
 
   useEffect(() => {
-    console.log('pageHeight', pageHeight);
+    __DEV__ && console.log('pageHeight', pageHeight);
   }, [pageHeight]);
 
   // const [ballState, setBallState] = useState<any | null>(null);
@@ -129,7 +131,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     // Add touchmove event listener
     const onTouchMove = (event: TouchEvent) => {
-      console.log('event.touches[0]', event.touches[0]);
       const touch = event.touches[0];
       const scenePosition = getScenePositionFromScreen(
         touch.clientX,
@@ -141,8 +142,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       const distanceTravelled = mousePositionCurr.current.distanceTo(
         mousePositionPrev.current
       );
-
-      console.log('distanceTravelled', distanceTravelled);
 
       scrollPosition.current += distanceTravelled * 0.03;
     };
@@ -162,7 +161,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       //   pageHeight
       // );
       // scrollPosition.current = Math.max(scrollPosition.current, 0);
-      console.log('scrollPosition.current', scrollPosition.current);
 
       // Clamp the scrollPosition to a range suitable for controlling the Z position
       // const scrollRange = { min: -6000, max: 0 };
@@ -232,7 +230,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
   // print height
   useEffect(() => {
-    console.log('height', height);
+    __DEV__ && console.log('height', height);
   }, [height]);
 
   useEffect(() => {
@@ -256,9 +254,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const copyToClipboard = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(email);
-      console.log('Email copied to clipboard');
+      __DEV__ && console.log('Email copied to clipboard');
     } catch (err) {
-      console.error('Failed to copy email: ', err);
+      __DEV__ && console.error('Failed to copy email: ', err);
     }
   }, [email]);
 
@@ -310,11 +308,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
                 <div
                   className="project-overlay"
                   onMouseEnter={(element) => {
-                    console.log('hovering', project.title);
+                    __DEV__ && console.log('hovering', project.title);
                     setHoverCurr(project.title);
                   }}
                   onMouseLeave={(element) => {
-                    console.log('leaving', project.title);
+                    __DEV__ && console.log('leaving', project.title);
                     setHoverCurr(null);
                   }}
                   onClick={() => {
