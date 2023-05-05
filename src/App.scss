@@ -102,9 +102,10 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border: 3px dashed lime;
+  // border: 3px dashed lime;
   z-index: -1;
 }
+
 .three-mobile {
   position: fixed;
   top: 0;
@@ -113,7 +114,7 @@
   height: 100%;
   // overflow: hidden;
   overflow: visible;
-  border: 3px dashed lime;
+  // border: 3px dashed lime;
   z-index: -1;
 }
 
@@ -266,6 +267,7 @@ button:active {
   align-items: center;
   color: rgba(200, 200, 200, 1);
   text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px 10px black;
   filter: blur(0px);
   transition: filter 0.5s ease-in-out;
   // box-shadow: inset 0 0 0 10px black;

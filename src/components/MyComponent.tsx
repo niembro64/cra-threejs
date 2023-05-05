@@ -127,7 +127,18 @@ const MyThree: React.FC<MyThreeProps> = () => {
       mousePositionCurr.current = scenePosition;
     };
 
+    // Add touchmove event listener
+    const onTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      const scenePosition = getScenePositionFromScreen(
+        touch.clientX,
+        touch.clientY
+      );
+      mousePositionCurr.current = scenePosition;
+    };
+
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchmove', onTouchMove);
 
     // Add wheel event listener
     const onWheel = (event: WheelEvent) => {
