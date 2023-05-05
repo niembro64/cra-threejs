@@ -375,7 +375,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
               alt="project-icon"
             />
             <p className="last">This website was built with:</p>
-            <p className="last">Yarn, ReactTS, THREE.js, and SCSS</p>
+            <p className="last">ReactTS, THREE.js, and SCSS</p>
           </div>
         </div>
       </div>

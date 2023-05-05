@@ -13,7 +13,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         <h3 className="name-resume">Resume</h3>
         <h1>Eric Michael Niemeyer</h1>
         <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
-        <h2>Computer Engineer, Web Developer, & Game Developer</h2>
+        <h2>Computer Engineer, Web Developer, and Game Developer</h2>
         <p>Stamford, Connecticut</p>
         <p>
           Email:{' '}
@@ -35,7 +35,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>May 2022 - Today</p>
           <ul>
             <li>
-              Client: AudienceAI
+              <h1>Client: AudienceAI</h1>
               <ul>
                 <li>Lead Engineer: Design & implementation of AI comedy app</li>
                 <li>Recurrent Neural Networks, Natural Language Processing</li>
@@ -43,7 +43,9 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              Client: The Games Agency & McGraw Hill Educational Publishing
+              <h1>
+                Client: The Games Agency & McGraw Hill Educational Publishing
+              </h1>
               <ul>
                 <li>
                   Implemented puzzles, sticker books, & reading-reaction games
@@ -53,21 +55,21 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              Client: Redleaf
+              <h1>Client: Redleaf</h1>
               <ul>
                 <li>Implemented business website</li>
                 <li>Angular 2+, TypeScript, Bootstrap, Express</li>
               </ul>
             </li>
             <li>
-              Client: Punchey (Payment Processor)
+              <h1>Client: Punchey (Payment Processor)</h1>
               <ul>
                 <li>Maintenance & new features</li>
                 <li>React Native CLI, iOS & Android</li>
               </ul>
             </li>
             <li>
-              Client: SLP (Spray-Foam Loyalty Program)
+              <h1>Client: SLP (Spray-Foam Loyalty Program)</h1>
               <ul>
                 <li>Maintenance & new features</li>
                 <li>React Native CLI, Typescript, Django, SQL</li>
