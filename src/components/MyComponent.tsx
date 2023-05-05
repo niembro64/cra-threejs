@@ -143,7 +143,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
         mousePositionPrev.current
       );
 
-      scrollPosition.current += distanceTravelled * 0.03;
+      scrollPosition.current += distanceTravelled * 0.5;
     };
 
     window.addEventListener('mousemove', onMouseMove);
