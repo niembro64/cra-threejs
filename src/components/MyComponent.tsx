@@ -360,15 +360,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
-          {/* <h1>Resume</h1> */}
           <div className="sette-wrapper">
             <img
-              src={
-                process.env.PUBLIC_URL +
-                // '/videos2/' +
-                '/sette.jpeg'
-              }
-              // id={hoverCurr === project.title ? 'project-icon-hover' : ''}
+              src={process.env.PUBLIC_URL + '/sette.jpeg'}
               className="sette-icon"
               alt="project-icon"
             />
@@ -376,12 +370,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
           </div>
           <div className="post">
             <img
-              src={
-                process.env.PUBLIC_URL +
-                // '/videos2/' +
-                '/kirby.png'
-              }
-              // id={hoverCurr === project.title ? 'project-icon-hover' : ''}
+              src={process.env.PUBLIC_URL + '/kirby.png'}
               className="kirby"
               alt="project-icon"
             />

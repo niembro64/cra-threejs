@@ -86,7 +86,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>Dec 2018 - May 2022</p>
           <ul>
             <li>
-              Client: Lucid Motors (Casa Grande, AZ)
+              <h1>Client: Lucid Motors (Casa Grande, AZ)</h1>
               <ul>
                 <li>Configured MES on-site in production environment</li>
                 <li>
@@ -96,20 +96,20 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              Client: 3M Incinerator Facility (Cottage Grove, MN)
+              <h1>Client: 3M Incinerator Facility (Cottage Grove, MN)</h1>
               <ul>
                 <li>Managed a small development team</li>
                 <li>Maintained requirements, schedule</li>
               </ul>
             </li>
             <li>
-              Client: Cooper Tires (Texarkana, AR)
+              <h1>Client: Cooper Tires (Texarkana, AR)</h1>
               <ul>
                 <li>Documented Customer Requirements</li>
               </ul>
             </li>
             <li>
-              Client: Continental Tire (Mt. Vernon, IL)
+              <h1>Client: Continental Tire (Mt. Vernon, IL)</h1>
               <ul>
                 <li>
                   Maintained legacy system, Java, Pnuts, code tracking, Jira
@@ -117,7 +117,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              Client: Maple Leaf Foods (Shelbyville, IN)
+              <h1>Client: Maple Leaf Foods (Shelbyville, IN)</h1>
               <ul>
                 <li>
                   Supported Business Layer of Industrial Processes, DBs,
@@ -137,25 +137,25 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>South Korea</p>
           <p>2015 - 2017</p>
           <ul>
-            <li>Managed Money</li>
+            <h1>Managed Money</h1>
             <ul>
               <li>Budgeted $100k/Season Funds</li>
               <li>Field Fees</li>
               <li>Equipment</li>
             </ul>
-            <li>Managed Materials</li>
+            <h1>Managed Materials</h1>
             <ul>
               <li>Uniforms</li>
               <li>Merchandise</li>
               <li>Field Equipment</li>
             </ul>
-            <li>Managed Schedules</li>
+            <h1>Managed Schedules</h1>
             <ul>
               <li>35 Teams from Around the Whole Country</li>
               <li>Each Team to play Every Other Team Twice per Season</li>
               <li>Coordination with National Train Schedules</li>
             </ul>
-            <li>Managed People</li>
+            <h1>Managed People</h1>
             <ul>
               <li>Korean Secretary</li>
               <li>Managed Roster-Zoning-Pools</li>
