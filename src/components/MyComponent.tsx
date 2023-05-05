@@ -281,12 +281,14 @@ const MyThree: React.FC<MyThreeProps> = () => {
           className={!mobile ? 'projects-scroller' : 'projects-scroller-mobile'}
         >
           <div className="pre">
-            {/* <h1>PRE STUFF</h1> */}
-
             <Resume />
-            <h1 className="demo-projects">Demos</h1>
-            <p>All Projects, Games, and Music are Original</p>
-            <p>Click a Demo to Navigate to it!</p>
+            <div className="demo-projects-wrapper">
+              <h1 className="demo-projects">Demos</h1>
+              <p className="demo-projects-p">
+                All Projects, Games, and Music are Original
+              </p>
+              <p className="demo-projects-p">Click a Demo to Navigate to it!</p>
+            </div>
           </div>
           {projects.map((project, index) => {
             return (
@@ -372,14 +374,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
-          <div className="sette-wrapper">
-            <img
-              src={process.env.PUBLIC_URL + '/sette.jpeg'}
-              className="sette-icon"
-              alt="project-icon"
-            />
-            <p className="last">Original Piano Piece</p>
-          </div>
           <div className="post">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
@@ -390,6 +384,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
             <p className="last">ReactTS, THREE.js, and SCSS</p>
           </div>
         </div>
+        {/* <div className="sette-wrapper">
+          <img
+            src={process.env.PUBLIC_URL + '/sette.jpeg'}
+            className="sette-icon"
+            alt="project-icon"
+          />
+        </div> */}
       </div>
     </div>
   );

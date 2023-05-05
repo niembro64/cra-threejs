@@ -102,7 +102,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  // border: 3px dashed lime;
   z-index: -1;
 }
 
@@ -114,7 +113,6 @@
   height: 100%;
   // overflow: hidden;
   overflow: visible;
-  // border: 3px dashed lime;
   z-index: -1;
 }
 
@@ -129,8 +127,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  // border: 3px dashed lime;
 }
 .resume-name {
   // font-family: 'PixelOperator-Bold', 'Roboto', sans-serif;
@@ -213,7 +209,6 @@ button:active {
   height: 50%;
   cursor: pointer;
 
-  border: 3px dashed lime;
   z-index: 4;
 }
 
@@ -256,8 +251,6 @@ button:active {
   align-items: center;
 
   z-index: 1;
-
-  border: 3px dashed lime;
 }
 
 .project-title {
@@ -296,8 +289,6 @@ button:active {
   align-items: center;
   color: rgba(200, 200, 200, 1);
   text-shadow: 0 0 10px rgba(255, 255, 255, 1);
-
-  // border: 3px dashed lime;
 
   filter: blur(0px);
   transition: filter 0.5s ease-in-out;
@@ -676,6 +667,11 @@ ul {
   color: rgb(255, 200, 255);
   text-shadow: 0 0 5px rgba(200, 255, 255, 1);
 }
+.demo-projects-wrapper {
+  z-index: 3;
+
+  margin-bottom: 3vh;
+}
 
 .gif {
   width: 40%;
@@ -737,4 +733,8 @@ ul {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.kirby {
+  margin-bottom: 2vh;
 }
