@@ -372,7 +372,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
               className="sette-icon"
               alt="project-icon"
             />
-            <p className="last">Hand-written for piano</p>
+            <p className="last">Original Piano Piece</p>
           </div>
           <div className="post">
             <img

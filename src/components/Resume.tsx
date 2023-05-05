@@ -269,9 +269,9 @@ export const Resume: React.FC<ResumeProps> = () => {
         <h3>Human Languages</h3>
         <ul>
           <li>English: Native</li>
-          <li>Italian: Conversational, Lived in Italy, Italian Girlfriend</li>
-          <li>Spanish: Intermediate, International Experiences</li>
-          <li>Korean: Basic, Lived in Korea</li>
+          <li>Italian: Conversational</li>
+          <li>Spanish: Intermediate</li>
+          <li>Korean: Basic</li>
         </ul>
       </section>
 
