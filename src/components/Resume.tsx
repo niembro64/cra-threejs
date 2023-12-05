@@ -25,10 +25,10 @@ export const Resume: React.FC<ResumeProps> = () => {
     <div className="body">
       <header>
         {/* {mobile && <p>Best Website Experience is on Desktop</p>} */}
-        <h3 className="name-resume">Eric Niemeyer</h3>
-        {!mobile && <h1>niemo</h1>}
+        {!mobile && <h3 className="name-resume">niemo.io</h3>}
         {mobile && (
           <>
+            <h3 className="name-resume">Eric Niemeyer</h3>
             <img
               className="gif-40"
               src="/videos2/smashed_small.gif"
@@ -73,14 +73,14 @@ export const Resume: React.FC<ResumeProps> = () => {
                   Implemented puzzles, sticker books, & reading-reaction games
                   for young learners.
                 </li>
-                <li>Phaser 3, Angular 2+, Angular Material Drag & Drop</li>
+                <li>Phaser 3, Angular, Angular Material</li>
               </ul>
             </li>
             <li>
               <h1>Client: Redleaf</h1>
               <ul>
                 <li>Implemented business website</li>
-                <li>Angular 2+, TypeScript, Bootstrap, Express</li>
+                <li>Angular, TypeScript, Bootstrap, Express</li>
               </ul>
             </li>
             <li>
@@ -93,8 +93,8 @@ export const Resume: React.FC<ResumeProps> = () => {
             <li>
               <h1>Client: SLP (Spray-Foam Loyalty Program)</h1>
               <ul>
-                <li>Maintenance & new features</li>
-                <li>React Native CLI, Typescript, Django, SQL</li>
+                <li>Lead Front-End Developer</li>
+                <li>React Native CLI, Vue, Typescript, Laravel, SQL</li>
               </ul>
             </li>
           </ul>
@@ -262,7 +262,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <h4>Frameworks</h4>
           <ul>
             <li>
-              React, React-Native, Angular 2, Flask, Django, ASP.NET, Express
+              React, React-Native, Vue, Angular, Flask, Djang Express, Laravel
             </li>
           </ul>
         </div>
@@ -270,7 +270,7 @@ export const Resume: React.FC<ResumeProps> = () => {
       <section>
         <h3>Other Technical Skills</h3>
         <ul>
-          <li>Recurrent Neural Networks</li>
+          <li>RecurreNeural Networks</li>
           <li>HTML5 2D Game Development, 3D Animations</li>
           <li>Audio Engineering & Audio Production</li>
           <li>
