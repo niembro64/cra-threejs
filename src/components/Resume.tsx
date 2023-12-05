@@ -1,27 +1,52 @@
 // new component for Resume.tsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { mobile } from './MyComponent';
 
 interface ResumeProps {}
 
 export const Resume: React.FC<ResumeProps> = () => {
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth < 800) {
+  //       setMobile(true);
+  //     } else {
+  //       setMobile(false);
+  //     }
+  //   };
+  //   window.addEventListener('resize', handleResize);
+  //   handleResize();
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
+
   return (
     <div className="body">
       <header>
         {/* {mobile && <p>Best Website Experience is on Desktop</p>} */}
-        {/* <h3 className="name-resume">Resume</h3> */}
-        <h1>Eric Michael Niemeyer</h1>
-        <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
-        <h2>Computer Engineer, Web Developer, and Game Developer</h2>
-        <p>Stamford, Connecticut</p>
-        <p>
-          Email:{' '}
-          <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
-        </p>
-        <p>Phone: +1 (618) 616-3380</p>
-        <p>
-          My Website: <a href="https://niembro64.com">niembro64.com</a>
-        </p>
+        <h3 className="name-resume">Eric Niemeyer</h3>
+        {!mobile && <h1>niemo</h1>}
+        {mobile && (
+          <>
+            <img
+              className="gif-40"
+              src="/videos2/smashed_small.gif"
+              alt="asdf"
+            />
+            <h2>Computer Engineer, Web Developer, and Game Developer</h2>
+            <p>Stamford, Connecticut</p>
+            <p>
+              <a href="mailto:niemeyer.eric@gmail.com">
+                niemeyer.eric@gmail.com
+              </a>
+            </p>
+            <p>+1 (618) 616-3380</p>
+            <p>
+              <a href="https://niemo.io">https://niemo.io</a>
+            </p>
+          </>
+        )}
       </header>
       <section>
         <h3>Work Experience</h3>

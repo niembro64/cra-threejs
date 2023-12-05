@@ -282,6 +282,17 @@ const MyThree: React.FC<MyThreeProps> = () => {
           </button>
           {/* <CopyEmail email={email} /> */}
           <p>Stamford, Connecticut</p>
+          <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
+          {/* <h2>Computer Engineer, Web Developer, and Game Developer</h2> */}
+          {/* <p>Stamford, Connecticut</p> */}
+          {/* <p>
+            Email:{' '}
+            <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
+          </p> */}
+          <p>Phone: +1 (618) 616-3380</p>
+          <p>
+          <a href="https://niemo.io">https://niemo.io</a>
+          </p>
         </div>
       )}
       <div className="projects-top">
