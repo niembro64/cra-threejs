@@ -3,14 +3,9 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Title, projects } from '../data/projects';
 import { Resume } from './Resume';
+import { MyThreeProps, __DEV__, mobile } from './MyComponent';
 
-export interface MyThreeProps {}
-
-export const mobile: boolean = window.innerWidth < 1200;
-
-export const __DEV__ = process.env.NODE_ENV === 'development';
-
-const MyThree: React.FC<MyThreeProps> = () => {
+export const MyThree: React.FC<MyThreeProps> = () => {
   const refContainer = useRef<any>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
   const mousePositionPrev = useRef(new THREE.Vector3());
@@ -46,7 +41,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, [pageHeight]);
 
   // const [ballState, setBallState] = useState<any | null>(null);
-
   useEffect(() => {
     if (height === 0 || pageHeight === 0) {
       return;
@@ -89,11 +83,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
     const geometry = new THREE.IcosahedronGeometry(90, 1);
 
     const material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+      color: 16777215,
       // emissive: 0x111111,
-      specular: 0x111111,
-      // shininess: 100000,
-      shininess: 300,
+      // specular: 0x111111,
     });
     const ball = new THREE.Mesh(geometry, material);
 
@@ -102,24 +94,17 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     camera.position.z = 150;
 
-    const pointLightFirst = new THREE.PointLight(0xff0000);
-    pointLightFirst.position.set(500 + globalX, 1000, -5);
-    pointLightFirst.intensity = 1;
-    scene.add(pointLightFirst);
+    const pointLightUpper = new THREE.PointLight(16777215);
+    pointLightUpper.position.set(0 + globalX, 400, -5);
+    const pointLightLower = new THREE.PointLight(0);
+    pointLightLower.position.set(0 + globalX, -400, -5);
 
-    const pointLightSecond = new THREE.PointLight(0x00ff00);
-    pointLightSecond.position.set(550 + globalX, 1000, -150);
-    pointLightSecond.intensity = 1;
-    scene.add(pointLightSecond);
-
-    const pointLightThird = new THREE.PointLight(0x0000ff);
-    pointLightThird.position.set(600 + globalX, 1000, -5);
-    pointLightThird.intensity = 1;
-    scene.add(pointLightThird);
-
-    // const ambientLightThree = new THREE.AmbientLight(0xffffff);
-    // scene.add(ambientLightThree);
-    // ambientLightThree.intensity = 0;
+    const ambientLightThree = new THREE.AmbientLight(16777215);
+    ambientLightThree.intensity = 0;
+    pointLightUpper.intensity = 1;
+    scene.add(pointLightUpper);
+    scene.add(pointLightLower);
+    scene.add(ambientLightThree);
 
     // Create a function to convert screen coordinates to 3D scene coordinates
     const getScenePositionFromScreen = (
@@ -178,14 +163,12 @@ const MyThree: React.FC<MyThreeProps> = () => {
       //   pageHeight
       // );
       // scrollPosition.current = Math.max(scrollPosition.current, 0);
-
       // Clamp the scrollPosition to a range suitable for controlling the Z position
       // const scrollRange = { min: -6000, max: 0 };
       // scrollPosition.current = Math.max(
       //   Math.min(scrollPosition.current, scrollRange.max),
       //   scrollRange.min
       // );
-
       // boyRef.current.style.transform = `translateX(${scrollPosition.current}px)`;
     };
 
@@ -205,13 +188,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
       requestAnimationFrame(animate);
 
       // setBallState(ball.rotation);
-
       scrollPositionAverage.current =
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current;
 
       // console.log(scrollPositionAverage.current);
-
       ball.rotation.z =
         (percentKeepMouse * ball.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
@@ -303,9 +284,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
           {/* <h2>Computer Engineer, Web Developer, and Game Developer</h2> */}
           {/* <p>Stamford, Connecticut</p> */}
           {/* <p>
-            Email:{' '}
-            <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
-          </p> */}
+                      Email:{' '}
+                      <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
+                    </p> */}
           <p>Phone: +1 (618) 616-3380</p>
           <p>
             <a href="https://niemo.io">https://niemo.io</a>
@@ -421,15 +402,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
           </div>
         </div>
         {/* <div className="sette-wrapper">
-          <img
-            src={process.env.PUBLIC_URL + '/sette.jpeg'}
-            className="sette-icon"
-            alt="project-icon"
-          />
-        </div> */}
+              <img
+                src={process.env.PUBLIC_URL + '/sette.jpeg'}
+                className="sette-icon"
+                alt="project-icon"
+              />
+            </div> */}
       </div>
     </div>
   );
 };
-
-export default MyThree;
