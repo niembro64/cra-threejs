@@ -53,13 +53,28 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Venturetec</h4>
           <p className="job-title">
-            Software Engineer - Developed Websites, Mobile Apps, & Web Games
+            Lead Software Engineer - Develops Neural Networks, Mobile Apps, &
+            Web Games, Websites
           </p>
           <p>Stamford, Connecticut (Office & Remote)</p>
           <p>May 2022 - Today</p>
           <ul>
             <li>
-              <h1>Client: AudienceAI</h1>
+              <h1>SeniorSafe</h1>
+              <ul>
+                <li>
+                  Lead Neural Network Engineer: Design & train fraud detection
+                  neural networks
+                </li>
+                <li>
+                  Transformer & Recurrent Neural Networks, Natural Language
+                  Processing, Acoustic & Text Features
+                </li>
+                <li>Pytorch, Python, TensorFlow, AWS S3</li>
+              </ul>
+            </li>
+            <li>
+              <h1>AudienceAI</h1>
               <ul>
                 <li>Lead Engineer: Design & implementation of AI comedy app</li>
                 <li>Recurrent Neural Networks, Natural Language Processing</li>
@@ -67,7 +82,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              <h1>Client: The Games Agency & McGraw-Hill</h1>
+              <h1>The Games Agency & McGraw-Hill</h1>
               <ul>
                 <li>
                   Implemented puzzles, sticker books, & reading-reaction games
@@ -77,14 +92,14 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              <h1>Client: Redleaf</h1>
+              <h1>Redleaf</h1>
               <ul>
                 <li>Implemented business website</li>
                 <li>Angular, TypeScript, Bootstrap, Express</li>
               </ul>
             </li>
             <li>
-              <h1>Client: Punchey (Payment Processor)</h1>
+              <h1>Punchey (Payment Processor)</h1>
               <ul>
                 <li>Maintenance & new features</li>
                 <li>React Native CLI, iOS & Android</li>
