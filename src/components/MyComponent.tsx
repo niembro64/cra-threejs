@@ -1,11 +1,7 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
-import { useCallback, useEffect, useRef, useState } from 'react';
-import React from 'react';
 import { Title, projects } from '../data/projects';
-import usePageHeight from './usePageHeight';
-import CopyEmail from './CopyEmail';
 import { Resume } from './Resume';
 
 export interface MyThreeProps {}
@@ -57,7 +53,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     }
 
     // === THREE.JS CODE START ===
-    var scene = new THREE.Scene();
+    const scene = new THREE.Scene();
     const loader = new GLTFLoader();
 
     loader.load(
@@ -71,17 +67,21 @@ const MyThree: React.FC<MyThreeProps> = () => {
       }
     );
 
-    var camera: any = new THREE.PerspectiveCamera(
+    const camera: any = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    var renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true , preserveDrawingBuffer: true});
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const globalX = mobile ? -50 : 0;
+    // const geometry = new THREE.IcosahedronGeometry(20, 0);
+    // const geometry = new THREE.BoxGeometry(100, 100, 100);
+    // const geometry = new THREE.IcosahedronGeometry(90, 0);
+    // const geometry = new THREE.SphereGeometry(50, 5, 5);
     const geometry = new THREE.IcosahedronGeometry(90, 1);
 
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -92,17 +92,17 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     camera.position.z = 150;
 
-    const pointLight = new THREE.PointLight(0x00ffff);
-    pointLight.position.set(0 + globalX, 400, -100);
-    const pointLight2 = new THREE.PointLight(0xff00ff);
-    pointLight2.position.set(0 + globalX, -400, -100);
+    const pointLightUpper = new THREE.PointLight(0xffffff);
+    pointLightUpper.position.set(0 + globalX, 400, -5);
+    const pointLightLower = new THREE.PointLight(0x000000);
+    pointLightLower.position.set(0 + globalX, -400, -5);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff);
-    ambientLight.intensity = 0;
-    pointLight.intensity = 1;
-    scene.add(pointLight);
-    scene.add(pointLight2);
-    scene.add(ambientLight);
+    const ambientLightThree = new THREE.AmbientLight(0xffffff);
+    ambientLightThree.intensity = 0;
+    pointLightUpper.intensity = 1;
+    scene.add(pointLightUpper);
+    scene.add(pointLightLower);
+    scene.add(ambientLightThree);
 
     // Create a function to convert screen coordinates to 3D scene coordinates
     const getScenePositionFromScreen = (
