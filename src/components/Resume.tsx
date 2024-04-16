@@ -98,15 +98,15 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <li>Angular, TypeScript, Bootstrap, Express</li>
               </ul>
             </li>
-            <li>
+            {/* <li>
               <h1>Punchey (Payment Processor)</h1>
               <ul>
                 <li>Maintenance & new features</li>
                 <li>React Native CLI, iOS & Android</li>
               </ul>
-            </li>
+            </li> */}
             <li>
-              <h1>Client: SLP (Spray-Foam Loyalty Program)</h1>
+              <h1>Spray-Foam Loyalty Program</h1>
               <ul>
                 <li>Lead Front-End Developer</li>
                 <li>React Native CLI, Vue, Typescript, Laravel, SQL</li>
@@ -125,7 +125,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>Dec 2018 - May 2022</p>
           <ul>
             <li>
-              <h1>Client: Lucid Motors (Casa Grande, AZ)</h1>
+              <h1>Lucid Motors (Casa Grande, AZ)</h1>
               <ul>
                 <li>Configured MES on-site in production environment</li>
                 <li>
@@ -135,20 +135,20 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              <h1>Client: 3M Incinerator Facility (Cottage Grove, MN)</h1>
+              <h1>3M Incinerator Facility (Cottage Grove, MN)</h1>
               <ul>
                 <li>Managed a small development team</li>
                 <li>Maintained requirements, schedule</li>
               </ul>
             </li>
             <li>
-              <h1>Client: Cooper Tires (Texarkana, AR)</h1>
+              <h1>Cooper Tires (Texarkana, AR)</h1>
               <ul>
                 <li>Documented Customer Requirements</li>
               </ul>
             </li>
             <li>
-              <h1>Client: Continental Tire (Mt. Vernon, IL)</h1>
+              <h1>Continental Tire (Mt. Vernon, IL)</h1>
               <ul>
                 <li>
                   Maintained legacy system, Java, Pnuts, code tracking, Jira
@@ -156,7 +156,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               </ul>
             </li>
             <li>
-              <h1>Client: Maple Leaf Foods (Shelbyville, IN)</h1>
+              <h1>Maple Leaf Foods (Shelbyville, IN)</h1>
               <ul>
                 <li>
                   Supported Business Layer of Industrial Processes, DBs,
@@ -277,7 +277,8 @@ export const Resume: React.FC<ResumeProps> = () => {
           <h4>Frameworks</h4>
           <ul>
             <li>
-              React, React-Native, Vue, Angular, Flask, Djang Express, Laravel
+              Pytorch, React, React-Native, Vue, Angular, Flask, Django,
+              Express, Laravel
             </li>
           </ul>
         </div>
@@ -285,7 +286,7 @@ export const Resume: React.FC<ResumeProps> = () => {
       <section>
         <h3>Other Technical Skills</h3>
         <ul>
-          <li>RecurreNeural Networks</li>
+          <li>Transformer, Recurrent Neural Networks</li>
           <li>HTML5 2D Game Development, 3D Animations</li>
           <li>Audio Engineering & Audio Production</li>
           <li>
