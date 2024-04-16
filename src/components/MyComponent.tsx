@@ -78,7 +78,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       alpha: true,
       preserveDrawingBuffer: true,
       failIfMajorPerformanceCaveat: false,
-
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -93,10 +92,21 @@ const MyThree: React.FC<MyThreeProps> = () => {
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       // emissive: 0x111111,
-      specular: 0x111111,
+      // specular: 0x111111,
       // shininess: 100000,
       shininess: 300,
       flatShading: true,
+      wireframe: false,
+      shadowSide: THREE.DoubleSide,
+      side: THREE.DoubleSide,
+      // roughness: 0.5,
+      reflectivity: 0,
+      // refractionRatio: 0,
+      envMap: null,
+      wireframeLinejoin: 'round',
+      wireframeLinecap: 'round',
+      wireframeLinewidth: 10,
+      colorWrite: true,
     });
     const ball = new THREE.Mesh(geometry, material);
 
