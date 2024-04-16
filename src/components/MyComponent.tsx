@@ -93,7 +93,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
       // emissive: 0x111111,
       specular: 0x111111,
       // shininess: 100000,
-      shininess: 300,
+      shininess: 100,
     });
     const ball = new THREE.Mesh(geometry, material);
 
@@ -102,20 +102,35 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
     camera.position.z = 150;
 
-    const pointLightFirst = new THREE.PointLight(0xff0000);
-    pointLightFirst.position.set(500 + globalX, 1000, -5);
-    pointLightFirst.intensity = 1;
-    scene.add(pointLightFirst);
+    const pointLightRed = new THREE.PointLight(0xff0000);
+    pointLightRed.position.set(500 + globalX, 1000, -5);
+    pointLightRed.intensity = 1;
+    scene.add(pointLightRed);
 
-    const pointLightSecond = new THREE.PointLight(0x00ff00);
-    pointLightSecond.position.set(550 + globalX, 1000, -150);
-    pointLightSecond.intensity = 1;
-    scene.add(pointLightSecond);
+    const pointLightGreen = new THREE.PointLight(0x00ff00);
+    pointLightGreen.position.set(550 + globalX, 1000, -150);
+    pointLightGreen.intensity = 1;
+    scene.add(pointLightGreen);
 
-    const pointLightThird = new THREE.PointLight(0x0000ff);
-    pointLightThird.position.set(600 + globalX, 1000, -5);
-    pointLightThird.intensity = 1;
-    scene.add(pointLightThird);
+    const pointLightBlue = new THREE.PointLight(0x0000ff);
+    pointLightBlue.position.set(600 + globalX, 1000, -5);
+    pointLightBlue.intensity = 1;
+    scene.add(pointLightBlue);
+
+    const pointLightYellow = new THREE.PointLight(0xffff00);
+    pointLightYellow.position.set(1200 + globalX, 1000, -150);
+    pointLightYellow.intensity = 0.2;
+    scene.add(pointLightYellow);
+
+    const pointLightMagenta = new THREE.PointLight(0xff00ff);
+    pointLightMagenta.position.set(1600 + globalX, 1000, -500);
+    pointLightMagenta.intensity = 0.2;
+    scene.add(pointLightMagenta);
+
+    const pointLightCyan = new THREE.PointLight(0x00ffff);
+    pointLightCyan.position.set(2200 + globalX, 1350, -80);
+    pointLightCyan.intensity = 0.2;
+    scene.add(pointLightCyan);
 
     // const ambientLightThree = new THREE.AmbientLight(0xffffff);
     // scene.add(ambientLightThree);
