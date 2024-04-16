@@ -77,6 +77,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
       antialias: true,
       alpha: true,
       preserveDrawingBuffer: true,
+      failIfMajorPerformanceCaveat: false,
+
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -93,7 +95,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
       // emissive: 0x111111,
       specular: 0x111111,
       // shininess: 100000,
-      shininess: 100,
+      shininess: 300,
+      flatShading: true,
     });
     const ball = new THREE.Mesh(geometry, material);
 
@@ -117,20 +120,20 @@ const MyThree: React.FC<MyThreeProps> = () => {
     pointLightBlue.intensity = 1;
     scene.add(pointLightBlue);
 
-    const pointLightYellow = new THREE.PointLight(0xffff00);
-    pointLightYellow.position.set(1200 + globalX, 1000, -150);
-    pointLightYellow.intensity = 0.2;
-    scene.add(pointLightYellow);
+    // const pointLightYellow = new THREE.PointLight(0xffff00);
+    // pointLightYellow.position.set(1200 + globalX, 1000, -150);
+    // pointLightYellow.intensity = 0.2;
+    // scene.add(pointLightYellow);
 
-    const pointLightMagenta = new THREE.PointLight(0xff00ff);
-    pointLightMagenta.position.set(1600 + globalX, 1000, -500);
-    pointLightMagenta.intensity = 0.2;
-    scene.add(pointLightMagenta);
+    // const pointLightMagenta = new THREE.PointLight(0xff00ff);
+    // pointLightMagenta.position.set(1600 + globalX, 1000, -500);
+    // pointLightMagenta.intensity = 0.2;
+    // scene.add(pointLightMagenta);
 
-    const pointLightCyan = new THREE.PointLight(0x00ffff);
-    pointLightCyan.position.set(2200 + globalX, 1350, -80);
-    pointLightCyan.intensity = 0.2;
-    scene.add(pointLightCyan);
+    // const pointLightCyan = new THREE.PointLight(0x00ffff);
+    // pointLightCyan.position.set(2200 + globalX, 1350, -80);
+    // pointLightCyan.intensity = 0.2;
+    // scene.add(pointLightCyan);
 
     // const ambientLightThree = new THREE.AmbientLight(0xffffff);
     // scene.add(ambientLightThree);
