@@ -277,8 +277,14 @@ export const Resume: React.FC<ResumeProps> = () => {
           <h4>Frameworks</h4>
           <ul>
             <li>
-              Pytorch, React, React-Native, Vue, Angular, Flask, Django,
-              Express, Laravel
+              JAVASCRIPT - React, React-Native, Vue, Angular, Node.js, Phaser 3,
+              Three.js, Express.js, Brain.js
+            </li>
+            <li>PYTHON - Pytorch, TensorFlow, Flask, Django, Laravel</li>
+            <li>C# - .NET, Unity</li>
+            <li>
+              STYLING - HTML, SCSS, CSS, HTML, Bootstrap, Material-UI, Angular
+              Material, Tailwind
             </li>
           </ul>
         </div>
