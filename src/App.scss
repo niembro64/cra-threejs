@@ -41,6 +41,7 @@
   resize: none;
 
   outline: none;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -53,8 +54,12 @@
   border-radius: 6px;
 }
 
-* {
-  overflow: hidden;
+iframe {
+  width: 90%;
+  height: 600px;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  border-radius: 6px;
 }
 
 .name-resume {
@@ -560,8 +565,8 @@ $stack-count: 10;
 
 header {
   // background-color: #4CAF50;
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  margin-top: 30vh;
+  margin-bottom: 50vh;
   padding: 20px;
   text-align: center;
   color: white;

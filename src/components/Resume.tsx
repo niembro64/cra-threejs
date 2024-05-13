@@ -49,6 +49,16 @@ export const Resume: React.FC<ResumeProps> = () => {
         )}
       </header>
       <section>
+        <iframe
+          src="https://niemo.io"
+          title="Niemo"
+          // width="100%"
+          // height="500px"
+          // frameBorder="0"
+          allowFullScreen
+        ></iframe>
+      </section>
+      <section>
         <h3>Work Experience</h3>
         <div className="job">
           <h4>Venturetec</h4>

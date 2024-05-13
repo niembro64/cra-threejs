@@ -340,11 +340,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
           </p>
         </div>
       )}
+
       <div className="projects-top">
         <div
           className={!mobile ? 'projects-scroller' : 'projects-scroller-mobile'}
         >
           <div className="pre">
+  
             <Resume />
             <div className="demo-projects-wrapper">
               <h1 className="demo-projects">Demos</h1>
@@ -444,8 +446,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
               className="kirby"
               alt="project-icon"
             />
-            <p className="last">This website was built with:</p>
-            <p className="last">ReactTS, THREE.js, and SCSS</p>
+            <p className="last">Blue Skies</p>
+            {/* <p className="last">ReactTS, THREE.js, and SCSS</p> */}
           </div>
         </div>
         {/* <div className="sette-wrapper">
