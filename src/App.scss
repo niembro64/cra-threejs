@@ -54,12 +54,31 @@
   border-radius: 6px;
 }
 
-iframe {
-  width: 90%;
+.iframe-thin {
+  width: 100%;
   height: 400px;
-  margin-right: 1vw;
-  margin-left: 1vw;
-  border-radius: 6px;
+  // margin-right: 3vw;
+  // margin-left: 3vw;
+  padding: 0;
+  margin: 0;
+  border-radius: 25px;
+  // border: 6px solid rgb(32, 71, 129);
+  border: 0;
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.208);
+  overflow: visible;
+}
+.iframe-wide {
+  width: 100%;
+  height: 600px;
+  // margin-right: 3vw;
+  // margin-left: 3vw;
+  padding: 0;
+  margin: 0;
+  border-radius: 25px;
+  // border: 6px solid rgb(32, 71, 129);
+  border: 0;
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.208);
+  overflow: visible;
 }
 
 .spacer {

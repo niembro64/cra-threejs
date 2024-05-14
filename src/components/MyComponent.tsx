@@ -344,10 +344,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
             <Resume />
             <div className="demo-projects-wrapper">
               <h1 className="demo-projects">Demos</h1>
-              <p className="demo-projects-p">
+              {/* <p className="demo-projects-p">
                 All Projects, Games, and Music are Original
               </p>
-              <p className="demo-projects-p">Click a Demo!</p>
+              <p className="demo-projects-p">Click a Demo!</p> */}
             </div>
           </div>
           {projects.map((project, index) => {
@@ -434,6 +434,14 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
           <div className="post">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}

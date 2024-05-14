@@ -6,7 +6,7 @@ export type Title =
   | 'Pirates'
   | 'Events'
   | 'Shows'
-  | 'Media';
+  | 'Music';
 
 export type Platform = 'desktop' | 'mobile' | 'both';
 
@@ -137,22 +137,22 @@ export const projects: Project[] = [
   //   video: true,
   //   platforms: 'both',
   // },
-  // {
-  //   title: 'Media',
-  //   url: 'http://media.niemo.io/wordpress/',
-  //   stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
-  //   stackIcon: null,
-  //   description: ['Showcase of Original Music'],
-  //   bullets: [
-  //     ' Visual Art',
-  //     'Classical Music',
-  //     'Electronic Music',
-  //     'All Media Original',
-  //   ],
-  //   dbImage: null,
-  //   icon: 'fruit.png',
-  //   gif: null,
-  //   video: true,
-  //   platforms: 'both',
-  // },
+  {
+    title: 'Music',
+    url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
+    stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
+    stackIcon: null,
+    description: ['Showcase of Original Music'],
+    bullets: [
+      ' Visual Art',
+      'Classical Music',
+      'Electronic Music',
+      'All Media Original',
+    ],
+    dbImage: null,
+    icon: 'fruit.png',
+    gif: null,
+    video: true,
+    platforms: 'both',
+  },
 ];
