@@ -60,22 +60,24 @@ export const Resume: React.FC<ResumeProps> = () => {
           </>
         )}
       </header>
-      <section>
-        <iframe
-          className={mobile ? 'iframe-thin' : 'iframe-wide'}
-          src="https://projects.niemo.io"
-          title="Projects"
-          // width="100%"
-          // height="500px"
-          // frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      </section>
-      <div className="spacer" />
-      <div className="spacer" />
-      <div className="spacer" />
-      <div className="spacer" />
-      <div className="spacer" />
+      {!mobile && (
+        <section>
+          <iframe
+            className={'iframe-wide'}
+            src="https://projects.niemo.io"
+            title="Projects"
+            // width="100%"
+            // height="500px"
+            // frameBorder="0"
+            allowFullScreen
+          ></iframe>
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+        </section>
+      )}
       <section>
         <h3>Work Experience</h3>
         <div className="job">
