@@ -56,10 +56,14 @@
 
 iframe {
   width: 90%;
-  height: 600px;
+  height: 400px;
   margin-right: 1vw;
   margin-left: 1vw;
   border-radius: 6px;
+}
+
+.spacer {
+  height: 10vh;
 }
 
 .name-resume {
@@ -72,7 +76,7 @@ iframe {
   margin: 0;
   padding: 0;
 
-  font-size: 10vw;
+  font-size: 13vw;
 
   margin-bottom: -6 vw;
 }

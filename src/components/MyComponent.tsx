@@ -188,7 +188,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
         mousePositionPrev.current
       );
 
-      scrollPosition.current += distanceTravelled * 0.5;
+      scrollPosition.current += distanceTravelled * 0.2;
     };
 
     window.addEventListener('mousemove', onMouseMove);
@@ -208,11 +208,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       // scrollPosition.current = Math.max(scrollPosition.current, 0);
 
       // Clamp the scrollPosition to a range suitable for controlling the Z position
-      // const scrollRange = { min: -6000, max: 0 };
-      // scrollPosition.current = Math.max(
-      //   Math.min(scrollPosition.current, scrollRange.max),
-      //   scrollRange.min
-      // );
 
       // boyRef.current.style.transform = `translateX(${scrollPosition.current}px)`;
     };
@@ -222,14 +217,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
     refContainer.current &&
       refContainer.current.appendChild(renderer.domElement);
 
-    let x = 0.0093;
-    let y = 0.007;
-    let z = 0.001;
+    const x = 0.0093;
+    const y = 0.007;
+    const z = 0.001;
 
     const percentKeep = 0.99995;
     const percentKeepMouse = 0.95;
 
-    var animate = function () {
+    let animationFrame = -1;
+    const animate = function () {
+      animationFrame += 1;
       requestAnimationFrame(animate);
 
       // setBallState(ball.rotation);
@@ -255,19 +252,17 @@ const MyThree: React.FC<MyThreeProps> = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
-      const date = Date.now();
-
       ball.rotation.x =
         percentKeep * ball.rotation.x +
         (1 - percentKeep) *
-          (20 * Math.sin(date * x) + mousePositionPrev.current.x);
+          (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x);
       ball.rotation.y =
         percentKeep * ball.rotation.y +
         (1 - percentKeep) *
-          (20 * Math.sin(date * y) + mousePositionPrev.current.y);
+          (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y);
       ball.rotation.z =
         percentKeep * ball.rotation.z +
-        (1 - percentKeep) * (20 * Math.sin(date * z));
+        (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
       renderer.render(scene, camera);
     };
     animate();
@@ -325,19 +320,19 @@ const MyThree: React.FC<MyThreeProps> = () => {
           >
             {showEmail ? email : 'Copy Email'}
           </button>
-          {/* <CopyEmail email={email} /> */}
-          <p>Stamford, Connecticut</p>
           <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
+          {/* <CopyEmail email={email} /> */}
           {/* <h2>Computer Engineer, Web Developer, and Game Developer</h2> */}
           {/* <p>Stamford, Connecticut</p> */}
           {/* <p>
             Email:{' '}
             <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
           </p> */}
-          <p>Phone: +1 (618) 616-3380</p>
-          <p>
+          <h1>Stamford, Connecticut</h1>
+          <h1>618-616-338O</h1>
+          {/* <p>
             <a href="https://niemo.io">https://niemo.io</a>
-          </p>
+          </p> */}
         </div>
       )}
 
@@ -346,7 +341,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
           className={!mobile ? 'projects-scroller' : 'projects-scroller-mobile'}
         >
           <div className="pre">
-  
             <Resume />
             <div className="demo-projects-wrapper">
               <h1 className="demo-projects">Demos</h1>

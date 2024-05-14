@@ -28,23 +28,35 @@ export const Resume: React.FC<ResumeProps> = () => {
         {!mobile && <h3 className="name-resume">niemo.io</h3>}
         {mobile && (
           <>
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <h3 className="name-resume">niemo.io</h3>
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
+            <div className="spacer" />
             <h3 className="name-resume">Eric Niemeyer</h3>
             <img
               className="gif-40"
               src="/videos2/smashed_small.gif"
               alt="asdf"
             />
-            <h2>Computer Engineer, Web Developer, and Game Developer</h2>
+            <h2>Neural Networks, Mobile, Websites, Games</h2>
             <p>Stamford, Connecticut</p>
             <p>
               <a href="mailto:niemeyer.eric@gmail.com">
                 niemeyer.eric@gmail.com
               </a>
             </p>
-            <p>+1 (618) 616-3380</p>
-            <p>
+            <p>618-616-338O</p>
+            {/* <p>
               <a href="https://niemo.io">https://niemo.io</a>
-            </p>
+            </p> */}
           </>
         )}
       </header>
