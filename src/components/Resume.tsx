@@ -1,7 +1,7 @@
 // new component for Resume.tsx
 
 import React, { useEffect, useState } from 'react';
-import { mobile } from './MyComponent';
+import { isMobile } from './MyComponent';
 
 interface ResumeProps {}
 
@@ -25,8 +25,8 @@ export const Resume: React.FC<ResumeProps> = () => {
     <div className="body">
       <header>
         {/* {mobile && <p>Best Website Experience is on Desktop</p>} */}
-        {!mobile && <h3 className="name-resume">niemo.io</h3>}
-        {mobile && (
+        {!isMobile && <h3 className="name-resume">niemo.io</h3>}
+        {isMobile && (
           <>
             <div className="spacer" />
             <div className="spacer" />
@@ -60,7 +60,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           </>
         )}
       </header>
-      {!mobile && (
+      {!isMobile && (
         <section>
           <iframe
             className={'iframe-wide'}

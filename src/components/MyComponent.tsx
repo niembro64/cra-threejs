@@ -6,7 +6,7 @@ import { Resume } from './Resume';
 
 export interface MyThreeProps {}
 
-export const mobile: boolean = window.innerWidth < 1200;
+export const isMobile: boolean = window.innerWidth < 900;
 
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
@@ -20,6 +20,44 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const [hoverCurr, setHoverCurr] = useState<Title | null>(null);
   const topElementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
+
+  const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
+  const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
+
+  useEffect(() => {
+    __DEV__ && console.log('urlStateCurr', urlStateCurr);
+    __DEV__ && console.log('urlStatePrev', urlStatePrev);
+
+    if (urlStateCurr !== urlStatePrev && urlStateCurr !== null) {
+      __DEV__ && console.log('NAVIAGTING TO URL', urlStateCurr);
+
+      const httpToHttps = (url: string) => {
+        return url.replace('http://', 'https://');
+      }
+
+      const urlStateCurrHttps = httpToHttps(urlStateCurr.toString());
+
+      
+      window.open(urlStateCurrHttps, '_blank');
+    }
+
+    setUrlStatePrev(urlStateCurr);
+  }, [urlStateCurr, urlStatePrev]);
+
+  window.addEventListener('message', function (event) {
+    // // It's a good security practice to check the origin of the message
+    // if (event.origin !== 'http://example.com') {
+    //   // Replace 'http://example.com' with the origin of your iframe
+    //   return;
+    // }
+
+    // Handling the event
+    if (event?.data?.url) {
+      console.log('Received message from iframe:', event);
+
+      setUrlStateCurr(event.data.url);
+    }
+  });
 
   useEffect(() => {
     __DEV__ && console.log('window.innerWidth', window.innerWidth);
@@ -82,7 +120,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const globalX = mobile ? -50 : 0;
+    const globalX = isMobile ? -50 : 0;
     // const geometry = new THREE.IcosahedronGeometry(20, 0);
     // const geometry = new THREE.BoxGeometry(100, 100, 100);
     // const geometry = new THREE.IcosahedronGeometry(90, 0);
@@ -303,9 +341,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
   return (
     <div className="top" ref={topElementRef}>
       <div className="black-boy"></div>
-      {!mobile && <div className="three" ref={refContainer} />}
-      {mobile && <div className="three-mobile" ref={refContainer} />}
-      {!mobile && (
+      {!isMobile && <div className="three" ref={refContainer} />}
+      {isMobile && <div className="three-mobile" ref={refContainer} />}
+      {!isMobile && (
         <div className="resume">
           {/* <h3>niemeyer.eric@gmail.com</h3> */}
           <h1 className="resume-name">Eric Niemeyer</h1>
@@ -338,7 +376,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
       <div className="projects-top">
         <div
-          className={!mobile ? 'projects-scroller' : 'projects-scroller-mobile'}
+          className={
+            !isMobile ? 'projects-scroller' : 'projects-scroller-mobile'
+          }
         >
           <div className="pre">
             <Resume />
@@ -372,7 +412,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
                   }}
                 ></div>
                 <div
-                  className={mobile ? 'project-title-mobile' : 'project-title'}
+                  className={
+                    isMobile ? 'project-title-mobile' : 'project-title'
+                  }
                   id={project.title}
                 >
                   {project.title.toUpperCase()}
@@ -434,14 +476,14 @@ const MyThree: React.FC<MyThreeProps> = () => {
               </div>
             );
           })}
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
-            <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
+          <div className="spacer" />
           <div className="post">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
