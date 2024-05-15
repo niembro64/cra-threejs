@@ -107,21 +107,21 @@ const AudioSpectrogram: React.FC = () => {
   }, []);
 
   return (
-    <div className="audio-spectrogram-container">
+    <div className="spectrogram-container">
       <audio ref={audioRef} loop>
         <source src="song.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
 
       <canvas
-        className="canvas-spectrogram"
+        className="spectrogram"
         ref={canvasRef}
         width="1024"
         height="100"
       ></canvas>
 
       <canvas
-        className="canvas-spectrogram"
+        className="spectrogram"
         ref={canvasFlippedRef}
         width="1024"
         height="100"
