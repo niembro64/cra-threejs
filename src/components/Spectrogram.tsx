@@ -44,10 +44,8 @@ const AudioSpectrogram: React.FC = () => {
 
                 if (ctx && flippedCtx) {
                   // Clear both canvases
-                  ctx.fillStyle = 'black';
-                  ctx.fillRect(0, 0, canvas.width, canvas.height);
-                  flippedCtx.fillStyle = 'black';
-                  flippedCtx.fillRect(
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  flippedCtx.clearRect(
                     0,
                     0,
                     flippedCanvas.width,
@@ -118,15 +116,15 @@ const AudioSpectrogram: React.FC = () => {
       <canvas
         className="canvas-spectrogram"
         ref={canvasRef}
-        // width="1024"
-        // height="100"
+        width="1024"
+        height="100"
       ></canvas>
 
       <canvas
         className="canvas-spectrogram"
         ref={canvasFlippedRef}
-        // width="1024"
-        // height="100"
+        width="1024"
+        height="100"
       ></canvas>
     </div>
   );
