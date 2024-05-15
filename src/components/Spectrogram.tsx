@@ -1,15 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 
 const AudioSpectrogram: React.FC = () => {
+  const [audioStarted, setAudioStarted] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasFlippedRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const startAudio = () => {
+    setAudioStarted(true);
+  };
+
   useEffect(() => {
+    if (!audioStarted) return;
+
     const setupMeyda = async (): Promise<void> => {
       if (audioRef.current && !audioContextRef.current) {
         try {
@@ -98,35 +105,31 @@ const AudioSpectrogram: React.FC = () => {
         audioElement.removeEventListener('canplay', setupMeyda);
       }
     };
-  }, []);
+  }, [audioStarted]);
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioStarted && audioRef.current) {
       audioRef.current.play();
     }
-  }, []);
+  }, [audioStarted]);
 
   return (
     <div className="spectrogram-container">
-      <audio ref={audioRef} loop>
-        <source src="song.mp3" type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
+      {!audioStarted ? (
+        <button onClick={startAudio}>Start Audio</button>
+      ) : (
+        <>
+          <audio ref={audioRef} loop>
+            <source src="song.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
 
-      <canvas
-        className="spectrogram"
-        ref={canvasRef}
-        // width="1024"
-        // height="100"
-      ></canvas>
-      <h4 className="spectrogram-text">Niemo Audio</h4>
+          <canvas className="spectrogram" ref={canvasRef}></canvas>
+          <h4 className="spectrogram-text">Niemo Audio</h4>
 
-      <canvas
-        className="spectrogram"
-        ref={canvasFlippedRef}
-        // width="1024"
-        // height="100"
-      ></canvas>
+          <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
+        </>
+      )}
     </div>
   );
 };
