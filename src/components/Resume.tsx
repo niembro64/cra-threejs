@@ -91,7 +91,7 @@ export const Resume: React.FC<ResumeProps> = () => {
             Web Games, Websites
           </p>
           <p>Stamford, Connecticut (Office & Remote)</p>
-          <p>May 2022 - Today</p>
+          <p>2022 - Today</p>
           <ul>
             <li>
               <h1>SeniorSafe</h1>
@@ -156,7 +156,7 @@ export const Resume: React.FC<ResumeProps> = () => {
             Systems (MES)
           </p>
           <p>St. Louis, Missouri (Office & Remote)</p>
-          <p>Dec 2018 - May 2022</p>
+          <p>2018 - 2022</p>
           <ul>
             <li>
               <h1>Lucid Motors (Casa Grande, AZ)</h1>
