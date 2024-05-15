@@ -116,15 +116,15 @@ const AudioSpectrogram: React.FC = () => {
       <canvas
         className="spectrogram"
         ref={canvasRef}
-        width="1024"
-        height="100"
+        // width="1024"
+        // height="100"
       ></canvas>
 
       <canvas
         className="spectrogram"
         ref={canvasFlippedRef}
-        width="1024"
-        height="100"
+        // width="1024"
+        // height="100"
       ></canvas>
     </div>
   );

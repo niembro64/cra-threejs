@@ -371,12 +371,11 @@ const MyThree: React.FC<MyThreeProps> = () => {
           {/* <p>
             <a href="https://niemo.io">https://niemo.io</a>
           </p> */}
+          <AudioSpectrogram />
         </div>
       )}
 
       <div className="projects-top">
-        <AudioSpectrogram />
-
         <div
           className={
             !isMobile ? 'projects-scroller' : 'projects-scroller-mobile'
