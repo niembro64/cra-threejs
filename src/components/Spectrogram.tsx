@@ -119,6 +119,7 @@ const AudioSpectrogram: React.FC = () => {
         // width="1024"
         // height="100"
       ></canvas>
+      <h4 className="spectrogram-text">Niemo Audio</h4>
 
       <canvas
         className="spectrogram"

@@ -38,7 +38,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
       const urlStateCurrHttps = httpToHttps(urlStateCurr.toString());
 
-      window.open(urlStateCurrHttps, '_blank');
+      window.location.href = urlStateCurrHttps;
     }
 
     setUrlStatePrev(urlStateCurr);
@@ -409,7 +409,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
                     setHoverCurr(null);
                   }}
                   onClick={() => {
-                    window.open(project.url, '_blank');
+                    window.location.href = project.url;
                   }}
                 ></div>
                 <div
