@@ -116,7 +116,7 @@ const AudioSpectrogram: React.FC = () => {
   return (
     <div className="spectrogram-container">
       {!audioStarted ? (
-        <button onClick={startAudio}>Start Audio</button>
+        <button onClick={startAudio}>Music</button>
       ) : (
         <>
           <audio ref={audioRef} loop>
