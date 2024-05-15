@@ -4,10 +4,8 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 
 const AudioSpectrogram: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
-  
-  const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
-  // const microphoneRef = useRef<MediaStreamAudioSourceNote | null>(null);
 
+  const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
 
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
