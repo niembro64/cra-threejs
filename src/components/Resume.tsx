@@ -79,9 +79,9 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="spacer" />
         </section>
       )}
-      <section>
+      {/* <section>
         <AudioSpectrogram />
-      </section>
+      </section> */}
       <section>
         <h3>Work Experience</h3>
         <div className="job">

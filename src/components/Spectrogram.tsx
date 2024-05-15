@@ -109,28 +109,24 @@ const AudioSpectrogram: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="audio-spectrogram-container">
       <audio ref={audioRef} loop>
         <source src="song.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
-      <h1>Mel-Frequency Spectrogram</h1>
-      {/* @ts-ignore */}
+
       <canvas
         className="canvas-spectrogram"
         ref={canvasRef}
-        width="1024"
-        height="100"
-        // style={{ background: 'black' }}
+        // width="1024"
+        // height="100"
       ></canvas>
-      <h1>Mel-Frequency Spectrogram (Flipped)</h1>
-      {/* @ts-ignore */}
+
       <canvas
         className="canvas-spectrogram"
         ref={canvasFlippedRef}
-        width="1024"
-        height="100"
-        // style={{ background: 'black' }}
+        // width="1024"
+        // height="100"
       ></canvas>
     </div>
   );

@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Title, projects } from '../data/projects';
 import { Resume } from './Resume';
+import AudioSpectrogram from './Spectrogram';
 
 export interface MyThreeProps {}
 
@@ -374,6 +375,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
       )}
 
       <div className="projects-top">
+        <AudioSpectrogram />
+
         <div
           className={
             !isMobile ? 'projects-scroller' : 'projects-scroller-mobile'
