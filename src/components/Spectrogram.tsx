@@ -12,6 +12,10 @@ const AudioSpectrogram: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const startAudio = () => {
+    if (audioStarted) {
+      return;
+    }
+
     setAudioStarted(true);
   };
 
@@ -137,13 +141,18 @@ const AudioSpectrogram: React.FC = () => {
           </audio>
 
           <canvas className="spectrogram" ref={canvasRef}></canvas>
-          <div className="spectrogram-mid">
+          <div
+            className="spectrogram-mid"
+            onClick={() => {
+              startAudio();
+              toggleAudio();
+            }}
+          >
             <div className="spectrogram-image-wrapper">
               <img
                 className="spectrogram-image"
                 src="/NA.png"
                 alt="Niemo Audio Logo"
-                onClick={toggleAudio}
               />
             </div>
             <h4 className="spectrogram-text">Niemo Audio</h4>

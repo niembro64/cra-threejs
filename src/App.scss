@@ -108,6 +108,7 @@
   border: 0.2vw solid black;
   border-top: 0.2vw solid white;
   border-bottom: 0.2vw solid white;
+    cursor: pointer;
 }
 
 .spectrogram-image-wrapper {
@@ -136,7 +137,7 @@
   // border: 0.2vw solid black;
   // border: 3px dashed red;
   border: 0;
-  cursor: pointer;
+
 }
 
 .spectrogram-text {
