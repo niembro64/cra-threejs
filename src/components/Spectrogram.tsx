@@ -6,6 +6,7 @@ const AudioSpectrogram: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasFlippedRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -29,13 +30,29 @@ const AudioSpectrogram: React.FC = () => {
             featureExtractors: ['melBands'],
             melBands: 64, // Increase the number of mel bands to 64
             callback: (features: MeydaFeaturesObject) => {
-              // @ts-ignore
-              if (features && features.melBands && canvasRef.current) {
+              if (
+                features &&
+                // @ts-ignore
+                features.melBands &&
+                canvasRef.current &&
+                canvasFlippedRef.current
+              ) {
                 const canvas = canvasRef.current;
+                const flippedCanvas = canvasFlippedRef.current;
                 const ctx = canvas.getContext('2d');
-                if (ctx) {
+                const flippedCtx = flippedCanvas.getContext('2d');
+
+                if (ctx && flippedCtx) {
+                  // Clear both canvases
                   ctx.fillStyle = 'black';
                   ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  flippedCtx.fillStyle = 'black';
+                  flippedCtx.fillRect(
+                    0,
+                    0,
+                    flippedCanvas.width,
+                    flippedCanvas.height
+                  );
 
                   // Draw each mel band on the canvas in white
                   // @ts-ignore
@@ -44,13 +61,19 @@ const AudioSpectrogram: React.FC = () => {
                     const height = normalizedValue * canvas.height;
                     // @ts-ignore
                     const width = canvas.width / features.melBands.length;
+                    // @ts-ignore
                     ctx.fillStyle = 'white'; // Set fill color to white
+                    flippedCtx.fillStyle = 'white'; // Set fill color to white
+
+                    // Draw on the original canvas
                     ctx.fillRect(
                       index * width,
                       canvas.height - height,
                       width,
                       height
                     );
+                    // Draw on the flipped canvas (inverted vertically)
+                    flippedCtx.fillRect(index * width, 0, width, height);
                   });
                 }
               }
@@ -96,6 +119,15 @@ const AudioSpectrogram: React.FC = () => {
       <canvas
         className="canvas-spectrogram"
         ref={canvasRef}
+        width="1024"
+        height="100"
+        // style={{ background: 'black' }}
+      ></canvas>
+      <h1>Mel-Frequency Spectrogram (Flipped)</h1>
+      {/* @ts-ignore */}
+      <canvas
+        className="canvas-spectrogram"
+        ref={canvasFlippedRef}
         width="1024"
         height="100"
         // style={{ background: 'black' }}
