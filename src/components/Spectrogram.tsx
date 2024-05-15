@@ -125,7 +125,16 @@ const AudioSpectrogram: React.FC = () => {
           </audio>
 
           <canvas className="spectrogram" ref={canvasRef}></canvas>
-          <h4 className="spectrogram-text">Niemo Audio</h4>
+          <div className="spectrogram-mid">
+            <div className="spectrogram-image-wrapper">
+              <img
+                className="spectrogram-image"
+                src="/NA.png"
+                alt="Niemo Audio Logo"
+              />
+            </div>
+            <h4 className="spectrogram-text">Niemo Audio</h4>
+          </div>
 
           <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
         </>

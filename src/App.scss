@@ -88,11 +88,65 @@
   margin: 0;
 }
 
-.spectrogram-text {
-  flex: 0.5;
+.spectrogram-mid {
+  // flex: 0.5;
+  height: 50px;
   width: 100%;
+  background-color: white;
+  color: black;
+  // background-color: transparent;
+  // color: white;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  border: 0.2vw solid black;
+  border-top: 0.2vw solid white;
+  border-bottom: 0.2vw solid white;
+}
+
+.spectrogram-image-wrapper {
+  flex: 0.3;
+  height: 50px;
+
   background-color: transparent;
-  color: white;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+}
+
+.spectrogram-image {
+  // flex: 0.3;
+  // width: 100%; /* Makes the image fill the available width */
+  height: 50px; /* Makes the image fill the available height */
+  object-fit: contain; /* Resize the image to cover the container, the image may be clipped */
+  // height: 70px;
+  background-color: transparent;
+
+  padding: 0;
+  margin: 0;
+
+  // border: 0.2vw solid black;
+  // border: 3px dashed red;
+  border: 0;
+}
+
+.spectrogram-text {
+  flex: 0.7;
+  // width: 100%;
+  background-color: white;
+  color: black;
+  // background-color: transparent;
+  // color: white;
+
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
   padding: 0;
   margin: 0;
@@ -102,9 +156,9 @@
   justify-content: center;
   align-items: center;
 
-  border: 0.2vw solid black;
-  border-top: 0.2vw solid white;
-  border-bottom: 0.2vw solid white;
+  border: 0.2vw solid white;
+
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.248);
 }
 
 .spacer {
