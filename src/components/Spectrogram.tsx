@@ -4,6 +4,7 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 
 const AudioSpectrogram: React.FC = () => {
   const [audioStarted, setAudioStarted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -12,6 +13,17 @@ const AudioSpectrogram: React.FC = () => {
 
   const startAudio = () => {
     setAudioStarted(true);
+  };
+
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   useEffect(() => {
@@ -131,6 +143,7 @@ const AudioSpectrogram: React.FC = () => {
                 className="spectrogram-image"
                 src="/NA.png"
                 alt="Niemo Audio Logo"
+                onClick={toggleAudio}
               />
             </div>
             <h4 className="spectrogram-text">Niemo Audio</h4>
