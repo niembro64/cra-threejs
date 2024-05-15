@@ -1,13 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
-import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 
 const AudioSpectrogram: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
-
   const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
-
-  const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
+  const meydaAnalyzerRef = useRef<Meyda.MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -15,9 +12,7 @@ const AudioSpectrogram: React.FC = () => {
       try {
         const audioContext = new AudioContext();
         audioContextRef.current = audioContext;
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const source = audioContext.createMediaStreamSource(stream);
         microphoneRef.current = source;
 
@@ -25,20 +20,20 @@ const AudioSpectrogram: React.FC = () => {
           audioContext: audioContext,
           source: source,
           bufferSize: 512,
-          featureExtractors: ['amplitudeSpectrum'],
+          featureExtractors: ['mfcc'],
           callback: (features: MeydaFeaturesObject) => {
-            if (features && features.amplitudeSpectrum && canvasRef.current) {
+            if (features && features.mfcc && canvasRef.current) {
               const canvas = canvasRef.current;
               const ctx = canvas.getContext('2d');
               if (ctx) {
-                const data = features.amplitudeSpectrum;
-                const width = canvas.width / data.length;
                 ctx.fillStyle = 'black';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                ctx.fillStyle = 'white';
-                data.forEach((value, index) => {
-                  const height = value * canvas.height;
+                features.mfcc.forEach((mfccValue, index) => {
+                  const normalizedValue = (mfccValue + 40) / 80; // Normalization step
+                  const height = normalizedValue * canvas.height;
+                  const width = canvas.width / features.mfcc.length;
+                  ctx.fillStyle = `hsl(${index * 10}, 100%, 50%)`;
                   ctx.fillRect(
                     index * width,
                     canvas.height - height,
