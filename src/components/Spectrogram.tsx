@@ -27,7 +27,7 @@ const AudioSpectrogram: React.FC = () => {
             source: source,
             bufferSize: 512 * 2,
             featureExtractors: ['melBands'],
-            melBands: 16, // Number of mel bands
+            melBands: 64, // Increase the number of mel bands to 64
             callback: (features: MeydaFeaturesObject) => {
               // @ts-ignore
               if (features && features.melBands && canvasRef.current) {
@@ -37,16 +37,14 @@ const AudioSpectrogram: React.FC = () => {
                   ctx.fillStyle = 'black';
                   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+                  // Draw each mel band on the canvas in white
                   // @ts-ignore
                   features.melBands.forEach((melValue, index) => {
                     const normalizedValue = melValue / 10; // Normalize based on expected max value
                     const height = normalizedValue * canvas.height;
                     // @ts-ignore
                     const width = canvas.width / features.melBands.length;
-                    ctx.fillStyle = `hsl(${
-                      // @ts-ignore
-                      360 * (index / features.melBands.length)
-                    }, 100%, 50%)`;
+                    ctx.fillStyle = 'white'; // Set fill color to white
                     ctx.fillRect(
                       index * width,
                       canvas.height - height,
