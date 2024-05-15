@@ -21,9 +21,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const topElementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
 
-
-  
-
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
 
@@ -36,11 +33,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
       const httpToHttps = (url: string) => {
         return url.replace('http://', 'https://');
-      }
+      };
 
       const urlStateCurrHttps = httpToHttps(urlStateCurr.toString());
 
-      
       window.open(urlStateCurrHttps, '_blank');
     }
 
