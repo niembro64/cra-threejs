@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { isMobile } from './MyComponent';
+import AudioSpectrogram from './Spectrogram';
 
 interface ResumeProps {}
 
@@ -78,6 +79,9 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="spacer" />
         </section>
       )}
+      <section>
+        <AudioSpectrogram />
+      </section>
       <section>
         <h3>Work Experience</h3>
         <div className="job">
