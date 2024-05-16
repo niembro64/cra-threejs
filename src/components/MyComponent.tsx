@@ -22,8 +22,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const topElementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
 
-  const lowerPowerRef = useRef<number>(0);
-  const upperPowerRef = useRef<number>(0);
+  const lowerPowerRawRef = useRef<number>(0);
+  const upperPowerRawRef = useRef<number>(0);
+
+  const lowerPowerAccumulatedRef = useRef<number>(0);
+  const upperPowerAccumulatedRef = useRef<number>(0);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
@@ -186,9 +191,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
     // pointLightCyan.intensity = 0.2;
     // scene.add(pointLightCyan);
 
-    // const ambientLightThree = new THREE.AmbientLight(0xffffff);
-    // scene.add(ambientLightThree);
-    // ambientLightThree.intensity = 0;
+    const ambientLightThree = new THREE.AmbientLight(0xffffff);
+    scene.add(ambientLightThree);
+    ambientLightThree.intensity = 0;
 
     // Create a function to convert screen coordinates to 3D scene coordinates
     const getScenePositionFromScreen = (
@@ -298,29 +303,67 @@ const MyThree: React.FC<MyThreeProps> = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
-      ///////////////////////////////////////
-      // ANIMATION MOOUSE & SCROLL
-      ///////////////////////////////////////
-      ball.rotation.x =
-        percentKeep * ball.rotation.x +
-        (1 - percentKeep) *
-          (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x);
-      ball.rotation.y =
-        percentKeep * ball.rotation.y +
-        (1 - percentKeep) *
-          (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y);
-      ball.rotation.z =
-        percentKeep * ball.rotation.z +
-        (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
+      if (isMobile || !audioRef.current || audioRef.current?.paused) {
+        ///////////////////////////////////////
+        // ANIMATION MOOUSE & SCROLL
+        ///////////////////////////////////////
+        ball.rotation.x =
+          percentKeep * ball.rotation.x +
+          (1 - percentKeep) *
+            (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x);
+        ball.rotation.y =
+          percentKeep * ball.rotation.y +
+          (1 - percentKeep) *
+            (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y);
+        ball.rotation.z =
+          percentKeep * ball.rotation.z +
+          (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
+      } else {
+        lowerPowerAccumulatedRef.current =
+          (lowerPowerAccumulatedRef.current +
+            lowerPowerRawRef.current * 0.002) %
+          360;
 
-      ///////////////////////////////////////
-      // ANIMATION FROM SPECTRUM
-      ///////////////////////////////////////
-      ball.rotation.x = lowerPowerRef.current * 0.01;
-      ball.rotation.y = 0;
-      ball.rotation.z = 0;
+        upperPowerAccumulatedRef.current =
+          (upperPowerAccumulatedRef.current +
+            upperPowerRawRef.current * 0.0012) %
+          360;
 
-      __DEV__ && console.log('spectrumLowerPower', lowerPowerRef.current);
+        ///////////////////////////////////////
+        // ANIMATION FROM SPECTRUM
+        ///////////////////////////////////////
+        const percentKeepPowerShort = 0.1;
+        const percentKeepPowerMedium = 0.5;
+        const percentKeepPowerLong = 0.92;
+
+        // ball.rotation.x = 0;
+        ball.rotation.x =
+          ball.rotation.x * percentKeepPowerShort +
+          lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
+
+        ball.rotation.y =
+          ball.rotation.y * percentKeepPowerShort +
+          upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
+
+        // ball.material.shininess = 100 + lowerPowerRawRef.current * 10;
+
+        // ball.rotation.z = 0;
+        // ambientLightThree.intensity =
+        //   ambientLightThree.intensity * percentKeepPowerMedium +
+        //   (upperPowerRawRef.current * 0.05 > 0.6 ? 0.2 : 0) *
+        //     (1 - percentKeepPowerMedium);
+
+        pointLightRed.intensity =
+          pointLightRed.intensity * percentKeepPowerLong +
+          (0.5 + lowerPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong);
+
+        pointLightBlue.intensity =
+          pointLightBlue.intensity * percentKeepPowerLong +
+          (0.5 + upperPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong);
+
+        pointLightGreen.intensity =
+          (pointLightBlue.intensity + pointLightRed.intensity) / 2;
+      }
 
       renderer.render(scene, camera);
     };
@@ -393,8 +436,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
             <a href="https://niemo.io">https://niemo.io</a>
           </p> */}
           <AudioSpectrogram
-            lowerPowerRef={lowerPowerRef}
-            upperPowerRef={upperPowerRef}
+            lowerPowerRef={lowerPowerRawRef}
+            upperPowerRef={upperPowerRawRef}
+            audioRef={audioRef}
           />
         </div>
       )}

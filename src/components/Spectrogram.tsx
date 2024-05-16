@@ -5,11 +5,14 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>;
   upperPowerRef: React.MutableRefObject<number>;
+
+  audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   lowerPowerRef,
   upperPowerRef,
+  audioRef,
 }) => {
   const [audioStarted, setAudioStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -17,7 +20,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasFlippedRef = useRef<HTMLCanvasElement | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   const startAudio = () => {
     if (audioStarted) {
@@ -85,10 +87,51 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
                   // @ts-ignore
                   if (features && features.melBands) {
+                    // BARS index 3 - 8 inclusive are the middle power bands
+                    // BARS total of 26 bands
+
                     // @ts-ignore
-                    const lowerPower = features.melBands[0];
+                    const lowerPower =
+                      // @ts-ignore
+                      features.melBands[0];
                     // @ts-ignore
-                    const upperPower = features.melBands[1]; // Middle mel band value
+
+                    // @ts-ignore
+                    const upperPower =
+                      // @ts-ignore
+                      // features.melBands[9] +
+                      // // @ts-ignore
+                      // features.melBands[10] +
+                      // // @ts-ignore
+                      // features.melBands[11] +
+                      // // @ts-ignore
+                      // features.melBands[12] +
+                      // // @ts-ignore
+                      // features.melBands[13] +
+                      // // @ts-ignore
+                      // features.melBands[14] +
+                      // // @ts-ignore
+                      // features.melBands[15] +
+                      // // @ts-ignore
+                      // features.melBands[16] +
+                      // // @ts-ignore
+                      // features.melBands[17] +
+                      // @ts-ignore
+                      features.melBands[18] +
+                      // @ts-ignore
+                      features.melBands[19] +
+                      // @ts-ignore
+                      features.melBands[20] +
+                      // @ts-ignore
+                      features.melBands[21] +
+                      // @ts-ignore
+                      features.melBands[22] +
+                      // @ts-ignore
+                      features.melBands[23] +
+                      // @ts-ignore
+                      features.melBands[24] +
+                      // @ts-ignore
+                      features.melBands[25];
 
                     lowerPowerRef.current = lowerPower;
 
