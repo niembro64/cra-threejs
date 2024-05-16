@@ -22,6 +22,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const topElementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
 
+  const lowerPowerRef = useRef<number>(0);
+  const upperPowerRef = useRef<number>(0);
+
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
 
@@ -267,19 +270,24 @@ const MyThree: React.FC<MyThreeProps> = () => {
       animationFrame += 1;
       requestAnimationFrame(animate);
 
-      // setBallState(ball.rotation);
-
+      ///////////////////////////////////////
+      // SCROLL POSITION
+      ///////////////////////////////////////
       scrollPositionAverage.current =
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current;
 
-      // console.log(scrollPositionAverage.current);
-
+      ///////////////////////////////////////
+      // MOUSE ADD ROTATION
+      ///////////////////////////////////////
       ball.rotation.z =
         (percentKeepMouse * ball.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1;
 
+      ///////////////////////////////////////
+      // MOUSE POSITION
+      ///////////////////////////////////////
       mousePositionPrev.current.x =
         percentKeepMouse * mousePositionPrev.current.x +
         (1 - percentKeepMouse) * mousePositionCurr.current.x;
@@ -290,6 +298,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
+      ///////////////////////////////////////
+      // ANIMATION MOOUSE & SCROLL
+      ///////////////////////////////////////
       ball.rotation.x =
         percentKeep * ball.rotation.x +
         (1 - percentKeep) *
@@ -301,6 +312,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
       ball.rotation.z =
         percentKeep * ball.rotation.z +
         (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
+
+      ///////////////////////////////////////
+      // ANIMATION FROM SPECTRUM
+      ///////////////////////////////////////
+      ball.rotation.x = lowerPowerRef.current * 0.01;
+      ball.rotation.y = 0;
+      ball.rotation.z = 0;
+
+      __DEV__ && console.log('spectrumLowerPower', lowerPowerRef.current);
+
       renderer.render(scene, camera);
     };
     animate();
@@ -371,7 +392,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
           {/* <p>
             <a href="https://niemo.io">https://niemo.io</a>
           </p> */}
-          <AudioSpectrogram />
+          <AudioSpectrogram
+            lowerPowerRef={lowerPowerRef}
+            upperPowerRef={upperPowerRef}
+          />
         </div>
       )}
 

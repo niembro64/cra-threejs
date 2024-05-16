@@ -2,7 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 
-const AudioSpectrogram: React.FC = () => {
+interface AudioSpectrogramProps {
+  lowerPowerRef: React.MutableRefObject<number>;
+  upperPowerRef: React.MutableRefObject<number>;
+}
+
+const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
+  lowerPowerRef,
+  upperPowerRef,
+}) => {
   const [audioStarted, setAudioStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -75,6 +83,18 @@ const AudioSpectrogram: React.FC = () => {
                     flippedCanvas.height
                   );
 
+                  // @ts-ignore
+                  if (features && features.melBands) {
+                    // @ts-ignore
+                    const lowerPower = features.melBands[0];
+                    // @ts-ignore
+                    const upperPower = features.melBands[1]; // Middle mel band value
+
+                    lowerPowerRef.current = lowerPower;
+
+                    upperPowerRef.current = upperPower;
+                  }
+
                   // Draw each mel band on the canvas in white
                   // @ts-ignore
                   features.melBands.forEach((melValue, index) => {
@@ -132,11 +152,9 @@ const AudioSpectrogram: React.FC = () => {
   return (
     <div className="spectrogram-container">
       {!audioStarted ? (
-        <button
-        
-        className='button-music'
-          
-          onClick={startAudio}>Original Music</button>
+        <button className="button-music" onClick={startAudio}>
+          Original Music
+        </button>
       ) : (
         <>
           <audio ref={audioRef} loop>
