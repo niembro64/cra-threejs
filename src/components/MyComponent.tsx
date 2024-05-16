@@ -321,12 +321,12 @@ const MyThree: React.FC<MyThreeProps> = () => {
       } else {
         lowerPowerAccumulatedRef.current =
           (lowerPowerAccumulatedRef.current +
-            lowerPowerRawRef.current * 0.002) %
+            Math.pow(lowerPowerRawRef.current, 1) * 0.0008) %
           360;
 
         upperPowerAccumulatedRef.current =
           (upperPowerAccumulatedRef.current +
-            upperPowerRawRef.current * 0.0012) %
+            Math.pow(upperPowerRawRef.current, 3) * 0.00003) %
           360;
 
         ///////////////////////////////////////
