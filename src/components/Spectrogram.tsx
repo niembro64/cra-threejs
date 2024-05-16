@@ -136,7 +136,7 @@ const AudioSpectrogram: React.FC = () => {
         
         className='button-music'
           
-          onClick={startAudio}>Music</button>
+          onClick={startAudio}>Original Music</button>
       ) : (
         <>
           <audio ref={audioRef} loop>
