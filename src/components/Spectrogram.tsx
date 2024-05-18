@@ -167,14 +167,17 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   return (
     <div className="spectrogram-container">
       {!audioStarted ? (
-        <button className="button-music" onClick={startAudio}>
-          <img
-            className="spectrogram-image"
-            src="/qblack_hardpixels_transbg.png"
-            alt="Niemo Audio Logo"
-          />
-        </button>
+        // <button className="button-music" onClick={startAudio}>
+        <img
+          className="button-music"
+          src="/qblack_hardpixels_transbg.png"
+          alt="Niemo Audio Logo"
+          onClick={() => {
+            startAudio();
+          }}
+        />
       ) : (
+        // </button>
         // <button className="button-music" onClick={startAudio}>
         //   ?
         // </button>
@@ -204,7 +207,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             </div>
 
             {/* <h4 className="spectrogram-text">Niemo Audio</h4> */}
-            <h4 className="spectrogram-text"></h4>
+            <h4 className="spectrogram-text">= Math + Art</h4>
           </div>
 
           <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
