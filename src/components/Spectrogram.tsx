@@ -61,7 +61,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext: audioContext,
             source: source,
-            bufferSize: 512,
+            bufferSize: 512 * 2,
             featureExtractors: ['melBands'],
             melBands: 64, // Increase the number of mel bands to 64
             callback: (features: MeydaFeaturesObject) => {
@@ -88,7 +88,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   );
 
                   // Apply decay factor to previous mel bands
-                  const decayFactor = 0.95;
+                  const decayFactor = 0.8;
                   // @ts-ignore
                   const currentMelBands = features.melBands;
                   if (previousMelBandsRef.current.length === 0) {
@@ -168,9 +168,19 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     <div className="spectrogram-container">
       {!audioStarted ? (
         <button className="button-music" onClick={startAudio}>
-          Original Music
+          <img
+            className="spectrogram-image"
+            src="/qblack_hardpixels_transbg.png"
+            alt="Niemo Audio Logo"
+          />
         </button>
       ) : (
+        // <button className="button-music" onClick={startAudio}>
+        //   ?
+        // </button>
+        // <button className="button-music" onClick={startAudio}>
+        //   Original Music
+        // </button>
         <>
           <audio ref={audioRef} loop>
             <source src="song.mp3" type="audio/mp3" />
@@ -188,11 +198,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             <div className="spectrogram-image-wrapper">
               <img
                 className="spectrogram-image"
-                src="/NA.png"
+                src="/NA_white_on_trans.png"
                 alt="Niemo Audio Logo"
               />
             </div>
-            <h4 className="spectrogram-text">Niemo Audio</h4>
+
+            {/* <h4 className="spectrogram-text">Niemo Audio</h4> */}
+            <h4 className="spectrogram-text"></h4>
           </div>
 
           <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
