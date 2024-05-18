@@ -21,6 +21,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasFlippedRef = useRef<HTMLCanvasElement | null>(null);
 
+  const previousMelBandsRef = useRef<number[]>([]);
+
   const startAudio = () => {
     if (audioStarted) {
       return;
@@ -59,7 +61,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext: audioContext,
             source: source,
-            bufferSize: 512 * 2,
+            bufferSize: 512,
             featureExtractors: ['melBands'],
             melBands: 64, // Increase the number of mel bands to 64
             callback: (features: MeydaFeaturesObject) => {
@@ -85,69 +87,32 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     flippedCanvas.height
                   );
 
+                  // Apply decay factor to previous mel bands
+                  const decayFactor = 0.95;
                   // @ts-ignore
-                  if (features && features.melBands) {
-                    // BARS index 3 - 8 inclusive are the middle power bands
-                    // BARS total of 26 bands
-
-                    // @ts-ignore
-                    const lowerPower =
-                      // @ts-ignore
-                      features.melBands[0];
-                    // @ts-ignore
-
-                    // @ts-ignore
-                    const upperPower =
-                      // @ts-ignore
-                      // features.melBands[9] +
-                      // // @ts-ignore
-                      // features.melBands[10] +
-                      // // @ts-ignore
-                      // features.melBands[11] +
-                      // // @ts-ignore
-                      // features.melBands[12] +
-                      // // @ts-ignore
-                      // features.melBands[13] +
-                      // // @ts-ignore
-                      // features.melBands[14] +
-                      // // @ts-ignore
-                      // features.melBands[15] +
-                      // // @ts-ignore
-                      // features.melBands[16] +
-                      // // @ts-ignore
-                      // features.melBands[17] +
-                      // @ts-ignore
-                      features.melBands[18] +
-                      // @ts-ignore
-                      features.melBands[19] +
-                      // @ts-ignore
-                      features.melBands[20] +
-                      // @ts-ignore
-                      features.melBands[21] +
-                      // @ts-ignore
-                      features.melBands[22] +
-                      // @ts-ignore
-                      features.melBands[23] +
-                      // @ts-ignore
-                      features.melBands[24] +
-                      // @ts-ignore
-                      features.melBands[25];
-
-                    lowerPowerRef.current = lowerPower;
-
-                    upperPowerRef.current = upperPower;
+                  const currentMelBands = features.melBands;
+                  if (previousMelBandsRef.current.length === 0) {
+                    previousMelBandsRef.current = currentMelBands;
+                  } else {
+                    previousMelBandsRef.current =
+                      previousMelBandsRef.current.map((prevValue, index) => {
+                        const currentValue = currentMelBands[index];
+                        return Math.max(currentValue, prevValue * decayFactor);
+                      });
                   }
 
                   // Draw each mel band on the canvas in white
-                  // @ts-ignore
-                  features.melBands.forEach((melValue, index) => {
+                  previousMelBandsRef.current.forEach((melValue, index) => {
                     const normalizedValue = melValue / 10; // Normalize based on expected max value
                     const height = normalizedValue * canvas.height;
-                    // @ts-ignore
-                    const width = canvas.width / features.melBands.length;
-                    // @ts-ignore
-                    ctx.fillStyle = 'white'; // Set fill color to white
-                    flippedCtx.fillStyle = 'white'; // Set fill color to white
+                    const width =
+                      canvas.width /
+                      // @ts-ignore
+                      (features.melBands.length - 1);
+
+                    // half transparency white
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    flippedCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 
                     // Draw on the original canvas
                     ctx.fillRect(
@@ -159,6 +124,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     // Draw on the flipped canvas (inverted vertically)
                     flippedCtx.fillRect(index * width, 0, width, height);
                   });
+
+                  // Update lowerPower and upperPower references
+                  lowerPowerRef.current = currentMelBands[0];
+                  upperPowerRef.current = currentMelBands
+                    .slice(18, 26)
+                    // @ts-ignore
+                    .reduce((sum, value) => sum + value, 0);
                 }
               }
             },
