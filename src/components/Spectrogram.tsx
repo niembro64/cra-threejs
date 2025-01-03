@@ -1,3 +1,5 @@
+// Spectrogram.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
@@ -5,7 +7,6 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>;
   upperPowerRef: React.MutableRefObject<number>;
-
   audioRef: React.RefObject<HTMLAudioElement>;
 }
 
@@ -24,10 +25,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const previousMelBandsRef = useRef<number[]>([]);
 
   const startAudio = () => {
-    if (audioStarted) {
-      return;
-    }
-
+    if (audioStarted) return;
     setAudioStarted(true);
   };
 
@@ -54,17 +52,15 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           const source = audioContext.createMediaElementSource(
             audioRef.current
           );
-
-          // Connect the source to the destination (speakers)
+          // Connect the source to the speakers
           source.connect(audioContext.destination);
 
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext: audioContext,
             source: source,
             bufferSize: 512,
-            // bufferSize: 512 * 2,
             featureExtractors: ['melBands'],
-            melBands: 64, // Increase the number of mel bands to 64
+            melBands: 64,
             callback: (features: MeydaFeaturesObject) => {
               if (
                 features &&
@@ -79,7 +75,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 const flippedCtx = flippedCanvas.getContext('2d');
 
                 if (ctx && flippedCtx) {
-                  // Clear both canvases
                   ctx.clearRect(0, 0, canvas.width, canvas.height);
                   flippedCtx.clearRect(
                     0,
@@ -88,7 +83,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     flippedCanvas.height
                   );
 
-                  // Apply decay factor to previous mel bands
                   const decayFactor = 0.85;
                   // @ts-ignore
                   const currentMelBands = features.melBands;
@@ -102,31 +96,29 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       });
                   }
 
-                  // Draw each mel band on the canvas in white
+                  // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
-                    const normalizedValue = melValue / 10; // Normalize based on expected max value
+                    const normalizedValue = melValue / 10;
                     const height = normalizedValue * canvas.height;
-                    const width =
-                      canvas.width /
-                      // @ts-ignore
-                      (features.melBands.length - 1);
 
-                    // half transparency white
+                    // @ts-ignore
+                    const width = canvas.width / (features.melBands.length - 1);
+
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
                     flippedCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 
-                    // Draw on the original canvas
+                    // Original canvas
                     ctx.fillRect(
                       index * width,
                       canvas.height - height,
                       width,
                       height
                     );
-                    // Draw on the flipped canvas (inverted vertically)
+                    // Flipped
                     flippedCtx.fillRect(index * width, 0, width, height);
                   });
 
-                  // Update lowerPower and upperPower references
+                  // Update references
                   lowerPowerRef.current = currentMelBands[0];
                   upperPowerRef.current = currentMelBands
                     .slice(18, 26)
@@ -144,7 +136,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
       }
     };
 
-    // Set up Meyda when the audio element is loaded
     const audioElement = audioRef.current;
     if (audioElement) {
       audioElement.addEventListener('canplay', setupMeyda);
@@ -168,23 +159,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   return (
     <div className="spectrogram-container">
       {!audioStarted ? (
-        // <button className="button-music" onClick={startAudio}>
         <img
           className="button-music"
           src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
-          onClick={() => {
-            startAudio();
-          }}
+          onClick={startAudio}
         />
       ) : (
-        // </button>
-        // <button className="button-music" onClick={startAudio}>
-        //   ?
-        // </button>
-        // <button className="button-music" onClick={startAudio}>
-        //   Original Music
-        // </button>
         <>
           <audio ref={audioRef} loop>
             <source src="song.mp3" type="audio/mp3" />
@@ -206,11 +187,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 alt="Niemo Audio Logo"
               />
             </div>
-
-            {/* <h4 className="spectrogram-text">Niemo Audio</h4> */}
-            <h4 className="spectrogram-text">Math + Art</h4>
+            <h4 className="spectrogram-text">{isPlaying ? 'Pause' : 'Play'}</h4>
           </div>
-
           <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
         </>
       )}
