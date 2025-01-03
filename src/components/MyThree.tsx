@@ -53,13 +53,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, [urlStateCurr, urlStatePrev]);
 
   window.addEventListener('message', function (event) {
-    // // It's a good security practice to check the origin of the message
-    // if (event.origin !== 'http://example.com') {
-    //   // Replace 'http://example.com' with the origin of your iframe
-    //   return;
-    // }
-
-    // Handling the event
     if (event?.data?.url) {
       console.log('Received message from iframe:', event);
 
@@ -176,21 +169,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     pointLightBlue.intensity = 1;
     scene.add(pointLightBlue);
 
-    // const pointLightYellow = new THREE.PointLight(0xffff00);
-    // pointLightYellow.position.set(1200 + globalX, 1000, -150);
-    // pointLightYellow.intensity = 0.2;
-    // scene.add(pointLightYellow);
-
-    // const pointLightMagenta = new THREE.PointLight(0xff00ff);
-    // pointLightMagenta.position.set(1600 + globalX, 1000, -500);
-    // pointLightMagenta.intensity = 0.2;
-    // scene.add(pointLightMagenta);
-
-    // const pointLightCyan = new THREE.PointLight(0x00ffff);
-    // pointLightCyan.position.set(2200 + globalX, 1350, -80);
-    // pointLightCyan.intensity = 0.2;
-    // scene.add(pointLightCyan);
-
     const ambientLightThree = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLightThree);
     ambientLightThree.intensity = 0;
@@ -246,16 +224,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       const wheelDelta = event.deltaY * 0.1;
 
       scrollPosition.current += wheelDelta;
-      // scrollPosition.current = Math.min(
-      //   scrollPosition.current,
-      //   height,
-      //   pageHeight
-      // );
-      // scrollPosition.current = Math.max(scrollPosition.current, 0);
-
-      // Clamp the scrollPosition to a range suitable for controlling the Z position
-
-      // boyRef.current.style.transform = `translateX(${scrollPosition.current}px)`;
     };
 
     window.addEventListener('wheel', onWheel);
@@ -560,16 +528,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
               alt="project-icon"
             />
             <p className="last">Blue Skies</p>
-            {/* <p className="last">ReactTS, THREE.js, and SCSS</p> */}
           </div>
         </div>
-        {/* <div className="sette-wrapper">
-          <img
-            src={process.env.PUBLIC_URL + '/sette.jpeg'}
-            className="sette-icon"
-            alt="project-icon"
-          />
-        </div> */}
       </div>
     </div>
   );

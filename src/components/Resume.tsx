@@ -1,27 +1,11 @@
 // new component for Resume.tsx
 
-import React, { useEffect, useState } from 'react';
-import { isMobile } from './MyComponent';
-import AudioSpectrogram from './Spectrogram';
+import React from 'react';
+import { isMobile } from './MyThree';
 
 interface ResumeProps {}
 
 export const Resume: React.FC<ResumeProps> = () => {
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth < 800) {
-  //       setMobile(true);
-  //     } else {
-  //       setMobile(false);
-  //     }
-  //   };
-  //   window.addEventListener('resize', handleResize);
-  //   handleResize();
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
-
   return (
     <div className="body">
       <header>
@@ -55,9 +39,6 @@ export const Resume: React.FC<ResumeProps> = () => {
               </a>
             </p>
             <p>618-616-338O</p>
-            {/* <p>
-              <a href="https://niemo.io">https://niemo.io</a>
-            </p> */}
           </>
         )}
       </header>

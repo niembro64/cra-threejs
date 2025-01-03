@@ -61,7 +61,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext: audioContext,
             source: source,
-            bufferSize: 512 * 2,
+            bufferSize: 512,
+            // bufferSize: 512 * 2,
             featureExtractors: ['melBands'],
             melBands: 64, // Increase the number of mel bands to 64
             callback: (features: MeydaFeaturesObject) => {
@@ -88,7 +89,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   );
 
                   // Apply decay factor to previous mel bands
-                  const decayFactor = 0.8;
+                  const decayFactor = 0.85;
                   // @ts-ignore
                   const currentMelBands = features.melBands;
                   if (previousMelBandsRef.current.length === 0) {
@@ -156,13 +157,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
         audioElement.removeEventListener('canplay', setupMeyda);
       }
     };
-  }, [audioStarted]);
+  }, [audioRef, audioStarted, lowerPowerRef, upperPowerRef]);
 
   useEffect(() => {
     if (audioStarted && audioRef.current) {
       audioRef.current.play();
     }
-  }, [audioStarted]);
+  }, [audioRef, audioStarted]);
 
   return (
     <div className="spectrogram-container">
@@ -170,7 +171,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
         // <button className="button-music" onClick={startAudio}>
         <img
           className="button-music"
-          src="/qblack_hardpixels_transbg.png"
+          src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
           onClick={() => {
             startAudio();
@@ -207,7 +208,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             </div>
 
             {/* <h4 className="spectrogram-text">Niemo Audio</h4> */}
-            <h4 className="spectrogram-text">= Math + Art</h4>
+            <h4 className="spectrogram-text">Math + Art</h4>
           </div>
 
           <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
