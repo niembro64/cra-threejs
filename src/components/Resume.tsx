@@ -113,13 +113,6 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <li>Phaser 3, Angular, Angular Material</li>
               </ul>
             </li>
-            {/* <li>
-              <h1>Redleaf</h1>
-              <ul>
-                <li>Delivered a business website featuring a modern UI</li>
-                <li>Angular, TypeScript, Bootstrap, Express</li>
-              </ul>
-            </li> */}
           </ul>
         </div>
 
