@@ -254,7 +254,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         <h3>Education</h3>
         <div className="education">
           <h4>B.S. Computer Engineering - Honors 3.73 GPA</h4>
-          <p>Southern Illinois University Edwardsville (SIUE)</p>
+          <p>Southern Illinois University Edwardsville</p>
           <p>Dec 2018</p>
           <ul>
             <h1>Major in Computer Engineering</h1>
@@ -283,23 +283,20 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="languages">
           <h4>Languages</h4>
           <ul>
-            <li>TypeScript, JavaScript, Python, Java, C#, C++, C</li>
-            <li>MIPS/x86 Assembly Language, Verilog, Matlab</li>
-            <li>SQL Certified (MTA), MongoDB NoSQL, HTML, CSS, SCSS</li>
+            <li>
+              TypeScript, JavaScript, Python, Java, C#, C++, CMIPS/x86 Assembly
+              Language, Verilog, Matlab MIPS, SQL Certified (MTA), MongoDB
+              NoSQL, HTML, CSS
+            </li>
           </ul>
         </div>
         <div className="frameworks">
           <h4>Frameworks</h4>
           <ul>
             <li>
-              JAVASCRIPT - React, React-Native, Vue, Angular, Node.js, Phaser 3,
-              Three.js, Express.js, Brain.js
-            </li>
-            <li>PYTHON - Pytorch, TensorFlow, Flask, Django, Laravel</li>
-            <li>C# - .NET, Unity</li>
-            <li>
-              STYLING - HTML, SCSS, CSS, HTML, Bootstrap, Material-UI, Angular
-              Material, Tailwind
+              React, React-Native, Vue, Angular, Node.js, Phaser 3, Three.js,
+              Express.js, Brain.js, Pytorch, TensorFlow, Flask, Django, Laravel,
+              .NET, Unity, SCSS
             </li>
           </ul>
         </div>
@@ -307,7 +304,7 @@ export const Resume: React.FC<ResumeProps> = () => {
       <section>
         <h3>Other Technical Skills</h3>
         <ul>
-          <li>Transformer, Recurrent Neural Networks</li>
+          <li>Neural Nets, Transformers, RNNs</li>
           <li>HTML5 2D Game Development, 3D Animations</li>
           <li>Audio Engineering & Audio Production</li>
           <li>
@@ -337,11 +334,11 @@ export const Resume: React.FC<ResumeProps> = () => {
       </section>
       <section className="horiz-section">
         <section>
-          <h4>Android & iOS Dev</h4>
+          <h4>Office Studio</h4>
           <img className="pic" src="/videos2/rn.jpg" alt="asdf" />
         </section>
         <section>
-          <h4>WFH Setup</h4>
+          <h4>Home Studio</h4>
           <img className="pic" src="/videos2/wfh_setup.jpg" alt="asdf" />
         </section>
       </section>

@@ -60,7 +60,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             source: source,
             bufferSize: 512,
             featureExtractors: ['melBands'],
-            melBands: 64,
+            melBands: 26,
+            // melBands: 64,
             callback: (features: MeydaFeaturesObject) => {
               if (
                 features &&
@@ -83,7 +84,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     flippedCanvas.height
                   );
 
-                  const decayFactor = 0.85;
+                  const decayFactor = 0.95;
                   // @ts-ignore
                   const currentMelBands = features.melBands;
                   if (previousMelBandsRef.current.length === 0) {
@@ -119,11 +120,16 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   });
 
                   // Update references
-                  lowerPowerRef.current = currentMelBands[0];
-                  upperPowerRef.current = currentMelBands
-                    .slice(18, 26)
-                    // @ts-ignore
-                    .reduce((sum, value) => sum + value, 0);
+                  lowerPowerRef.current =
+                    currentMelBands
+                      .slice(0, 2)
+                      // @ts-ignore
+                      .reduce((sum, value) => sum + value, 0) / 3;
+                  upperPowerRef.current =
+                    currentMelBands
+                      .slice(18, 26)
+                      // @ts-ignore
+                      .reduce((sum, value) => sum + value, 0) / 3;
                 }
               }
             },
