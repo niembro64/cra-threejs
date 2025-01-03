@@ -1,24 +1,25 @@
+// MyThree.tsx
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Title, projects } from '../data/projects';
 import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
+import ProjectDemo from './ProjectDemo'; // <-- import new component
 
 export interface MyThreeProps {}
 
 export const isMobile: boolean = window.innerWidth < 900;
-
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
 const MyThree: React.FC<MyThreeProps> = () => {
-  const refContainer = useRef<any>(null);
+  const refContainer = useRef<HTMLDivElement | null>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
   const mousePositionPrev = useRef(new THREE.Vector3());
   const scrollPosition = useRef(0);
   const scrollPositionAverage = useRef(0);
   const [pageHeight, setPageHeight] = useState(0);
-  const [hoverCurr, setHoverCurr] = useState<Title | null>(null);
   const topElementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
 
@@ -33,63 +34,77 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
 
-  useEffect(() => {
-    __DEV__ && console.log('urlStateCurr', urlStateCurr);
-    __DEV__ && console.log('urlStatePrev', urlStatePrev);
+  // For copying email
+  const email = 'niemeyer.eric@gmail.com';
+  const [showEmail, setShowEmail] = useState(false);
 
-    if (urlStateCurr !== urlStatePrev && urlStateCurr !== null) {
-      __DEV__ && console.log('NAVIAGTING TO URL', urlStateCurr);
-
-      const httpToHttps = (url: string) => {
-        return url.replace('http://', 'https://');
-      };
-
-      const urlStateCurrHttps = httpToHttps(urlStateCurr.toString());
-
-      window.location.href = urlStateCurrHttps;
+  // Copy email helper
+  const copyToClipboard = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      __DEV__ && console.log('Email copied to clipboard');
+    } catch (err) {
+      __DEV__ && console.error('Failed to copy email: ', err);
     }
+  }, [email]);
 
-    setUrlStatePrev(urlStateCurr);
+  // Listen for posted messages from child iframes
+  useEffect(() => {
+    function onMessage(event: MessageEvent) {
+      if (event?.data?.url) {
+        console.log('Received message from iframe:', event);
+        setUrlStateCurr(event.data.url);
+      }
+    }
+    window.addEventListener('message', onMessage);
+    return () => {
+      window.removeEventListener('message', onMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (urlStateCurr !== urlStatePrev && urlStateCurr !== null) {
+      __DEV__ && console.log('NAVIGATING TO URL', urlStateCurr);
+      const httpToHttps = (url: string) => url.replace('http://', 'https://');
+      const urlStateCurrHttps = httpToHttps(urlStateCurr.toString());
+      window.location.href = urlStateCurrHttps;
+      setUrlStatePrev(urlStateCurr);
+    }
   }, [urlStateCurr, urlStatePrev]);
 
-  window.addEventListener('message', function (event) {
-    if (event?.data?.url) {
-      console.log('Received message from iframe:', event);
-
-      setUrlStateCurr(event.data.url);
-    }
-  });
-
+  // Track page height
   useEffect(() => {
-    __DEV__ && console.log('window.innerWidth', window.innerWidth);
     const updatePageHeight = () => {
       const documentHeight =
         document.documentElement.getBoundingClientRect().height;
       setPageHeight(documentHeight);
     };
-
-    // Update the page height initially
     updatePageHeight();
-
-    // Add a listener for window resize events
     window.addEventListener('resize', updatePageHeight);
-
-    // Cleanup the listener when the component is unmounted
     return () => {
       window.removeEventListener('resize', updatePageHeight);
     };
   }, []);
 
+  // Set container height
   useEffect(() => {
-    __DEV__ && console.log('pageHeight', pageHeight);
-  }, [pageHeight]);
+    const updateHeight = () => {
+      if (topElementRef.current) {
+        setHeight(topElementRef.current.offsetHeight);
+      }
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
 
-  // const [ballState, setBallState] = useState<any | null>(null);
-
+  ////////////////////////////////
+  // 3D Setup
+  ////////////////////////////////
   useEffect(() => {
-    if (height === 0 || pageHeight === 0) {
-      return;
-    }
+    if (height === 0 || pageHeight === 0) return;
 
     // === THREE.JS CODE START ===
     const scene = new THREE.Scene();
@@ -121,39 +136,26 @@ const MyThree: React.FC<MyThreeProps> = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    // On mobile, we’ll adjust the x offset a bit
     const globalX = isMobile ? -50 : 0;
-    // const geometry = new THREE.IcosahedronGeometry(20, 0);
-    // const geometry = new THREE.BoxGeometry(100, 100, 100);
-    // const geometry = new THREE.IcosahedronGeometry(90, 0);
-    // const geometry = new THREE.SphereGeometry(50, 5, 5);
-    const geometry = new THREE.IcosahedronGeometry(90, 1);
 
+    // Simple geometry for demonstration
+    const geometry = new THREE.IcosahedronGeometry(90, 1);
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
-      // emissive: 0x111111,
-      // specular: 0x111111,
-      // shininess: 100000,
       shininess: 300,
       flatShading: true,
       wireframe: false,
       shadowSide: THREE.DoubleSide,
       side: THREE.DoubleSide,
-      // roughness: 0.5,
-      reflectivity: 0,
-      // refractionRatio: 0,
-      envMap: null,
-      wireframeLinejoin: 'round',
-      wireframeLinecap: 'round',
-      wireframeLinewidth: 10,
-      colorWrite: true,
     });
     const ball = new THREE.Mesh(geometry, material);
-
     scene.add(ball);
     ball.position.x = 0 + globalX;
 
     camera.position.z = 150;
 
+    // Lights
     const pointLightRed = new THREE.PointLight(0xff0000);
     pointLightRed.position.set(500 + globalX, 1000, -5);
     pointLightRed.intensity = 1;
@@ -173,7 +175,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     scene.add(ambientLightThree);
     ambientLightThree.intensity = 0;
 
-    // Create a function to convert screen coordinates to 3D scene coordinates
     const getScenePositionFromScreen = (
       x: number,
       y: number
@@ -189,7 +190,7 @@ const MyThree: React.FC<MyThreeProps> = () => {
       return camera.position.clone().add(dir.multiplyScalar(distance));
     };
 
-    // Add mousemove event listener
+    // Mouse move
     const onMouseMove = (event: MouseEvent) => {
       const scenePosition = getScenePositionFromScreen(
         event.clientX,
@@ -197,70 +198,58 @@ const MyThree: React.FC<MyThreeProps> = () => {
       );
       mousePositionCurr.current = scenePosition;
     };
+    window.addEventListener('mousemove', onMouseMove);
 
-    // Add touchmove event listener
+    // Touch move
     const onTouchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
       const scenePosition = getScenePositionFromScreen(
         touch.clientX,
         touch.clientY
       );
-
       mousePositionCurr.current = scenePosition;
-
       const distanceTravelled = mousePositionCurr.current.distanceTo(
         mousePositionPrev.current
       );
-
       scrollPosition.current += distanceTravelled * 0.2;
     };
-
-    window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('touchmove', onTouchMove);
 
-    // Add wheel event listener
+    // Wheel
     const onWheel = (event: WheelEvent) => {
-      // Normalize wheel movement (inverted)
       const wheelDelta = event.deltaY * 0.1;
-
       scrollPosition.current += wheelDelta;
     };
-
     window.addEventListener('wheel', onWheel);
 
-    refContainer.current &&
+    // Append the renderer
+    if (refContainer.current) {
       refContainer.current.appendChild(renderer.domElement);
+    }
 
+    // Animation
     const x = 0.0093;
     const y = 0.007;
     const z = 0.001;
-
     const percentKeep = 0.99995;
     const percentKeepMouse = 0.95;
-
     let animationFrame = -1;
-    const animate = function () {
+
+    const animate = () => {
       animationFrame += 1;
       requestAnimationFrame(animate);
 
-      ///////////////////////////////////////
-      // SCROLL POSITION
-      ///////////////////////////////////////
+      // SCROLL
       scrollPositionAverage.current =
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current;
 
-      ///////////////////////////////////////
-      // MOUSE ADD ROTATION
-      ///////////////////////////////////////
       ball.rotation.z =
         (percentKeepMouse * ball.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1;
 
-      ///////////////////////////////////////
-      // MOUSE POSITION
-      ///////////////////////////////////////
+      // Mouse
       mousePositionPrev.current.x =
         percentKeepMouse * mousePositionPrev.current.x +
         (1 - percentKeepMouse) * mousePositionCurr.current.x;
@@ -271,10 +260,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
-      if (isMobile || !audioRef.current || audioRef.current?.paused) {
-        ///////////////////////////////////////
-        // ANIMATION MOOUSE & SCROLL
-        ///////////////////////////////////////
+      if (isMobile || !audioRef.current || audioRef.current.paused) {
+        // Normal ball motion
         ball.rotation.x =
           percentKeep * ball.rotation.x +
           (1 - percentKeep) *
@@ -287,24 +274,19 @@ const MyThree: React.FC<MyThreeProps> = () => {
           percentKeep * ball.rotation.z +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
       } else {
+        // Animate from audio
         lowerPowerAccumulatedRef.current =
           (lowerPowerAccumulatedRef.current +
             Math.pow(lowerPowerRawRef.current, 1) * 0.0008) %
           360;
-
         upperPowerAccumulatedRef.current =
           (upperPowerAccumulatedRef.current +
             Math.pow(upperPowerRawRef.current, 3) * 0.00003) %
           360;
 
-        ///////////////////////////////////////
-        // ANIMATION FROM SPECTRUM
-        ///////////////////////////////////////
         const percentKeepPowerShort = 0.1;
-        const percentKeepPowerMedium = 0.5;
         const percentKeepPowerLong = 0.92;
 
-        // ball.rotation.x = 0;
         ball.rotation.x =
           ball.rotation.x * percentKeepPowerShort +
           lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
@@ -313,22 +295,13 @@ const MyThree: React.FC<MyThreeProps> = () => {
           ball.rotation.y * percentKeepPowerShort +
           upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
 
-        // ball.material.shininess = 100 + lowerPowerRawRef.current * 10;
-
-        // ball.rotation.z = 0;
-        // ambientLightThree.intensity =
-        //   ambientLightThree.intensity * percentKeepPowerMedium +
-        //   (upperPowerRawRef.current * 0.05 > 0.6 ? 0.2 : 0) *
-        //     (1 - percentKeepPowerMedium);
-
+        // Example: color intensities
         pointLightRed.intensity =
           pointLightRed.intensity * percentKeepPowerLong +
           (0.5 + lowerPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong);
-
         pointLightBlue.intensity =
           pointLightBlue.intensity * percentKeepPowerLong +
           (0.5 + upperPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong);
-
         pointLightGreen.intensity =
           (pointLightBlue.intensity + pointLightRed.intensity) / 2;
       }
@@ -336,73 +309,34 @@ const MyThree: React.FC<MyThreeProps> = () => {
       renderer.render(scene, camera);
     };
     animate();
-  }, [height, pageHeight]);
-
-  // print height
-  useEffect(() => {
-    __DEV__ && console.log('height', height);
-  }, [height]);
-
-  useEffect(() => {
-    const updateHeight = () => {
-      if (topElementRef.current) {
-        setHeight(topElementRef.current.offsetHeight);
-      }
-    };
-
-    updateHeight(); // Update height initially
-    window.addEventListener('resize', updateHeight);
 
     return () => {
-      window.removeEventListener('resize', updateHeight);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('wheel', onWheel);
     };
-  }, []);
-
-  const email = 'niemeyer.eric@gmail.com';
-  const [showEmail, setShowEmail] = useState(false);
-
-  const copyToClipboard = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      __DEV__ && console.log('Email copied to clipboard');
-    } catch (err) {
-      __DEV__ && console.error('Failed to copy email: ', err);
-    }
-  }, [email]);
+  }, [height, pageHeight]);
 
   return (
     <div className="top" ref={topElementRef}>
       <div className="black-boy"></div>
       {!isMobile && <div className="three" ref={refContainer} />}
       {isMobile && <div className="three-mobile" ref={refContainer} />}
+
+      {/* Desktop Resume & AudioSpectrogram */}
       {!isMobile && (
         <div className="resume">
-          {/* <h3>niemeyer.eric@gmail.com</h3> */}
           <h1 className="resume-name">Eric Niemeyer</h1>
           <button
-            onMouseEnter={() => {
-              setShowEmail(true);
-            }}
-            onMouseLeave={() => {
-              setShowEmail(false);
-            }}
+            onMouseEnter={() => setShowEmail(true)}
+            onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
           >
             {showEmail ? email : 'Copy Email'}
           </button>
           <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
-          {/* <CopyEmail email={email} /> */}
-          {/* <h2>Computer Engineer, Web Developer, and Game Developer</h2> */}
-          {/* <p>Stamford, Connecticut</p> */}
-          {/* <p>
-            Email:{' '}
-            <a href="mailto:niemeyer.eric@gmail.com">niemeyer.eric@gmail.com</a>
-          </p> */}
           <h1>Stamford, Connecticut</h1>
           <h1>618-616-338O</h1>
-          {/* <p>
-            <a href="https://niemo.io">https://niemo.io</a>
-          </p> */}
           <AudioSpectrogram
             lowerPowerRef={lowerPowerRawRef}
             upperPowerRef={upperPowerRawRef}
@@ -421,98 +355,14 @@ const MyThree: React.FC<MyThreeProps> = () => {
             <Resume />
             <div className="demo-projects-wrapper">
               <h1 className="demo-projects">Demos</h1>
-              {/* <p className="demo-projects-p">
-                All Projects, Games, and Music are Original
-              </p>
-              <p className="demo-projects-p">Click a Demo!</p> */}
             </div>
           </div>
-          {projects.map((project, index) => {
-            return (
-              <div
-                key={index}
-                id={hoverCurr === project.title ? 'project-hover' : ''}
-                className={'project'}
-              >
-                <div
-                  className="project-overlay"
-                  onMouseEnter={(element) => {
-                    __DEV__ && console.log('hovering', project.title);
-                    setHoverCurr(project.title);
-                  }}
-                  onMouseLeave={(element) => {
-                    __DEV__ && console.log('leaving', project.title);
-                    setHoverCurr(null);
-                  }}
-                  onClick={() => {
-                    window.location.href = project.url;
-                  }}
-                ></div>
-                <div
-                  className={
-                    isMobile ? 'project-title-mobile' : 'project-title'
-                  }
-                  id={project.title}
-                >
-                  {project.title.toUpperCase()}
-                </div>
-                <div className="project-title-wrapper">
-                  <img
-                    src={process.env.PUBLIC_URL + '/' + project.icon}
-                    id={hoverCurr === project.title ? 'project-icon-hover' : ''}
-                    className="project-icon"
-                    alt="project-icon"
-                  />
-                  <div
-                    id={
-                      hoverCurr === project.title
-                        ? 'project-description-hover'
-                        : ''
-                    }
-                    className="project-description"
-                  >
-                    {project.description}
-                  </div>
-                </div>
-                <video
-                  className="project-video"
-                  src={
-                    process.env.PUBLIC_URL +
-                    '/videos2/' +
-                    project.title +
-                    '.mp4'
-                  }
-                  autoPlay
-                  muted
-                  loop
-                ></video>
-                {hoverCurr !== project.title && (
-                  <div className="project-bullet-container">
-                    <div className="project-bullet-wrapper">
-                      {project.bullets?.map((bullet, index) => {
-                        return (
-                          <div key={index} className="project-bullet">
-                            {'· ' + bullet}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-                {hoverCurr !== project.title && (
-                  <div className="project-stack-container">
-                    {project.stack?.map((stack, index) => {
-                      return (
-                        <div key={index} className="project-stack">
-                          {stack}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+
+          {/* Render each project via new ProjectDemo */}
+          {projects.map((project, index) => (
+            <ProjectDemo key={index} project={project} />
+          ))}
+
           <div className="spacer" />
           <div className="spacer" />
           <div className="spacer" />

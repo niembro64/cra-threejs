@@ -887,3 +887,28 @@ ul {
 .kirby {
   margin-bottom: 2vh;
 }
+
+// App.scss (snippet of suggested changes)
+
+// For the .project-mobile-media (the <img> on mobile)
+.project-mobile-media {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+// Or if you want to keep the same ratio as the video was
+// you can do something like:
+.project-mobile-media {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: cover;
+}
+
+// For simpler mobile usage, you might want bigger clickable areas
+.project-overlay {
+  // Hide it entirely on mobile
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
