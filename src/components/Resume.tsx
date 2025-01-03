@@ -1,4 +1,4 @@
-// new component for Resume.tsx
+// Resume.tsx
 
 import React from 'react';
 import { isMobile } from './MyThree';
@@ -42,15 +42,13 @@ export const Resume: React.FC<ResumeProps> = () => {
           </>
         )}
       </header>
+
       {!isMobile && (
         <section>
           <iframe
-            className={'iframe-wide'}
+            className="iframe-wide"
             src="https://projects.niemo.io"
             title="Projects"
-            // width="100%"
-            // height="500px"
-            // frameBorder="0"
             allowFullScreen
           ></iframe>
           <div className="spacer" />
@@ -60,16 +58,18 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="spacer" />
         </section>
       )}
+
       {/* <section>
         <AudioSpectrogram />
       </section> */}
+
       <section>
         <h3>Work Experience</h3>
+
         <div className="job">
           <h4>Venturetec</h4>
           <p className="job-title">
-            Lead Software Engineer - Develops Neural Networks, Mobile Apps, &
-            Web Games, Websites
+            Lead Software Engineer — Neural Networks, Mobile Apps, Web Games,
           </p>
           <p>Stamford, Connecticut (Office & Remote)</p>
           <p>2022 - Today</p>
@@ -78,62 +78,55 @@ export const Resume: React.FC<ResumeProps> = () => {
               <h1>SeniorSafe</h1>
               <ul>
                 <li>
-                  Lead Neural Network Engineer: Design & train fraud detection
-                  neural networks
+                  Led fraud detection NN architecture, using Transformers and
+                  RNNs for NLP, acoustic, and text analysis
                 </li>
-                <li>
-                  Transformer & Recurrent Neural Networks, Natural Language
-                  Processing, Acoustic & Text Features
-                </li>
-                <li>Pytorch, Python, TensorFlow, AWS S3</li>
+                <li>Developed in Python (PyTorch, TensorFlow) and AWS S3</li>
+              </ul>
+            </li>
+            <li>
+              <h1>Spray-Foam Loyalty Program</h1>
+              <ul>
+                <li>Served as Lead Front-End Developer</li>
+                <li>React Native CLI, Vue, TypeScript, Laravel, SQL</li>
               </ul>
             </li>
             <li>
               <h1>AudienceAI</h1>
               <ul>
-                <li>Lead Engineer: Design & implementation of AI comedy app</li>
-                <li>Recurrent Neural Networks, Natural Language Processing</li>
-                <li>FFT, MFCCs, React Native, Express, AWS S3</li>
+                <li>
+                  Designed & implemented an AI comedy app with RNN-based
+                  language generation
+                </li>
+                <li>
+                  React Native, Express, AWS S3, FFT, MFCC for audio processing
+                </li>
               </ul>
             </li>
             <li>
               <h1>The Games Agency & McGraw-Hill</h1>
               <ul>
                 <li>
-                  Implemented puzzles, sticker books, & reading-reaction games
-                  for young learners.
+                  Built interactive puzzles, sticker books, & reading-reaction
+                  mini-games for young learners
                 </li>
                 <li>Phaser 3, Angular, Angular Material</li>
               </ul>
             </li>
-            <li>
+            {/* <li>
               <h1>Redleaf</h1>
               <ul>
-                <li>Implemented business website</li>
+                <li>Delivered a business website featuring a modern UI</li>
                 <li>Angular, TypeScript, Bootstrap, Express</li>
               </ul>
-            </li>
-            {/* <li>
-              <h1>Punchey (Payment Processor)</h1>
-              <ul>
-                <li>Maintenance & new features</li>
-                <li>React Native CLI, iOS & Android</li>
-              </ul>
             </li> */}
-            <li>
-              <h1>Spray-Foam Loyalty Program</h1>
-              <ul>
-                <li>Lead Front-End Developer</li>
-                <li>React Native CLI, Vue, Typescript, Laravel, SQL</li>
-              </ul>
-            </li>
           </ul>
         </div>
 
         <div className="job">
           <h4>Rockwell Automation</h4>
           <p className="job-title">
-            Software Engineer II - Designed & Implemented Machine Execution
+            Software Engineer II — Designed & Implemented Machine Execution
             Systems (MES)
           </p>
           <p>St. Louis, Missouri (Office & Remote)</p>
@@ -142,31 +135,32 @@ export const Resume: React.FC<ResumeProps> = () => {
             <li>
               <h1>Lucid Motors (Casa Grande, AZ)</h1>
               <ul>
-                <li>Configured MES on-site in production environment</li>
+                <li>Configured MES on-site in a live production environment</li>
                 <li>
-                  Integrated 3rd-party components into a system of systems
+                  Integrated 3rd-party systems into overall MES architecture
                 </li>
-                <li>Debugged & wrote scripts for configuring connectivity</li>
+                <li>Developed scripts and debugged connectivity issues</li>
               </ul>
             </li>
             <li>
               <h1>3M Incinerator Facility (Cottage Grove, MN)</h1>
               <ul>
-                <li>Managed a small development team</li>
-                <li>Maintained requirements, schedule</li>
+                <li>Led a small development team, maintaining schedules</li>
+                <li>Updated requirements and tracked progress</li>
               </ul>
             </li>
             <li>
               <h1>Cooper Tires (Texarkana, AR)</h1>
               <ul>
-                <li>Documented Customer Requirements</li>
+                <li>Gathered and documented client requirements for MES</li>
               </ul>
             </li>
             <li>
               <h1>Continental Tire (Mt. Vernon, IL)</h1>
               <ul>
                 <li>
-                  Maintained legacy system, Java, Pnuts, code tracking, Jira
+                  Maintained a legacy system (Java, Pnuts) with Jira-based issue
+                  tracking
                 </li>
               </ul>
             </li>
@@ -174,10 +168,10 @@ export const Resume: React.FC<ResumeProps> = () => {
               <h1>Maple Leaf Foods (Shelbyville, IN)</h1>
               <ul>
                 <li>
-                  Supported Business Layer of Industrial Processes, DBs,
-                  Connectivity, Reports
+                  Supported industrial database connectivity, reporting, and
+                  business logic
                 </li>
-                <li>Built VBA management system</li>
+                <li>Built a VBA-driven management tool</li>
               </ul>
             </li>
           </ul>
@@ -186,35 +180,29 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Republic of Korea Ultimate</h4>
           <p className="job-title">
-            Executive Manager - Managed 35-Team National Sports League
+            Executive Manager — Managed 35-Team National Sports League
           </p>
           <p>South Korea</p>
           <p>2015 - 2017</p>
           <ul>
             <h1>Managed Money</h1>
             <ul>
-              <li>Budgeted $100k/Season Funds</li>
-              <li>Field Fees</li>
-              <li>Equipment</li>
+              <li>Oversaw $150k per season</li>
+              <li>Handled field fees and general league expenses</li>
             </ul>
             <h1>Managed Materials</h1>
             <ul>
-              <li>Uniforms</li>
-              <li>Merchandise</li>
-              <li>Field Equipment</li>
+              <li>Coordinated uniforms, equipment, and merchandise</li>
             </ul>
             <h1>Managed Schedules</h1>
             <ul>
-              <li>35 Teams from Around the Whole Country</li>
-              <li>Each Team to play Every Other Team Twice per Season</li>
-              <li>Coordination with National Train Schedules</li>
+              <li>Scheduled 35 teams nationwide for home/away matches</li>
+              <li>Coordinated with national train timetables</li>
             </ul>
             <h1>Managed People</h1>
             <ul>
-              <li>Korean Secretary</li>
-              <li>Managed Roster-Zoning-Pools</li>
-              <li>Board Meetings</li>
-              <li>Captains Meetings</li>
+              <li>Worked closely with a Korean secretary</li>
+              <li>Managed rosters, zones/pools, and official meetings</li>
             </ul>
           </ul>
         </div>
@@ -222,17 +210,18 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Daegu Science High School</h4>
           <p className="job-title">
-            ESL & Science Instructor - 대구과학고등학교 영재고
+            ESL & Science Instructor — 대구과학고등학교 영재고
           </p>
           <p>Daegu, South Korea</p>
           <p>2013 - 2017</p>
           <ul>
             <li>
-              Programmed application that compiles faculty schedules from
-              cryptic database
+              Built software to compile faculty schedules from a cryptic
+              database
             </li>
             <li>
-              Led college-prep English & science classes, English immersion
+              Taught specialized college-prep English and science courses,
+              emphasizing immersion
             </li>
           </ul>
         </div>
@@ -244,24 +233,23 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p>2008 - 2013</p>
           <ul>
             <li>
-              Developed & taught 25 English courses and 12 Pedagogy courses in
-              15 cities
+              Designed & delivered 25 English courses and 12 pedagogy courses in
+              15 different cities
             </li>
           </ul>
         </div>
       </section>
+
       <section>
         <h3>Education</h3>
         <div className="education">
-          <h4>B.S. Computer Engineering - Honors 3.73 GPA</h4>
+          <h4>B.S. Computer Engineering — Honors, 3.73 GPA</h4>
           <p>Southern Illinois University Edwardsville</p>
           <p>Dec 2018</p>
           <ul>
             <h1>Major in Computer Engineering</h1>
             <ul>
-              <li>
-                Digital Design, PSpice, Circuits, PCB Design, Microcontrollers
-              </li>
+              <li>Digital Design, PSpice, Circuits, PCB, Microcontrollers</li>
               <li>Digital Signal Processing, Signal Communication</li>
             </ul>
             <h1>Minor in Computer Science</h1>
@@ -271,22 +259,21 @@ export const Resume: React.FC<ResumeProps> = () => {
             <h1>Minor in Mathematics</h1>
             <ul>
               <li>
-                Calculus 3, Differential Equations, Discrete Mathematics, Engr
-                Statistics
+                Calculus III, Differential Equations, Discrete Math, Engr Stats
               </li>
             </ul>
           </ul>
         </div>
       </section>
+
       <section>
         <h3>Code</h3>
         <div className="languages">
           <h4>Languages</h4>
           <ul>
             <li>
-              TypeScript, JavaScript, Python, Java, C#, C++, CMIPS/x86 Assembly
-              Language, Verilog, Matlab MIPS, SQL Certified (MTA), MongoDB
-              NoSQL, HTML, CSS
+              TypeScript, JavaScript, Python, Java, C#, C++, MIPS/x86 Assembly,
+              Verilog, Matlab, SQL (MTA), MongoDB, HTML, CSS
             </li>
           </ul>
         </div>
@@ -294,35 +281,35 @@ export const Resume: React.FC<ResumeProps> = () => {
           <h4>Frameworks</h4>
           <ul>
             <li>
-              React, React-Native, Vue, Angular, Node.js, Phaser 3, Three.js,
-              Express.js, Brain.js, Pytorch, TensorFlow, Flask, Django, Laravel,
+              React, React Native, Vue, Angular, Node.js, Phaser 3, Three.js,
+              Express.js, Brain.js, PyTorch, TensorFlow, Flask, Django, Laravel,
               .NET, Unity, SCSS
             </li>
           </ul>
         </div>
       </section>
+
       <section>
         <h3>Other Technical Skills</h3>
         <ul>
-          <li>Neural Nets, Transformers, RNNs</li>
-          <li>HTML5 2D Game Development, 3D Animations</li>
+          <li>Neural Networks, Transformers, RNNs</li>
+          <li>HTML5 2D Game Development & 3D Animations</li>
           <li>Audio Engineering & Audio Production</li>
-          <li>
-            Video Production, Image Manipulation, Adobe Creative Suite, etc.
-          </li>
-          <li>Personal Home Server Rack</li>
+          <li>Video Production, Image Manipulation (Adobe Suite), etc.</li>
+          <li>Home Server Tower</li>
           <ul>
             <li>
               Servers, Networking, Raspberry Pi Cluster, Arduino, Crypto Mining,
               Network Storage
             </li>
           </ul>
-          <li>PCB Design & Repair (Electronics)</li>
-          <li>Excel Expert</li>
+          <li>PCB Design & Electronics Repair</li>
+          <li>Advanced Excel</li>
           <li>ROM Hacking (Retro Games)</li>
           <li>Wedding DJ, Concert Violinist, Composer</li>
         </ul>
       </section>
+
       <section>
         <h3>Human Languages</h3>
         <ul>
@@ -332,6 +319,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <li>Korean: Basic</li>
         </ul>
       </section>
+
       <section className="horiz-section">
         <section>
           <h4>Office Studio</h4>
