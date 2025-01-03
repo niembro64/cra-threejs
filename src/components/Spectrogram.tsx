@@ -60,13 +60,11 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             source: source,
             bufferSize: 512,
             featureExtractors: ['melBands'],
-            melBands: 26,
-            // melBands: 64,
+            // melBands: 26 * 2, // Set to the desired number of mel bands
             callback: (features: MeydaFeaturesObject) => {
               if (
                 features &&
-                // @ts-ignore
-                features.melBands &&
+                (features as any).melBands &&
                 canvasRef.current &&
                 canvasFlippedRef.current
               ) {
@@ -84,9 +82,9 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     flippedCanvas.height
                   );
 
-                  const decayFactor = 0.95;
-                  // @ts-ignore
-                  const currentMelBands = features.melBands;
+                  const decayFactor = 0.5;
+                  const currentMelBands = (features as any).melBands;
+
                   if (previousMelBandsRef.current.length === 0) {
                     previousMelBandsRef.current = currentMelBands;
                   } else {
@@ -97,39 +95,42 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       });
                   }
 
+                  const bandWidth = canvas.width / currentMelBands.length;
+
                   // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
-                    const normalizedValue = melValue / 10;
+                    const normalizedValue = melValue / 15;
                     const height = normalizedValue * canvas.height;
-
-                    // @ts-ignore
-                    const width = canvas.width / (features.melBands.length - 1);
 
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
                     flippedCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 
                     // Original canvas
                     ctx.fillRect(
-                      index * width,
+                      index * bandWidth,
                       canvas.height - height,
-                      width,
+                      bandWidth,
                       height
                     );
-                    // Flipped
-                    flippedCtx.fillRect(index * width, 0, width, height);
+                    // Flipped canvas
+                    flippedCtx.fillRect(
+                      index * bandWidth,
+                      0,
+                      bandWidth,
+                      height
+                    );
                   });
 
-                  // Update references
-                  lowerPowerRef.current =
+                  // Update references (adjust slice indices based on melBands count)
+                  lowerPowerRef.current = currentMelBands
+                    .slice(0, 1)
+                    // @ts-ignore
+                    .reduce((sum, value) => sum + value, 0);
+                    upperPowerRef.current =
                     currentMelBands
-                      .slice(0, 2)
-                      // @ts-ignore
-                      .reduce((sum, value) => sum + value, 0) / 3;
-                  upperPowerRef.current =
-                    currentMelBands
-                      .slice(18, 26)
-                      // @ts-ignore
-                      .reduce((sum, value) => sum + value, 0) / 3;
+                    .slice(18, 26)
+                    // @ts-ignore
+                      .reduce((sum, value) => sum + value, 0) / 2;
                 }
               }
             },
