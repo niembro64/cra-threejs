@@ -28,23 +28,33 @@ export const Resume: React.FC<ResumeProps> = () => {
             <h3 className="name-resume">Eric Niemeyer</h3>
 
             <p>Stamford, Connecticut</p>
-            <p>
+            <h2>
               <a href="mailto:niemeyer.eric@gmail.com">
                 niemeyer.eric@gmail.com
               </a>
-            </p>
-            <p>618-616-338O</p>
+            </h2>
+            <h2
+              onClick={() => {
+
+
+                // call if on mobile
+                window.open("tel:618-616-3380");
+
+              }}
+          >
+              618-616-338O
+            </h2>
             <img
               className="gif-40"
               src="/videos2/smashed_small.gif"
               alt="asdf"
             />
-            <h2>
+            <p>
               Eric is an engineer specializing in web and mobile development,
               creating neural networks, web applications, and games. He
               prioritizes defensive programming, strict type safety, and elegant
               solutions.
-            </h2>
+            </p>
           </>
         )}
       </header>

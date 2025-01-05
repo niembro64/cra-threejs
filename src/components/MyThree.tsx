@@ -3,10 +3,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Title, projects } from '../data/projects';
+import { projects } from '../data/projects';
+import ProjectDemo from './ProjectDemo'; // <-- import new component
 import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
-import ProjectDemo from './ProjectDemo'; // <-- import new component
 
 export interface MyThreeProps {}
 
