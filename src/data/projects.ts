@@ -7,7 +7,7 @@ export type Title =
   | 'Events'
   | 'Tanks'
   | 'Space'
-  | 'Seouldat'
+  | 'Fight'
   | 'Shows'
   | 'Media';
 
@@ -73,11 +73,11 @@ export const projects: Project[] = [
     platforms: 'desktop',
   },
   {
-    title: 'Seouldat',
+    title: 'Fight',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Online Multiplayer-Gaming'],
+    description: ['Online Multiplayer Gaming'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/space',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Mobile Gaming'],
+    description: ['Simple Mobile Gaming'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -103,7 +103,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Mobile Gaming'],
+    description: ['Complex Mobile Gaming'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -184,7 +184,7 @@ export const projects: Project[] = [
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
-    description: ['Original Productions'],
+    description: ['Original Music'],
     bullets: [
       ' Visual Art',
       'Classical Music',
