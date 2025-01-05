@@ -208,7 +208,7 @@
   height: 100%;
   z-index: 0;
 
-  cursor: grab;
+  // cursor: grab;
   overflow: visible;
 }
 
@@ -355,8 +355,11 @@ button:active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 30px 30px black;
+  // box-shadow: 0 0 30px 30px black;
   z-index: 1;
+  border-radius: 20px;
+  
+  cursor: pointer;
 }
 
 .project-icon {

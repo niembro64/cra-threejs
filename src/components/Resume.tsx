@@ -26,12 +26,7 @@ export const Resume: React.FC<ResumeProps> = () => {
             <div className="spacer" />
             <div className="spacer" />
             <h3 className="name-resume">Eric Niemeyer</h3>
-            <img
-              className="gif-40"
-              src="/videos2/smashed_small.gif"
-              alt="asdf"
-            />
-            <h2>Neural Networks, Mobile, Websites, Games</h2>
+
             <p>Stamford, Connecticut</p>
             <p>
               <a href="mailto:niemeyer.eric@gmail.com">
@@ -39,6 +34,17 @@ export const Resume: React.FC<ResumeProps> = () => {
               </a>
             </p>
             <p>618-616-338O</p>
+            <img
+              className="gif-40"
+              src="/videos2/smashed_small.gif"
+              alt="asdf"
+            />
+            <h2>
+              Eric is an engineer specializing in web and mobile development,
+              creating neural networks, web applications, and games. He
+              prioritizes defensive programming, strict type safety, and elegant
+              solutions.
+            </h2>
           </>
         )}
       </header>
@@ -236,9 +242,9 @@ export const Resume: React.FC<ResumeProps> = () => {
       <section>
         <h3>Education</h3>
         <div className="education">
-          <h4>B.S. Computer Engineering — Honors, 3.73 GPA</h4>
+          <h4>B.S. Computer Engineering</h4>
           <p>Southern Illinois University Edwardsville</p>
-          <p>Dec 2018</p>
+          <p>Honors, 3.73 GPA - Dec 2018</p>
           <ul>
             <h1>Major in Computer Engineering</h1>
             <ul>

@@ -360,7 +360,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
 
           {/* Render each project via new ProjectDemo */}
           {projects.map((project, index) => (
-            <ProjectDemo key={index} project={project} />
+            <>
+              <div className="spacer" />
+              <ProjectDemo key={index} project={project} />
+            </>
           ))}
 
           <div className="spacer" />
