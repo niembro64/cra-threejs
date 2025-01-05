@@ -5,8 +5,11 @@ export type Title =
   | 'Smashed'
   | 'Pirates'
   | 'Events'
+  | 'Tanks'
+  | 'Space'
+  | 'Seouldat'
   | 'Shows'
-  | 'Music';
+  | 'Media';
 
 export type Platform = 'desktop' | 'mobile' | 'both';
 
@@ -52,24 +55,11 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
-    title: 'Design',
-    url: 'https://design.niemo.io',
-    stack: ['HTML', 'CSS', 'JavaScript'],
-    stackIcon: null,
-    description: ['Style Control'],
-    bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
-    dbImage: null,
-    icon: 'html_css_js.png',
-    gif: null,
-    video: true,
-    platforms: 'desktop',
-  },
-  {
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
     stackIcon: null,
-    description: ['Web Gaming'],
+    description: ['Multiplayer Gaming'],
     bullets: [
       'Rules-Based Bots',
       'Neural-Network Bots',
@@ -78,6 +68,58 @@ export const projects: Project[] = [
     ],
     dbImage: null,
     icon: 'phaser-icon.png',
+    gif: null,
+    video: true,
+    platforms: 'desktop',
+  },
+  {
+    title: 'Seouldat',
+    url: 'http://34.230.11.31:1444/',
+    stack: ['Phaser3', 'React', 'TypeScript'],
+    stackIcon: null,
+    description: ['Online Multiplayer-Gaming'],
+    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    dbImage: null,
+    icon: 'phaser-icon.png',
+    gif: null,
+    video: true,
+    platforms: 'desktop',
+  },
+  {
+    title: 'Space',
+    url: 'https://games.niemo.io/space',
+    stack: ['Phaser3', 'React', 'TypeScript'],
+    stackIcon: null,
+    description: ['Mobile Gaming'],
+    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    dbImage: null,
+    icon: 'phaser-icon.png',
+    gif: null,
+    video: true,
+    platforms: 'desktop',
+  },
+  {
+    title: 'Tanks',
+    url: 'https://games.niemo.io/tanks',
+    stack: ['Phaser3', 'React', 'TypeScript'],
+    stackIcon: null,
+    description: ['Mobile Gaming'],
+    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    dbImage: null,
+    icon: 'phaser-icon.png',
+    gif: null,
+    video: true,
+    platforms: 'desktop',
+  },
+  {
+    title: 'Design',
+    url: 'https://design.niemo.io',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    stackIcon: null,
+    description: ['Exercise in Style Control'],
+    bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
+    dbImage: null,
+    icon: 'html_css_js.png',
     gif: null,
     video: true,
     platforms: 'desktop',
@@ -100,24 +142,24 @@ export const projects: Project[] = [
   //   video: true,
   //   platforms: 'both',
   // },
-  // {
-  //   title: 'Events',
-  //   url: 'https://events.niemo.io',
-  //   stack: ['C#, ASP.NET Core', 'MySQL'],
-  //   stackIcon: null,
-  //   description: ['Exercise in Tidiness'],
-  //   bullets: [
-  //     'CRUD Operations',
-  //     'Data Validation',
-  //     'MVC Design Pattern',
-  //     'EF Core LINQ ORM (SQL)',
-  //   ],
-  //   dbImage: null,
-  //   icon: 'csharp.png',
-  //   gif: null,
-  //   video: true,
-  //   platforms: 'both',
-  // },
+  {
+    title: 'Events',
+    url: 'https://events.niemo.io',
+    stack: ['C#, ASP.NET Core', 'MySQL'],
+    stackIcon: null,
+    description: ['Exercise in Web Tidiness'],
+    bullets: [
+      'CRUD Operations',
+      'Data Validation',
+      'MVC Design Pattern',
+      'EF Core LINQ ORM (SQL)',
+    ],
+    dbImage: null,
+    icon: 'csharp.png',
+    gif: null,
+    video: true,
+    platforms: 'both',
+  },
   // {
   //   title: 'Shows',
   //   url: 'https://shows.niemo.io',
@@ -138,7 +180,7 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
-    title: 'Music',
+    title: 'Media',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
