@@ -56,7 +56,7 @@ export const projects: Project[] = [
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
     stackIcon: null,
-    description: ['Showcase of Control'],
+    description: ['Style Control'],
     bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
     dbImage: null,
     icon: 'html_css_js.png',
@@ -69,7 +69,7 @@ export const projects: Project[] = [
     url: 'https://smashed.niemo.io',
     stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
     stackIcon: null,
-    description: ['Showcase of HTML5 Gaming'],
+    description: ['Web Gaming'],
     bullets: [
       'Rules-Based Bots',
       'Neural-Network Bots',
@@ -142,7 +142,7 @@ export const projects: Project[] = [
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
-    description: ['Showcase of Original Music'],
+    description: ['Original Productions'],
     bullets: [
       ' Visual Art',
       'Classical Music',
