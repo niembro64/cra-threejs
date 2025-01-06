@@ -15,9 +15,14 @@ const CopyEmail: React.FC<CopyEmailProps> = ({ email }) => {
   }, [email]);
 
   return (
-    <div>
+    <div className="flex flex-row items-center space-x-2">
       <span>{email}</span>
-      <button onClick={copyToClipboard}>Copy Email</button>
+      <button
+        onClick={copyToClipboard}
+        className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-700"
+      >
+        Copy Email
+      </button>
     </div>
   );
 };

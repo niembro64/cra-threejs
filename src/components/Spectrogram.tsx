@@ -1,5 +1,3 @@
-// Spectrogram.tsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
@@ -52,15 +50,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           const source = audioContext.createMediaElementSource(
             audioRef.current
           );
-          // Connect the source to the speakers
           source.connect(audioContext.destination);
 
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
-            audioContext: audioContext,
-            source: source,
+            audioContext,
+            source,
             bufferSize: 512,
             featureExtractors: ['melBands'],
-            // melBands: 26 * 2, // Set to the desired number of mel bands
             callback: (features: MeydaFeaturesObject) => {
               if (
                 features &&
@@ -121,15 +117,15 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     );
                   });
 
-                  // Update references (adjust slice indices based on melBands count)
+                  // Update references
                   lowerPowerRef.current = currentMelBands
                     .slice(0, 1)
                     // @ts-ignore
                     .reduce((sum, value) => sum + value, 0);
-                    upperPowerRef.current =
+                  upperPowerRef.current =
                     currentMelBands
-                    .slice(18, 26)
-                    // @ts-ignore
+                      .slice(18, 26)
+                      // @ts-ignore
                       .reduce((sum, value) => sum + value, 0) / 2;
                 }
               }
@@ -164,10 +160,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   }, [audioRef, audioStarted]);
 
   return (
-    <div className="spectrogram-container">
+    <div className="flex flex-col justify-center items-center w-full h-full">
       {!audioStarted ? (
         <img
-          className="button-music"
+          className="cursor-pointer opacity-40 hover:opacity-100 transition-all w-[130px] h-[130px]"
           src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
           onClick={startAudio}
@@ -179,24 +175,26 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          <canvas className="spectrogram" ref={canvasRef}></canvas>
+          <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
           <div
-            className="spectrogram-mid"
+            className="flex flex-row justify-center items-center bg-white/50 text-black cursor-pointer my-2 px-4 py-2"
             onClick={() => {
               startAudio();
               toggleAudio();
             }}
           >
-            <div className="spectrogram-image-wrapper">
+            <div className="mr-2">
               <img
-                className="spectrogram-image"
+                className="h-[50px] object-contain"
                 src="/NA_white_on_trans.png"
                 alt="Niemo Audio Logo"
               />
             </div>
-            <h4 className="spectrogram-text">{isPlaying ? 'Pause' : 'Play'}</h4>
+            <h4 className="text-2xl font-bold">
+              {isPlaying ? 'Pause' : 'Play'}
+            </h4>
           </div>
-          <canvas className="spectrogram" ref={canvasFlippedRef}></canvas>
+          <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>
         </>
       )}
     </div>

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Example of a custom font-face if needed */
+@font-face {
+  font-family: 'PixelOperator';
+  src: url('./fonts/pixel_operator/PixelOperator.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Scrollbar customization can be done with a plugin or global CSS. */
+/* Example override: */
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: black;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #00ffff; /* niemo-teal example */
+  border-radius: 6px;
+}
+
+/* Body defaults */
+body {
+  @apply m-0 bg-black text-white overflow-x-hidden;
+  font-family: 'PixelOperator', sans-serif;
+}
+/*  */
+/* .App wrapper if you want a global container class */
+.App {
+  @apply w-full h-screen overflow-y-scroll;
+}

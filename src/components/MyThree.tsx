@@ -1,19 +1,15 @@
-// MyThree.tsx
-
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { projects } from '../data/projects';
-import ProjectDemo from './ProjectDemo'; // <-- import new component
+import ProjectDemo from './ProjectDemo';
 import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
-
-export interface MyThreeProps {}
 
 export const isMobile: boolean = window.innerWidth < 900;
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
-const MyThree: React.FC<MyThreeProps> = () => {
+const MyThree: React.FC = () => {
   const refContainer = useRef<HTMLDivElement | null>(null);
   const mousePositionCurr = useRef(new THREE.Vector3());
   const mousePositionPrev = useRef(new THREE.Vector3());
@@ -34,11 +30,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
 
-  // For copying email
   const email = 'niemeyer.eric@gmail.com';
   const [showEmail, setShowEmail] = useState(false);
 
-  // Copy email helper
   const copyToClipboard = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(email);
@@ -48,7 +42,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     }
   }, [email]);
 
-  // Listen for posted messages from child iframes
   useEffect(() => {
     function onMessage(event: MessageEvent) {
       if (event?.data?.url) {
@@ -72,7 +65,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     }
   }, [urlStateCurr, urlStatePrev]);
 
-  // Track page height
   useEffect(() => {
     const updatePageHeight = () => {
       const documentHeight =
@@ -86,7 +78,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     };
   }, []);
 
-  // Set container height
   useEffect(() => {
     const updateHeight = () => {
       if (topElementRef.current) {
@@ -100,13 +91,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
     };
   }, []);
 
-  ////////////////////////////////
   // 3D Setup
-  ////////////////////////////////
   useEffect(() => {
     if (height === 0 || pageHeight === 0) return;
 
-    // === THREE.JS CODE START ===
     const scene = new THREE.Scene();
     const loader = new GLTFLoader();
 
@@ -136,10 +124,8 @@ const MyThree: React.FC<MyThreeProps> = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // On mobile, we’ll adjust the x offset a bit
     const globalX = isMobile ? -50 : 0;
 
-    // Simple geometry for demonstration
     const geometry = new THREE.IcosahedronGeometry(90, 1);
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
@@ -151,11 +137,10 @@ const MyThree: React.FC<MyThreeProps> = () => {
     });
     const ball = new THREE.Mesh(geometry, material);
     scene.add(ball);
-    ball.position.x = 0 + globalX;
+    ball.position.x = globalX;
 
     camera.position.z = 150;
 
-    // Lights
     const pointLightRed = new THREE.PointLight(0xff0000);
     pointLightRed.position.set(500 + globalX, 1000, -5);
     pointLightRed.intensity = 1;
@@ -190,7 +175,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       return camera.position.clone().add(dir.multiplyScalar(distance));
     };
 
-    // Mouse move
     const onMouseMove = (event: MouseEvent) => {
       const scenePosition = getScenePositionFromScreen(
         event.clientX,
@@ -200,7 +184,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
     };
     window.addEventListener('mousemove', onMouseMove);
 
-    // Touch move
     const onTouchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
       const scenePosition = getScenePositionFromScreen(
@@ -215,19 +198,16 @@ const MyThree: React.FC<MyThreeProps> = () => {
     };
     window.addEventListener('touchmove', onTouchMove);
 
-    // Wheel
     const onWheel = (event: WheelEvent) => {
       const wheelDelta = event.deltaY * 0.1;
       scrollPosition.current += wheelDelta;
     };
     window.addEventListener('wheel', onWheel);
 
-    // Append the renderer
     if (refContainer.current) {
       refContainer.current.appendChild(renderer.domElement);
     }
 
-    // Animation
     const x = 0.0093;
     const y = 0.007;
     const z = 0.001;
@@ -239,7 +219,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
       animationFrame += 1;
       requestAnimationFrame(animate);
 
-      // SCROLL
       scrollPositionAverage.current =
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current;
@@ -249,7 +228,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1;
 
-      // Mouse
       mousePositionPrev.current.x =
         percentKeepMouse * mousePositionPrev.current.x +
         (1 - percentKeepMouse) * mousePositionCurr.current.x;
@@ -261,7 +239,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
         (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
       if (isMobile || !audioRef.current || audioRef.current.paused) {
-        // Normal ball motion
         ball.rotation.x =
           percentKeep * ball.rotation.x +
           (1 - percentKeep) *
@@ -274,7 +251,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
           percentKeep * ball.rotation.z +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
       } else {
-        // Animate from audio
         lowerPowerAccumulatedRef.current =
           (lowerPowerAccumulatedRef.current +
             Math.pow(lowerPowerRawRef.current, 1) * 0.0008) %
@@ -295,7 +271,6 @@ const MyThree: React.FC<MyThreeProps> = () => {
           ball.rotation.y * percentKeepPowerShort +
           upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
 
-        // Example: color intensities
         pointLightRed.intensity =
           pointLightRed.intensity * percentKeepPowerLong +
           (0.5 + lowerPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong);
@@ -318,25 +293,43 @@ const MyThree: React.FC<MyThreeProps> = () => {
   }, [height, pageHeight]);
 
   return (
-    <div className="top" ref={topElementRef}>
-      <div className="black-boy"></div>
-      {!isMobile && <div className="three" ref={refContainer} />}
-      {isMobile && <div className="three-mobile" ref={refContainer} />}
+    <div className="relative w-full h-full" ref={topElementRef}>
+      {/* black background behind everything */}
+      <div className="fixed top-0 left-0 w-full h-full bg-black -z-10"></div>
+
+      {/* 3D canvas */}
+      {!isMobile && (
+        <div
+          className="fixed top-0 left-[-50%] w-full h-full -z-10"
+          ref={refContainer}
+        />
+      )}
+      {isMobile && (
+        <div
+          className="fixed top-0 left-0 w-full h-full -z-10"
+          ref={refContainer}
+        />
+      )}
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isMobile && (
-        <div className="resume">
-          <h1 className="resume-name">Eric Niemeyer</h1>
+        <div className="fixed top-[25%] left-0 p-4 w-auto z-10 flex flex-col items-center">
+          <h1 className="text-4xl font-bold mb-4">Eric Niemeyer</h1>
           <button
+            className="px-4 py-2 mb-4 border border-white rounded hover:bg-purple-800"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
           >
             {showEmail ? email : 'Copy Email'}
           </button>
-          <img className="gif" src="/videos2/smashed_small.gif" alt="asdf" />
-          <h1>Stamford, Connecticut</h1>
-          <h1>618-616-338O</h1>
+          <img
+            className="w-[70%] object-cover mb-4"
+            src="/videos2/smashed_small.gif"
+            alt="gif"
+          />
+          <h1 className="text-2xl mb-4">Stamford, Connecticut</h1>
+          <h1 className="text-2xl mb-4">618-616-338O</h1>
           <AudioSpectrogram
             lowerPowerRef={lowerPowerRawRef}
             upperPowerRef={upperPowerRawRef}
@@ -345,23 +338,18 @@ const MyThree: React.FC<MyThreeProps> = () => {
         </div>
       )}
 
-      <div className="projects-top">
-        <div
-          className={
-            !isMobile ? 'projects-scroller' : 'projects-scroller-mobile'
-          }
-        >
-          <div className="pre">
+      <div className="absolute w-full h-full top-0 left-0 z-0 flex flex-col items-end">
+        <div className={`relative ${!isMobile ? 'w-[70%]' : 'w-full'} h-full`}>
+          <div className="absolute top-0 left-0 w-full h-auto">
             <Resume />
           </div>
-
-          <div className="post">
+          <div className="absolute bottom-0 left-0 w-full h-[40vh] flex flex-col items-center justify-center">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
-              className="kirby"
+              className="w-[100px] mb-2"
               alt="project-icon"
             />
-            <p className="last">Blue Skies</p>
+            <p className="text-xl">Blue Skies</p>
           </div>
         </div>
       </div>
