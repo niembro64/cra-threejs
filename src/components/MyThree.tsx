@@ -352,26 +352,9 @@ const MyThree: React.FC<MyThreeProps> = () => {
           }
         >
           <div className="pre">
-
-            
             <Resume />
-            {/* <div className="demo-projects-wrapper">
-              <h1 className="demo-projects">Demos</h1>
-            </div> */}
           </div>
 
-          {/* {projects.map((project, index) => (
-            <ProjectDemo key={index} project={project} />
-          ))}
-
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" /> */}
           <div className="post">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
