@@ -177,8 +177,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          {/* PUT THIS DIV A BIT OFF THE BOTTOM OF HTE SCREEN  */}
-
           <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
           <div
             className="flex flex-row justify-center items-center bg-white/50 cursor-pointer  px-4 py-2  w-full bg-white"

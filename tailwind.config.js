@@ -11,11 +11,6 @@ module.exports = {
           'image-rendering': 'auto',
         },
       },
-      // Add any custom colors, fonts, spacing, etc. you need
-      colors: {
-        // example:
-        'niemo-teal': '#00ffff',
-      },
     },
   },
   plugins: [
