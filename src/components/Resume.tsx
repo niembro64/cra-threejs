@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { isMobile } from './MyThree';
+import ProjectDemo from './ProjectDemo';
+import { projects } from '../data/projects';
 
 interface ResumeProps {}
 
@@ -56,21 +58,38 @@ export const Resume: React.FC<ResumeProps> = () => {
         )}
       </header>
 
-      {!isMobile && (
-        <section>
-          <iframe
-            className="iframe-wide"
-            src="https://projects.niemo.io"
-            title="Projects"
-            allowFullScreen
-          ></iframe>
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-          <div className="spacer" />
-        </section>
-      )}
+      <div className="demo-projects-wrapper">
+        <h1 className="demo-projects">Demos</h1>
+      </div>
+
+      <section>
+        <h3>Navigation Game</h3>
+        <iframe
+          className="iframe-wide"
+          src="https://projects.niemo.io"
+          title="Projects"
+          allowFullScreen
+        ></iframe>
+      </section>
+
+      <div
+        className="demo-projects-wrapper"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignSelf: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {projects.map((project, index) => (
+          <ProjectDemo key={index} project={project} />
+        ))}
+      </div>
+
+      <div className="spacer" />
+      <div className="spacer" />
+      <div className="spacer" />
+      <div className="spacer" />
 
       <section>
         <h3>Work Experience</h3>
