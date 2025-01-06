@@ -355,24 +355,17 @@ button:active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // box-shadow: 0 0 30px 30px black;
   z-index: 1;
   border-radius: 20px;
 
   margin-bottom: 20px;
-  
+
   cursor: pointer;
 }
 
 .project-icon {
-  // position: absolute;
-  // top: 10%;
-  // right: 27%;
-  // width: 10%;
   height: 15%;
   z-index: 1;
-  // cursor: pointer;
-
   transition: opacity 2s ease-in-out;
 }
 
@@ -828,7 +821,7 @@ ul {
   margin-bottom: 2vh;
 }
 .gif-40 {
-  width: 40%;
+  width: 80%;
   // height: 100px;
   object-fit: cover;
   image-rendering: pixelated;

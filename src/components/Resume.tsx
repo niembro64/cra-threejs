@@ -26,8 +26,8 @@ export const Resume: React.FC<ResumeProps> = () => {
             <div className="spacer" />
             <div className="spacer" />
             <h3 className="name-resume">Eric Niemeyer</h3>
+            <div className="spacer" />
 
-            <p>Stamford, Connecticut</p>
             <h2>
               <a href="mailto:niemeyer.eric@gmail.com">
                 niemeyer.eric@gmail.com
@@ -35,13 +35,9 @@ export const Resume: React.FC<ResumeProps> = () => {
             </h2>
             <h2
               onClick={() => {
-
-
-                // call if on mobile
-                window.open("tel:618-616-3380");
-
+                window.open('tel:618-616-3380');
               }}
-          >
+            >
               618-616-338O
             </h2>
             <img
@@ -51,10 +47,11 @@ export const Resume: React.FC<ResumeProps> = () => {
             />
             <p>
               Eric is an engineer specializing in web and mobile development,
-              creating neural networks, web applications, and games. He
-              prioritizes defensive programming, strict type safety, and elegant
-              solutions.
+              neural networks, and game design. He emphasizes defensive
+              programming, strict type safety, and elegant solutions.
             </p>
+            <div className="spacer" />
+            <p>Stamford, Connecticut</p>
           </>
         )}
       </header>
@@ -75,59 +72,30 @@ export const Resume: React.FC<ResumeProps> = () => {
         </section>
       )}
 
-      {/* <section>
-        <AudioSpectrogram />
-      </section> */}
-
       <section>
         <h3>Work Experience</h3>
 
         <div className="job">
           <h4>Venturetec</h4>
           <p className="job-title">
-            Lead Software Engineer — Neural Networks, Mobile Apps, Web Games,
+            Lead Software Engineer — Neural Networks, Mobile Apps, Web Games
           </p>
-          <p>Stamford, Connecticut (Office & Remote)</p>
-          <p>2022 - Today</p>
+          <p>Stamford, Connecticut (Office & Remote) • 2022 - Present</p>
           <ul>
             <li>
-              <h1>SeniorSafe</h1>
-              <ul>
-                <li>
-                  Led fraud detection NN architecture, using Transformers and
-                  RNNs for NLP, acoustic, and text analysis
-                </li>
-                <li>Developed in Python (PyTorch, TensorFlow) and AWS S3</li>
-              </ul>
+              <strong>AI & Fraud Detection:</strong> Led the design of NN
+              architectures (Transformers, RNNs) to analyze text, acoustic
+              signals, and NLP data (Python, PyTorch, TensorFlow, AWS S3).
             </li>
             <li>
-              <h1>Spray-Foam Loyalty Program</h1>
-              <ul>
-                <li>Served as Lead Front-End Developer</li>
-                <li>React Native CLI, Vue, TypeScript, Laravel, SQL</li>
-              </ul>
+              <strong>Full-Stack Development:</strong> Implemented mobile apps
+              (React Native, Vue, TypeScript, Laravel, SQL) and web games
+              (Phaser 3, Angular, Angular Material).
             </li>
             <li>
-              <h1>AudienceAI</h1>
-              <ul>
-                <li>
-                  Designed & implemented an AI comedy app with RNN-based
-                  language generation
-                </li>
-                <li>
-                  React Native, Express, AWS S3, FFT, MFCC for audio processing
-                </li>
-              </ul>
-            </li>
-            <li>
-              <h1>The Games Agency & McGraw-Hill</h1>
-              <ul>
-                <li>
-                  Built interactive puzzles, sticker books, & reading-reaction
-                  mini-games for young learners
-                </li>
-                <li>Phaser 3, Angular, Angular Material</li>
-              </ul>
+              <strong>Creative AI Solutions:</strong> Delivered comedy/text
+              generation apps (RNN-based), audio processing (FFT, MFCC), and
+              interactive user experiences.
             </li>
           </ul>
         </div>
@@ -135,53 +103,23 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Rockwell Automation</h4>
           <p className="job-title">
-            Software Engineer II — Designed & Implemented Machine Execution
-            Systems (MES)
+            Software Engineer II — MES & Industrial Integration
           </p>
-          <p>St. Louis, Missouri (Office & Remote)</p>
-          <p>2018 - 2022</p>
+          <p>St. Louis, Missouri (Office & Remote) • 2018 - 2022</p>
           <ul>
             <li>
-              <h1>Lucid Motors (Casa Grande, AZ)</h1>
-              <ul>
-                <li>Configured MES on-site in a live production environment</li>
-                <li>
-                  Integrated 3rd-party systems into overall MES architecture
-                </li>
-                <li>Developed scripts and debugged connectivity issues</li>
-              </ul>
+              <strong>On-Site MES Configuration:</strong> Deployed and
+              maintained industrial systems for clients like Lucid Motors, 3M,
+              Cooper Tires, Continental Tire, and Maple Leaf Foods.
             </li>
             <li>
-              <h1>3M Incinerator Facility (Cottage Grove, MN)</h1>
-              <ul>
-                <li>Led a small development team, maintaining schedules</li>
-                <li>Updated requirements and tracked progress</li>
-              </ul>
+              <strong>System Integration:</strong> Coordinated third-party
+              connectivity, debugged production issues, and managed legacy
+              systems (Java, Pnuts) with Jira-based tracking.
             </li>
             <li>
-              <h1>Cooper Tires (Texarkana, AR)</h1>
-              <ul>
-                <li>Gathered and documented client requirements for MES</li>
-              </ul>
-            </li>
-            <li>
-              <h1>Continental Tire (Mt. Vernon, IL)</h1>
-              <ul>
-                <li>
-                  Maintained a legacy system (Java, Pnuts) with Jira-based issue
-                  tracking
-                </li>
-              </ul>
-            </li>
-            <li>
-              <h1>Maple Leaf Foods (Shelbyville, IN)</h1>
-              <ul>
-                <li>
-                  Supported industrial database connectivity, reporting, and
-                  business logic
-                </li>
-                <li>Built a VBA-driven management tool</li>
-              </ul>
+              <strong>Team Leadership:</strong> Managed small dev teams,
+              overseeing requirements updates, scheduling, and deliverables.
             </li>
           </ul>
         </div>
@@ -189,30 +127,19 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>Republic of Korea Ultimate</h4>
           <p className="job-title">
-            Executive Manager — Managed 35-Team National Sports League
+            Executive Manager — 35-Team National Sports League
           </p>
-          <p>South Korea</p>
-          <p>2015 - 2017</p>
+          <p>South Korea • 2015 - 2017</p>
           <ul>
-            <h1>Managed Money</h1>
-            <ul>
-              <li>Oversaw $150k per season</li>
-              <li>Handled field fees and general league expenses</li>
-            </ul>
-            <h1>Managed Materials</h1>
-            <ul>
-              <li>Coordinated uniforms, equipment, and merchandise</li>
-            </ul>
-            <h1>Managed Schedules</h1>
-            <ul>
-              <li>Scheduled 35 teams nationwide for home/away matches</li>
-              <li>Coordinated with national train timetables</li>
-            </ul>
-            <h1>Managed People</h1>
-            <ul>
-              <li>Worked closely with a Korean secretary</li>
-              <li>Managed rosters, zones/pools, and official meetings</li>
-            </ul>
+            <li>
+              Oversaw seasonal budgets of \$150k, scheduling for 35 teams across
+              multiple cities, and logistics for uniforms, equipment, and
+              rosters.
+            </li>
+            <li>
+              Worked closely with a Korean secretary to handle administration,
+              league pools, and official meetings.
+            </li>
           </ul>
         </div>
 
@@ -221,16 +148,15 @@ export const Resume: React.FC<ResumeProps> = () => {
           <p className="job-title">
             ESL & Science Instructor — 대구과학고등학교 영재고
           </p>
-          <p>Daegu, South Korea</p>
-          <p>2013 - 2017</p>
+          <p>Daegu, South Korea • 2013 - 2017</p>
           <ul>
             <li>
-              Built software to compile faculty schedules from a cryptic
-              database
+              Built custom software to compile faculty schedules from a cryptic
+              database and streamlined administrative processes.
             </li>
             <li>
-              Taught specialized college-prep English and science courses,
-              emphasizing immersion
+              Taught advanced, immersion-focused STEM-based ESL courses to
+              gifted high-school students.
             </li>
           </ul>
         </div>
@@ -238,12 +164,11 @@ export const Resume: React.FC<ResumeProps> = () => {
         <div className="job">
           <h4>A.C.L.E.</h4>
           <p className="job-title">ESL Lead Instructor</p>
-          <p>Sanremo, Italy</p>
-          <p>2008 - 2013</p>
+          <p>Sanremo, Italy • 2008 - 2013</p>
           <ul>
             <li>
-              Designed & delivered 25 English courses and 12 pedagogy courses in
-              15 different cities
+              Delivered over 25 immersive English courses and 12 pedagogy
+              training sessions in 15 cities, serving diverse student groups.
             </li>
           </ul>
         </div>
@@ -258,7 +183,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <ul>
             <h1>Major in Computer Engineering</h1>
             <ul>
-              <li>Digital Design, PSpice, Circuits, PCB, Microcontrollers</li>
+              <li>Digital Design, Circuits, PCB, Microcontrollers</li>
               <li>Digital Signal Processing, Signal Communication</li>
             </ul>
             <h1>Minor in Computer Science</h1>
