@@ -1,5 +1,6 @@
 import React from 'react';
 import MyThree from './components/MyThree';
+import './App.scss';
 
 function App() {
   return (

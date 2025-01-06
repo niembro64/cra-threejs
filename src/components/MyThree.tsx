@@ -324,7 +324,7 @@ const MyThree: React.FC = () => {
             {showEmail ? email : 'Copy Email'}
           </button>
           <img
-            className="w-[70%] object-cover mb-4"
+            className="w-[70%] object-cover mb-4 pixel-art"
             src="/videos2/smashed_small.gif"
             alt="gif"
           />
@@ -343,10 +343,14 @@ const MyThree: React.FC = () => {
           <div className="w-full h-auto">
             <Resume />
           </div>
+
+          <div className="h-40" />
+          <div className="h-40" />
+          <div className="h-40" />
           <div className="w-full h-[40vh] flex flex-col items-center justify-center">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
-              className="w-[40px] mb-2"
+              className="w-[40px] mb-2  pixel-art"
               alt="project-icon"
             />
             <p className="text-xl">Blue Skies</p>

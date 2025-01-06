@@ -17,13 +17,14 @@ export interface Education {
 export const jobs: Job[] = [
   {
     company: 'Venturetec',
-    title: 'Lead Software Engineer — Neural Networks, Mobile Apps, Web Games',
+    title:
+      'Lead Software Engineer — Mobile & Web Apps, Neural Networks, Games',
     location: 'Stamford, Connecticut (Office & Remote)',
     dates: '2022 - Present',
     bullets: [
-      'AI & Fraud Detection: Led the design of NN architectures (Transformers, RNNs)...',
-      'Full-Stack Development: Implemented mobile apps (React Native, Vue...)',
-      'Creative AI Solutions: Delivered comedy/text generation apps...',
+      'AI & Fraud Detection: Led the design of NN architectures (Transformers, RNNs) to analyze text, acoustic signals, and NLP data (Python, PyTorch, TensorFlow, AWS S3).',
+      'Full-Stack Development: Implemented mobile apps (React Native, Vue, TypeScript, Laravel, SQL) and web games (Phaser 3, Angular, Angular Material).',
+      'Creative AI Solutions: Delivered comedy/text generation apps (RNN-based), audio processing (FFT, MFCC), and interactive user experiences.',
     ],
   },
   {
@@ -32,12 +33,40 @@ export const jobs: Job[] = [
     location: 'St. Louis, Missouri (Office & Remote)',
     dates: '2018 - 2022',
     bullets: [
-      'On-Site MES Configuration: Deployed & maintained industrial systems...',
-      'System Integration: Coordinated 3rd-party connectivity, debugged production...',
-      'Team Leadership: Managed small dev teams...',
+      'On-Site MES Configuration: Deployed and maintained industrial systems for clients like Lucid Motors, 3M, Cooper Tires, Continental Tire, and Maple Leaf Foods.',
+      'System Integration: Coordinated third-party connectivity, debugged production issues, and managed legacy systems (Java, Pnuts) with Jira-based tracking.',
+      'Team Leadership: Managed small dev teams, overseeing requirements updates, scheduling, and deliverables.',
     ],
   },
-  // add the other job entries...
+  {
+    company: 'Republic of Korea Ultimate',
+    title: 'Executive Manager — 35-Team National Sports League',
+    location: 'South Korea',
+    dates: '2015 - 2017',
+    bullets: [
+      'Oversaw seasonal budgets of $150k, scheduling for 35 teams across multiple cities, and logistics for uniforms, equipment, and rosters.',
+      'Worked closely with a Korean secretary to handle administration, league pools, and official meetings.',
+    ],
+  },
+  {
+    company: 'Daegu Science High School',
+    title: 'ESL & Science Instructor — 대구과학고등학교 영재고',
+    location: 'Daegu, South Korea',
+    dates: '2013 - 2017',
+    bullets: [
+      'Built custom software to compile faculty schedules from a cryptic database and streamlined administrative processes.',
+      'Taught advanced, immersion-focused STEM-based ESL courses to gifted high-school students.',
+    ],
+  },
+  {
+    company: 'A.C.L.E.',
+    title: 'ESL Lead Instructor',
+    location: 'Sanremo, Italy',
+    dates: '2008 - 2013',
+    bullets: [
+      'Delivered over 25 immersive English courses and 12 pedagogy training sessions in 15 cities, serving diverse student groups.',
+    ],
+  },
 ];
 
 export const educations: Education[] = [
@@ -46,9 +75,9 @@ export const educations: Education[] = [
     school: 'Southern Illinois University Edwardsville',
     details: [
       'Honors, 3.73 GPA - Dec 2018',
-      'Major in Computer Engineering: Digital Design, Circuits, ...',
-      'Minor in Computer Science: Data Structures & Algorithms, ...',
-      'Minor in Mathematics: Calculus III, Diff Eq...',
+      'Major in Computer Engineering: Digital Design, Circuits, PCB, Microcontrollers, Digital Signal Processing, Signal Communication',
+      'Minor in Computer Science: Data Structures & Algorithms, OS Design, Linux',
+      'Minor in Mathematics: Calculus III, Differential Equations, Discrete Math, Engineering Statistics',
     ],
   },
 ];

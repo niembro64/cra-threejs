@@ -3,6 +3,14 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      utilities: {
+        '.image-crisp': {
+          'image-rendering': 'pixelated',
+        },
+        '.image-smooth': {
+          'image-rendering': 'auto',
+        },
+      },
       // Add any custom colors, fonts, spacing, etc. you need
       colors: {
         // example:
