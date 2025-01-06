@@ -165,7 +165,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     <div className="w-[100%]  flex flex-col justify-center items-center">
       {!audioStarted ? (
         <img
-          className="cursor-pointer transition-all w-[130px] h-[130px]"
+          className="cursor-pointer transition-all w-[130px] h-[130px] pixel-art"
           src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
           onClick={startAudio}
