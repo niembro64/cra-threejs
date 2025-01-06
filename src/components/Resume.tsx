@@ -108,12 +108,14 @@ export const Resume: React.FC = () => {
         {/* <h3 className="text-6xl font-bold mb-4">Work</h3> */}
         {jobs.map((job, idx) => (
           <div key={idx} className="mb-8">
-            <h4 className="text-xl font-bold">{job.company}</h4>
-            <p className="italic">{job.title}</p>
-            <p>
+            <h4 className="text-3xl font-bold">{job.company}</h4>
+            <p className="italic text-2xl">{job.title}</p>
+            <p
+              className="text-xl"
+            >
               {job.location} • {job.dates}
             </p>
-            <ul className="list-disc ml-6 mt-2">
+            <ul className="list-disc ml-6 mt-2 text-xl">
               {job.bullets.map((b, i) => (
                 <li key={i} className="mb-2">
                   {b}
@@ -131,9 +133,9 @@ export const Resume: React.FC = () => {
         </div>
         {educations.map((edu, idx) => (
           <div key={idx} className="mb-8">
-            <h4 className="text-xl font-bold">{edu.degree}</h4>
-            <p className="italic">{edu.school}</p>
-            <ul className="list-disc ml-6 mt-2">
+            <h4 className="text-3xl font-bold">{edu.degree}</h4>
+            <p className="italic text-xl">{edu.school}</p>
+            <ul className="list-disc ml-6 mt-2 text-xl">
               {edu.details.map((detail, i) => (
                 <li key={i} className="mb-2">
                   {detail}
@@ -143,7 +145,39 @@ export const Resume: React.FC = () => {
           </div>
         ))}
       </section>
-      {/* Add more sections for Code, Skills, etc., using .map(...) with your arrays */}
+
+      <div className="h-40" />
+      <section className="mb-8">
+        <div className="text-center mb-8">
+          <h1 className="text-6xl font-bold">Fun Facts</h1>
+        </div>
+
+        <div className="mb-8">
+          <h4 className="text-3xl font-bold">Featured on Wikipedia</h4>
+          <p className="mt-2  text-xl">
+            Eric's track{' '}
+            <a
+              href="https://en.wikipedia.org/wiki/File:Ars_Niemo_-_Small_Talk_Build_IV.ogg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-300 underline text-xl"
+            >
+              "Small Talk (Build IV)"
+            </a>{' '}
+            is showcased on the{' '}
+            <a
+              href="https://en.wikipedia.org/wiki/Drum_and_bass"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-300 underline text-xl"
+            >
+              Drum and Bass
+            </a>{' '}
+            Wikipedia main page, representing the sole Drum and Bass example
+            featured.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };

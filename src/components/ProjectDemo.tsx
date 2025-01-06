@@ -40,7 +40,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
       </div>
 
       {project.description && (
-        <div className="text-lg mb-2 text-white/80">
+        <div className="text-xl mb-2 text-white">
           {project.description.join('. ')}
         </div>
       )}

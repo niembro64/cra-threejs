@@ -1,16 +1,4 @@
 .pixel-art {
-  image-rendering: pixelated; /* Ensures sharp rendering for pixel art */
-  // image-rendering: crisp-edges; /* Fallback for older browsers */
-  -ms-interpolation-mode: nearest-neighbor; /* Fallback for Internet Explorer */
-  // width: auto; /* Adjust as needed */
-  // height: auto; /* Adjust as needed */
-}
-
-.pixel-art-gif {
-  image-rendering: pixelated; /* Keeps GIFs sharp */
-  
-  // image-rendering: crisp-edges; /* Fallback */
+  image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
-  width: 100%; /* Optional: set dimensions to match your layout */
-  height: auto;
 }
