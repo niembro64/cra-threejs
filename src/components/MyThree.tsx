@@ -338,15 +338,15 @@ const MyThree: React.FC = () => {
         </div>
       )}
 
-      <div className="absolute w-full h-full top-0 left-0 z-0 flex flex-col items-end">
+      <div className="w-full h-full top-0 left-0 z-0 flex flex-col items-end">
         <div className={`relative ${!isMobile ? 'w-[70%]' : 'w-full'} h-full`}>
-          <div className="absolute top-0 left-0 w-full h-auto">
+          <div className="w-full h-auto">
             <Resume />
           </div>
-          <div className="absolute bottom-0 left-0 w-full h-[40vh] flex flex-col items-center justify-center">
+          <div className="w-full h-[40vh] flex flex-col items-center justify-center">
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
-              className="w-[100px] mb-2"
+              className="w-[40px] mb-2"
               alt="project-icon"
             />
             <p className="text-xl">Blue Skies</p>
