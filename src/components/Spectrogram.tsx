@@ -175,26 +175,31 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
-          <div
-            className="flex flex-row justify-start items-center bg-white/50 cursor-pointer  px-4 py-2  w-full"
-            onClick={() => {
-              startAudio();
-              toggleAudio();
-            }}
-          >
-            <div className="mr-2">
-              <img
-                className="h-[50px] object-contain"
-                src="/NA_white_on_trans.png"
-                alt="Niemo Audio Logo"
-              />
+          <div className="absolute ">
+            <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
+            <div
+              className="flex flex-row justify-start items-center bg-white/50 cursor-pointer  px-4 py-2  w-full"
+              onClick={() => {
+                startAudio();
+                toggleAudio();
+              }}
+            >
+              <div className="mr-2">
+                <img
+                  className="h-[50px] object-contain"
+                  src="/NA_white_on_trans.png"
+                  alt="Niemo Audio Logo"
+                />
+              </div>
+              <h4 className="text-5xl font-bold text-white">
+                {isPlaying ? 'PAUSE' : 'PLAY'}
+              </h4>
             </div>
-            <h4 className="text-5xl font-bold text-white">
-              {isPlaying ? 'PAUSE' : 'PLAY'}
-            </h4>
+            <canvas
+              className="w-full h-[200px]"
+              ref={canvasFlippedRef}
+            ></canvas>
           </div>
-          <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>
         </>
       )}
     </div>
