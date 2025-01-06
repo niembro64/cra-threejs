@@ -321,7 +321,7 @@ const MyThree: React.FC = () => {
           {/* when the user hovers, change colors, */}
           {/* and when user clicks change colors  */}
           <button
-            className="w-[90%] px-4 py-2 mb-4 border border-transparent hover:border-white rounded hover:bg-purple-800  hover:text-white active:bg-purple-800/50 active:border-white/50  text-3xl uppercase"
+            className="w-[90%] px-4 py-2 mb-4 border border-transparent hover:border-white rounded hover:bg-purple-800  hover:text-white active:bg-purple-800/50 active:border-white/50  text-2xl uppercase"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
