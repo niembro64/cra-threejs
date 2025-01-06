@@ -7,7 +7,7 @@ export type Title =
   | 'Events'
   | 'Tanks'
   | 'Space'
-  | 'Fight'
+  | 'Seouldat'
   | 'Shows'
   | 'Media';
 
@@ -22,7 +22,7 @@ export interface Project {
   bullets: string[] | null;
   dbImage: string | null;
   icon: string | null;
-  gif: string | null;
+  gif: boolean; 
   video: boolean;
   platforms: Platform;
 }
@@ -37,7 +37,7 @@ export const projects: Project[] = [
   //   bullets: null,
   //   dbImage: null,
   //   icon: null,
-  //   gif: null,
+  //   gif: false,
   //   video: false,
   //   platforms: 'both',
   // },
@@ -50,7 +50,7 @@ export const projects: Project[] = [
   //   bullets: null,
   //   dbImage: null,
   //   icon: null,
-  //   gif: null,
+  //   gif: false,
   //   video: false,
   //   platforms: 'both',
   // },
@@ -68,12 +68,12 @@ export const projects: Project[] = [
     ],
     dbImage: null,
     icon: 'phaser-icon.png',
-    gif: null,
+    gif: true,
     video: true,
     platforms: 'desktop',
   },
   {
-    title: 'Fight',
+    title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
@@ -81,8 +81,8 @@ export const projects: Project[] = [
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
-    gif: null,
-    video: true,
+    gif: false,
+    video: false,
     platforms: 'desktop',
   },
   {
@@ -94,8 +94,8 @@ export const projects: Project[] = [
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
-    gif: null,
-    video: true,
+    gif: false,
+    video: false,
     platforms: 'desktop',
   },
   {
@@ -103,12 +103,12 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Complex Mobile Gaming'],
+    description: ['Mobile / Desktop Gaming'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
-    gif: null,
-    video: true,
+    gif: false,
+    video: false,
     platforms: 'desktop',
   },
   {
@@ -120,7 +120,7 @@ export const projects: Project[] = [
     bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
     dbImage: null,
     icon: 'html_css_js.png',
-    gif: null,
+    gif: true,
     video: true,
     platforms: 'desktop',
   },
@@ -138,7 +138,7 @@ export const projects: Project[] = [
   //   ],
   //   dbImage: null,
   //   icon: 'react.png',
-  //   gif: null,
+  //   gif: false,
   //   video: true,
   //   platforms: 'both',
   // },
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     stackIcon: null,
-    description: ['Exercise in Web Tidiness'],
+    description: ['Fullstack Web Tidiness'],
     bullets: [
       'CRUD Operations',
       'Data Validation',
@@ -156,7 +156,7 @@ export const projects: Project[] = [
     ],
     dbImage: null,
     icon: 'csharp.png',
-    gif: null,
+    gif: false,
     video: true,
     platforms: 'both',
   },
@@ -175,7 +175,7 @@ export const projects: Project[] = [
   //   ],
   //   dbImage: null,
   //   icon: 'python.png',
-  //   gif: null,
+  //   gif: false,
   //   video: true,
   //   platforms: 'both',
   // },
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     ],
     dbImage: null,
     icon: 'fruit.png',
-    gif: null,
+    gif: true,
     video: true,
     platforms: 'both',
   },

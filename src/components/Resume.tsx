@@ -11,9 +11,16 @@ export const Resume: React.FC = () => {
         {!isMobile && (
           <>
             <div className="h-40" />
+            {/* <div className="h-40" />
+            <div className="h-40" /> */}
+            {/* <h3 className="text-6xl font-bold mb-2">niemo.io</h3> */}
+
+            <p className="text-3xl uppercase bold">
+              Eric is an engineer specializing in web and mobile development,
+              neural networks, and game design. He emphasizes defensive
+              programming, strict type safety, and elegant solutions.
+            </p>
             <div className="h-40" />
-            <div className="h-40" />
-            <h3 className="text-6xl font-bold mb-2">niemo.io</h3>
           </>
         )}
         {isMobile && (
@@ -57,11 +64,11 @@ export const Resume: React.FC = () => {
               programming, strict type safety, and elegant solutions.
             </p>
             <p className="text-2xl uppercase">Stamford, Connecticut</p>
+            <div className="h-40" />
+            <div className="h-40" />
           </>
         )}
       </header>
-      <div className="h-40" />
-      <div className="h-40" />
       <div className="text-center mb-8">
         <h1 className="text-6xl font-bold">Demos</h1>
       </div>

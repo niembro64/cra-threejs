@@ -19,23 +19,19 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
 
   return (
     <div
-      className="relative w-[70vw] md:w-[45vw] bg-black bg-opacity-50 rounded-lg shadow-lg p-4 cursor-pointer mb-6"
+      className="relative w-[80vw] md:w-[45vw] bg-black bg-opacity-50 rounded-lg shadow-lg p-4 cursor-pointer mb-6"
       onClick={handleProjectClick}
     >
-      <h2
-        id={project.title}
-        className="text-3xl font-bold tracking-wider mb-2 mix-blend-multiply text-white"
-      >
-        {project.title.toUpperCase()}
-      </h2>
-
-      {project.icon && (
-        <img
-          src={process.env.PUBLIC_URL + '/' + project.icon}
-          alt={`${project.title}-icon`}
-          className="h-12 w-auto mb-2"
-        />
-      )}
+      <div className="flex flex-row items-start">
+        {project.icon && (
+          <img
+            src={process.env.PUBLIC_URL + '/' + project.icon}
+            alt={`${project.title}-icon`}
+            className="h-10 w-auto mb-2 mr-2"
+          />
+        )}
+        <div className="text-4xl mb-2 text-white uppercase">{project.title}</div>
+      </div>
 
       {project.description && (
         <div className="text-lg mb-2 text-white/80">
@@ -43,13 +39,15 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
         </div>
       )}
 
-      {isMobile ? (
+      {isMobile && project.gif && (
         <img
           className="w-full object-cover rounded-md"
           src={mediaSrc}
           alt={`${project.title}-gif`}
         />
-      ) : (
+      )}
+
+      {!isMobile && project.video && (
         <video
           className="w-full h-auto rounded-md"
           src={mediaSrc}

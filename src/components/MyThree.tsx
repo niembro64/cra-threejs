@@ -315,25 +315,25 @@ const MyThree: React.FC = () => {
       {!isMobile && (
         <div className="fixed w-[30%] left-0 p-4 w-auto z-10 flex flex-col items-center">
           <div className="h-40" />
-          <h1 className="text-6xl font-bold mb-4">Eric Niemeyer</h1>
+          <h1 className="text-6xl font-bold mb-4 uppercase">Eric Niemeyer</h1>
 
           {/* when the user hovers over the button, show the email */}
           {/* when the user hovers, change colors, */}
           {/* and when user clicks change colors  */}
           <button
-            className="px-4 py-2 mb-4 border border-white rounded hover:bg-purple-800  hover:text-white transition-all duration-300"
+            className="w-[90%] px-4 py-2 mb-4 border border-transparent hover:border-white rounded hover:bg-purple-800  hover:text-white active:bg-purple-800/50 active:border-white/50  text-3xl uppercase"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
           >
-            {showEmail ? email : 'Copy Email'}
+            {showEmail ? 'Copy Email' : email}
           </button>
           <img
             className="w-[70%] object-cover mb-4 pixel-art"
             src="/videos2/smashed_small.gif"
             alt="gif"
           />
-          <h1 className="text-2xl mb-4">Stamford, Connecticut</h1>
+          <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
           <h1 className="text-2xl mb-4">618-616-338O</h1>
           <AudioSpectrogram
             lowerPowerRef={lowerPowerRawRef}
