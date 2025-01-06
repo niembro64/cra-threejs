@@ -313,10 +313,15 @@ const MyThree: React.FC = () => {
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isMobile && (
-        <div className="fixed top-[25%] left-0 p-4 w-auto z-10 flex flex-col items-center">
-          <h1 className="text-4xl font-bold mb-4">Eric Niemeyer</h1>
+        <div className="fixed w-[30%] left-0 p-4 w-auto z-10 flex flex-col items-center">
+          <div className="h-40" />
+          <h1 className="text-6xl font-bold mb-4">Eric Niemeyer</h1>
+
+          {/* when the user hovers over the button, show the email */}
+          {/* when the user hovers, change colors, */}
+          {/* and when user clicks change colors  */}
           <button
-            className="px-4 py-2 mb-4 border border-white rounded hover:bg-purple-800"
+            className="px-4 py-2 mb-4 border border-white rounded hover:bg-purple-800  hover:text-white transition-all duration-300"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}

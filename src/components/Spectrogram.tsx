@@ -91,28 +91,30 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       });
                   }
 
-                  const bandWidth = (canvas.width / currentMelBands.length) * 1;
+                  const bandWidth = canvas.width / currentMelBands.length;
 
                   // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
                     const normalizedValue = melValue / 15;
                     const height = normalizedValue * canvas.height;
 
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                    flippedCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.fillStyle = 'rgba(255, 255, 255)';
+                    flippedCtx.fillStyle = 'rgba(255, 255, 255)';
+
+                    const isLastIndex = index === currentMelBands.length - 1;
 
                     // Original canvas
                     ctx.fillRect(
                       index * bandWidth,
                       canvas.height - height,
-                      bandWidth,
+                      bandWidth * (isLastIndex ? 1 : 1.2),
                       height
                     );
                     // Flipped canvas
                     flippedCtx.fillRect(
                       index * bandWidth,
                       0,
-                      bandWidth,
+                      bandWidth * (isLastIndex ? 1 : 1.2),
                       height
                     );
                   });
@@ -160,10 +162,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   }, [audioRef, audioStarted]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full">
+    <div className="w-[100%]  flex flex-col justify-center items-center">
       {!audioStarted ? (
         <img
-          className="cursor-pointer opacity-40 hover:opacity-100 transition-all w-[130px] h-[130px]"
+          className="cursor-pointer transition-all w-[130px] h-[130px]"
           src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
           onClick={startAudio}
@@ -175,31 +177,30 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          <div className="absolute ">
-            <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
-            <div
-              className="flex flex-row justify-start items-center bg-white/50 cursor-pointer  px-4 py-2  w-full"
-              onClick={() => {
-                startAudio();
-                toggleAudio();
-              }}
-            >
-              <div className="mr-2">
-                <img
-                  className="h-[50px] object-contain"
-                  src="/NA_white_on_trans.png"
-                  alt="Niemo Audio Logo"
-                />
-              </div>
-              <h4 className="text-5xl font-bold text-white">
-                {isPlaying ? 'PAUSE' : 'PLAY'}
-              </h4>
-            </div>
-            <canvas
-              className="w-full h-[200px]"
-              ref={canvasFlippedRef}
-            ></canvas>
+          {/* PUT THIS DIV A BIT OFF THE BOTTOM OF HTE SCREEN  */}
+
+          <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
+          <div
+            className="flex flex-row justify-center items-center bg-white/50 cursor-pointer  px-4 py-2  w-full bg-white"
+            onClick={() => {
+              startAudio();
+              toggleAudio();
+            }}
+          >
+            {/* <div className="mr-2">
+     
+              <img
+                className="h-[50px] object-contain   
+                  filter invert"
+                src="/NA_white_on_trans.png"
+                alt="Niemo Audio Logo"
+              />
+            </div> */}
+            <h4 className="text-5xl font-bold text-black ">
+              {isPlaying ? 'PAUSE' : 'PLAY'}
+            </h4>
           </div>
+          <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>
         </>
       )}
     </div>
