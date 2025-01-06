@@ -8,7 +8,14 @@ export const Resume: React.FC = () => {
   return (
     <div className="w-full px-4 md:px-8 py-4">
       <header className="text-center mb-8">
-        {!isMobile && <h3 className="text-3xl font-bold mb-2">niemo.io</h3>}
+        {!isMobile && (
+          <>
+            <div className="h-40" />
+            <div className="h-40" />
+            <div className="h-40" />
+            <h3 className="text-6xl font-bold mb-2">niemo.io</h3>
+          </>
+        )}
         {isMobile && (
           <>
             <div className="h-40" />
