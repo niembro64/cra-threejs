@@ -6,10 +6,11 @@ export type Title =
   | 'Pirates'
   | 'Events'
   | 'Tanks'
-  | 'Space'
+  | 'Galaxy Destroyer'
   | 'Seouldat'
+  | 'YouTube'
   | 'Shows'
-  | 'Media';
+  | 'SoundCloud';
 
 export type Platform = 'desktop' | 'mobile' | 'both';
 
@@ -22,7 +23,7 @@ export interface Project {
   bullets: string[] | null;
   dbImage: string | null;
   icon: string | null;
-  gif: boolean; 
+  gif: boolean;
   video: boolean;
   platforms: Platform;
 }
@@ -59,7 +60,7 @@ export const projects: Project[] = [
     url: 'https://smashed.niemo.io',
     stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
     stackIcon: null,
-    description: ['Multiplayer Gaming'],
+    description: ['Multiplayer Platform Fighter'],
     bullets: [
       'Rules-Based Bots',
       'Neural-Network Bots',
@@ -77,7 +78,7 @@ export const projects: Project[] = [
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Online Multiplayer Gaming'],
+    description: ['Online Multiplayer Arena Shooter'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -86,11 +87,11 @@ export const projects: Project[] = [
     platforms: 'desktop',
   },
   {
-    title: 'Space',
+    title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Simple Mobile Gaming'],
+    description: ['Mobile Vertical Scrolling Shooter'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -103,7 +104,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Mobile / Desktop Gaming'],
+    description: ['Desktop Vertical Scrolling Shooter'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -116,7 +117,7 @@ export const projects: Project[] = [
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
     stackIcon: null,
-    description: ['Exercise in Style Control'],
+    description: ['Exercise in Web Style Control'],
     bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
     dbImage: null,
     icon: 'html_css_js.png',
@@ -147,7 +148,7 @@ export const projects: Project[] = [
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     stackIcon: null,
-    description: ['Fullstack Web Tidiness'],
+    description: ['Exercise in Fullstack Web Tidiness'],
     bullets: [
       'CRUD Operations',
       'Data Validation',
@@ -180,11 +181,29 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
-    title: 'Media',
+    title: 'SoundCloud',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     stackIcon: null,
-    description: ['Original Music'],
+    description: ['Original Music & Art'],
+    bullets: [
+      ' Visual Art',
+      'Classical Music',
+      'Electronic Music',
+      'All Media Original',
+    ],
+    dbImage: null,
+    icon: 'fruit.png',
+    gif: false,
+    video: false,
+    platforms: 'both',
+  },
+  {
+    title: 'YouTube',
+    url: 'https://www.youtube.com/@niemoaudio',
+    stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
+    stackIcon: null,
+    description: ['Original Music & Video Effects'],
     bullets: [
       ' Visual Art',
       'Classical Music',

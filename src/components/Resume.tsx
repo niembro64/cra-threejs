@@ -28,7 +28,6 @@ export const Resume: React.FC = () => {
             <div className="h-40" />
             <div className="h-40" />
             <div className="h-40" />
-            <div className="h-40" />
 
             <h3 className="text-6xl font-bold mb-2">niemo.io</h3>
             <div className="h-40" />
@@ -69,18 +68,30 @@ export const Resume: React.FC = () => {
           </>
         )}
       </header>
-      <div className="text-center mb-8">
-        <h1 className="text-6xl font-bold">Demos</h1>
-      </div>
+
       <section className="mb-8">
-        <h3 className="text-2xl font-semibold mb-2">Navigation Game</h3>
+        <h3 className="w-full text-4xl text-center font-semibold mb-2">
+          Demo Navigation Game
+        </h3>
+        {isMobile && (
+          <p className="text-center mb-4">game prevents scrolling</p>
+        )}
+
         <iframe
-          className="w-full h-[600px] rounded-2xl shadow-lg"
+          className={`w-full ${
+            isMobile ? 'h-[400px]' : 'h-[600px]'
+          } rounded-2xl shadow-lg border border-white/30`}
           src="https://projects.niemo.io"
           title="Projects"
           allowFullScreen
         ></iframe>
       </section>
+
+      <div className="h-40" />
+      <div className="h-40" />
+      <div className="text-center mb-8">
+        <h1 className="text-6xl font-bold">Demos</h1>
+      </div>
       <div className="flex flex-col items-center mb-8">
         {projects.map((project, index) => (
           <ProjectDemo key={index} project={project} />
