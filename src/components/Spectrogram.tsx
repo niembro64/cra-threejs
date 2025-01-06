@@ -91,7 +91,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       });
                   }
 
-                  const bandWidth = canvas.width / currentMelBands.length;
+                  const bandWidth = (canvas.width / currentMelBands.length) * 1;
 
                   // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
@@ -177,7 +177,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
           <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
           <div
-            className="flex flex-row justify-center items-center bg-white/50 text-black cursor-pointer my-2 px-4 py-2"
+            className="flex flex-row justify-start items-center bg-white/50 cursor-pointer  px-4 py-2  w-full"
             onClick={() => {
               startAudio();
               toggleAudio();
@@ -190,8 +190,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 alt="Niemo Audio Logo"
               />
             </div>
-            <h4 className="text-2xl font-bold">
-              {isPlaying ? 'Pause' : 'Play'}
+            <h4 className="text-5xl font-bold text-white">
+              {isPlaying ? 'PAUSE' : 'PLAY'}
             </h4>
           </div>
           <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>
