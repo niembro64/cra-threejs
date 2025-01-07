@@ -17,7 +17,8 @@
   background-color: black;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #ffaaff; /* niemo-teal example */
+  background-color: rgb(100, 116, 139 );
+  /* background-color: #ffaaff; */
   border-radius: 6px;
 }
 

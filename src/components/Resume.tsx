@@ -1,40 +1,43 @@
 import React from 'react';
 import { isMobile } from './MyThree';
-import { projects } from '../data/projects';
+import { EricResumeDescription, projects } from '../data/projects';
 import ProjectDemo from './ProjectDemo';
 import { jobs, educations } from '../data/resumeData';
 
 export const Resume: React.FC = () => {
   return (
-    <div className="w-full px-4 md:px-8 py-4">
-      <header className="text-center mb-8">
-        {!isMobile && (
-          <>
-            <div className="h-40" />
-            {/* <div className="h-40" />
-            <div className="h-40" /> */}
-            {/* <h3 className="text-6xl font-bold mb-2">niemo.io</h3> */}
-
-            <p className="text-3xl uppercase bold">
-              Eric is an engineer specializing in web and mobile development,
-              neural networks, and game design. He emphasizes defensive
-              programming, strict type safety, and elegant solutions.
-            </p>
-            <div className="h-40" />
-          </>
-        )}
-        {isMobile && (
-          <>
-            <div className="h-40" />
-            <div className="h-40" />
-            <div className="h-40" />
-
-            <h3 className="text-6xl font-bold mb-2">niemo.io</h3>
-            <div className="h-40" />
-            <div className="h-40" />
-            <div className=" h-40" />
+    <div className="w-full md:px-12 py-4">
+      {!isMobile && (
+        <section
+          className={`px-4 py-12 ${
+            isMobile ? 'bg-slate-900/50' : ''
+          } text-center`}
+        >
+          <h3 className="text-[1000%]  font-bold mb-2">niemo.io</h3>
+          <div className="h-40" />
+          <p className="text-3xl bold">{EricResumeDescription}</p>
+          <div className="h-40" />
+        </section>
+      )}
+      {isMobile && (
+        <>
+          <div className="h-40" />
+          <div className="h-40" />
+          <div className="h-40" />
+          <h3 className="w-full text-center text-6xl font-bold mb-2">
+            niemo.io
+          </h3>
+          <div className="h-40" />
+          <div className="h-40" />
+          <div className=" h-40" />
+          <section
+            className={`px-4 py-12 ${
+              isMobile ? 'bg-black/70' : ''
+            } text-center`}
+          >
             <h3 className="text-6xl font-bold mb-2">ERIC NIEMEYER</h3>
             {/* <div className="h-40" /> */}
+            <p className="text-2xl uppercase">Stamford, Connecticut</p>
             <h2>
               <a
                 href="mailto:niemeyer.eric@gmail.com"
@@ -57,51 +60,59 @@ export const Resume: React.FC = () => {
                 alt="gif"
               />
             </div>
-            <p className="mb-4 uppercase">
-              Eric is an engineer specializing in web and mobile development,
-              neural networks, and game design. He emphasizes defensive
-              programming, strict type safety, and elegant solutions.
-            </p>
-            <p className="text-2xl uppercase">Stamford, Connecticut</p>
-            <div className="h-40" />
-            <div className="h-40" />
-          </>
-        )}
-      </header>
+            <p className="mb-4">{EricResumeDescription}</p>
+          </section>
+        </>
+      )}
 
-      <section className="mb-8">
-        <h3 className="w-full text-4xl text-center font-semibold mb-2">
+      <div className="h-40" />
+      <div className="h-40" />
+
+      <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
+        <h3 className="w-full text-4xl text-center font-semibold">
           Demo Navigation Game
         </h3>
-        {isMobile && (
-          <p className="text-center mb-4">game prevents scrolling</p>
-        )}
 
         <iframe
-          className={`w-full ${
-            isMobile ? 'h-[400px]' : 'h-[600px]'
-          } rounded-2xl shadow-lg border border-white/30`}
+          className={`${
+            isMobile
+              ? 'w-full h-[400px] rounded-3xl'
+              : 'w-full h-[600px] bg-blue-800 rounded-3xl'
+          }  shadow-lg  shadow-xl  hover:bg-blue-600 transition-all mt-6 justify-self-center`}
           src="https://projects.niemo.io"
           title="Projects"
           allowFullScreen
         ></iframe>
+        {isMobile && (
+          <p className="text-center mt-4 mb-4 text-xl">
+            continue scrolling here
+          </p>
+        )}
       </section>
 
       <div className="h-40" />
       <div className="h-40" />
-      <div className="text-center mb-8">
-        <h1 className="text-6xl font-bold">Demos</h1>
-      </div>
-      <div className="flex flex-col items-center mb-8">
-        {projects.map((project, index) => (
-          <ProjectDemo key={index} project={project} />
-        ))}
-      </div>
+      <section
+        className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
+      >
+        <div className="text-center mb-24">
+          <h1 className="text-6xl font-bold">Projects</h1>
+
+          <p className="text-2xl pt-4 ">
+            Original Apps, Music, & Games for Mobile & Desktop
+          </p>
+        </div>
+        <div className="flex flex-col items-center mb-8">
+          {projects.map((project, index) => (
+            <ProjectDemo key={index} project={project} />
+          ))}
+        </div>
+      </section>
 
       <div className="h-40" />
       <div className="h-40" />
 
-      <section className="mb-8">
+      <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
           <h1 className="text-6xl font-bold">Work Experience</h1>
         </div>
@@ -110,9 +121,7 @@ export const Resume: React.FC = () => {
           <div key={idx} className="mb-8">
             <h4 className="text-3xl font-bold">{job.company}</h4>
             <p className="italic text-2xl">{job.title}</p>
-            <p
-              className="text-xl"
-            >
+            <p className="text-xl">
               {job.location} • {job.dates}
             </p>
             <ul className="list-disc ml-6 mt-2 text-xl">
@@ -127,7 +136,7 @@ export const Resume: React.FC = () => {
       </section>
 
       <div className="h-40" />
-      <section className="mb-8">
+      <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
           <h1 className="text-6xl font-bold">Education</h1>
         </div>
@@ -147,7 +156,7 @@ export const Resume: React.FC = () => {
       </section>
 
       <div className="h-40" />
-      <section className="mb-8">
+      <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
           <h1 className="text-6xl font-bold">Fun Facts</h1>
         </div>

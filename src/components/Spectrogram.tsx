@@ -179,7 +179,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
           <canvas className="w-full h-[200px]" ref={canvasRef}></canvas>
           <div
-            className="flex flex-row justify-center items-center bg-white/50 cursor-pointer  px-4 py-2  w-full bg-white"
+            className={`flex flex-row justify-center items-center cursor-pointer  px-4 py-2  w-full bg-white  hover:bg-fuchsia-100 active:bg-fuchsia-200`}
             onClick={() => {
               startAudio();
               toggleAudio();

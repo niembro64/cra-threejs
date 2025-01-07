@@ -37,6 +37,8 @@ const MyThree: React.FC = () => {
     try {
       await navigator.clipboard.writeText(email);
       __DEV__ && console.log('Email copied to clipboard');
+
+
     } catch (err) {
       __DEV__ && console.error('Failed to copy email: ', err);
     }
@@ -321,7 +323,7 @@ const MyThree: React.FC = () => {
           {/* when the user hovers, change colors, */}
           {/* and when user clicks change colors  */}
           <button
-            className="w-[90%] px-4 py-2 mb-4 border border-transparent hover:border-white rounded hover:bg-purple-800  hover:text-white active:bg-purple-800/50 active:border-white/50  text-2xl uppercase"
+            className="w-[90%] px-4 py-2 mb-4 rounded hover:bg-fuchsia-500/50  active:bg-fuchsia-500/0   text-2xl uppercase transition-all"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
@@ -353,6 +355,7 @@ const MyThree: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="w-full h-[40vh] flex flex-col items-center justify-center">
+            {/* <p className="text-xl">Blue Skies,</p> */}
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
               className="w-[40px] mb-2  pixel-art"

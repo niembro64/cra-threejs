@@ -217,3 +217,6 @@ export const projects: Project[] = [
     platforms: 'both',
   },
 ];
+
+export const EricResumeDescription =
+  'Eric (Niemo) is an engineer specializing in web and mobile development, neural networks, and game design. He emphasizes defensive programming, strict type safety, and elegant solutions.';

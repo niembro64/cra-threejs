@@ -23,7 +23,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
 
   return (
     <div
-      className="relative w-[80vw] md:w-[45vw] bg-black bg-opacity-50 rounded-lg shadow-lg p-4 cursor-pointer mb-6 border border-white/30"
+      className={`relative w-full md:w-[45vw] rounded-lg p-4 cursor-pointer mb-6 transition-all hover:scale-105 transform rounded-2xl ${
+        isMobile ? '' : 'hover:bg-slate-800/50 bg-black/80'
+      }`}
       onClick={handleProjectClick}
     >
       <div className="flex flex-row items-start">
@@ -34,7 +36,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
             className="h-10 w-auto mb-2 mr-2"
           />
         )}
-        <div className="text-4xl mb-2 text-white uppercase">
+        <div className="text-4xl mb-2 text-white transition-all hover:text-white uppercase">
           {project.title}
         </div>
       </div>
