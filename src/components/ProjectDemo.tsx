@@ -11,16 +11,16 @@ interface ProjectDemoProps {
 }
 
 const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
-  const mediaSrc =
-    process.env.PUBLIC_URL +
-    '/videos2/' +
-    removeSpacesFromString(project.title) +
-    '.mp4';
   // const mediaSrc =
   //   process.env.PUBLIC_URL +
   //   '/videos2/' +
   //   removeSpacesFromString(project.title) +
-  //   (isMobile ? '.gif' : '.mp4');
+  //   '.mp4';
+  const mediaSrc =
+    process.env.PUBLIC_URL +
+    '/videos2/' +
+    removeSpacesFromString(project.title) +
+    (isMobile ? '.gif' : '.mp4');
 
   const handleProjectClick = () => {
     window.location.href = project.url;
@@ -52,7 +52,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
         </div>
       )}
 
-      {isMobile && project.gif && (
+      {/* {isMobile && project.gif && (
         <video
           className="w-full object-cover rounded-md"
           src={mediaSrc}
@@ -60,14 +60,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
           muted
           loop
         />
-      )}
-      {/* {isMobile && project.gif && (
+      )} */}
+      {isMobile && project.gif && (
         <img
           className="w-full object-cover rounded-md"
           src={mediaSrc}
           alt={`${project.title}-gif`}
         />
-      )} */}
+      )}
 
       {!isMobile && project.video && (
         <video
