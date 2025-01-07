@@ -1,8 +1,8 @@
 import React from 'react';
-import { isMobile } from './MyThree';
 import { EricResumeDescription, projects } from '../data/projects';
+import { educations, jobs } from '../data/resumeData';
+import { isMobile } from './MyThree';
 import ProjectDemo from './ProjectDemo';
-import { jobs, educations } from '../data/resumeData';
 
 export const Resume: React.FC = () => {
   return (
@@ -67,6 +67,25 @@ export const Resume: React.FC = () => {
 
       <div className="h-40" />
       <div className="h-40" />
+      <section
+        className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
+      >
+        <div className="text-center mb-24">
+          <h1 className="text-6xl font-bold">Projects</h1>
+
+          <p className="text-2xl pt-4 ">
+            Original Apps, Music, & Games for Mobile & Desktop
+          </p>
+        </div>
+        <div className="flex flex-col items-center mb-8">
+          {projects.map((project, index) => (
+            <ProjectDemo key={index} project={project} />
+          ))}
+        </div>
+      </section>
+
+      <div className="h-40" />
+      <div className="h-40" />
 
       <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <h3 className="w-full text-4xl text-center font-semibold">
@@ -88,25 +107,6 @@ export const Resume: React.FC = () => {
             continue scrolling here
           </p>
         )}
-      </section>
-
-      <div className="h-40" />
-      <div className="h-40" />
-      <section
-        className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
-      >
-        <div className="text-center mb-24">
-          <h1 className="text-6xl font-bold">Projects</h1>
-
-          <p className="text-2xl pt-4 ">
-            Original Apps, Music, & Games for Mobile & Desktop
-          </p>
-        </div>
-        <div className="flex flex-col items-center mb-8">
-          {projects.map((project, index) => (
-            <ProjectDemo key={index} project={project} />
-          ))}
-        </div>
       </section>
 
       <div className="h-40" />

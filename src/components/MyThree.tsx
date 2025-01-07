@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { projects } from '../data/projects';
-import ProjectDemo from './ProjectDemo';
 import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
 
@@ -37,8 +35,6 @@ const MyThree: React.FC = () => {
     try {
       await navigator.clipboard.writeText(email);
       __DEV__ && console.log('Email copied to clipboard');
-
-
     } catch (err) {
       __DEV__ && console.error('Failed to copy email: ', err);
     }

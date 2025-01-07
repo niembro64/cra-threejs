@@ -1,6 +1,6 @@
 import React from 'react';
 import { Project } from '../data/projects';
-import { __DEV__, isMobile } from './MyThree';
+import { isMobile } from './MyThree';
 
 const removeSpacesFromString = (str: string): string => {
   return str.replace(/\s/g, '');
@@ -15,7 +15,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
     process.env.PUBLIC_URL +
     '/videos2/' +
     removeSpacesFromString(project.title) +
-    (isMobile ? '.gif' : '.mp4');
+    '.mp4';
+  // const mediaSrc =
+  //   process.env.PUBLIC_URL +
+  //   '/videos2/' +
+  //   removeSpacesFromString(project.title) +
+  //   (isMobile ? '.gif' : '.mp4');
 
   const handleProjectClick = () => {
     window.location.href = project.url;
@@ -48,12 +53,21 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
       )}
 
       {isMobile && project.gif && (
+        <video
+          className="w-full object-cover rounded-md"
+          src={mediaSrc}
+          autoPlay
+          muted
+          loop
+        />
+      )}
+      {/* {isMobile && project.gif && (
         <img
           className="w-full object-cover rounded-md"
           src={mediaSrc}
           alt={`${project.title}-gif`}
         />
-      )}
+      )} */}
 
       {!isMobile && project.video && (
         <video
