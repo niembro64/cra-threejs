@@ -73,14 +73,14 @@ export const educations: Education[] = [
     degree: 'B.S. Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
-      'Honors, 3.73 GPA - Dec 2018',
+      'With Honors, 3.73 GPA - Dec 2018',
       'Major in Computer Engineering: Digital Design, Circuits, PCB, Microcontrollers, Digital Signal Processing, Signal Communication',
       'Minor in Computer Science: Data Structures & Algorithms, OS Design, Linux',
       'Minor in Mathematics: Calculus III, Differential Equations, Discrete Math, Engineering Statistics',
     ],
   },
   {
-    degree: 'B.S. Secondary Education Science',
+    degree: 'B.S. Secondary Education - Science',
     school: 'Southern Illinois University Edwardsville',
     details: [
       'Highschool Teaching Certification: Biology, Chemistry, Earth Science, Computer Science - Dec 2013',
