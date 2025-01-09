@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
+import { useAudioStore } from '../store/audioStore';
 
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>;
@@ -13,6 +14,14 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   upperPowerRef,
   audioRef,
 }) => {
+  const {
+    setIsMutedArray,
+    isMutedArray,
+    setIsMuted,
+    hasTouchedAMuteButton,
+    setHasTouchedAMuteButton,
+  } = useAudioStore();
+
   const [audioStarted, setAudioStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
