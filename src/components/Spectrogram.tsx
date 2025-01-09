@@ -14,10 +14,9 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   upperPowerRef,
   audioRef,
 }) => {
-  const { playMain, setPlayMain } = useAudioStore();
+  const { play, setPlay } = useAudioStore();
 
   const [audioStarted, setAudioStarted] = useState(false);
-  // const [isPlaying, setIsPlaying] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -32,15 +31,20 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
   const toggleAudio = () => {
     if (audioRef.current) {
-      if (playMain) {
+      if (play) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
       }
-      // setIsPlaying(!isPlaying);
-      setPlayMain(!playMain);
+      setPlay(!play);
     }
   };
+
+  useEffect(() => {
+    if (audioStarted && audioRef.current) {
+      audioRef.current.play();
+    }
+  }, [audioRef, audioStarted]);
 
   useEffect(() => {
     if (!audioStarted) return;
@@ -146,6 +150,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     };
 
     const audioElement = audioRef.current;
+
     if (audioElement) {
       audioElement.addEventListener('canplay', setupMeyda);
     }
@@ -158,12 +163,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
       }
     };
   }, [audioRef, audioStarted, lowerPowerRef, upperPowerRef]);
-
-  useEffect(() => {
-    if (audioStarted && audioRef.current) {
-      audioRef.current.play();
-    }
-  }, [audioRef, audioStarted]);
 
   return (
     <div className="w-[100%]  flex flex-col justify-center items-center">
@@ -199,7 +198,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               />
             </div> */}
             <h4 className="text-5xl font-bold text-black ">
-              {playMain ? 'PAUSE' : 'PLAY'}
+              {play ? 'PAUSE' : 'PLAY'}
             </h4>
           </div>
           <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>

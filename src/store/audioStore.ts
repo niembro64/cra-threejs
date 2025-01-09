@@ -1,29 +1,31 @@
 import { create } from 'zustand';
+import { Project, projects } from '../data/projects';
 
 interface AudioState {
-  playMain: boolean;
-  setPlayMain: (m: boolean) => void;
-  setIsMutedArray: (m: boolean[]) => void;
-  isMutedArray: boolean[];
-  setIsMuted: (index: number, isMuted: boolean) => void;
-  hasTouchedAMuteButton: boolean;
-  setHasTouchedAMuteButton: (hasTouched: boolean) => void;
+  play: boolean;
+  setPlay: (m: boolean) => void;
+  mutedArray: boolean[];
+  setMuted: (index: number, isMuted: boolean) => void;
+  hasTouchedAudioButton: boolean;
 }
 
 export const useAudioStore = create<AudioState>((set) => ({
-  isMutedArray: [],
-  playMain: true,
-  setPlayMain: (m) => set({ playMain: m }),
-  setIsMuted: (index, isMuted) =>
-    set((state: AudioState) => {
-      const newMutedArray = [...state.isMutedArray];
-      newMutedArray[index] = isMuted;
-      return { isMutedArray: newMutedArray };
-    }),
-  hasTouchedAMuteButton: false,
-  setIsMutedArray: (m: boolean[]) => {
-    set({ isMutedArray: m });
+  hasTouchedAudioButton: false,
+  mutedArray: projects.map((p: Project) => true),
+  play: true,
+  setPlay: (newPlayState: boolean) => {
+    set({ hasTouchedAudioButton: true });
+    set({ mutedArray: projects.map((p: Project) => true) });
+    set({ play: newPlayState });
   },
-  setHasTouchedAMuteButton: (hasTouched) =>
-    set({ hasTouchedAMuteButton: hasTouched }),
+  setMuted: (index: number, isMuted: boolean) => {
+    set({ hasTouchedAudioButton: true });
+    set({ play: false });
+    set((state: AudioState) => {
+      const m: boolean[] = [...projects.map((p) => true)];
+      m[index] = isMuted;
+
+      return { mutedArray: m };
+    });
+  },
 }));
