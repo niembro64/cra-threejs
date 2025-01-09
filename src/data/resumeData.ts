@@ -80,7 +80,7 @@ export const educations: Education[] = [
     ],
   },
   {
-    degree: 'Web Development Bootcamp',
+    degree: 'Web Dev Bootcamp',
     school: 'Coding Dojo',
     details: ['Black Belt Certification - May 2022'],
   },
@@ -92,7 +92,7 @@ export const educations: Education[] = [
     ],
   },
   {
-    degree: 'Associate in Arts: Music Education - Violin',
+    degree: 'A.A. Music Education - Violin',
     school: 'Lewis & Clark Community College',
     details: ['Violin Performance, Music Theory - May 2010'],
   },
