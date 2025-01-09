@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React from 'react';
 import { Project } from '../data/projects';
 import { isMobile } from './MyThree';
 
@@ -8,7 +8,7 @@ const removeSpacesFromString = (str: string): string => {
 
 interface ProjectDemoProps {
   project: Project;
-  setIsMuted: Dispatch<SetStateAction<boolean>>;
+  setIsMuted: () => void;
   isMuted: boolean;
   hasTouchedAMuteButton: boolean;
 }
@@ -33,7 +33,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    setIsMuted(!isMuted);
+    setIsMuted();
   };
 
   return (
@@ -56,9 +56,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
       {isMobile ? (
         <>
-          {project.description && (
+          {project.type && (
             <div className="text-xl mb-2 text-blue-300 uppercase">
-              <strong>{project.description.join('. ')}</strong>
+              <strong>{project.type}</strong>
             </div>
           )}
 
@@ -90,10 +90,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         <div className="flex flex-row">
           {/* Desktop Layout */}
           <div className="w-1/2 pr-4">
-            {project.description && (
-              <div className="text-2xl mb-2 text-white">
-                {project.description.join('. ')}
-              </div>
+            {project.type && (
+              <div className="text-2xl mb-2 text-white">{project.type}</div>
             )}
 
             {project.stack && (

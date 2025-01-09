@@ -18,8 +18,7 @@ export interface Project {
   title: Title;
   url: string;
   stack: string[] | null;
-
-  description: string[] | null;
+  type: string | null;
   bullets: string[] | null;
   icon: string | null;
   gif: boolean;
@@ -36,7 +35,7 @@ export const projects: Project[] = [
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'Express', 'MongoDB'],
-    description: ['Multiplayer Platform Fighter'],
+    type: 'Multiplayer Platform Fighter',
     bullets: [
       'Keyboard Support',
       'USB Controller Support',
@@ -57,7 +56,7 @@ export const projects: Project[] = [
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
-    description: ['Online Multiplayer Arena Shooter'],
+    type: 'Online Multiplayer Arena Shooter',
     bullets: [
       'Keyboard & Mouse Controls',
       'Play Online with Friends',
@@ -78,7 +77,7 @@ export const projects: Project[] = [
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript'],
-    description: ['Vertical Scrolling Shooter'],
+    type: 'Vertical Scrolling Shooter',
     bullets: [
       'Simple Mobile Controls',
       'Desktop Mouse & Keyboard',
@@ -97,7 +96,7 @@ export const projects: Project[] = [
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser', 'React', 'TypeScript'],
-    description: ['Free-Roam Shooter'],
+    type: 'Free-Roam Shooter',
     bullets: [
       '2-Thumbs Mobile Controls',
       'Desktop Mouse & Keyboard',
@@ -116,7 +115,7 @@ export const projects: Project[] = [
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    description: ['Exercises in Web Styling'],
+    type: 'Exercises in Web Styling',
     bullets: [
       'No Libraries',
       'No Frameworks',
@@ -154,7 +153,7 @@ export const projects: Project[] = [
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
-    description: ['Exercise in Fullstack Web'],
+    type: 'Exercise in Fullstack Web',
     bullets: [
       'CRUD Operations',
       'MVC Design Pattern',
@@ -193,7 +192,7 @@ export const projects: Project[] = [
     title: 'SoundCloud',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
-    description: ['Original Music & Art'],
+    type: 'Original Music & Art',
     bullets: [
       'Classical Music',
       'Electronic Music',
@@ -212,7 +211,7 @@ export const projects: Project[] = [
     title: 'YouTube',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
-    description: ['Original Music & Video Effects'],
+    type: 'Original Music & Video Effects',
     bullets: [
       'Classical Music',
       'Electronic Music',
