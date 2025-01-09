@@ -29,22 +29,28 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     setAudioStarted(true);
   };
 
-  const toggleAudio = () => {
-    if (audioRef.current) {
-      if (play) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setPlay(!play);
-    }
-  };
+  // const toggleAudio = () => {
+  //   if (audioRef.current) {
+  //     if (play) {
+  //       audioRef.current.pause();
+  //     } else {
+  //       audioRef.current.play();
+  //     }
+  //     setPlay(!play);
+  //   }
+  // };
 
   useEffect(() => {
-    if (audioStarted && audioRef.current) {
+    if (!audioRef.current) return;
+
+    if (!audioStarted) return;
+
+    if (play) {
       audioRef.current.play();
+    } else {
+      audioRef.current.pause();
     }
-  }, [audioRef, audioStarted]);
+  }, [play, audioRef, audioStarted]);
 
   useEffect(() => {
     if (!audioStarted) return;
@@ -185,7 +191,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             className={`flex flex-row justify-center items-center cursor-pointer  px-4 py-2  w-full bg-white  hover:bg-fuchsia-100 active:bg-fuchsia-200`}
             onClick={() => {
               startAudio();
-              toggleAudio();
+              setPlay(!play);
             }}
           >
             {/* <div className="mr-2">

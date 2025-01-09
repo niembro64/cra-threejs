@@ -11,11 +11,11 @@ interface AudioState {
 
 export const useAudioStore = create<AudioState>((set) => ({
   hasTouchedAudioButton: false,
-  mutedArray: projects.map((p: Project) => true),
+  mutedArray: [...projects.map((p: Project) => true)],
   play: true,
   setPlay: (newPlayState: boolean) => {
     set({ hasTouchedAudioButton: true });
-    set({ mutedArray: projects.map((p: Project) => true) });
+    set({ mutedArray: [...projects.map((p: Project) => true)] });
     set({ play: newPlayState });
   },
   setMuted: (index: number, isMuted: boolean) => {
