@@ -39,9 +39,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   return (
     <div
       className={`relative w-full md:w-[45vw] rounded-lg p-4 mb-6 transition-all rounded-2xl`}
-      // onClick={handleProjectClick}
     >
-      <div className="flex flex-row items-start">
+      <div className="flex flex-row items-center">
         {project.icon && (
           <img
             src={process.env.PUBLIC_URL + '/' + project.icon}
@@ -59,6 +58,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           {project.type && (
             <div className="text-xl mb-2 text-blue-300 uppercase">
               <strong>{project.type}</strong>
+            </div>
+          )}
+
+          {project.description && (
+            <div className="text-xl mb-2 text-blue-100">
+              {project.description}
             </div>
           )}
 

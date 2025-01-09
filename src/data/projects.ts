@@ -35,7 +35,15 @@ export const projects: Project[] = [
   {
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
-    stack: ['Phaser', 'Aseprite', 'Express', 'MongoDB'],
+    stack: [
+      'Phaser',
+      'BrainJS',
+      'React',
+      'TypeScript',
+      'Aseprite',
+      'Express',
+      'MongoDB',
+    ],
     type: 'Multiplayer Platform Fighter',
     bullets: [
       'Keyboard Support',
@@ -76,7 +84,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      "Eric's current obession, an online multiplayer game; an exercise in server-client zen.",
+      "Eric's current obession - an exercise in server-client zen.",
   },
   {
     title: 'Galaxy Destroyer',
