@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Project } from '../data/projects';
 import { isMobile } from './MyThree';
 
@@ -8,10 +8,17 @@ const removeSpacesFromString = (str: string): string => {
 
 interface ProjectDemoProps {
   project: Project;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
+  isMuted: boolean;
+  hasTouchedAMuteButton: boolean;
 }
 
-const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
-  const [isMuted, setIsMuted] = useState(true);
+const ProjectDemo: React.FC<ProjectDemoProps> = ({
+  project,
+  setIsMuted,
+  isMuted,
+  hasTouchedAMuteButton,
+}) => {
   const mediaSrc =
     process.env.PUBLIC_URL +
     '/videos2/' +
@@ -84,20 +91,20 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
           {/* Desktop Layout */}
           <div className="w-1/2 pr-4">
             {project.description && (
-              <div className="text-xl mb-2 text-white">
+              <div className="text-2xl mb-2 text-white">
                 {project.description.join('. ')}
               </div>
             )}
 
             {project.stack && (
-              <div className="text-lg mb-2 text-white">
-                <strong>Stack:</strong> {project.stack.join(', ')}
+              <div className="text-2xl mb-2 text-white">
+                {project.stack.join(', ')}
               </div>
             )}
           </div>
           <div className="w-1/2 pl-4">
             {project.bullets && (
-              <ul className="list-disc list-inside text-white text-lg">
+              <ul className="list-disc list-inside text-white text-2xl">
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}
@@ -113,10 +120,13 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
       {(isMobile && project.supportsMobile) ||
       (!isMobile && project.supportsDesktop) ? (
         <button
-          className="w-full px-4 py-2 mb-4 bg-blue-500 text-white rounded-3xl hover:bg-blue-700 transition-all text-2xl"
+          className="w-full px-4 py-2 mb-4 bg-blue-500 text-white rounded-3xl hover:bg-blue-600 transition-all text-2xl capitalize"
           onClick={handleProjectClick}
         >
-          {project.buttonStartText} {project.title}
+          <strong>
+            {project.buttonStartText.toUpperCase()}{' '}
+            {project.title.toUpperCase()}
+          </strong>
         </button>
       ) : (
         <button
@@ -147,15 +157,24 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
           />
           {project.hasSound && (
             <button
-              className="absolute top-2 right-2 bg-transparent text-white p-2 rounded-full z-10"
+              className="absolute bottom-2 right-2 bg-transparent text-white p-2 rounded-full z-10 shadow-xl hover:bg-white/50 transition-all"
               onClick={toggleMute}
             >
               <img
-                src={process.env.PUBLIC_URL + '/' + (isMuted ? 'no-sound.png' : 'sound.png')}
+                src={
+                  process.env.PUBLIC_URL +
+                  '/' +
+                  (isMuted ? 'no-sound.png' : 'sound.png')
+                }
                 alt={isMuted ? 'Unmute' : 'Mute'}
                 className="h-12 w-12"
               />
-              <div className="absolute bottom-0 left-0 w-full h-full rounded-full animate-ping bg-white opacity-75"></div>
+              {!hasTouchedAMuteButton && (
+                <div
+                  className="absolute top-0 left-0 w-full h-full rounded-full animate-ping
+                  bg-white opacity-50 animation-delay-2000"
+                ></div>
+              )}
             </button>
           )}
         </div>

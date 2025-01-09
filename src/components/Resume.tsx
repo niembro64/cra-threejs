@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { EricResumeDescription, projects } from '../data/projects';
 import { educations, jobs } from '../data/resumeData';
 import { isMobile } from './MyThree';
 import ProjectDemo from './ProjectDemo';
 
 export const Resume: React.FC = () => {
+  const [isMutedArray, setIsMutedArray] = useState<boolean[]>([]);
+  const [hasTouchedAMuteButton, setHasTouchedAMuteButton] = useState(false);
+
+  useEffect(() => {
+    setIsMutedArray(projects.map(() => true));
+  }, []);
+
   return (
     <div className="w-full md:px-12 py-4">
       {!isMobile && (
@@ -36,7 +43,6 @@ export const Resume: React.FC = () => {
             } text-center`}
           >
             <h3 className="text-6xl font-bold mb-2">ERIC NIEMEYER</h3>
-            {/* <div className="h-40" /> */}
             <p className="text-2xl uppercase">Stamford, Connecticut</p>
             <h2>
               <a
@@ -79,7 +85,18 @@ export const Resume: React.FC = () => {
         </div>
         <div className="flex flex-col items-center mb-8">
           {projects.map((project, index) => (
-            <ProjectDemo key={index} project={project} />
+            <ProjectDemo
+              key={index}
+              project={project}
+              isMuted={isMutedArray[index]}
+              setIsMuted={() => {
+                const m: boolean[] = projects.map(() => true);
+                m[index] = !isMutedArray[index];
+                setIsMutedArray(m);
+                setHasTouchedAMuteButton(true);
+              }}
+              hasTouchedAMuteButton={hasTouchedAMuteButton}
+            />
           ))}
         </div>
       </section>
