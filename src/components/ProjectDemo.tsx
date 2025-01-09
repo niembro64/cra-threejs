@@ -92,13 +92,13 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           <div className="w-1/2 pr-4">
             {project.type && (
               <div className="text-2xl mb-2 text-blue-300">
-                <strong>{project.type}</strong>
+                <strong>{project.type.toUpperCase()}</strong>
               </div>
             )}
 
             {project.stack && (
               <div className="text-2xl mb-2 text-fuchsia-300">
-                <strong>{project.stack.join(', ')}</strong>
+                <strong>{project.stack.join(', ').toUpperCase()}</strong>
               </div>
             )}
 

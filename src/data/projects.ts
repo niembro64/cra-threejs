@@ -35,13 +35,14 @@ export const projects: Project[] = [
   {
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
-    stack: ['Phaser', 'Express', 'MongoDB'],
+    stack: ['Phaser', 'Aseprite', 'Express', 'MongoDB'],
     type: 'Multiplayer Platform Fighter',
     bullets: [
       'Keyboard Support',
       'USB Controller Support',
       'Finite State Machine Bots',
       'Neural-Network Bots',
+      'Evolving AI Bots',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -75,7 +76,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      'My current project, an online multiplayer game built as an exercise in networking and server-client architecture.',
+      'My current obession, an online multiplayer game. An exercise in networking and server-client zen.',
   },
   {
     title: 'Galaxy Destroyer',
@@ -95,6 +96,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Play',
+    description: 'My take on a classic game genre.',
   },
   {
     title: 'Tanks',
@@ -104,6 +106,7 @@ export const projects: Project[] = [
     bullets: [
       '2-Thumbs Mobile Controls',
       'Desktop Mouse & Keyboard',
+      'Better Experience on Desktop',
       'Original Music & Sounds',
     ],
     icon: 'phaser-icon.png',
@@ -114,6 +117,8 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Play',
+    description:
+      'A unque "bullet gate" mechanic I invented - diverse gate types mirror, refract, and multiply bullets.',
   },
   {
     title: 'Design',
@@ -134,6 +139,8 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'View',
+    description:
+      'A collection of nicknacks and playthings I made to practice raw web basics.',
   },
   // {
   //   title: 'Pirates',
@@ -172,6 +179,8 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'View',
+    description:
+      'A simple event management system with user authentication, validation, and CRUD operations.',
   },
   // {
   //   title: 'Shows',
@@ -195,7 +204,7 @@ export const projects: Project[] = [
   {
     title: 'SoundCloud',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
-    stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
+    stack: ['FL Studio'],
     type: 'Original Music & Art',
     bullets: [
       'Classical Music',
@@ -210,11 +219,13 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'Go to',
+    description:
+      'A collection of original music I have created over the years.',
   },
   {
     title: 'YouTube',
     url: 'https://www.youtube.com/@niemoaudio',
-    stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
+    stack: ['FL Studio', 'Adobe CS'],
     type: 'Original Music & Video Effects',
     bullets: [
       'Classical Music',
@@ -229,6 +240,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Go to',
+    description: 'Music I have created over the years - but with visuals lol.',
   },
 ];
 
