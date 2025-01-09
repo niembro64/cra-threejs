@@ -21,7 +21,6 @@ export interface Project {
 
   description: string[] | null;
   bullets: string[] | null;
-  dbImage: string | null;
   icon: string | null;
   gif: boolean;
   video: boolean;
@@ -41,10 +40,10 @@ export const projects: Project[] = [
     bullets: [
       'Keyboard Support',
       'USB Controller Support',
-      'Rules-Based Bots',
+      'Finite State Machine Bots',
       'Neural-Network Bots',
+      'Evolving NN Bots',
     ],
-    dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
@@ -60,11 +59,12 @@ export const projects: Project[] = [
     stack: ['Phaser', 'Express', 'Socket.io'],
     description: ['Online Multiplayer Arena Shooter'],
     bullets: [
-      'Keyboard Support',
-      'Authoritative Reconciliation ',
-      'Game In-Progress',
+      'Keyboard & Mouse Controls',
+      'Play Online with Friends',
+      'Authoritative Server',
+      'Client-Side Prediction',
+      'Server-Client Reconciliation',
     ],
-    dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
@@ -82,9 +82,8 @@ export const projects: Project[] = [
     bullets: [
       'Simple Mobile Controls',
       'Desktop Mouse & Keyboard',
-      'Original Sound Effects',
+      'Original Sounds Effects',
     ],
-    dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
@@ -102,9 +101,8 @@ export const projects: Project[] = [
     bullets: [
       '2-Thumbs Mobile Controls',
       'Desktop Mouse & Keyboard',
-      'Original Music & Sound Effects',
+      'Original Music & Sounds',
     ],
-    dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
@@ -125,7 +123,6 @@ export const projects: Project[] = [
       'Vanilla Web Development',
       'All Original Content',
     ],
-    dbImage: null,
     icon: 'html_css_js.png',
     gif: true,
     video: true,
@@ -164,7 +161,6 @@ export const projects: Project[] = [
       'EF Core LINQ ORM (SQL)',
       'Front & Backend Validation',
     ],
-    dbImage: null,
     icon: 'csharp.png',
     gif: true,
     video: true,
@@ -203,7 +199,6 @@ export const projects: Project[] = [
       'Electronic Music',
       'All Original Music & Art',
     ],
-    dbImage: null,
     icon: 'soundcloud.png',
     gif: true,
     video: true,
@@ -218,8 +213,11 @@ export const projects: Project[] = [
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
     description: ['Original Music & Video Effects'],
-    bullets: ['Classical Music', 'Electronic Music', 'All Original Music & Art'],
-    dbImage: null,
+    bullets: [
+      'Classical Music',
+      'Electronic Music',
+      'All Original Music & Art',
+    ],
     icon: 'YouTube.png',
     gif: true,
     video: true,
