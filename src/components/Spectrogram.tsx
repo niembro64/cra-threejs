@@ -14,16 +14,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   upperPowerRef,
   audioRef,
 }) => {
-  const {
-    setIsMutedArray,
-    isMutedArray,
-    setIsMuted,
-    hasTouchedAMuteButton,
-    setHasTouchedAMuteButton,
-  } = useAudioStore();
+  const { playMain, setPlayMain } = useAudioStore();
 
   const [audioStarted, setAudioStarted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  // const [isPlaying, setIsPlaying] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -38,12 +32,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
   const toggleAudio = () => {
     if (audioRef.current) {
-      if (isPlaying) {
+      if (playMain) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
       }
-      setIsPlaying(!isPlaying);
+      // setIsPlaying(!isPlaying);
+      setPlayMain(!playMain);
     }
   };
 
@@ -204,7 +199,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               />
             </div> */}
             <h4 className="text-5xl font-bold text-black ">
-              {isPlaying ? 'PAUSE' : 'PLAY'}
+              {playMain ? 'PAUSE' : 'PLAY'}
             </h4>
           </div>
           <canvas className="w-full h-[200px]" ref={canvasFlippedRef}></canvas>

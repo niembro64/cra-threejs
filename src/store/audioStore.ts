@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 
 interface AudioState {
+  playMain: boolean;
+  setPlayMain: (m: boolean) => void;
   setIsMutedArray: (m: boolean[]) => void;
   isMutedArray: boolean[];
   setIsMuted: (index: number, isMuted: boolean) => void;
@@ -10,6 +12,8 @@ interface AudioState {
 
 export const useAudioStore = create<AudioState>((set) => ({
   isMutedArray: [],
+  playMain: true,
+  setPlayMain: (m) => set({ playMain: m }),
   setIsMuted: (index, isMuted) =>
     set((state: AudioState) => {
       const newMutedArray = [...state.isMutedArray];
