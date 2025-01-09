@@ -17,8 +17,9 @@
   background-color: black;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(100, 116, 139 );
-  /* background-color: #ffaaff; */
+  /* USE TAILWIND blue-400 */
+  background-color: #4299e1;
+
   border-radius: 6px;
 }
 

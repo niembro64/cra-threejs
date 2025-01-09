@@ -18,7 +18,7 @@ export interface Project {
   title: Title;
   url: string;
   stack: string[] | null;
-  stackIcon: string | null;
+
   description: string[] | null;
   bullets: string[] | null;
   dbImage: string | null;
@@ -29,20 +29,20 @@ export interface Project {
   supportsMobile: boolean;
   supportsDesktop: boolean;
   hasSound: boolean;
+  buttonStartText: string;
 }
 
 export const projects: Project[] = [
   {
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
-    stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
-    stackIcon: null,
+    stack: ['Phaser', 'Express', 'MongoDB'],
     description: ['Multiplayer Platform Fighter'],
     bullets: [
+      'Keyboard Support',
+      'USB Controller Support',
       'Rules-Based Bots',
       'Neural-Network Bots',
-      'Supports 4 USB Controllers',
-      'Supports 2-Players on Keyboard',
     ],
     dbImage: null,
     icon: 'phaser-icon.png',
@@ -52,14 +52,18 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
+    buttonStartText: 'Play',
   },
   {
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
-    stack: ['Phaser3', 'React', 'TypeScript'],
-    stackIcon: null,
+    stack: ['Phaser', 'Express', 'Socket.io'],
     description: ['Online Multiplayer Arena Shooter'],
-    bullets: ['Desktop', 'Game In-Progress'],
+    bullets: [
+      'Keyboard Support',
+      'Authoritative Reconciliation ',
+      'Game In-Progress',
+    ],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
@@ -67,15 +71,15 @@ export const projects: Project[] = [
     platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: false,
-    hasSound: true,
+    hasSound: false,
+    buttonStartText: 'Play',
   },
   {
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
-    stack: ['Phaser3', 'React', 'TypeScript'],
-    stackIcon: null,
+    stack: ['Phaser', 'React', 'TypeScript'],
     description: ['Vertical Scrolling Shooter'],
-    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    bullets: ['Simple Mobile Controls', 'Desktop Mouse & Keyboard'],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
@@ -84,14 +88,14 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
+    buttonStartText: 'Play',
   },
   {
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
-    stack: ['Phaser3', 'React', 'TypeScript'],
-    stackIcon: null,
-    description: ['Vertical Scrolling Shooter (Desktop)'],
-    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    stack: ['Phaser', 'React', 'TypeScript'],
+    description: ['Free-Roam Shooter'],
+    bullets: ['2-Thumbs Mobile Controls', 'Desktop Mouse & Keyboard'],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
@@ -100,14 +104,19 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
+    buttonStartText: 'Play',
   },
   {
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    stackIcon: null,
-    description: ['Exercise in Web Style Control'],
-    bullets: ['No Libraries', 'No Frameworks', 'Vanilla Web Development'],
+    description: ['Exercises in Web Styling'],
+    bullets: [
+      'No Libraries',
+      'No Frameworks',
+      'Vanilla Web Development',
+      'All Original Content',
+    ],
     dbImage: null,
     icon: 'html_css_js.png',
     gif: true,
@@ -116,6 +125,7 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
+    buttonStartText: 'View',
   },
   // {
   //   title: 'Pirates',
@@ -139,13 +149,12 @@ export const projects: Project[] = [
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
-    stackIcon: null,
     description: ['Exercise in Fullstack Web'],
     bullets: [
       'CRUD Operations',
-      'Data Validation',
       'MVC Design Pattern',
       'EF Core LINQ ORM (SQL)',
+      'Front & Backend Validation',
     ],
     dbImage: null,
     icon: 'csharp.png',
@@ -155,6 +164,7 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
+    buttonStartText: 'View',
   },
   // {
   //   title: 'Shows',
@@ -179,13 +189,12 @@ export const projects: Project[] = [
     title: 'SoundCloud',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
-    stackIcon: null,
     description: ['Original Music & Art'],
     bullets: [
       ' Visual Art',
       'Classical Music',
       'Electronic Music',
-      'All Media Original',
+      'All Original Content',
     ],
     dbImage: null,
     icon: 'soundcloud.png',
@@ -195,18 +204,18 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
+    buttonStartText: 'Go to',
   },
   {
     title: 'YouTube',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe CS', 'WordPress', 'CloudFlare', 'Synology'],
-    stackIcon: null,
     description: ['Original Music & Video Effects'],
     bullets: [
       ' Visual Art',
       'Classical Music',
       'Electronic Music',
-      'All Media Original',
+      'All Original Content',
     ],
     dbImage: null,
     icon: 'YouTube.png',
@@ -216,6 +225,7 @@ export const projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
+    buttonStartText: 'Go to',
   },
 ];
 

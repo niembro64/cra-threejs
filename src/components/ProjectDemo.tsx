@@ -42,32 +42,41 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
             className="h-10 w-auto mb-2 mr-2"
           />
         )}
-        <div className="text-4xl mb-2 text-white transition-all hover:text-white uppercase">
-          {project.title}
+        <div className="text-4xl mb-2 uppercase">
+          <strong>{project.title}</strong>
         </div>
       </div>
 
       {isMobile ? (
         <>
-          {/* Mobile Layout */}
           {project.description && (
-            <div className="text-xl mb-2 text-white">
-              {project.description.join('. ')}
+            <div className="text-xl mb-2 text-blue-300 uppercase">
+              <strong>{project.description.join('. ')}</strong>
             </div>
           )}
 
           {project.stack && (
-            <div className="text-lg mb-2 text-white">
-              <strong>Stack:</strong> {project.stack.join(', ')}
-            </div>
+            <>
+              <div className="text-xl text-fuchsia-300">
+                <strong>STACK</strong>
+              </div>
+              <div className="text-xl mb-2 text-fuchsia-100">
+                {project.stack.join(', ')}
+              </div>
+            </>
           )}
 
           {project.bullets && (
-            <ul className="list-disc list-inside text-white">
-              {project.bullets.map((bullet, index) => (
-                <li key={index}>{bullet}</li>
-              ))}
-            </ul>
+            <>
+              <div className="text-xl text-green-300">
+                <strong>FEATURES</strong>
+              </div>
+              <ul className="list-disc text-xl list-inside text-green-100">
+                {project.bullets.map((bullet, index) => (
+                  <li key={index}>{bullet}</li>
+                ))}
+              </ul>
+            </>
           )}
         </>
       ) : (
@@ -88,7 +97,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
           </div>
           <div className="w-1/2 pl-4">
             {project.bullets && (
-              <ul className="list-disc list-inside text-white">
+              <ul className="list-disc list-inside text-white text-lg">
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}
@@ -104,12 +113,20 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
       {(isMobile && project.supportsMobile) ||
       (!isMobile && project.supportsDesktop) ? (
         <button
-          className="w-full py-2 mb-4 bg-blue-500 text-white rounded-3xl over:bg-blue-700 transition-all"
+          className="w-full px-4 py-2 mb-4 bg-blue-500 text-white rounded-3xl hover:bg-blue-700 transition-all text-2xl"
           onClick={handleProjectClick}
         >
-          Try It Out!
+          {project.buttonStartText} {project.title}
         </button>
-      ) : null}
+      ) : (
+        <button
+          className="w-full px-4 py-2 mb-4 bg-gray-500/50 text-white/50 hover:text-white rounded-3xl hover:bg-gray-700 transition-all text-2xl uppercase"
+          onClick={handleProjectClick}
+          disabled
+        >
+          {isMobile ? 'Desktop Only' : 'Mobile Only'}
+        </button>
+      )}
 
       {isMobile && project.gif && (
         <img
@@ -130,10 +147,15 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project }) => {
           />
           {project.hasSound && (
             <button
-              className="absolute top-2 right-2 bg-gray-800 text-white p-2 rounded-full z-10"
+              className="absolute top-2 right-2 bg-transparent text-white p-2 rounded-full z-10"
               onClick={toggleMute}
             >
-              {isMuted ? 'Unmute' : 'Mute'}
+              <img
+                src={process.env.PUBLIC_URL + '/' + (isMuted ? 'no-sound.png' : 'sound.png')}
+                alt={isMuted ? 'Unmute' : 'Mute'}
+                className="h-12 w-12"
+              />
+              <div className="absolute bottom-0 left-0 w-full h-full rounded-full animate-ping bg-white opacity-75"></div>
             </button>
           )}
         </div>
