@@ -35,15 +35,7 @@ export const projects: Project[] = [
   {
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
-    stack: [
-      'Phaser',
-      'BrainJS',
-      'React',
-      'TypeScript',
-      'Aseprite',
-      'Express',
-      'MongoDB',
-    ],
+    stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
     type: 'Multiplayer Platform Fighter',
     bullets: [
       'Keyboard Support',
@@ -83,13 +75,12 @@ export const projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'Play',
-    description:
-      "Eric's current obession - an exercise in server-client zen.",
+    description: "Eric's current obession - an exercise in server-client zen.",
   },
   {
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
-    stack: ['Phaser', 'React', 'TypeScript'],
+    stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Vertical Scrolling Shooter',
     bullets: [
       'Simple Mobile Controls',
@@ -109,7 +100,7 @@ export const projects: Project[] = [
   {
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
-    stack: ['Phaser', 'React', 'TypeScript'],
+    stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Free-Roam Shooter',
     bullets: [
       '2-Thumbs Mobile Controls',

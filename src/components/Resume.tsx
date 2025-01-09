@@ -61,7 +61,6 @@ export const Resume: React.FC = () => {
         </>
       )}
 
-
       <section
         className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
       >
@@ -74,17 +73,23 @@ export const Resume: React.FC = () => {
         </div>
         <div className="flex flex-col items-center mb-8">
           {projects.map((project, index) => (
-            <ProjectDemo
-              key={index}
-              project={project}
-              isMuted={isMutedArray[index]}
-              setIsMuted={() => {
-                const nextState: boolean = !isMutedArray[index];
+            <>
+              {index !== 0 && isMobile && (
+                // MAKE A WHITE HORIZONTAL LINE HERE
+                <div className="w-full h-0.5 bg-blue-300/50 mb-4"></div>
+              )}
+              <ProjectDemo
+                key={index}
+                project={project}
+                isMuted={isMutedArray[index]}
+                setIsMuted={() => {
+                  const nextState: boolean = !isMutedArray[index];
 
-                setIsMuted(index, nextState);
-              }}
-              hasTouchedAMuteButton={hasTouchedAudioButton}
-            />
+                  setIsMuted(index, nextState);
+                }}
+                hasTouchedAMuteButton={hasTouchedAudioButton}
+              />
+            </>
           ))}
         </div>
       </section>
@@ -129,7 +134,6 @@ export const Resume: React.FC = () => {
         </section>
       )}
 
-
       <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
           <h1 className="text-6xl font-bold">Work Experience</h1>
@@ -137,9 +141,9 @@ export const Resume: React.FC = () => {
         {/* <h3 className="text-6xl font-bold mb-4">Work</h3> */}
         {jobs.map((job, idx) => (
           <div key={idx} className="mb-8">
-            <h4 className="text-3xl font-bold">{job.company}</h4>
-            <p className="italic text-2xl">{job.title}</p>
-            <p className="text-xl">
+            <h4 className="text-3xl font-bold text-blue-300">{job.company}</h4>
+            <p className="italic text-2xl text-fuchsia-300">{job.title}</p>
+            <p className="text-xl text-emerald-300">
               {job.location} • {job.dates}
             </p>
             <ul className="list-disc ml-6 mt-2 text-xl">
@@ -160,8 +164,8 @@ export const Resume: React.FC = () => {
         </div>
         {educations.map((edu, idx) => (
           <div key={idx} className="mb-8">
-            <h4 className="text-3xl font-bold">{edu.degree}</h4>
-            <p className="italic text-xl">{edu.school}</p>
+            <h4 className="text-3xl font-bold text-blue-300">{edu.degree}</h4>
+            <p className="italic text-xl text-fuchsia-300">{edu.school}</p>
             <ul className="list-disc ml-6 mt-2 text-xl">
               {edu.details.map((detail, i) => (
                 <li key={i} className="mb-2">
@@ -180,7 +184,7 @@ export const Resume: React.FC = () => {
         </div>
 
         <div className="mb-8">
-          <h4 className="text-3xl font-bold">Featured on Wikipedia</h4>
+          <h4 className="text-3xl font-bold text-emerald-300">Featured on Wikipedia</h4>
           <p className="mt-2  text-xl">
             Eric's track{' '}
             <a
