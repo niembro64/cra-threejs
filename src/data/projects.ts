@@ -96,7 +96,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Play',
-    description: 'My take on a classic game genre.',
+    description: 'My take on a classic.',
   },
   {
     title: 'Tanks',
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'A unque "bullet gate" mechanic I invented - diverse gate types mirror, refract, and multiply bullets.',
+      'A unque "bullet gate" mechanic - varied gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
     title: 'Design',
@@ -225,7 +225,7 @@ export const projects: Project[] = [
   {
     title: 'YouTube',
     url: 'https://www.youtube.com/@niemoaudio',
-    stack: ['FL Studio', 'Adobe CS'],
+    stack: ['FL Studio', 'Adobe Premiere & After Effects'],
     type: 'Original Music & Video Effects',
     bullets: [
       'Classical Music',
