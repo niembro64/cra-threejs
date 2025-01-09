@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Project } from '../data/projects';
 import { isMobile } from './MyThree';
 
@@ -8,7 +8,7 @@ const removeSpacesFromString = (str: string): string => {
 
 interface ProjectDemoProps {
   project: Project;
-  setIsMuted: () => void;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
   isMuted: boolean;
   hasTouchedAMuteButton: boolean;
 }
@@ -33,7 +33,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    setIsMuted();
+    setIsMuted(!isMuted);
   };
 
   return (
@@ -91,18 +91,32 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           {/* Desktop Layout */}
           <div className="w-1/2 pr-4">
             {project.type && (
-              <div className="text-2xl mb-2 text-white">{project.type}</div>
+              <div className="text-2xl mb-2 text-blue-300">
+                <strong>{project.type}</strong>
+              </div>
             )}
 
             {project.stack && (
+              <div className="text-2xl mb-2 text-fuchsia-300">
+                <strong>{project.stack.join(', ')}</strong>
+              </div>
+            )}
+
+            {project.description && (
               <div className="text-2xl mb-2 text-white">
-                {project.stack.join(', ')}
+                {project.description}
               </div>
             )}
           </div>
           <div className="w-1/2 pl-4">
+            <div className="text-2xl text-green-300">
+              <strong>FEATURES</strong>
+            </div>
             {project.bullets && (
-              <ul className="list-disc list-inside text-white text-2xl">
+              <ul
+                className="list-disc list-inside text-green-100
+               text-2xl"
+              >
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}

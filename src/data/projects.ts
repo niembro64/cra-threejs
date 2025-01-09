@@ -28,6 +28,7 @@ export interface Project {
   supportsDesktop: boolean;
   hasSound: boolean;
   buttonStartText: string;
+  description?: string;
 }
 
 export const projects: Project[] = [
@@ -41,7 +42,6 @@ export const projects: Project[] = [
       'USB Controller Support',
       'Finite State Machine Bots',
       'Neural-Network Bots',
-      'Evolving NN Bots',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -51,6 +51,8 @@ export const projects: Project[] = [
     supportsMobile: false,
     hasSound: true,
     buttonStartText: 'Play',
+    description:
+      'This project represents two years of experimentation with neural networks and multiplayer game design.',
   },
   {
     title: 'Seouldat',
@@ -72,6 +74,8 @@ export const projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'Play',
+    description:
+      'My current project, an online multiplayer game built as an exercise in networking and server-client architecture.',
   },
   {
     title: 'Galaxy Destroyer',
