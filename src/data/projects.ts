@@ -26,6 +26,9 @@ export interface Project {
   gif: boolean;
   video: boolean;
   platforms: Platform;
+  supportsMobile: boolean;
+  supportsDesktop: boolean;
+  hasSound: boolean;
 }
 
 export const projects: Project[] = [
@@ -34,44 +37,53 @@ export const projects: Project[] = [
     url: 'https://smashed.niemo.io',
     stack: ['Phaser3', 'React', 'TypeScript', 'Express', 'MongoDB'],
     stackIcon: null,
-    description: ['Multiplayer Platform Fighter (Desktop)'],
+    description: ['Multiplayer Platform Fighter'],
     bullets: [
       'Rules-Based Bots',
       'Neural-Network Bots',
-      'Best Experience with 4 USB SNES Controllers',
-      'Two Players on Single Keyboard Also Possible',
+      'Supports 4 USB Controllers',
+      'Supports 2-Players on Keyboard',
     ],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
     platforms: 'desktop',
+    supportsDesktop: true,
+    supportsMobile: false,
+    hasSound: true,
   },
   {
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Online Multiplayer Arena Shooter (Desktop)'],
-    bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
+    description: ['Online Multiplayer Arena Shooter'],
+    bullets: ['Desktop', 'Game In-Progress'],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
     platforms: 'desktop',
+    supportsDesktop: true,
+    supportsMobile: false,
+    hasSound: true,
   },
   {
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser3', 'React', 'TypeScript'],
     stackIcon: null,
-    description: ['Vertical Scrolling Shooter (Mobile)'],
+    description: ['Vertical Scrolling Shooter'],
     bullets: ['Rules-Based Bots', 'Mobile or Desktop'],
     dbImage: null,
     icon: 'phaser-icon.png',
     gif: true,
     video: true,
     platforms: 'desktop',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: true,
   },
   {
     title: 'Tanks',
@@ -85,6 +97,9 @@ export const projects: Project[] = [
     gif: true,
     video: true,
     platforms: 'desktop',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: true,
   },
   {
     title: 'Design',
@@ -98,6 +113,9 @@ export const projects: Project[] = [
     gif: true,
     video: true,
     platforms: 'desktop',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: true,
   },
   // {
   //   title: 'Pirates',
@@ -134,6 +152,9 @@ export const projects: Project[] = [
     gif: true,
     video: true,
     platforms: 'both',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
   },
   // {
   //   title: 'Shows',
@@ -171,6 +192,9 @@ export const projects: Project[] = [
     gif: true,
     video: true,
     platforms: 'both',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
   },
   {
     title: 'YouTube',
@@ -189,6 +213,9 @@ export const projects: Project[] = [
     gif: true,
     video: true,
     platforms: 'both',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: true,
   },
 ];
 
