@@ -40,7 +40,8 @@ export const projects: Project[] = [
     bullets: [
       'Keyboard Support',
       'USB Controller Support',
-      'Bots',
+      'Scripted Bots',
+      'Neural Network Bots',
       // 'Finite State Machine Bots',
       // 'Neural-Network Bots',
       // 'Evolving AI Bots',
@@ -54,7 +55,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'This project represents two years of experimentation with neural networks and multiplayer game design. Play with friends or sit back and watch a bunch of neural networks battle it out.',
+      'This project represents two years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
     title: 'Seouldat',
