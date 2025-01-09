@@ -17,8 +17,7 @@ export interface Education {
 export const jobs: Job[] = [
   {
     company: 'Venturetec',
-    title:
-      'Lead Software Engineer — Mobile & Web Apps, Neural Networks, Games',
+    title: 'Lead Software Engineer — Mobile & Web Apps, Neural Networks, Games',
     location: 'Stamford, Connecticut (Office & Remote)',
     dates: '2022 - Present',
     bullets: [
@@ -79,5 +78,17 @@ export const educations: Education[] = [
       'Minor in Computer Science: Data Structures & Algorithms, OS Design, Linux',
       'Minor in Mathematics: Calculus III, Differential Equations, Discrete Math, Engineering Statistics',
     ],
+  },
+  {
+    degree: 'B.S. Secondary Education Science',
+    school: 'Southern Illinois University Edwardsville',
+    details: [
+      'Highschool Teaching Certification: Biology, Chemistry, Earth Science, Computer Science - Dec 2013',
+    ],
+  },
+  {
+    degree: 'Associate in Arts: Music Education - Violin',
+    school: 'Lewis & Clark Community College',
+    details: ['Violin Performance, Music Theory, Music History - May 2010'],
   },
 ];
