@@ -350,14 +350,29 @@ const MyThree: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
+
           <div className="w-full h-[40vh] flex flex-col items-center justify-center">
             {/* <p className="text-xl">Blue Skies,</p> */}
+            <h2
+              onClick={() => window.open('tel:618-616-3380')}
+              className="text-3xl cursor-pointer underline mb-2"
+            >
+              618-616-338O
+            </h2>
+            <h2 className="text-3xl mb-6 underline">
+              <a href="mailto:niemeyer.eric@gmail.com">
+                niemeyer.eric@gmail.com
+              </a>
+            </h2>
+
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
               className="w-[40px] mb-2  pixel-art"
               alt="project-icon"
             />
-            <p className="text-xl">Blue Skies</p>
+            <p className="text-3xl">
+              <strong>niemo.io</strong>
+            </p>
           </div>
         </div>
       </div>

@@ -76,7 +76,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      'My current obession, an online multiplayer game. An exercise in networking and server-client zen.',
+      "Eric's current obession, an online multiplayer game; an exercise in server-client zen.",
   },
   {
     title: 'Galaxy Destroyer',
@@ -96,7 +96,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Play',
-    description: 'My take on a classic.',
+    description: "Eric's take on a classic.",
   },
   {
     title: 'Tanks',
@@ -166,7 +166,7 @@ export const projects: Project[] = [
     stack: ['C#, ASP.NET Core', 'MySQL'],
     type: 'Exercise in Fullstack Web',
     bullets: [
-      'CRUD Operations',
+      'Create, Read, Update, Delete',
       'MVC Design Pattern',
       'EF Core LINQ ORM (SQL)',
       'Front & Backend Validation',
@@ -180,7 +180,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'View',
     description:
-      'A simple event management system with user authentication, validation, and CRUD operations.',
+      'A simple event management system with user authentication, validation, and CRUD database operations.',
   },
   // {
   //   title: 'Shows',

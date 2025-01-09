@@ -14,18 +14,6 @@ export const Resume: React.FC = () => {
 
   return (
     <div className="w-full md:px-12 py-4">
-      {!isMobile && (
-        <section
-          className={`px-4 py-12 ${
-            isMobile ? 'bg-slate-900/50' : ''
-          } text-center`}
-        >
-          <h3 className="text-[1000%]  font-bold mb-2">niemo.io</h3>
-          <div className="h-40" />
-          <p className="text-3xl bold">{EricResumeDescription}</p>
-          <div className="h-40" />
-        </section>
-      )}
       {isMobile && (
         <>
           <div className="h-40" />
@@ -44,7 +32,7 @@ export const Resume: React.FC = () => {
           >
             <h3 className="text-6xl font-bold mb-2">ERIC NIEMEYER</h3>
             <p className="text-2xl uppercase">Stamford, Connecticut</p>
-            <h2>
+            {/* <h2>
               <a
                 href="mailto:niemeyer.eric@gmail.com"
                 className="text-2xl underline"
@@ -57,7 +45,7 @@ export const Resume: React.FC = () => {
               className="text-2xl cursor-pointer underline"
             >
               618-616-338O
-            </h2>
+            </h2> */}
 
             <div className="h-40 flex flex-row justify-center items-center">
               <img
@@ -66,13 +54,14 @@ export const Resume: React.FC = () => {
                 alt="gif"
               />
             </div>
-            <p className="mb-4">{EricResumeDescription}</p>
+            <p className="text-2xl mb-4">{EricResumeDescription}</p>
           </section>
+          <div className="h-40" />
+          <div className="h-40" />
         </>
       )}
 
-      <div className="h-40" />
-      <div className="h-40" />
+
       <section
         className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
       >
@@ -127,6 +116,19 @@ export const Resume: React.FC = () => {
 
       <div className="h-40" />
       <div className="h-40" />
+      {!isMobile && (
+        <section
+          className={`px-4 py-12 ${
+            isMobile ? 'bg-slate-900/50' : ''
+          } text-center`}
+        >
+          {/* <h3 className="text-[1000%]  font-bold mb-2">niemo.io</h3> */}
+          <div className="h-40" />
+          <p className="text-3xl bold">{EricResumeDescription}</p>
+          <div className="h-40" />
+        </section>
+      )}
+
 
       <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
@@ -174,7 +176,7 @@ export const Resume: React.FC = () => {
       <div className="h-40" />
       <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-bold">Fun Facts</h1>
+          <h1 className="text-6xl font-bold">Fun Fact</h1>
         </div>
 
         <div className="mb-8">
