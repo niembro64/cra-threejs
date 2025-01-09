@@ -80,15 +80,20 @@ export const educations: Education[] = [
     ],
   },
   {
+    degree: 'Web Development Bootcamp',
+    school: 'Coding Dojo',
+    details: ['Black Belt Certification - May 2022'],
+  },
+  {
     degree: 'B.S. Secondary Education - Science',
     school: 'Southern Illinois University Edwardsville',
     details: [
-      'Highschool Teaching Certification: Biology, Chemistry, Earth Science, Computer Science - Dec 2013',
+      'Highschool Teaching Certification - Dec 2013',
     ],
   },
   {
     degree: 'Associate in Arts: Music Education - Violin',
     school: 'Lewis & Clark Community College',
-    details: ['Violin Performance, Music Theory, Music History - May 2010'],
+    details: ['Violin Performance, Music Theory - May 2010'],
   },
 ];
