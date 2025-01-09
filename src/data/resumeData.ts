@@ -73,7 +73,7 @@ export const educations: Education[] = [
     degree: 'B.S. Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
-      'With Honors, 3.73 GPA - Dec 2018',
+      'With Honors, 3.73 GPA - 2018',
       'Major in Computer Engineering: Digital Design, Circuits, PCB, Microcontrollers, Digital Signal Processing, Signal Communication',
       'Minor in Computer Science: Data Structures & Algorithms, OS Design, Linux',
       'Minor in Mathematics: Calculus III, Differential Equations, Discrete Math, Engineering Statistics',
@@ -82,18 +82,18 @@ export const educations: Education[] = [
   {
     degree: 'Web Dev Bootcamp',
     school: 'Coding Dojo',
-    details: ['Black Belt Certification - May 2022'],
+    details: ['Black Belt Certification - 2022'],
   },
   {
     degree: 'B.S. Secondary Education - Science',
     school: 'Southern Illinois University Edwardsville',
     details: [
-      'Highschool Teaching Certification - Dec 2013',
+      'Highschool Teaching Certification - 2013',
     ],
   },
   {
     degree: 'A.A. Music Education - Violin',
     school: 'Lewis & Clark Community College',
-    details: ['Violin Performance, Music Theory - May 2010'],
+    details: ['Violin Performance, Music Theory - 2010'],
   },
 ];
