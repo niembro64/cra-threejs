@@ -40,9 +40,10 @@ export const projects: Project[] = [
     bullets: [
       'Keyboard Support',
       'USB Controller Support',
-      'Finite State Machine Bots',
-      'Neural-Network Bots',
-      'Evolving AI Bots',
+      'Bots',
+      // 'Finite State Machine Bots',
+      // 'Neural-Network Bots',
+      // 'Evolving AI Bots',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -53,7 +54,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'This project represents two years of experimentation with neural networks and multiplayer game design.',
+      'This project represents two years of experimentation with neural networks and multiplayer game design. Play with friends or sit back and watch a bunch of neural networks battle it out.',
   },
   {
     title: 'Seouldat',
@@ -61,11 +62,11 @@ export const projects: Project[] = [
     stack: ['Phaser', 'Express', 'Socket.io'],
     type: 'Online Multiplayer Arena Shooter',
     bullets: [
-      'Keyboard & Mouse Controls',
-      'Play Online with Friends',
-      'Authoritative Server',
-      'Client-Side Prediction',
-      'Server-Client Reconciliation',
+      'Keyboard & Mouse Support',
+      'Online Multiplayer',
+      // 'Authoritative Server',
+      // 'Client-Side Prediction',
+      // 'Server-Client Reconciliation',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -75,7 +76,8 @@ export const projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'Play',
-    description: "Eric's current obession - an exercise in server-client zen.",
+    description:
+      'Server-client zen: authoritative server, client-side prediction, & server-client reconciliation.',
   },
   {
     title: 'Galaxy Destroyer',
@@ -85,7 +87,7 @@ export const projects: Project[] = [
     bullets: [
       'Simple Mobile Controls',
       'Desktop Mouse & Keyboard',
-      'Original Sounds Effects',
+      // 'Original Sounds Effects',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -95,18 +97,19 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Play',
-    description: "Eric's take on a classic.",
+    description:
+      "Eric's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
   {
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
-    stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
+    stack: ['Phaser', 'React', 'FL Studio'],
     type: 'Free-Roam Shooter',
     bullets: [
       '2-Thumbs Mobile Controls',
       'Desktop Mouse & Keyboard',
-      'Better Experience on Desktop',
-      'Original Music & Sounds',
+      'Best Experience = Desktop',
+      // 'Original Music & Sounds',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -125,8 +128,8 @@ export const projects: Project[] = [
     stack: ['HTML', 'CSS', 'JavaScript'],
     type: 'Exercises in Web Styling',
     bullets: [
-      'No Libraries',
-      'No Frameworks',
+      // 'No Libraries',
+      // 'No Frameworks',
       'Vanilla Web Development',
       'All Original Content',
     ],
@@ -166,7 +169,7 @@ export const projects: Project[] = [
     type: 'Exercise in Fullstack Web',
     bullets: [
       'Create, Read, Update, Delete',
-      'MVC Design Pattern',
+      // 'MVC Design Pattern',
       'EF Core LINQ ORM (SQL)',
       'Front & Backend Validation',
     ],
@@ -206,8 +209,8 @@ export const projects: Project[] = [
     stack: ['FL Studio'],
     type: 'Original Music & Art',
     bullets: [
-      'Classical Music',
-      'Electronic Music',
+      'Classical & Electronic Music',
+      // 'Electronic Music',
       'All Original Music & Art',
     ],
     icon: 'soundcloud.png',
@@ -219,7 +222,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Go to',
     description:
-      'A collection of original music I have created over the years.',
+      'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
   },
   {
     title: 'YouTube',
@@ -227,8 +230,8 @@ export const projects: Project[] = [
     stack: ['FL Studio', 'Adobe Premiere & After Effects'],
     type: 'Original Music & Video Effects',
     bullets: [
-      'Classical Music',
-      'Electronic Music',
+      'Classical & Electronic Music',
+      // 'Electronic Music',
       'All Original Music & Art',
     ],
     icon: 'YouTube.png',
@@ -239,7 +242,8 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Go to',
-    description: 'Music I have created over the years - but with visuals lol.',
+    description:
+      'Music I have created over the years - but with visuals generated using the Adobe Creative Suite.',
   },
 ];
 

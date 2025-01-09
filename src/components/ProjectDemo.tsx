@@ -101,12 +101,6 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               </div>
             )}
 
-            {project.stack && (
-              <div className="text-2xl mb-2 text-fuchsia-300">
-                <strong>{project.stack.join(', ').toUpperCase()}</strong>
-              </div>
-            )}
-
             {project.description && (
               <div className="text-2xl mb-2 text-white">
                 {project.description}
@@ -114,6 +108,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             )}
           </div>
           <div className="w-1/2 pl-4">
+            {project.stack && (
+              <div className="text-2xl mb-2 text-fuchsia-300">
+                <strong>{project.stack.join(', ').toUpperCase()}</strong>
+              </div>
+            )}
+
             <div className="text-2xl text-green-300">
               <strong>FEATURES</strong>
             </div>

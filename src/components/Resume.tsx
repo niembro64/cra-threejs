@@ -31,21 +31,9 @@ export const Resume: React.FC = () => {
             } text-center`}
           >
             <h3 className="text-6xl font-bold mb-2">ERIC NIEMEYER</h3>
-            <p className="text-2xl uppercase">Stamford, Connecticut</p>
-            {/* <h2>
-              <a
-                href="mailto:niemeyer.eric@gmail.com"
-                className="text-2xl underline"
-              >
-                niemeyer.eric@gmail.com
-              </a>
-            </h2>
-            <h2
-              onClick={() => window.open('tel:618-616-3380')}
-              className="text-2xl cursor-pointer underline"
-            >
-              618-616-338O
-            </h2> */}
+            <p className="text-2xl uppercase text-blue-300">
+              Stamford, Connecticut
+            </p>
 
             <div className="h-40 flex flex-row justify-center items-center">
               <img
@@ -54,7 +42,9 @@ export const Resume: React.FC = () => {
                 alt="gif"
               />
             </div>
-            <p className="text-2xl mb-4">{EricResumeDescription}</p>
+            <p className="text-2xl mb-4 text-blue-100">
+              {EricResumeDescription}
+            </p>
           </section>
           <div className="h-40" />
           <div className="h-40" />
@@ -67,17 +57,15 @@ export const Resume: React.FC = () => {
         <div className="text-center mb-24">
           <h1 className="text-6xl font-bold">Projects</h1>
 
-          <p className="text-2xl pt-4 ">
+          <p className="text-2xl pt-4 text-blue-300">
             Original Apps, Music, & Games for Mobile & Desktop
           </p>
         </div>
         <div className="flex flex-col items-center mb-8">
           {projects.map((project, index) => (
             <>
-              {index !== 0 && isMobile && (
-                // MAKE A WHITE HORIZONTAL LINE HERE
-                <div className="w-full h-0.5 bg-blue-300/50 mb-4"></div>
-              )}
+         
+              {index !== 0 && <div className="w-full h-16"></div>}
               <ProjectDemo
                 key={index}
                 project={project}
@@ -101,6 +89,9 @@ export const Resume: React.FC = () => {
         <h3 className="w-full text-4xl text-center font-semibold">
           Demo Navigation Game
         </h3>
+        <p className="text-center text-xl mb-4">
+          A unique way to explore my projects
+        </p>
 
         <iframe
           className={`${
@@ -184,7 +175,9 @@ export const Resume: React.FC = () => {
         </div>
 
         <div className="mb-8">
-          <h4 className="text-3xl font-bold text-emerald-300">Featured on Wikipedia</h4>
+          <h4 className="text-3xl font-bold text-emerald-300">
+            Featured on Wikipedia
+          </h4>
           <p className="mt-2  text-xl">
             Eric's track{' '}
             <a
