@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
 
@@ -27,6 +26,43 @@ const MyThree: React.FC = () => {
 
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
+
+  const [showDemoNavigationGame, setShowDemoNavigationGame] =
+    useState<boolean>(false);
+
+  const [animateKirby, setAnimateKirby] = useState(false);
+  const [animateBottom, setAnimateBottom] = useState(false);
+
+  const bounceDuration = 1000; // match this to your CSS animation duration
+  const explosionDuration = 1000;
+
+  const scrollToBottom = () => {
+    const bottom = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    window.scrollTo({ top: bottom, behavior: 'smooth' });
+  };
+
+  const handleKirbyClick = async () => {
+    // scroll to the very bottom of the page
+    scrollToBottom();
+
+    // // wait 1 second
+    // await new Promise((r) => setTimeout(r, 1000));
+
+    setAnimateKirby(true);
+    // Wait for Kirby bounce to finish
+    setTimeout(() => {
+      setShowDemoNavigationGame(true);
+      setAnimateBottom(true);
+
+      // Optionally remove bottom animation after explosion ends
+      setTimeout(() => {
+        setAnimateBottom(false);
+      }, explosionDuration);
+    }, bounceDuration);
+  };
 
   const email = 'niemeyer.eric@gmail.com';
   const [showEmail, setShowEmail] = useState(false);
@@ -94,18 +130,18 @@ const MyThree: React.FC = () => {
     if (height === 0 || pageHeight === 0) return;
 
     const scene = new THREE.Scene();
-    const loader = new GLTFLoader();
+    // const loader = new GLTFLoader();
 
-    loader.load(
-      './assets/niemblender.glb',
-      (gltf) => {
-        scene.add(gltf.scene);
-      },
-      undefined,
-      (error) => {
-        console.error(error);
-      }
-    );
+    // loader.load(
+    //   'src/assets/niemblender.glb',
+    //   (gltf) => {
+    //     scene.add(gltf.scene);
+    //   },
+    //   undefined,
+    //   (error) => {
+    //     console.error(error);
+    //   }
+    // );
 
     const camera: any = new THREE.PerspectiveCamera(
       75,
@@ -291,9 +327,9 @@ const MyThree: React.FC = () => {
   }, [height, pageHeight]);
 
   return (
-    <div className="relative w-full h-full" ref={topElementRef}>
+    <div className="relative w-full min-h-screen" ref={topElementRef}>
       {/* black background behind everything */}
-      <div className="fixed top-0 left-0 w-full h-full bg-black -z-10"></div>
+      <div className="absolute top-0 left-0 w-full min-h-screen bg-black -z-10"></div>
 
       {/* 3D canvas */}
       {!isMobile && (
@@ -351,8 +387,7 @@ const MyThree: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
 
-          <div className="w-full h-[40vh] flex flex-col items-center justify-center">
-            {/* <p className="text-xl">Blue Skies,</p> */}
+          <div className="w-full flex flex-col items-center justify-center">
             <h2
               onClick={() => window.open('tel:618-616-3380')}
               className="text-3xl cursor-pointer underline mb-2"
@@ -367,13 +402,42 @@ const MyThree: React.FC = () => {
 
             <img
               src={process.env.PUBLIC_URL + '/kirby.png'}
-              className="w-[40px] mb-2  pixel-art"
+              className={`w-[40px]
+                cursor-pointer
+                
+                pixel-art ${
+                  animateKirby
+                    ? isMobile
+                      ? 'kirby-bounce-mobile'
+                      : 'kirby-bounce-desktop'
+                    : ''
+                }`}
               alt="project-icon"
+              onClick={handleKirbyClick}
             />
-            <p className="text-3xl">
-              <strong>niemo.io</strong>
+
+            <p className="text-3xl  mt-4">
+              {/* <strong>niemo.io</strong> */}
+              Shoot me an email to say hi!
             </p>
           </div>
+
+          <section
+            className={`${
+              isMobile ? 'h-[500px]' : 'h-[700px]'
+            } flex flex-col items-center justify-end z-30`}
+          >
+            {showDemoNavigationGame ? (
+              <iframe
+                className={`${
+                  isMobile ? 'w-full h-[400px]' : 'w-full h-[800px]'
+                }  shadow-xl   transition-all justify-self-center`}
+                src="https://projects.niemo.io"
+                title="Projects"
+                allowFullScreen
+              ></iframe>
+            ) : null}
+          </section>
         </div>
       </div>
     </div>

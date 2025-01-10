@@ -55,7 +55,7 @@ export const Resume: React.FC = () => {
         className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
       >
         <div className="text-center mb-24">
-          <h1 className="text-6xl font-bold">Projects</h1>
+          <h1 className="text-6xl font-bold">PROJECTS</h1>
 
           <p className="text-2xl pt-4 text-blue-300">
             Original Apps, Music, & Games for Mobile & Desktop
@@ -63,8 +63,10 @@ export const Resume: React.FC = () => {
         </div>
         <div className="flex flex-col items-center mb-8">
           {projects.map((project, index) => (
-            <>
-         
+            <div
+              key={project.title + index}
+              className={`${isMobile ? 'w-full' : 'w-[45vw]'}`}
+            >
               {index !== 0 && <div className="w-full h-16"></div>}
               <ProjectDemo
                 key={index}
@@ -77,38 +79,14 @@ export const Resume: React.FC = () => {
                 }}
                 hasTouchedAMuteButton={hasTouchedAudioButton}
               />
-            </>
+              <div className="w-full h-16"></div>
+            </div>
           ))}
         </div>
       </section>
 
       <div className="h-40" />
       <div className="h-40" />
-
-      <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
-        <h3 className="w-full text-4xl text-center font-semibold">
-          Demo Navigation Game
-        </h3>
-        <p className="text-center text-xl mb-4">
-          A unique way to explore my projects
-        </p>
-
-        <iframe
-          className={`${
-            isMobile
-              ? 'w-full h-[400px] rounded-3xl'
-              : 'w-full h-[600px] bg-blue-800 rounded-3xl'
-          }  shadow-lg  shadow-xl  hover:bg-blue-600 transition-all mt-6 justify-self-center`}
-          src="https://projects.niemo.io"
-          title="Projects"
-          allowFullScreen
-        ></iframe>
-        {isMobile && (
-          <p className="text-center mt-4 mb-4 text-xl">
-            continue scrolling here
-          </p>
-        )}
-      </section>
 
       <div className="h-40" />
       <div className="h-40" />
@@ -131,7 +109,7 @@ export const Resume: React.FC = () => {
         </div>
         {/* <h3 className="text-6xl font-bold mb-4">Work</h3> */}
         {jobs.map((job, idx) => (
-          <div key={idx} className="mb-8">
+          <div key={job.title + idx} className="mb-8">
             <h4 className="text-3xl font-bold text-blue-300">{job.company}</h4>
             <p className="italic text-2xl text-fuchsia-300">{job.title}</p>
             <p className="text-xl text-emerald-300">
@@ -139,7 +117,7 @@ export const Resume: React.FC = () => {
             </p>
             <ul className="list-disc ml-6 mt-2 text-xl">
               {job.bullets.map((b, i) => (
-                <li key={i} className="mb-2">
+                <li key={b + i} className="mb-2">
                   {b}
                 </li>
               ))}

@@ -37,9 +37,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   };
 
   return (
-    <div
-      className={`relative w-full md:w-[45vw] rounded-lg p-4 mb-6 transition-all rounded-2xl`}
-    >
+    <div className={`relative w-full rounded-2xl`}>
       <div className="flex flex-row items-center">
         {project.icon && (
           <img
@@ -166,7 +164,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {!isMobile && project.video && (
         <div className="relative">
           <video
-            className="w-full h-auto rounded-md"
+            className="w-full h-auto rounded-3xl"
             src={mediaSrc}
             autoPlay
             muted={isMuted}
