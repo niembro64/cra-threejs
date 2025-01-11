@@ -4,9 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
-
-import ContactSection from './ContactSection' // NEW
-import KirbySection from './KirbySection' // NEW
+import ContactSection from './ContactSection'
 
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
@@ -325,18 +323,18 @@ const Main: React.FC = () => {
   // Each layer is absolute, full-width, and moves at half the scroll speed (mobileScrollY * 0.5).
   // We give them a small difference in top offset so you can see multiple colored layers.
 
-  const parallaxLayers = [
-    { color: 'rgba(255,0,0,0.3)', topOffset: 0 },
-    { color: 'rgba(0,255,0,0.3)', topOffset: 400 },
-    { color: 'rgba(0,0,255,0.3)', topOffset: 800 },
-  ]
+  // const parallaxLayers = [
+  //   { color: 'rgba(255,0,0,0.3)', topOffset: 0 },
+  //   { color: 'rgba(0,255,0,0.3)', topOffset: 400 },
+  //   { color: 'rgba(0,0,255,0.3)', topOffset: 800 },
+  // ]
 
   return (
     <div className="relative min-h-screen w-full" ref={topElementRef}>
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
 
       {/* NEW: Parallax backgrounds, only on mobile */}
-      {isMobile && (
+      {/* {isMobile && (
         <div className="-z-9 absolute left-0 top-0 w-full">
           {parallaxLayers.map((layer, idx) => (
             <div
@@ -345,12 +343,14 @@ const Main: React.FC = () => {
               style={{
                 top: layer.topOffset,
                 backgroundColor: layer.color,
-                transform: `translateY(${mobileScrollY * 0.5}px)`,
+                // CHANGED: Use translate3d + will-change
+                transform: `translate3d(0, ${mobileScrollY * 0.5}px, 0)`,
+                willChange: 'transform',
               }}
             />
           ))}
         </div>
-      )}
+      )} */}
 
       {!isMobile && (
         <div

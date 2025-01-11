@@ -65,9 +65,9 @@ export const projects: Project[] = [
     bullets: [
       'Keyboard & Mouse Support',
       'Online Multiplayer',
-      // 'Authoritative Server',
-      // 'Client-Side Prediction',
-      // 'Server-Client Reconciliation',
+      'Authoritative Server',
+      'Client-Side Prediction',
+      'Server-Client Reconciliation',
     ],
     icon: 'phaser-icon.png',
     gif: true,
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'Server-client zen: authoritative server, client-side prediction, & server-client reconciliation.',
+      "Grab your keyboard, aim your mouse, and enter the fight! Open the game again in a second tab on your computer, or tell a friend to join you - it's time to battle online!",
   },
   {
     title: 'Galaxy Destroyer',
