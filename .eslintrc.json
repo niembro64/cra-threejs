@@ -18,7 +18,7 @@
     "es6": true
   },
   "rules": {
-    // Add or override rules as needed
+    // Customize rules if needed
   },
   "parserOptions": {
     "ecmaFeatures": {
