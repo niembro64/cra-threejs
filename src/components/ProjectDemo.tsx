@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Project } from '../data/projects'
-import { isMobile } from './MyThree'
+import { isMobile } from './Main'
 
 const removeSpacesFromString = (str: string): string => {
   return str.replace(/\s/g, '')

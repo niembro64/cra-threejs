@@ -1,0 +1,55 @@
+// ProjectsSection.tsx
+
+import React from 'react'
+import { Project } from '../data/projects'
+import { isMobile } from './Main'
+import ProjectDemo from './ProjectDemo'
+import { useAudioStore } from '../store/audioStore'
+
+interface ProjectsSectionProps {
+  projects: Project[]
+}
+
+const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
+  const {
+    mutedArray: isMutedArray,
+    setMuted: setIsMuted,
+    hasTouchedAudioButton,
+  } = useAudioStore()
+
+  return (
+    <section
+      className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
+    >
+      <div className="mb-24 text-center">
+        <h1 className="text-6xl font-bold">PROJECTS</h1>
+        <p className="pt-4 text-2xl text-blue-300">
+          Original Apps, Music, &amp; Games for Mobile &amp; Desktop
+        </p>
+      </div>
+      <div className="mb-8 flex flex-col items-center">
+        {projects.map((project, index) => (
+          <div
+            key={project.title + index}
+            className={`${isMobile ? 'w-full' : 'w-[45vw]'}`}
+          >
+            {index !== 0 && <div className="h-16 w-full"></div>}
+            <ProjectDemo
+              key={index}
+              project={project}
+              isMuted={isMutedArray[index]}
+              setIsMuted={() => {
+                const nextState: boolean = !isMutedArray[index]
+                setIsMuted(index, nextState)
+              }}
+              hasTouchedAMuteButton={hasTouchedAudioButton}
+            />
+            <div className="h-16 w-full"></div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export default ProjectsSection

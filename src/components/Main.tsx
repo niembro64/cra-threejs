@@ -1,12 +1,17 @@
+// Main.tsx
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 
+import ContactSection from './ContactSection' // NEW
+import KirbySection from './KirbySection' // NEW
+
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
 
-const MyThree: React.FC = () => {
+const Main: React.FC = () => {
   const refContainer = useRef<HTMLDivElement | null>(null)
   const mousePositionCurr = useRef(new THREE.Vector3())
   const mousePositionPrev = useRef(new THREE.Vector3())
@@ -30,7 +35,6 @@ const MyThree: React.FC = () => {
   const [showDemoNavigationGame, setShowDemoNavigationGame] =
     useState<boolean>(false)
 
-  const [animateKirby, setAnimateKirby] = useState(false)
   const [animateBottom, setAnimateBottom] = useState(false)
 
   const bounceDuration = 1000 // match this to your CSS animation duration
@@ -44,20 +48,15 @@ const MyThree: React.FC = () => {
     window.scrollTo({ top: bottom, behavior: 'smooth' })
   }
 
+  const [animateKirby, setAnimateKirby] = useState(false)
+
   const handleKirbyClick = async () => {
-    // scroll to the very bottom of the page
     scrollToBottom()
 
-    // // wait 1 second
-    // await new Promise((r) => setTimeout(r, 1000));
-
     setAnimateKirby(true)
-    // Wait for Kirby bounce to finish
     setTimeout(() => {
       setShowDemoNavigationGame(true)
       setAnimateBottom(true)
-
-      // Optionally remove bottom animation after explosion ends
       setTimeout(() => {
         setAnimateBottom(false)
       }, explosionDuration)
@@ -130,18 +129,6 @@ const MyThree: React.FC = () => {
     if (height === 0 || pageHeight === 0) return
 
     const scene = new THREE.Scene()
-    // const loader = new GLTFLoader();
-
-    // loader.load(
-    //   'src/assets/niemblender.glb',
-    //   (gltf) => {
-    //     scene.add(gltf.scene);
-    //   },
-    //   undefined,
-    //   (error) => {
-    //     console.error(error);
-    //   }
-    // );
 
     const camera: any = new THREE.PerspectiveCamera(
       75,
@@ -328,10 +315,8 @@ const MyThree: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full" ref={topElementRef}>
-      {/* black background behind everything */}
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
 
-      {/* 3D canvas */}
       {!isMobile && (
         <div
           className="fixed left-[-50%] top-0 -z-10 h-full w-full"
@@ -351,9 +336,6 @@ const MyThree: React.FC = () => {
           <div className="h-40" />
           <h1 className="mb-4 text-6xl font-bold uppercase">Eric Niemeyer</h1>
 
-          {/* when the user hovers over the button, show the email */}
-          {/* when the user hovers, change colors, */}
-          {/* and when user clicks change colors  */}
           <button
             className="mb-4 w-[90%] rounded px-4 py-2 text-2xl uppercase transition-all hover:bg-fuchsia-500/50 active:bg-fuchsia-500/0"
             onMouseEnter={() => setShowEmail(true)}
@@ -387,37 +369,13 @@ const MyThree: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
 
-          <div className="flex w-full flex-col items-center justify-center">
-            <h2
-              onClick={() => window.open('tel:618-616-3380')}
-              className="mb-2 cursor-pointer text-3xl underline"
-            >
-              618-616-338O
-            </h2>
-            <h2 className="mb-6 text-3xl underline">
-              <a href="mailto:niemeyer.eric@gmail.com">
-                niemeyer.eric@gmail.com
-              </a>
-            </h2>
-
-            <img
-              src={process.env.PUBLIC_URL + '/kirby.png'}
-              className={`pixel-art w-[40px] cursor-pointer ${
-                animateKirby
-                  ? isMobile
-                    ? 'kirby-bounce-mobile'
-                    : 'kirby-bounce-desktop'
-                  : ''
-              }`}
-              alt="project-icon"
-              onClick={handleKirbyClick}
-            />
-
-            <p className="mt-4 text-3xl">
-              {/* <strong>niemo.io</strong> */}
-              Shoot me an email to say hi!
-            </p>
-          </div>
+          {/* Bottom Contact + Kirby */}
+          <ContactSection
+            animateKirby={animateKirby}
+            onPhoneClick={() => window.open('tel:618-616-3380')}
+            email={email}
+            handleKirbyClick={handleKirbyClick}
+          />
 
           <section
             className={`${
@@ -441,4 +399,4 @@ const MyThree: React.FC = () => {
   )
 }
 
-export default MyThree
+export default Main
