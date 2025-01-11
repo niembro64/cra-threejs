@@ -75,7 +75,7 @@ export const projects: Project[] = [
     platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: false,
-    hasSound: false,
+    hasSound: true,
     buttonStartText: 'Play',
     description:
       'Server-client zen: authoritative server, client-side prediction, & server-client reconciliation.',
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: true,
-    hasSound: true,
+    hasSound: false,
     buttonStartText: 'View',
     description:
       'A collection of nicknacks and playthings I made to practice raw web basics.',
