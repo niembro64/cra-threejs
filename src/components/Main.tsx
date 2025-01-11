@@ -35,10 +35,7 @@ const Main: React.FC = () => {
   const [showDemoNavigationGame, setShowDemoNavigationGame] =
     useState<boolean>(false)
 
-  const [animateBottom, setAnimateBottom] = useState(false)
-
-  const bounceDuration = 1000 // match this to your CSS animation duration
-  const explosionDuration = 1000
+  const bounceDuration = 1000
 
   const scrollToBottom = () => {
     const bottom = Math.max(
@@ -56,10 +53,6 @@ const Main: React.FC = () => {
     setAnimateKirby(true)
     setTimeout(() => {
       setShowDemoNavigationGame(true)
-      setAnimateBottom(true)
-      setTimeout(() => {
-        setAnimateBottom(false)
-      }, explosionDuration)
     }, bounceDuration)
   }
 
