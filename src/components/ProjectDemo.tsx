@@ -1,16 +1,16 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Project } from '../data/projects';
-import { isMobile } from './MyThree';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Project } from '../data/projects'
+import { isMobile } from './MyThree'
 
 const removeSpacesFromString = (str: string): string => {
-  return str.replace(/\s/g, '');
-};
+  return str.replace(/\s/g, '')
+}
 
 interface ProjectDemoProps {
-  project: Project;
-  setIsMuted: Dispatch<SetStateAction<boolean>>;
-  isMuted: boolean;
-  hasTouchedAMuteButton: boolean;
+  project: Project
+  setIsMuted: Dispatch<SetStateAction<boolean>>
+  isMuted: boolean
+  hasTouchedAMuteButton: boolean
 }
 
 const ProjectDemo: React.FC<ProjectDemoProps> = ({
@@ -23,18 +23,18 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     process.env.PUBLIC_URL +
     '/videos2/' +
     removeSpacesFromString(project.title) +
-    (isMobile ? '.gif' : '.mp4');
+    (isMobile ? '.gif' : '.mp4')
 
   const handleProjectClick = () => {
-    window.location.href = project.url;
-  };
+    window.location.href = project.url
+  }
 
   const toggleMute = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    event.stopPropagation();
-    setIsMuted(!isMuted);
-  };
+    event.stopPropagation()
+    setIsMuted(!isMuted)
+  }
 
   return (
     <div className={`relative w-full rounded-2xl`}>
@@ -43,10 +43,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           <img
             src={process.env.PUBLIC_URL + '/' + project.icon}
             alt={`${project.title}-icon`}
-            className="h-10 w-auto mb-2 mr-2"
+            className="mb-2 mr-2 h-10 w-auto"
           />
         )}
-        <div className="text-4xl mb-2 uppercase">
+        <div className="mb-2 text-4xl uppercase">
           <strong>{project.title}</strong>
         </div>
       </div>
@@ -54,13 +54,13 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {isMobile ? (
         <>
           {project.type && (
-            <div className="text-xl mb-2 text-blue-300 uppercase">
+            <div className="mb-2 text-xl uppercase text-blue-300">
               <strong>{project.type}</strong>
             </div>
           )}
 
           {project.description && (
-            <div className="text-xl mb-2 text-blue-100">
+            <div className="mb-2 text-xl text-blue-100">
               {project.description}
             </div>
           )}
@@ -70,7 +70,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               <div className="text-xl text-fuchsia-300">
                 <strong>STACK</strong>
               </div>
-              <div className="text-xl mb-2 text-fuchsia-100">
+              <div className="mb-2 text-xl text-fuchsia-100">
                 {project.stack.join(', ')}
               </div>
             </>
@@ -81,7 +81,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               <div className="text-xl text-green-300">
                 <strong>FEATURES</strong>
               </div>
-              <ul className="list-disc text-xl list-inside text-green-100">
+              <ul className="list-inside list-disc text-xl text-green-100">
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}
@@ -94,20 +94,20 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           {/* Desktop Layout */}
           <div className="w-1/2 pr-4">
             {project.type && (
-              <div className="text-2xl mb-2 text-blue-300">
+              <div className="mb-2 text-2xl text-blue-300">
                 <strong>{project.type.toUpperCase()}</strong>
               </div>
             )}
 
             {project.description && (
-              <div className="text-2xl mb-2 text-white">
+              <div className="mb-2 text-2xl text-white">
                 {project.description}
               </div>
             )}
           </div>
           <div className="w-1/2 pl-4">
             {project.stack && (
-              <div className="text-2xl mb-2 text-fuchsia-300">
+              <div className="mb-2 text-2xl text-fuchsia-300">
                 <strong>{project.stack.join(', ').toUpperCase()}</strong>
               </div>
             )}
@@ -116,10 +116,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               <strong>FEATURES</strong>
             </div>
             {project.bullets && (
-              <ul
-                className="list-disc list-inside text-green-100
-               text-2xl"
-              >
+              <ul className="list-inside list-disc text-2xl text-green-100">
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}
@@ -135,7 +132,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {(isMobile && project.supportsMobile) ||
       (!isMobile && project.supportsDesktop) ? (
         <button
-          className="w-full px-4 py-2 mb-4 bg-blue-500 text-white rounded-3xl hover:bg-blue-600 transition-all text-2xl capitalize"
+          className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
           onClick={handleProjectClick}
         >
           <strong>
@@ -145,7 +142,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         </button>
       ) : (
         <button
-          className="w-full px-4 py-2 mb-4 bg-gray-500/50 text-white/50 hover:text-white rounded-3xl hover:bg-gray-700 transition-all text-2xl uppercase"
+          className="mb-4 w-full rounded-3xl bg-gray-500/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
           onClick={handleProjectClick}
           disabled
         >
@@ -155,7 +152,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
       {isMobile && project.gif && (
         <img
-          className="w-full object-cover rounded-md"
+          className="w-full rounded-md object-cover"
           src={mediaSrc}
           alt={`${project.title}-gif`}
         />
@@ -164,7 +161,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {!isMobile && project.video && (
         <div className="relative">
           <video
-            className="w-full h-auto rounded-3xl"
+            className="h-auto w-full rounded-3xl"
             src={mediaSrc}
             autoPlay
             muted={isMuted}
@@ -172,7 +169,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           />
           {project.hasSound && (
             <button
-              className="absolute bottom-2 right-2 bg-transparent text-white p-2 rounded-full z-10 shadow-xl hover:bg-white/50 transition-all"
+              className="absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
               onClick={toggleMute}
             >
               <img
@@ -185,17 +182,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
                 className="h-12 w-12"
               />
               {!hasTouchedAMuteButton && (
-                <div
-                  className="absolute top-0 left-0 w-full h-full rounded-full animate-ping
-                  bg-white opacity-50 animation-delay-2000"
-                ></div>
+                <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
               )}
             </button>
           )}
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProjectDemo;
+export default ProjectDemo

@@ -1,17 +1,17 @@
 // resumeData.ts
 
 export interface Job {
-  company: string;
-  title: string;
-  location: string;
-  dates: string;
-  bullets: string[];
+  company: string
+  title: string
+  location: string
+  dates: string
+  bullets: string[]
 }
 
 export interface Education {
-  degree: string;
-  school: string;
-  details: string[];
+  degree: string
+  school: string
+  details: string[]
 }
 
 export const jobs: Job[] = [
@@ -66,7 +66,7 @@ export const jobs: Job[] = [
       'Delivered over 25 immersive English courses and 12 pedagogy training sessions in 15 cities, serving diverse student groups.',
     ],
   },
-];
+]
 
 export const educations: Education[] = [
   {
@@ -87,13 +87,11 @@ export const educations: Education[] = [
   {
     degree: 'B.S. Secondary Education - Science',
     school: 'Southern Illinois University Edwardsville',
-    details: [
-      'Highschool Teaching Certification - 2013',
-    ],
+    details: ['Highschool Teaching Certification - 2013'],
   },
   {
     degree: 'A.A. Music Education - Violin',
     school: 'Lewis & Clark Community College',
     details: ['Violin Performance, Music Theory - 2010'],
   },
-];
+]
