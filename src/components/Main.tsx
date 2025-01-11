@@ -75,6 +75,9 @@ const Main: React.FC = () => {
     }
   }, [email])
 
+  // --- NEW STATE & EFFECT FOR PARALLAX ON MOBILE ---
+  const [mobileScrollY, setMobileScrollY] = useState(0)
+
   useEffect(() => {
     function onMessage(event: MessageEvent) {
       if (event?.data?.url) {
@@ -121,6 +124,18 @@ const Main: React.FC = () => {
     window.addEventListener('resize', updateHeight)
     return () => {
       window.removeEventListener('resize', updateHeight)
+    }
+  }, [])
+
+  // --- ONLY ON MOBILE, TRACK SCROLL TO ACHIEVE PARALLAX ---
+  useEffect(() => {
+    if (!isMobile) return
+    const handleMobileScroll = () => {
+      setMobileScrollY(window.scrollY)
+    }
+    window.addEventListener('scroll', handleMobileScroll)
+    return () => {
+      window.removeEventListener('scroll', handleMobileScroll)
     }
   }, [])
 
@@ -313,9 +328,36 @@ const Main: React.FC = () => {
     }
   }, [height, pageHeight])
 
+  // We define some new parallax layers to show behind everything else (but above the black background).
+  // Each layer is absolute, full-width, and moves at half the scroll speed (mobileScrollY * 0.5).
+  // We give them a small difference in top offset so you can see multiple colored layers.
+
+  const parallaxLayers = [
+    { color: 'rgba(255,0,0,0.3)', topOffset: 0 },
+    { color: 'rgba(0,255,0,0.3)', topOffset: 400 },
+    { color: 'rgba(0,0,255,0.3)', topOffset: 800 },
+  ]
+
   return (
     <div className="relative min-h-screen w-full" ref={topElementRef}>
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
+
+      {/* NEW: Parallax backgrounds, only on mobile */}
+      {isMobile && (
+        <div className="-z-9 absolute left-0 top-0 w-full">
+          {parallaxLayers.map((layer, idx) => (
+            <div
+              key={idx}
+              className="absolute left-0 h-[1000px] w-full"
+              style={{
+                top: layer.topOffset,
+                backgroundColor: layer.color,
+                transform: `translateY(${mobileScrollY * 0.5}px)`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {!isMobile && (
         <div
