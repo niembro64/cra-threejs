@@ -18,7 +18,9 @@
     "es6": true
   },
   "rules": {
-    // Customize rules if needed
+    "@typescript-eslint/ban-ts-comment": "off", // Allow @ts-ignore and similar comments
+    "@typescript-eslint/no-inferrable-types": "off", // Disable trivial type warning
+    "react/no-unescaped-entities": "off" // Allow unescaped characters in JSX
   },
   "parserOptions": {
     "ecmaFeatures": {
