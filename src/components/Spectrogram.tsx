@@ -29,17 +29,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     setAudioStarted(true);
   };
 
-  // const toggleAudio = () => {
-  //   if (audioRef.current) {
-  //     if (play) {
-  //       audioRef.current.pause();
-  //     } else {
-  //       audioRef.current.play();
-  //     }
-  //     setPlay(!play);
-  //   }
-  // };
-
   useEffect(() => {
     if (!audioRef.current) return;
 
