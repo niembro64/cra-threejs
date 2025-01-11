@@ -10,25 +10,25 @@ export type Title =
   | 'Seouldat'
   | 'YouTube'
   | 'Shows'
-  | 'SoundCloud';
+  | 'SoundCloud'
 
-export type Platform = 'desktop' | 'mobile' | 'both';
+export type Platform = 'desktop' | 'mobile' | 'both'
 
 export interface Project {
-  title: Title;
-  url: string;
-  stack: string[] | null;
-  type: string | null;
-  bullets: string[] | null;
-  icon: string | null;
-  gif: boolean;
-  video: boolean;
-  platforms: Platform;
-  supportsMobile: boolean;
-  supportsDesktop: boolean;
-  hasSound: boolean;
-  buttonStartText: string;
-  description?: string;
+  title: Title
+  url: string
+  stack: string[] | null
+  type: string | null
+  bullets: string[] | null
+  icon: string | null
+  gif: boolean
+  video: boolean
+  platforms: Platform
+  supportsMobile: boolean
+  supportsDesktop: boolean
+  hasSound: boolean
+  buttonStartText: string
+  description?: string
 }
 
 export const projects: Project[] = [
@@ -246,7 +246,7 @@ export const projects: Project[] = [
     description:
       'Music I have created over the years - but with visuals generated using the Adobe Creative Suite.',
   },
-];
+]
 
 export const EricResumeDescription =
-  'Eric (Niemo) is an engineer specializing in web and mobile development, neural networks, and game design. He emphasizes defensive programming, strict type safety, and elegant solutions.';
+  'Eric (Niemo) is an engineer specializing in web and mobile development, neural networks, and game design. He emphasizes defensive programming, strict type safety, and elegant solutions.'
