@@ -121,7 +121,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'A unque "bullet gate" mechanic - varied gate types mirror, transmit, refract, and multiply bullets.',
+      'A unique "bullet gate" mechanic - varied gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
     title: 'Design',
