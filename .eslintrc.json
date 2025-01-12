@@ -18,9 +18,21 @@
     "es6": true
   },
   "rules": {
-    "@typescript-eslint/ban-ts-comment": "off", // Allow @ts-ignore and similar comments
-    "@typescript-eslint/no-inferrable-types": "off", // Disable trivial type warning
-    "react/no-unescaped-entities": "off" // Allow unescaped characters in JSX
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^React$" }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "singleQuote": true
+      }
+    ]
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -28,5 +40,14 @@
     },
     "ecmaVersion": 2020,
     "sourceType": "module"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-explicit-any": "warn"
+      }
+    }
+  ]
 }
