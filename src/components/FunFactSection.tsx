@@ -33,8 +33,8 @@ const FunFactSection: React.FC = () => {
           >
             Drum and Bass
           </a>{' '}
-          Wikipedia main page, representing the sole Drum and Bass example
-          featured.
+          Wikipedia page; it is the sole example featured for this large
+          electronic music genre.
         </p>
       </div>
     </section>
