@@ -2,9 +2,9 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import ContactSection from './ContactSection'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
-import ContactSection from './ContactSection'
 
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
@@ -426,7 +426,22 @@ const Main: React.FC = () => {
                 title="Projects"
                 allowFullScreen
               ></iframe>
-            ) : null}
+            ) : (
+              // placeholder with dashed gray border
+              <div
+                className={`${
+                  isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
+                } flex flex-col items-center justify-center justify-self-center border-8 border-dashed border-white/10 shadow-xl transition-all`}
+              >
+                {/* opacity high on image */}
+                <img
+                  className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
+                  src="/qwhite_hardpixels_transbg.png"
+                  alt="Question Mark"
+                  onClick={handleKirbyClick}
+                />
+              </div>
+            )}
           </section>
         </div>
       </div>
