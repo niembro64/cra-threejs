@@ -1,3 +1,24 @@
+import { CSSProperties } from 'react'
+
+export const tooltipDelay = 500
+
+export const toolTipStyle: CSSProperties = {
+  // color: 'white',
+  // backgroundColor: 'black',
+  color: 'black',
+  backgroundColor: 'white',
+  paddingTop: '10px',
+  fontSize: '1.5em',
+  fontWeight: 'bold',
+
+  paddingBottom: '8px',
+  paddingRight: '30px',
+  paddingLeft: '30px',
+  borderRadius: '25px',
+  zIndex: 1000,
+  // fontSize: '1.5em',
+}
+
 export type Title =
   | 'Resume'
   | 'Home'

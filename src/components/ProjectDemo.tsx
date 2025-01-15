@@ -169,7 +169,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           />
           {project.hasSound && (
             <button
-              className="absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
+              data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
+              className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
               onClick={toggleMute}
             >
               <img

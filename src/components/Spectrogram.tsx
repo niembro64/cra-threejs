@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Meyda, { MeydaFeaturesObject } from 'meyda'
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
 import { useAudioStore } from '../store/audioStore'
+import { Tooltip } from 'react-tooltip'
+import { tooltipDelay, toolTipStyle } from '../data/projects'
 
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>
@@ -161,7 +163,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
     <div className="flex w-[100%] flex-col items-center justify-center">
       {!audioStarted ? (
         <img
-          className="pixel-art h-[130px] w-[130px] cursor-pointer transition-all"
+          data-tooltip-content={'A Remix of a Bohemian Rhapsody by Niemo'}
+          className="pixel-art tooltip h-[130px] w-[130px] cursor-pointer transition-all"
           src="/qwhite_hardpixels_transbg.png"
           alt="Niemo Audio Logo"
           onClick={startAudio}
@@ -174,8 +177,12 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           </audio>
 
           <canvas className="h-[200px] w-full" ref={canvasRef}></canvas>
+
           <div
-            className={`flex w-full cursor-pointer flex-row items-center justify-center px-4 py-2 hover:bg-fuchsia-100/50 active:bg-fuchsia-200 active:text-blue-500 ${play ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+            data-tooltip-content={
+              'The audio controls the rotation of the icosahedron'
+            }
+            className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center px-4 py-2 hover:bg-fuchsia-100/50 active:bg-fuchsia-200 active:text-blue-500 ${play ? 'bg-white text-black' : 'bg-transparent text-white'}`}
             onClick={() => {
               startAudio()
               setPlay(!play)

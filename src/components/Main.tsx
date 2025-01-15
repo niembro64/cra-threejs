@@ -5,6 +5,8 @@ import * as THREE from 'three'
 import ContactSection from './ContactSection'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
+import { Tooltip } from 'react-tooltip'
+import { tooltipDelay, toolTipStyle } from '../data/projects'
 
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
@@ -380,7 +382,8 @@ const Main: React.FC = () => {
             {showEmail ? 'Copy Email' : email}
           </button>
           <img
-            className="pixel-art mb-4 w-[70%] object-cover"
+            data-tooltip-content={'His 2017 gif spawned a 2022 game'}
+            className="pixel-art tooltip mb-4 w-[70%] object-cover"
             src="/videos2/smashed_small.gif"
             alt="gif"
           />
@@ -447,6 +450,15 @@ const Main: React.FC = () => {
           </section>
         </div>
       </div>
+
+      <Tooltip
+        opacity={1}
+        anchorSelect=".tooltip"
+        place="top"
+        delayHide={tooltipDelay}
+        delayShow={tooltipDelay}
+        style={toolTipStyle}
+      />
     </div>
   )
 }

@@ -18,7 +18,7 @@ export const jobs: Job[] = [
   {
     company: 'Venturetec',
     title: 'Lead Software Engineer — Mobile & Web Apps, Neural Networks, Games',
-    location: 'Stamford, Connecticut (Office & Remote)',
+    location: 'Stamford, Connecticut',
     dates: '2022 - Present',
     bullets: [
       'AI & Fraud Detection: Trained and built NN models (Transformers, RNNs) to analyze text, acoustic signals, and NLP data (Python, PyTorch, AWS S3).',
@@ -29,7 +29,7 @@ export const jobs: Job[] = [
   {
     company: 'Rockwell Automation',
     title: 'Software Engineer II — MES & Industrial Integration',
-    location: 'St. Louis, Missouri (Office & Remote)',
+    location: 'St. Louis, Missouri',
     dates: '2018 - 2022',
     bullets: [
       'On-Site MES Configuration: Deployed and maintained industrial systems for clients like Lucid Motors, 3M, Cooper Tires, Continental Tire, and Maple Leaf Foods.',
