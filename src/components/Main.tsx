@@ -367,7 +367,7 @@ const Main: React.FC = () => {
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isMobile && (
-        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center p-4">
+        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center">
           <div className="h-40" />
           <h1 className="mb-4 text-6xl font-bold uppercase">Eric Niemeyer</h1>
 
