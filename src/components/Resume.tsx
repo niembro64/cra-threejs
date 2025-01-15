@@ -55,10 +55,12 @@ export const Resume: React.FC = () => {
       {/* PROJECTS SECTION */}
       <ProjectsSection projects={projects} />
 
-      <div className="h-40" />
-      <div className="h-40" />
-      <div className="h-40" />
-      <div className="h-40" />
+      {isMobile && (
+        <>
+          <div className="h-40" />
+          <div className="h-40" />
+        </>
+      )}
 
       {/* Only displayed if NOT mobile */}
       {!isMobile && (
