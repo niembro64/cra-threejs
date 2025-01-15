@@ -175,7 +175,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
           <canvas className="h-[200px] w-full" ref={canvasRef}></canvas>
           <div
-            className={`flex w-full cursor-pointer flex-row items-center justify-center bg-white px-4 py-2 hover:bg-fuchsia-100 active:bg-fuchsia-200`}
+            className={`flex w-full cursor-pointer flex-row items-center justify-center px-4 py-2 hover:bg-fuchsia-100/50 active:bg-fuchsia-200 active:text-blue-500 ${play ? 'bg-white text-black' : 'bg-transparent text-white'}`}
             onClick={() => {
               startAudio()
               setPlay(!play)
@@ -190,7 +190,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 alt="Niemo Audio Logo"
               />
             </div> */}
-            <h4 className="text-5xl font-bold text-black">
+            <h4
+              className={`text-5xl font-bold`}
+              // className={`text-5xl font-bold ${play ? 'text-black' : 'text-white'}`}
+            >
               {play ? 'PAUSE' : 'PLAY'}
             </h4>
           </div>
