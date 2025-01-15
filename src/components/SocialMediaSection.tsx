@@ -1,4 +1,5 @@
 import React from 'react'
+import { isMobile } from './Main'
 
 export type SocialMedia = {
   platform: string
@@ -27,14 +28,20 @@ const SocialMediaSection: React.FC = () => {
       platform: 'LinkedIn',
       url: 'https://www.linkedin.com/in/eric-niemo/',
     },
+    {
+      platform: 'GitHub',
+      url: 'https://github.com/niembro64',
+    },
   ]
 
   return (
-    <section className="px-4 py-12 text-center">
-      <div className="mb-8">
+    <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
+      <div className="mb-8 text-center">
         <h1 className="text-6xl font-bold">Follow Me</h1>
       </div>
-      <div className="flex justify-center space-x-8">
+      <div
+        className={`flex justify-center ${isMobile ? 'space-x-6' : 'space-x-10'}`}
+      >
         {socialMedia.map((social) => (
           <a
             key={social.platform}
@@ -46,47 +53,6 @@ const SocialMediaSection: React.FC = () => {
             <i className={`fab fa-${social.platform.toLowerCase()}`}></i>
           </a>
         ))}
-
-        {/* <a
-          href="https://soundcloud.com/niemoaudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-4xl text-orange-600 hover:text-orange-800"
-        >
-          <i className="fab fa-soundcloud"></i>
-        </a>
-        <a
-          href="https://www.instagram.com/niemoaudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-4xl text-pink-600 hover:text-pink-800"
-        >
-          <i className="fab fa-instagram"></i>
-        </a>
-        <a
-          href="https://www.youtube.com/@niemoaudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-4xl text-red-600 hover:text-red-800"
-        >
-          <i className="fab fa-youtube"></i>
-        </a>
-        <a
-          href="https://www.facebook.com/niemoaudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-4xl text-blue-600 hover:text-blue-800"
-        >
-          <i className="fab fa-facebook"></i>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/niemoaudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-4xl text-blue-700 hover:text-blue-900"
-        >
-          <i className="fab fa-linkedin"></i>
-        </a> */}
       </div>
     </section>
   )

@@ -404,8 +404,6 @@ const Main: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
 
-          {/* Bottom Contact + Kirby */}
-
           <ContactSection
             animateKirby={animateKirby}
             onPhoneClick={() => window.open('tel:618-616-3380')}

@@ -140,7 +140,7 @@ export const projects: Project[] = [
     platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: true,
-    hasSound: false,
+    hasSound: true,
     buttonStartText: 'View',
     description:
       'A collection of nicknacks and playthings I made to practice raw web basics.',
@@ -220,7 +220,7 @@ export const projects: Project[] = [
     platforms: 'both',
     supportsDesktop: true,
     supportsMobile: true,
-    hasSound: false,
+    hasSound: true,
     buttonStartText: 'Go to',
     description:
       'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',

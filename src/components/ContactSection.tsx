@@ -19,6 +19,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 }) => {
   return (
     <div className="flex w-full flex-col items-center justify-center">
+      <div className="mb-8 text-center">
+        <h1 className="text-6xl font-bold">Say Hi</h1>
+      </div>
       <h2
         onClick={onPhoneClick}
         className="mb-2 cursor-pointer text-3xl underline"
@@ -35,7 +38,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         onKirbyClick={handleKirbyClick}
       />
 
-      <p className="mt-4 text-3xl">Shoot me an email to say hi!</p>
+      <p className="mt-4 text-3xl">Shoot me a quick email!</p>
     </div>
   )
 }
