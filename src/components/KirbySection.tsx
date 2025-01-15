@@ -16,8 +16,9 @@ const KirbySection: React.FC<KirbySectionProps> = ({
   return (
     <div className="flex items-center justify-center">
       <img
+        data-tooltip-content={`I want to play!`}
         src={process.env.PUBLIC_URL + '/kirby.png'}
-        className={`pixel-art w-[40px] cursor-pointer ${
+        className={`tooltip pixel-art w-[40px] cursor-pointer ${
           animateKirby
             ? isMobile
               ? 'kirby-bounce-mobile'
