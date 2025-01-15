@@ -55,7 +55,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'This project represents two years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
+      'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
     title: 'Seouldat',
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      "Eric's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
+      "Niemo's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
   {
     title: 'Tanks',

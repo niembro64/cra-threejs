@@ -15,7 +15,7 @@ const FunFactSection: React.FC = () => {
           Featured on Wikipedia
         </h4>
         <p className="mt-2 text-xl">
-          Eric's track{' '}
+          Niemo's track{' '}
           <a
             href="https://en.wikipedia.org/wiki/File:Ars_Niemo_-_Small_Talk_Build_IV.ogg"
             target="_blank"
