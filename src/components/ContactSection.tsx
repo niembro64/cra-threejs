@@ -20,7 +20,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="mb-8 text-center">
-        <h1 className="text-6xl font-bold">Say Hi</h1>
+        <h1 className="text-6xl font-bold">SAY HI</h1>
       </div>
       <h2
         onClick={onPhoneClick}

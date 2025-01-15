@@ -7,7 +7,7 @@ const FunFactSection: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
-        <h1 className="text-6xl font-bold">Fun Fact</h1>
+        <h1 className="text-6xl font-bold">FUN FACT</h1>
       </div>
 
       <div className="mb-8">

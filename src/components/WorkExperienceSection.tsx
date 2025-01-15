@@ -14,7 +14,7 @@ const WorkExperienceSection: React.FC<WorkExperienceSectionProps> = ({
   return (
     <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
-        <h1 className="text-6xl font-bold">Work Experience</h1>
+        <h1 className="text-6xl font-bold">WORK EXPERIENCE</h1>
       </div>
       {jobs.map((job, idx) => (
         <div key={job.title + idx} className="mb-8">

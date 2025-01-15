@@ -12,7 +12,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ educations }) => {
   return (
     <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
-        <h1 className="text-6xl font-bold">Education</h1>
+        <h1 className="text-6xl font-bold">EDUCATION</h1>
       </div>
       {educations.map((edu, idx) => (
         <div key={idx} className="mb-8">
