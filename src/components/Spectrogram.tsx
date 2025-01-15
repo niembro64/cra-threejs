@@ -190,12 +190,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 alt="Niemo Audio Logo"
               />
             </div> */}
-            <h4
-              className={`text-5xl font-bold`}
-              // className={`text-5xl font-bold ${play ? 'text-black' : 'text-white'}`}
-            >
-              {play ? 'PAUSE' : 'PLAY'}
-            </h4>
+            <h4 className={`text-5xl font-bold`}>{play ? 'PAUSE' : 'PLAY'}</h4>
           </div>
           <canvas className="h-[200px] w-full" ref={canvasFlippedRef}></canvas>
         </>

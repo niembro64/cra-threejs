@@ -367,7 +367,7 @@ const Main: React.FC = () => {
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isMobile && (
-        <div className="fixed left-0 z-10 flex w-[30%] w-auto flex-col items-center p-4">
+        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center p-4">
           <div className="h-40" />
           <h1 className="mb-4 text-6xl font-bold uppercase">Eric Niemeyer</h1>
 
@@ -395,7 +395,7 @@ const Main: React.FC = () => {
       )}
 
       <div className="left-0 top-0 z-0 flex h-full w-full flex-col items-end">
-        <div className={`relative ${!isMobile ? 'w-[70%]' : 'w-full'} h-full`}>
+        <div className={`relative ${isMobile ? 'w-full' : 'w-[70%]'} h-full`}>
           <div className="h-auto w-full">
             <Resume />
           </div>
