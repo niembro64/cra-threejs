@@ -10,6 +10,7 @@ import ProjectsSection from './ProjectsSection'
 import WorkExperienceSection from './WorkExperienceSection'
 import EducationSection from './EducationSection'
 import FunFactSection from './FunFactSection'
+import SocialMediaSection from './SocialMediaSection'
 
 export const Resume: React.FC = () => {
   return (
@@ -84,6 +85,11 @@ export const Resume: React.FC = () => {
 
       {/* FUN FACT SECTION */}
       <FunFactSection />
+
+      <div className="h-40" />
+
+      {/* SOCIAL MEDIA SECTION */}
+      <SocialMediaSection />
     </div>
   )
 }
