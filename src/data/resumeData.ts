@@ -21,9 +21,9 @@ export const jobs: Job[] = [
     location: 'Stamford, Connecticut (Office & Remote)',
     dates: '2022 - Present',
     bullets: [
-      'AI & Fraud Detection: Led the design of NN architectures (Transformers, RNNs) to analyze text, acoustic signals, and NLP data (Python, PyTorch, TensorFlow, AWS S3).',
+      'AI & Fraud Detection: Trained and built NN models (Transformers, RNNs) to analyze text, acoustic signals, and NLP data (Python, PyTorch, AWS S3).',
       'Full-Stack Development: Implemented mobile apps (React Native, Vue, TypeScript, Laravel, SQL) and web games (Phaser 3, Angular, Angular Material).',
-      'Creative AI Solutions: Delivered comedy/text generation apps (RNN-based), audio processing (FFT, MFCC), and interactive user experiences.',
+      'Creative AI Solutions: Trained and built acoustic analysis AI video-generation apps (RNN-based, BrainJS), audio & video processing (FFT, MFCC, FFMPG, etc), interactive experiences.',
     ],
   },
   {
