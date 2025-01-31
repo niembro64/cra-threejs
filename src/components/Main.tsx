@@ -371,7 +371,9 @@ const Main: React.FC = () => {
       {!isMobile && (
         <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center">
           <div className="h-40" />
-          <h1 className="mb-4 text-6xl font-bold uppercase">Eric Niemeyer</h1>
+          <h1 className="pixel-font mb-4 text-6xl font-bold uppercase">
+            Eric Niemeyer
+          </h1>
 
           <button
             className="mb-4 w-[90%] rounded px-4 py-2 text-2xl uppercase transition-all hover:bg-fuchsia-500/50 active:bg-fuchsia-500/0"

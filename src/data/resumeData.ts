@@ -16,19 +16,28 @@ export interface Education {
 
 export const jobs: Job[] = [
   {
-    company: 'Venturetec',
-    title: 'Lead Software Engineer — Mobile & Web Apps, Neural Networks, Games',
+    company: 'Sentien',
+    title: 'Head of Engineering',
     location: 'Stamford, Connecticut',
-    dates: '2022 - Present',
+    dates: '2025 - Present',
     bullets: [
-      'AI & Fraud Detection: Trained and built NN models (Transformers, RNNs) to analyze text, acoustic signals, and NLP data (Python, PyTorch, AWS S3).',
-      'Full-Stack Development: Implemented mobile apps (React Native, Vue, TypeScript, Laravel, SQL) and web games (Phaser 3, Angular, Angular Material).',
+      'Architecting and implementing AI systems to prevent phone fraud.',
+    ],
+  },
+  {
+    company: 'Venturetec',
+    title: 'Lead Software Engineer',
+    location: 'Stamford, Connecticut',
+    dates: '2022 - 2025',
+    bullets: [
+      'Full-Stack Development: Implemented mobile apps (React Native, Vue, TypeScript, Laravel, SQL).',
       'Creative AI Solutions: Trained and built acoustic analysis AI video-generation apps (RNN-based, BrainJS), audio & video processing (FFT, MFCC, FFMPG, etc), interactive experiences.',
+      'Web Games: Designed and built games for adults and kids, mobile & desktop (Phaser 3, Angular, Angular Material).',
     ],
   },
   {
     company: 'Rockwell Automation',
-    title: 'Software Engineer II — MES & Industrial Integration',
+    title: 'Software Engineer II',
     location: 'St. Louis, Missouri',
     dates: '2018 - 2022',
     bullets: [
@@ -37,19 +46,19 @@ export const jobs: Job[] = [
       'Team Leadership: Managed small dev teams, overseeing requirements updates, scheduling, and deliverables.',
     ],
   },
+  // {
+  //   company: 'Republic of Korea Ultimate',
+  //   title: 'Executive Manager — 35-Team National Sports League',
+  //   location: 'South Korea',
+  //   dates: '2015 - 2017',
+  //   bullets: [
+  //     'Oversaw seasonal budgets of $150k, scheduling for 35 teams across multiple cities, and logistics for uniforms, equipment, and rosters.',
+  //     'Worked closely with a Korean secretary to handle administration, league pools, and official meetings.',
+  //   ],
+  // },
   {
-    company: 'Republic of Korea Ultimate',
-    title: 'Executive Manager — 35-Team National Sports League',
-    location: 'South Korea',
-    dates: '2015 - 2017',
-    bullets: [
-      'Oversaw seasonal budgets of $150k, scheduling for 35 teams across multiple cities, and logistics for uniforms, equipment, and rosters.',
-      'Worked closely with a Korean secretary to handle administration, league pools, and official meetings.',
-    ],
-  },
-  {
-    company: 'Daegu Science High School',
-    title: 'ESL & Science Instructor — 대구과학고등학교 영재고',
+    company: '대구과학고등학교 영재고',
+    title: 'High School ESL & Science Instructor',
     location: 'Daegu, South Korea',
     dates: '2013 - 2017',
     bullets: [
@@ -85,12 +94,12 @@ export const educations: Education[] = [
     details: ['Black Belt Certification - 2022'],
   },
   {
-    degree: 'B.S. Secondary Education - Science',
+    degree: 'B.S. Secondary Education',
     school: 'Southern Illinois University Edwardsville',
-    details: ['Highschool Teaching Certification - 2013'],
+    details: ['Highschool Science Teaching Certification - 2013'],
   },
   {
-    degree: 'A.A. Music Education - Violin',
+    degree: 'A.A. Music Education',
     school: 'Lewis & Clark Community College',
     details: ['Violin Performance, Music Theory - 2010'],
   },

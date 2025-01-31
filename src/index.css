@@ -10,6 +10,11 @@
   font-style: normal;
 }
 
+.pixel-font {
+  font-family: 'PixelOperator', sans-serif;
+}
+
+
 /* Scrollbar customization can be done with a plugin or global CSS. */
 /* Example override: */
 ::-webkit-scrollbar {
@@ -25,11 +30,11 @@
 
 /* Body defaults */
 body {
-  @apply m-0 bg-black text-white overflow-x-hidden;
-  font-family: 'PixelOperator', sans-serif;
+  @apply m-0 overflow-x-hidden bg-black text-white;
+  /* font-family: 'PixelOperator', sans-serif; */
 }
 /*  */
 /* .App wrapper if you want a global container class */
 .App {
-  @apply w-full h-screen overflow-y-scroll;
+  @apply h-screen w-full overflow-y-scroll;
 }

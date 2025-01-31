@@ -46,7 +46,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             className="mb-2 mr-2 h-10 w-auto"
           />
         )}
-        <div className="mb-2 text-4xl uppercase">
+        <div className="pixel-font mb-2 text-5xl uppercase">
           <strong>{project.title}</strong>
         </div>
       </div>
@@ -54,7 +54,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {isMobile ? (
         <>
           {project.type && (
-            <div className="mb-2 text-xl uppercase text-blue-300">
+            <div className="pixel-font mb-2 text-3xl uppercase text-blue-300">
               <strong>{project.type}</strong>
             </div>
           )}
@@ -67,7 +67,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
           {project.stack && (
             <>
-              <div className="text-xl text-fuchsia-300">
+              <div className="pixel-font text-3xl text-fuchsia-300">
                 <strong>STACK</strong>
               </div>
               <div className="mb-2 text-xl text-fuchsia-100">
@@ -78,7 +78,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
           {project.bullets && (
             <>
-              <div className="text-xl text-green-300">
+              <div className="pixel-font text-3xl text-green-300">
                 <strong>FEATURES</strong>
               </div>
               <ul className="list-inside list-disc text-xl text-green-100">
