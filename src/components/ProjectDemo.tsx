@@ -94,29 +94,29 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           {/* Desktop Layout */}
           <div className="w-1/2 pr-4">
             {project.type && (
-              <div className="mb-2 text-2xl text-blue-300">
+              <div className="mb-2 text-xl text-blue-300">
                 <strong>{project.type.toUpperCase()}</strong>
               </div>
             )}
 
             {project.description && (
-              <div className="mb-2 text-2xl text-white">
+              <div className="mb-2 text-xl text-white">
                 {project.description}
               </div>
             )}
           </div>
           <div className="w-1/2 pl-4">
             {project.stack && (
-              <div className="mb-2 text-2xl text-fuchsia-300">
+              <div className="mb-2 text-xl text-fuchsia-300">
                 <strong>{project.stack.join(', ').toUpperCase()}</strong>
               </div>
             )}
 
-            <div className="text-2xl text-green-300">
+            <div className="text-xl text-green-300">
               <strong>FEATURES</strong>
             </div>
             {project.bullets && (
-              <ul className="list-inside list-disc text-2xl text-green-100">
+              <ul className="list-inside list-disc text-xl text-green-100">
                 {project.bullets.map((bullet, index) => (
                   <li key={index}>{bullet}</li>
                 ))}
