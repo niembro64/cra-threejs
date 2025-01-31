@@ -48,7 +48,7 @@ export const Resume: React.FC = () => {
             <div className="flex h-40 flex-row items-center justify-center">
               <img
                 className="pixel-art w-4/5"
-                src="/videos2/smashed_small.gif"
+                src="/smashed_small.gif"
                 alt="gif"
               />
             </div>

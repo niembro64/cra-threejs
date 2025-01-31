@@ -386,7 +386,7 @@ const Main: React.FC = () => {
           <img
             data-tooltip-content={'His 2017 gif spawned a 2022 game'}
             className="pixel-art tooltip mb-4 w-[70%] object-cover"
-            src="/videos2/smashed_small.gif"
+            src="/smashed_small.gif"
             alt="gif"
           />
           <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
