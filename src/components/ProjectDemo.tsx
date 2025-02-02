@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Project } from '../data/projects'
 import { isMobile } from './Main'
 
@@ -19,23 +25,99 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   isMuted,
   hasTouchedAMuteButton,
 }) => {
-  const mediaSrc =
-    process.env.PUBLIC_URL +
-    '/videos2/' +
-    removeSpacesFromString(project.title) +
-    (isMobile ? '.gif' : '.mp4')
+  // State to track if the element is in view
+  const [inView, setInView] = useState(false)
+  // State to track media type based on bandwidth
+  const [connectionQuality, setConnectionQuality] = useState<
+    'low' | 'medium' | 'high'
+  >('low')
 
+  const setDefaultHighQuality = () => {
+    if (isMobile) {
+      setConnectionQuality('medium')
+    } else {
+      setConnectionQuality('high')
+    }
+  }
+
+  // Ref to attach to the lazy-load container
+  const mediaRef = useRef<HTMLDivElement>(null)
+  // 1. Detect the user's bandwidth using the NetworkInformation API
+  useEffect(() => {
+    // @ts-ignore
+    const navigatorConnection = navigator.connection
+    // @ts-ignore
+    const navigatorWebkitConnection = navigator.webkitConnection
+    // @ts-ignore
+    const navigatorMozConnection = navigator.mozConnection
+    console.log('navigatorConnection', navigatorConnection)
+    console.log('navigatorWebkitConnection', navigatorWebkitConnection)
+    console.log('navigatorMozConnection', navigatorMozConnection)
+    const connection =
+      navigatorConnection || navigatorWebkitConnection || navigatorMozConnection
+    if (connection && connection.effectiveType) {
+      const effectiveType = connection.effectiveType
+      if (effectiveType.includes('2g')) {
+        setConnectionQuality('low') // Show a static image for 2g or slow-2g
+      } else if (effectiveType === '3g') {
+        setConnectionQuality('medium') // Show a GIF for 3g
+      } else {
+        setDefaultHighQuality()
+      }
+
+      return
+    } else {
+      setDefaultHighQuality()
+    }
+  }, [])
+  // 2. Use Intersection Observer for lazy loading
+  useEffect(() => {
+    if (!mediaRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1, // trigger when 10% is visible
+      },
+    )
+    observer.observe(mediaRef.current)
+    return () => {
+      if (mediaRef.current) {
+        observer.unobserve(mediaRef.current)
+      }
+    }
+  }, [])
+  // 3. Construct the path for different media types
+  const mediaBasePath =
+    process.env.PUBLIC_URL + '/videos2/' + removeSpacesFromString(project.title)
+  let mediaSrc = ''
+  if (connectionQuality === 'low') {
+    // Some static image fallback path
+    // e.g. you might store "myProject.jpg" in "public/videos2/"
+    mediaSrc = mediaBasePath + '.jpg'
+  } else if (connectionQuality === 'medium') {
+    mediaSrc = mediaBasePath + '.gif'
+  } else {
+    // Default to MP4 if video
+    mediaSrc = mediaBasePath + '.mp4'
+  }
+  // Handle navigating to project page
   const handleProjectClick = () => {
     window.location.href = project.url
   }
-
+  // Handle mute toggling
   const toggleMute = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation()
     setIsMuted(!isMuted)
   }
-
   return (
     <div className={`relative w-full rounded-2xl`}>
       <div className="flex flex-row items-center">
@@ -128,7 +210,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
       <div className="h-6" />
 
-      {/* Full-width button */}
+      {/* BUTTON TO VISIT THE PROJECT */}
       {(isMobile && project.supportsMobile) ||
       (!isMobile && project.supportsDesktop) ? (
         <button
@@ -150,47 +232,59 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         </button>
       )}
 
-      {isMobile && project.gif && (
-        <img
-          className="w-full rounded-md object-cover"
-          src={mediaSrc}
-          alt={`${project.title}-gif`}
-        />
-      )}
-
-      {!isMobile && project.video && (
-        <div className="relative">
-          <video
-            className="h-auto w-full rounded-3xl"
-            src={mediaSrc}
-            autoPlay
-            muted={isMuted}
-            loop
-          />
-          {project.hasSound && (
-            <button
-              data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
-              className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
-              onClick={toggleMute}
-            >
-              <img
-                src={
-                  process.env.PUBLIC_URL +
-                  '/' +
-                  (isMuted ? 'no-sound.png' : 'sound.png')
-                }
-                alt={isMuted ? 'Unmute' : 'Mute'}
-                className="h-12 w-12"
+      {/* LAZY LOADED MEDIA */}
+      <div ref={mediaRef} className="relative">
+        {mediaSrc && inView && (
+          <>
+            {connectionQuality === 'high' && project.video && (
+              <video
+                className="h-auto w-full rounded-3xl"
+                src={mediaSrc}
+                autoPlay
+                muted={isMuted}
+                loop
               />
-              {!hasTouchedAMuteButton && (
-                <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
-              )}
-            </button>
-          )}
-        </div>
-      )}
+            )}
+            {connectionQuality === 'medium' && project.gif && (
+              <img
+                className="w-full rounded-md object-cover"
+                src={mediaSrc}
+                alt="gif"
+              />
+            )}
+            {connectionQuality === 'low' && project.image && (
+              <img
+                className="w-full rounded-md object-cover"
+                src={mediaSrc}
+                alt="static fallback"
+              />
+            )}
+          </>
+        )}
+
+        {/* MUTE BUTTON for video with sound */}
+        {project.hasSound && connectionQuality === 'high' && inView && (
+          <button
+            data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
+            className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
+            onClick={toggleMute}
+          >
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                '/' +
+                (isMuted ? 'no-sound.png' : 'sound.png')
+              }
+              alt={isMuted ? 'Unmute' : 'Mute'}
+              className="h-12 w-12"
+            />
+            {!hasTouchedAMuteButton && (
+              <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
+            )}
+          </button>
+        )}
+      </div>
     </div>
   )
 }
-
 export default ProjectDemo

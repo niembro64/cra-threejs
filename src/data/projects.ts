@@ -44,6 +44,7 @@ export interface Project {
   icon: string | null
   gif: boolean
   video: boolean
+  image: boolean
   platforms: Platform
   supportsMobile: boolean
   supportsDesktop: boolean
@@ -54,6 +55,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    image: false,
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
@@ -79,6 +81,7 @@ export const projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
+    image: false,
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
@@ -102,6 +105,7 @@ export const projects: Project[] = [
       "Grab your keyboard, aim your mouse, and enter the fight! Open the game again in a second tab on your computer, or tell a friend to join you - it's time to battle online!",
   },
   {
+    image: false,
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
@@ -123,6 +127,7 @@ export const projects: Project[] = [
       "Niemo's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
   {
+    image: false,
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser', 'React', 'FL Studio'],
@@ -145,6 +150,7 @@ export const projects: Project[] = [
       'A unique "bullet gate" mechanic - varied gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
+    image: false,
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
@@ -185,6 +191,7 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
+    image: false,
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
@@ -226,6 +233,7 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
+    image: false,
     title: 'SoundCloud',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio'],
@@ -247,6 +255,7 @@ export const projects: Project[] = [
       'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
   },
   {
+    image: false,
     title: 'YouTube',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe Premiere & After Effects'],
