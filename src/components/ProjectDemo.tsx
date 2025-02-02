@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Project } from '../data/projects'
+import { extraTimeLazyLoad, Project } from '../data/projects'
 import { isMobile } from './Main'
 
 const removeSpacesFromString = (str: string): string => {
@@ -45,27 +45,38 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   // 1. Detect the user's bandwidth using the NetworkInformation API
   useEffect(() => {
     // @ts-ignore
-    const navigatorConnection = navigator.connection
-    // @ts-ignore
-    const navigatorWebkitConnection = navigator.webkitConnection
-    // @ts-ignore
-    const navigatorMozConnection = navigator.mozConnection
-    console.log('navigatorConnection', navigatorConnection)
-    console.log('navigatorWebkitConnection', navigatorWebkitConnection)
-    console.log('navigatorMozConnection', navigatorMozConnection)
     const connection =
-      navigatorConnection || navigatorWebkitConnection || navigatorMozConnection
-    if (connection && connection.effectiveType) {
-      const effectiveType = connection.effectiveType
-      if (effectiveType.includes('2g')) {
-        setConnectionQuality('low') // Show a static image for 2g or slow-2g
-      } else if (effectiveType === '3g') {
-        setConnectionQuality('medium') // Show a GIF for 3g
+      // @ts-ignore
+      navigator.connection ||
+      // @ts-ignore
+      navigator.webkitConnection ||
+      // @ts-ignore
+      navigator.mozConnection
+    if (connection) {
+      // If downlink is available, use it to decide
+      if (connection.downlink) {
+        const downlinkMbps = connection.downlink
+        console.log('Downlink (Mbps):', downlinkMbps)
+        if (downlinkMbps < 1) {
+          setConnectionQuality('low')
+        } else if (downlinkMbps < 2) {
+          setConnectionQuality('medium')
+        } else {
+          setDefaultHighQuality()
+        }
+      } else if (connection.effectiveType) {
+        const effectiveType = connection.effectiveType
+        console.log('Effective type:', effectiveType)
+        if (effectiveType.includes('2g')) {
+          setConnectionQuality('low')
+        } else if (effectiveType === '3g') {
+          setConnectionQuality('medium')
+        } else {
+          setDefaultHighQuality()
+        }
       } else {
         setDefaultHighQuality()
       }
-
-      return
     } else {
       setDefaultHighQuality()
     }
@@ -76,7 +87,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true)
+          setTimeout(() => {
+            setInView(true)
+          }, extraTimeLazyLoad)
           observer.disconnect()
         }
       },

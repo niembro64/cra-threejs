@@ -2,6 +2,8 @@ import { CSSProperties } from 'react'
 
 export const tooltipDelay = 500
 
+export const extraTimeLazyLoad = 100
+
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
   // backgroundColor: 'black',
