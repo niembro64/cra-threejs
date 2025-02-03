@@ -252,7 +252,7 @@ export const projects: Project[] = [
   {
     title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
-    stack: ['FL Studio', 'Adobe Premiere & After Effects'],
+    stack: ['Adobe Premiere', 'After Effects', 'Photoshop'],
     type: 'Visual Effects',
     bullets: [
       'Classical & Electronic Music',
