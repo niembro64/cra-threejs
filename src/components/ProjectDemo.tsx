@@ -118,7 +118,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     }
   }, [])
   // 3. Construct the path for different media types
-  const mediaBasePath = process.env.PUBLIC_URL + '/videos2/'
+  const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
 
   const [mediaSrc, setMediaSrc] = useState<string | null>(null)
 
