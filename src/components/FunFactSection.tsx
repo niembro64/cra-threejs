@@ -17,100 +17,8 @@ const FunFactSection: React.FC = () => {
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
         <h4 className="text-3xl font-bold text-fuchsia-300">
-          Wikipedia-Famous!
+          Wikipedia-Famous
         </h4>
-        {/* <p className="mt-2 text-xl">
-          Niemo's track{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/File:Ars_Niemo_-_Small_Talk_Build_IV.ogg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            "Small Talk (Build IV)"
-          </a>{' '}
-          is showcased on the{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/Drum_and_bass"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Drum and Bass
-          </a>{' '}
-          Wikipedia page; it is the sole example featured for this large
-          electronic music genre. An editor named "Ftiercel" added the track to
-          the page on April 15th, 2012, and it remains there to this day. It is
-          by far his most famous track, other artists have also remixed and
-          covered it.
-        </p> */}
-        {/* <p className="mt-2 text-xl">
-          Niemo's track{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/File:Ars_Niemo_-_Small_Talk_Build_IV.ogg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            "Small Talk (Build IV)"
-          </a>{' '}
-          holds a unique place in electronic music history. It is featured on
-          the{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/Drum_and_bass"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Drum and Bass
-          </a>
-          {' and '}
-          <a
-            href="https://en.wikipedia.org/wiki/Liquid_funk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Liquid Funk
-          </a>{' '}
-          Wikipedia pages, representing this vast and influential genre.
-          Originally added by editor "Ftiercel" on April 15, 2012, the track
-          remains the sole example of the genre to this day.
-        </p> */}
-        {/* <p className="mt-2 text-xl">
-          Niemo's track{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/File:Ars_Niemo_-_Small_Talk_Build_IV.ogg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            "Small Talk (Build IV)"
-          </a>{' '}
-          holds a dignified place in the annals of electronic music. It is
-          prominently featured on the{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/Drum_and_bass"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Drum and Bass
-          </a>{' '}
-          and{' '}
-          <a
-            href="https://en.wikipedia.org/wiki/Liquid_funk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Liquid Funk
-          </a>{' '}
-          Wikipedia pages; originally uploaded by editor "Ftiercel" on April 15,
-          2012, this audio track remains the only example of this vast genre
-          shown on the site.
-        </p> */}
-
         <p className="mt-2 text-xl">
           Niemo's track{' '}
           <a
@@ -147,14 +55,24 @@ const FunFactSection: React.FC = () => {
       </div>
 
       {/* /////////////////////////////////////////////// */}
-      {/* WUDI Ultimate Frisbee League */}
+      {/* Ultimate Frisbee League */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
         <h4 className="text-3xl font-bold text-fuchsia-300">
-          Connecticut Frisbee
+          Ultimate Frisbee
         </h4>
         <p className="mt-2 text-xl">
-          Niemo helps coordinate{' '}
+          Niemo was executive manager of{' '}
+          <a
+            href="https://www.rokultimate.net/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xl text-blue-300 underline"
+          >
+            Republic of Korea Ultimate (ROK-U)
+          </a>{' '}
+          , the national ultimate frisbee league of South Korea, from 2015 -
+          2016. He is currently a coordinator for{' '}
           <a
             href="https://www.wudi.org/"
             target="_blank"
@@ -168,22 +86,28 @@ const FunFactSection: React.FC = () => {
         </p>
       </div>
       {/* /////////////////////////////////////////////// */}
-      {/* Republic of Korea Ultiamte Frisbee League */}
+      {/* MUSIC */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
-        <h4 className="text-3xl font-bold text-fuchsia-300">Korea Frisbee</h4>
+        <h4 className="text-3xl font-bold text-fuchsia-300">Musician</h4>
         <p className="mt-2 text-xl">
-          Niemo was executive manager of{' '}
-          <a
-            href="https://www.rokultimate.net/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-blue-300 underline"
-          >
-            Republic of Korea Ultimate (ROK-U)
-          </a>{' '}
-          , the national ultimate frisbee league of South Korea, from 2015 -
-          2016.
+          Niemo is a versatile musician—concert violinist, piano composer,
+          flamenco guitarist, and electronic music DJ. He has performed with
+          numerous orchestras, bands, and quartets and has composed music for
+          television and video games. His DJing experience spans weddings,
+          parties, and clubs across the USA and Korea.
+        </p>
+      </div>
+      {/* /////////////////////////////////////////////// */}
+      {/* BITCOIN */}
+      {/* /////////////////////////////////////////////// */}
+      <div className="mb-8">
+        <h4 className="text-3xl font-bold text-fuchsia-300">Crypto</h4>
+        <p className="mt-2 text-xl">
+          Niemo began mining Bitcoin with professional-grade ASIC miners in
+          2017, when it was valued at just $1,000. Through this experience, he
+          gained a deep understanding of blockchain and cryptocurrency, which he
+          now leverages to advise friends on their investments.
         </p>
       </div>
     </section>
