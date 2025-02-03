@@ -1,18 +1,21 @@
 // Resume.tsx
 
 import React from 'react'
-import { EricResumeDescription, projects } from '../data/projects'
-import { educations, jobs } from '../data/resumeData'
+import { EricResumeDescription } from '../data/projects'
+import { educations } from '../data/resumeData'
 import { isMobile } from './Main'
 
 // NEW IMPORTS
-import ProjectsSection from './ProjectsSection'
-import WorkExperienceSection from './WorkExperienceSection'
 import EducationSection from './EducationSection'
 import FunFactSection from './FunFactSection'
+import ProjectsSection from './ProjectsSection'
 import SocialMediaSection from './SocialMediaSection'
+import WorkExperienceSection from './WorkExperienceSection'
 
-export const Resume: React.FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ResumeProps {}
+
+export const Resume: React.FC<ResumeProps> = () => {
   return (
     <div className="w-full py-4 md:px-12">
       {isMobile && (
@@ -61,7 +64,7 @@ export const Resume: React.FC = () => {
         </>
       )}
 
-      <ProjectsSection projects={projects} />
+      <ProjectsSection />
 
       {isMobile && (
         <>

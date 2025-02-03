@@ -7,11 +7,15 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 import { tooltipDelay, toolTipStyle } from '../data/projects'
+import { useAudioStore } from '../store/audioStore'
 
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
 
 const Main: React.FC = () => {
+  const { play, setPlay, connectionQuality, setConnectionQuality } =
+    useAudioStore()
+
   const refContainer = useRef<HTMLDivElement | null>(null)
   const mousePositionCurr = useRef(new THREE.Vector3())
   const mousePositionPrev = useRef(new THREE.Vector3())
@@ -321,38 +325,56 @@ const Main: React.FC = () => {
     }
   }, [height, pageHeight])
 
-  // We define some new parallax layers to show behind everything else (but above the black background).
-  // Each layer is absolute, full-width, and moves at half the scroll speed (mobileScrollY * 0.5).
-  // We give them a small difference in top offset so you can see multiple colored layers.
+  const setDefaultHighQuality = () => {
+    if (isMobile) {
+      setConnectionQuality('medium')
+    } else {
+      setConnectionQuality('high')
+    }
+  }
 
-  // const parallaxLayers = [
-  //   { color: 'rgba(255,0,0,0.3)', topOffset: 0 },
-  //   { color: 'rgba(0,255,0,0.3)', topOffset: 400 },
-  //   { color: 'rgba(0,0,255,0.3)', topOffset: 800 },
-  // ]
+  useEffect(() => {
+    // @ts-ignore
+    const connection =
+      // @ts-ignore
+      navigator.connection ||
+      // @ts-ignore
+      navigator.webkitConnection ||
+      // @ts-ignore
+      navigator.mozConnection
+    if (connection) {
+      // If downlink is available, use it to decide
+      if (connection.downlink) {
+        const downlinkMbps = connection.downlink
+        console.log('Downlink (Mbps):', downlinkMbps)
+        if (downlinkMbps < 1) {
+          setConnectionQuality('low')
+        } else if (downlinkMbps < 2) {
+          setConnectionQuality('medium')
+        } else {
+          setDefaultHighQuality()
+        }
+      } else if (connection.effectiveType) {
+        const effectiveType = connection.effectiveType
+        console.log('Effective type:', effectiveType)
+        if (effectiveType.includes('2g')) {
+          setConnectionQuality('low')
+        } else if (effectiveType === '3g') {
+          setConnectionQuality('medium')
+        } else {
+          setDefaultHighQuality()
+        }
+      } else {
+        setDefaultHighQuality()
+      }
+    } else {
+      setDefaultHighQuality()
+    }
+  }, [])
 
   return (
     <div className="relative min-h-screen w-full" ref={topElementRef}>
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
-
-      {/* NEW: Parallax backgrounds, only on mobile */}
-      {/* {isMobile && (
-        <div className="-z-9 absolute left-0 top-0 w-full">
-          {parallaxLayers.map((layer, idx) => (
-            <div
-              key={idx}
-              className="absolute left-0 h-[1000px] w-full"
-              style={{
-                top: layer.topOffset,
-                backgroundColor: layer.color,
-                // CHANGED: Use translate3d + will-change
-                transform: `translate3d(0, ${mobileScrollY * 0.5}px, 0)`,
-                willChange: 'transform',
-              }}
-            />
-          ))}
-        </div>
-      )} */}
 
       {!isMobile && (
         <div

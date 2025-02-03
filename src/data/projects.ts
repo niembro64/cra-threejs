@@ -4,6 +4,8 @@ export const tooltipDelay = 500
 
 export const extraTimeLazyLoad = 100
 
+export type ConnectionQualityType = 'low' | 'medium' | 'high'
+
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
   // backgroundColor: 'black',
@@ -54,6 +56,8 @@ export interface Project {
   buttonStartText: string
   description?: string
 }
+
+export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
 
 export const projects: Project[] = [
   {

@@ -5,8 +5,14 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { extraTimeLazyLoad, Project } from '../data/projects'
+import {
+  ConnectionQualityType,
+  extraTimeLazyLoad,
+  mediaBasePath,
+  Project,
+} from '../data/projects'
 import { isMobile } from './Main'
+import { useAudioStore } from '../store/audioStore'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false
@@ -36,63 +42,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   isMuted,
   hasTouchedAMuteButton,
 }) => {
-  // State to track if the element is in view
-  const [inView, setInView] = useState(false)
-  // State to track media type based on bandwidth
-  const [connectionQuality, setConnectionQuality] = useState<
-    'low' | 'medium' | 'high'
-  >('low')
+  const { connectionQuality } = useAudioStore()
 
-  const setDefaultHighQuality = () => {
-    if (isMobile) {
-      setConnectionQuality('medium')
-    } else {
-      setConnectionQuality('high')
-    }
-  }
-
-  // Ref to attach to the lazy-load container
   const mediaRef = useRef<HTMLDivElement>(null)
-  // 1. Detect the user's bandwidth using the NetworkInformation API
-  useEffect(() => {
-    // @ts-ignore
-    const connection =
-      // @ts-ignore
-      navigator.connection ||
-      // @ts-ignore
-      navigator.webkitConnection ||
-      // @ts-ignore
-      navigator.mozConnection
-    if (connection) {
-      // If downlink is available, use it to decide
-      if (connection.downlink) {
-        const downlinkMbps = connection.downlink
-        console.log('Downlink (Mbps):', downlinkMbps)
-        if (downlinkMbps < 1) {
-          setConnectionQuality('low')
-        } else if (downlinkMbps < 2) {
-          setConnectionQuality('medium')
-        } else {
-          setDefaultHighQuality()
-        }
-      } else if (connection.effectiveType) {
-        const effectiveType = connection.effectiveType
-        console.log('Effective type:', effectiveType)
-        if (effectiveType.includes('2g')) {
-          setConnectionQuality('low')
-        } else if (effectiveType === '3g') {
-          setConnectionQuality('medium')
-        } else {
-          setDefaultHighQuality()
-        }
-      } else {
-        setDefaultHighQuality()
-      }
-    } else {
-      setDefaultHighQuality()
-    }
-  }, [])
-  // 2. Use Intersection Observer for lazy loading
+  const [inView, setInView] = useState(false)
+  const [mediaSrc, setMediaSrc] = useState<string | null>(null)
+
   useEffect(() => {
     if (!mediaRef.current) return
     const observer = new IntersectionObserver(
@@ -117,10 +72,6 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       }
     }
   }, [])
-  // 3. Construct the path for different media types
-  const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
-
-  const [mediaSrc, setMediaSrc] = useState<string | null>(null)
 
   useEffect(() => {
     if (connectionQuality === 'low') {
@@ -138,11 +89,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     console.log('fullPath:', fullPath)
   }, [mediaSrc])
 
-  // Handle navigating to project page
   const handleProjectClick = () => {
     window.location.href = project.url
   }
-  // Handle mute toggling
+
   const toggleMute = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {

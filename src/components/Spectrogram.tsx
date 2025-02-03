@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
 import Meyda, { MeydaFeaturesObject } from 'meyda'
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
+import React, { useEffect, useRef, useState } from 'react'
 import { useAudioStore } from '../store/audioStore'
-import { Tooltip } from 'react-tooltip'
-import { tooltipDelay, toolTipStyle } from '../data/projects'
 
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>

@@ -1,16 +1,15 @@
 // ProjectsSection.tsx
 
 import React from 'react'
-import { Project } from '../data/projects'
+import { useAudioStore } from '../store/audioStore'
 import { isMobile } from './Main'
 import ProjectDemo from './ProjectDemo'
-import { useAudioStore } from '../store/audioStore'
+import { projects } from '../data/projects'
 
-interface ProjectsSectionProps {
-  projects: Project[]
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ProjectsSectionProps {}
 
-const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
+const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
   const {
     mutedArray: isMutedArray,
     setMuted: setIsMuted,
