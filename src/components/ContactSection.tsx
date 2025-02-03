@@ -4,7 +4,7 @@ import { isMobile } from './Main'
 import { showEmojis } from '../data/projects'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
 
-const duration = 500
+const duration = 1500
 
 interface ContactSectionProps {
   onPhoneClick: () => void

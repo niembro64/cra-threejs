@@ -430,7 +430,7 @@ const Main: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
 
-          <div className="bg-blue-500">
+          <div className="bg-black/50">
             <ContactSection
               animateKirby={animateKirby}
               onPhoneClick={() => window.open('tel:618-616-3380')}
