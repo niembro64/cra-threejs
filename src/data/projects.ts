@@ -6,6 +6,8 @@ export const extraTimeLazyLoad = 0
 
 export const showEmojis: boolean = false
 
+export const showKirbyGame: boolean = false
+
 export type ConnectionQualityType = 'low' | 'medium' | 'high'
 
 export const toolTipStyle: CSSProperties = {
@@ -140,7 +142,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Play',
     description:
-      'A unique "bullet gate" mechanic - varied gate types mirror, transmit, refract, and multiply bullets.',
+      'A unique "bullet gate" mechanic - various gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
     title: 'Design',
@@ -163,7 +165,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'View',
     description:
-      'A collection of nicknacks and playthings I made to practice raw web basics.',
+      'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
   // {
   //   title: 'Pirates',
@@ -187,7 +189,7 @@ export const projects: Project[] = [
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
-    type: 'Exercise in Fullstack Web',
+    type: 'Exercise in Fullstack',
     bullets: [
       'Create, Read, Update, Delete',
       // 'MVC Design Pattern',
@@ -204,7 +206,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'View',
     description:
-      'A simple event management system with user authentication, validation, and CRUD database operations.',
+      'A simple, clean, event management system with user authentication, validation, and CRUD database operations.',
   },
   // {
   //   title: 'Shows',

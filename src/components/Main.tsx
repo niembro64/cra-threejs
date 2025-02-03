@@ -6,7 +6,7 @@ import ContactSection from './ContactSection'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
-import { tooltipDelay, toolTipStyle } from '../data/projects'
+import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
 
 export const isMobile: boolean = window.innerWidth < 900
@@ -435,9 +435,16 @@ const Main: React.FC = () => {
               email={email}
               handleKirbyClick={handleKirbyClick}
             />
+
             <section
               className={`${
-                isMobile ? 'h-[500px]' : 'h-[700px]'
+                isMobile
+                  ? showDemoNavigationGame
+                    ? 'h-[500px]'
+                    : 'h-[200px]'
+                  : showDemoNavigationGame
+                    ? 'h-[700px]'
+                    : 'h-[300px]'
               } relative z-30 flex flex-col items-center justify-end`}
             >
               {showDemoNavigationGame ? (
@@ -456,18 +463,22 @@ const Main: React.FC = () => {
                   />
                 </>
               ) : (
-                <div
-                  className={`${
-                    isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
-                  } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
-                >
-                  <img
-                    className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
-                    src="/qwhite_hardpixels_transbg.png"
-                    alt="Question Mark"
-                    onClick={handleKirbyClick}
-                  />
-                </div>
+                <>
+                  {showKirbyGame && (
+                    <div
+                      className={`${
+                        isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
+                      } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
+                    >
+                      <img
+                        className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
+                        src="/qwhite_hardpixels_transbg.png"
+                        alt="Question Mark"
+                        onClick={handleKirbyClick}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </section>
           </div>

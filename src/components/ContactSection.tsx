@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import KirbySection from './KirbySection'
 import { isMobile } from './Main'
-import { showEmojis } from '../data/projects'
+import { showEmojis, showKirbyGame } from '../data/projects'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
 
 const duration = 1500
