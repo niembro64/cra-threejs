@@ -8,8 +8,19 @@ import React, {
 import { extraTimeLazyLoad, Project } from '../data/projects'
 import { isMobile } from './Main'
 
-const removeSpacesFromString = (str: string): string => {
-  return str.replace(/\s/g, '')
+const isVideo = (mediaSource: string | null) => {
+  if (mediaSource === null) return false
+  return mediaSource.endsWith('.mp4')
+}
+
+const isGif = (mediaSource: string) => {
+  if (mediaSource === null) return false
+  return mediaSource.endsWith('.gif')
+}
+
+const isImage = (mediaSource: string) => {
+  if (mediaSource === null) return false
+  return mediaSource.endsWith('.png') || mediaSource.endsWith('.jpg')
 }
 
 interface ProjectDemoProps {
@@ -108,14 +119,19 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }, [])
   // 3. Construct the path for different media types
   const mediaBasePath = process.env.PUBLIC_URL + '/videos2/'
-  let mediaSrc = ''
-  if (connectionQuality === 'low') {
-    mediaSrc = mediaBasePath + project.image
-  } else if (connectionQuality === 'medium') {
-    mediaSrc = mediaBasePath + project.gif
-  } else {
-    mediaSrc = mediaBasePath + project.video
-  }
+
+  const [mediaSrc, setMediaSrc] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (connectionQuality === 'low') {
+      setMediaSrc(mediaBasePath + project.image)
+    } else if (connectionQuality === 'medium') {
+      setMediaSrc(mediaBasePath + project.gif)
+    } else {
+      setMediaSrc(mediaBasePath + project.video)
+    }
+  }, [connectionQuality, project])
+
   // Handle navigating to project page
   const handleProjectClick = () => {
     window.location.href = project.url
@@ -243,9 +259,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
       {/* LAZY LOADED MEDIA */}
       <div ref={mediaRef} className="relative">
-        {mediaSrc && inView && (
+        {inView && mediaSrc && (
           <>
-            {connectionQuality === 'high' && project.video && (
+            {isVideo(mediaSrc) && (
               <video
                 className="h-auto w-full rounded-3xl"
                 src={mediaSrc}
@@ -254,14 +270,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
                 loop
               />
             )}
-            {connectionQuality === 'medium' && project.gif && (
+            {isGif(mediaSrc) && (
               <img
                 className="w-full rounded-md object-cover"
                 src={mediaSrc}
                 alt="gif"
               />
             )}
-            {connectionQuality === 'low' && project.image && (
+            {isImage(mediaSrc) && (
               <img
                 className="w-full rounded-md object-cover"
                 src={mediaSrc}
