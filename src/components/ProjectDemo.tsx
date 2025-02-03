@@ -133,7 +133,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }, [connectionQuality, project])
 
   useEffect(() => {
-    console.log('mediaSrc:', mediaSrc)
+    const fullPath: string = mediaBasePath + mediaSrc || ''
+
+    console.log('fullPath:', fullPath)
   }, [mediaSrc])
 
   // Handle navigating to project page
