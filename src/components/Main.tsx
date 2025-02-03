@@ -430,47 +430,49 @@ const Main: React.FC = () => {
           <div className="h-40" />
           <div className="h-40" />
 
-          <ContactSection
-            animateKirby={animateKirby}
-            onPhoneClick={() => window.open('tel:618-616-3380')}
-            email={email}
-            handleKirbyClick={handleKirbyClick}
-          />
-          <section
-            className={`${
-              isMobile ? 'h-[500px]' : 'h-[700px]'
-            } relative z-30 flex flex-col items-center justify-end`}
-          >
-            {showDemoNavigationGame ? (
-              <>
-                <iframe
-                  className={`${isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
-                  src="https://projects.niemo.io"
-                  title="Projects"
-                  allowFullScreen
-                ></iframe>
-                <img
-                  className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isMobile ? 'top-28 opacity-50' : 'top-2 opacity-10'}`}
-                  src="/remove.png"
-                  alt="Close"
-                  onClick={() => setShowDemoNavigationGame(false)}
-                />
-              </>
-            ) : (
-              <div
-                className={`${
-                  isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
-                } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
-              >
-                <img
-                  className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
-                  src="/qwhite_hardpixels_transbg.png"
-                  alt="Question Mark"
-                  onClick={handleKirbyClick}
-                />
-              </div>
-            )}
-          </section>
+          <div className="bg-blue-500">
+            <ContactSection
+              animateKirby={animateKirby}
+              onPhoneClick={() => window.open('tel:618-616-3380')}
+              email={email}
+              handleKirbyClick={handleKirbyClick}
+            />
+            <section
+              className={`${
+                isMobile ? 'h-[500px]' : 'h-[700px]'
+              } relative z-30 flex flex-col items-center justify-end`}
+            >
+              {showDemoNavigationGame ? (
+                <>
+                  <iframe
+                    className={`${isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
+                    src="https://projects.niemo.io"
+                    title="Projects"
+                    allowFullScreen
+                  ></iframe>
+                  <img
+                    className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isMobile ? 'top-28' : 'top-2 opacity-50'}`}
+                    src="/remove.png"
+                    alt="Close"
+                    onClick={() => setShowDemoNavigationGame(false)}
+                  />
+                </>
+              ) : (
+                <div
+                  className={`${
+                    isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
+                  } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
+                >
+                  <img
+                    className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
+                    src="/qwhite_hardpixels_transbg.png"
+                    alt="Question Mark"
+                    onClick={handleKirbyClick}
+                  />
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </div>
 

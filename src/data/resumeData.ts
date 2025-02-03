@@ -21,7 +21,7 @@ export const jobs: Job[] = [
     location: 'Stamford, Connecticut',
     dates: '2025 - Present',
     bullets: [
-      'Architecting and implementing AI systems to prevent phone fraud.',
+      'Architecting and implementing in-house AI systems to prevent senior phone fraud.',
     ],
   },
   {

@@ -1,8 +1,10 @@
-// ContactSection.tsx
-
 import React, { useState } from 'react'
 import KirbySection from './KirbySection'
 import { isMobile } from './Main'
+import { showEmojis } from '../data/projects'
+import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
+
+const duration = 500
 
 interface ContactSectionProps {
   onPhoneClick: () => void
@@ -17,29 +19,97 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   handleKirbyClick,
   animateKirby,
 }) => {
+  // States for visual feedback on buttons
+  const [copiedPhone, setCopiedPhone] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState(false)
+  const phoneNumber = '618-616-3380'
+
+  const copyToClipboard = async (
+    text: string,
+    setCopied: React.Dispatch<React.SetStateAction<boolean>>,
+    toastText?: string,
+  ) => {
+    // Use the modern Clipboard API if available and in a secure context.
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text)
+        setCopied(true)
+
+        setTimeout(() => setCopied(false), duration)
+      } catch (err) {
+        console.error('Failed to copy using Clipboard API: ', err)
+      }
+    } else {
+      // Fallback for insecure contexts or browsers without clipboard API support
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      // Place the textarea off-screen
+      textArea.style.position = 'fixed'
+      textArea.style.left = '-999999px'
+      textArea.style.top = '0'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      try {
+        const successful = document.execCommand('copy')
+        if (successful) {
+          setCopied(true)
+
+          setTimeout(() => setCopied(false), duration)
+        } else {
+          console.error('Fallback: Copy command was unsuccessful')
+        }
+      } catch (err) {
+        console.error('Fallback: Unable to copy', err)
+      }
+      document.body.removeChild(textArea)
+    }
+  }
+
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="relative flex w-full flex-col items-center justify-center pt-12">
       <div className="mb-8 text-center">
-        <h1 className="mb-4 text-6xl font-bold">🤗</h1>
-        <h1 className="pixel-font text-6xl font-bold">SAY HI</h1>
+        {showEmojis && <h1 className="mb-4 text-6xl font-bold">🤗</h1>}
+        <h1 className="pixel-font text-6xl font-bold">EMAIL ME!</h1>
       </div>
-      <h2
-        onClick={onPhoneClick}
-        className="mb-2 cursor-pointer text-3xl underline"
-      >
-        618-616-338O
-      </h2>
-      <h2 className="mb-6 text-2xl underline">
-        <a href={`mailto:${email}`}>{email}</a>
-      </h2>
+
+      {/* Phone Number with Copy Button */}
+      <div className="mb-2 flex items-center space-x-2">
+        <h2 onClick={onPhoneClick} className="cursor-pointer text-2xl">
+          {phoneNumber}
+        </h2>
+        <button
+          onClick={() =>
+            copyToClipboard(phoneNumber, setCopiedPhone, 'Phone number copied!')
+          }
+          className="text-2xl focus:outline-none"
+          aria-label="Copy phone number to clipboard"
+        >
+          {copiedPhone ? <FaClipboardCheck /> : <FaRegClipboard />}
+        </button>
+      </div>
+
+      {/* Email Address with Copy Button */}
+      <div className="mb-6 flex items-center space-x-2 text-2xl">
+        <a href={`mailto:${email}`} className="cursor-pointer">
+          {email}
+        </a>
+        <button
+          onClick={() =>
+            copyToClipboard(email, setCopiedEmail, 'Email address copied!')
+          }
+          className="text-2xl focus:outline-none"
+          aria-label="Copy email address to clipboard"
+        >
+          {copiedEmail ? <FaClipboardCheck /> : <FaRegClipboard />}
+        </button>
+      </div>
 
       <KirbySection
         animateKirby={animateKirby}
         isMobile={isMobile}
         onKirbyClick={handleKirbyClick}
       />
-
-      <p className="mt-4 text-2xl">Shoot me a quick email!</p>
     </div>
   )
 }
