@@ -12,7 +12,7 @@ import {
   Project,
 } from '../data/projects'
 import { isMobile } from './Main'
-import { useAudioStore } from '../store/audioStore'
+import { useResumeStore } from '../store/audioStore'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false
@@ -42,7 +42,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   isMuted,
   hasTouchedAMuteButton,
 }) => {
-  const { connectionQuality } = useAudioStore()
+  const { connectionQuality } = useResumeStore()
 
   const mediaRef = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)

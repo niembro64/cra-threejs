@@ -1,7 +1,7 @@
 // ProjectsSection.tsx
 
 import React from 'react'
-import { useAudioStore } from '../store/audioStore'
+import { useResumeStore } from '../store/audioStore'
 import { isMobile } from './Main'
 import ProjectDemo from './ProjectDemo'
 import { projects } from '../data/projects'
@@ -14,7 +14,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
     mutedArray: isMutedArray,
     setMuted: setIsMuted,
     hasTouchedAudioButton,
-  } = useAudioStore()
+  } = useResumeStore()
 
   return (
     <section

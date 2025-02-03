@@ -7,14 +7,13 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 import { tooltipDelay, toolTipStyle } from '../data/projects'
-import { useAudioStore } from '../store/audioStore'
+import { useResumeStore } from '../store/audioStore'
 
 export const isMobile: boolean = window.innerWidth < 900
 export const __DEV__ = process.env.NODE_ENV === 'development'
 
 const Main: React.FC = () => {
-  const { play, setPlay, connectionQuality, setConnectionQuality } =
-    useAudioStore()
+  const { setConnectionQuality } = useResumeStore()
 
   const refContainer = useRef<HTMLDivElement | null>(null)
   const mousePositionCurr = useRef(new THREE.Vector3())

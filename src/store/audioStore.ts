@@ -11,7 +11,7 @@ interface AudioState {
   setConnectionQuality: (quality: ConnectionQualityType) => void
 }
 
-export const useAudioStore = create<AudioState>((set) => ({
+export const useResumeStore = create<AudioState>((set) => ({
   hasTouchedAudioButton: false,
   mutedArray: [...projects.map((p: Project) => true)],
   play: true,
