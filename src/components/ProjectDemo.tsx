@@ -69,10 +69,21 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }, [])
 
   useEffect(() => {
-    if (connectionQuality === 'low') {
-      setMediaSrc(project.image)
-    } else {
-      setMediaSrc(project.video)
+    switch (connectionQuality) {
+      case 'low':
+        setMediaSrc(project.image)
+        break
+      case 'medium':
+      case 'high':
+        if (isMobile) {
+          setMediaSrc(project.gif)
+        } else {
+          setMediaSrc(project.video)
+        }
+        break
+      default:
+        setMediaSrc(project.image)
+        break
     }
   }, [connectionQuality, project])
 
