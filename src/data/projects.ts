@@ -263,7 +263,7 @@ export const projects: Project[] = [
       // 'Electronic Music',
       'All Original Music & Art',
     ],
-    icon: 'YouTube.png',
+    icon: 'create.png',
     image: 'youtube.jpg',
     gif: 'youtube.gif',
     video: 'youtube.mp4',

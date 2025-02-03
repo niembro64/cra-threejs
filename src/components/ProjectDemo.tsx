@@ -110,7 +110,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           <img
             src={process.env.PUBLIC_URL + '/' + project.icon}
             alt={`${project.title}-icon`}
-            className="mb-2 mr-2 h-10 w-auto"
+            className="mb-2 mr-3 h-12 w-auto"
           />
         )}
         <div className="pixel-font mb-2 text-5xl uppercase">
