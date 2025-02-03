@@ -154,7 +154,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      'A unique blend of Phaser and React - move kirby around the map and jump on a box to navigate!',
+      'An unholy blending of Phaser and React - make Kirby run around with your finger or mouse.',
   },
   {
     title: 'Design',
