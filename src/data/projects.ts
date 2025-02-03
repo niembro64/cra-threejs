@@ -47,6 +47,9 @@ export interface Project {
 
 export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
 
+const phaserIcon = 'phaser-icon.png'
+// const phaserIcon = 'icon-raygun.png'
+
 export const projects: Project[] = [
   {
     title: 'Smashed',
@@ -62,7 +65,7 @@ export const projects: Project[] = [
       // 'Neural-Network Bots',
       // 'Evolving AI Bots',
     ],
-    icon: 'phaser-icon.png',
+    icon: phaserIcon,
     image: 'smashed.jpg',
     gif: 'smashed.gif',
     video: 'smashed.mp4',
@@ -85,7 +88,7 @@ export const projects: Project[] = [
       'Client-Side Prediction',
       'Server-Client Reconciliation',
     ],
-    icon: 'phaser-icon.png',
+    icon: phaserIcon,
     image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
@@ -106,7 +109,7 @@ export const projects: Project[] = [
       'Desktop Mouse & Keyboard',
       // 'Original Sounds Effects',
     ],
-    icon: 'phaser-icon.png',
+    icon: phaserIcon,
     image: 'galaxydestroyer.jpg',
     gif: 'galaxydestroyer.gif',
     video: 'galaxydestroyer.mp4',
@@ -128,7 +131,7 @@ export const projects: Project[] = [
       'Best Experience = Desktop',
       // 'Original Music & Sounds',
     ],
-    icon: 'phaser-icon.png',
+    icon: phaserIcon,
     image: 'tanks.jpg',
     gif: 'tanks.gif',
     video: 'tanks.mp4',
@@ -145,7 +148,7 @@ export const projects: Project[] = [
     stack: ['Phaser', 'React'],
     type: 'Phaser-React Fusion',
     bullets: ['Mouse & Keyboard Controls', 'Mobile Touch Controls'],
-    icon: 'phaser-icon.png',
+    icon: phaserIcon,
     image: null,
     gif: null,
     video: null,
