@@ -23,24 +23,24 @@ export const toolTipStyle: CSSProperties = {
   // fontSize: '1.5em',
 }
 
-export type Title =
-  | 'Resume'
-  | 'Home'
-  | 'Design'
-  | 'Smashed'
-  | 'Pirates'
-  | 'Events'
-  | 'Tanks'
-  | 'Galaxy Destroyer'
-  | 'Seouldat'
-  | 'YouTube'
-  | 'Shows'
-  | 'SoundCloud'
+// export type Title =
+//   | 'Resume'
+//   | 'Home'
+//   | 'Design'
+//   | 'Smashed'
+//   | 'Pirates'
+//   | 'Events'
+//   | 'Tanks'
+//   | 'Galaxy Destroyer'
+//   | 'Seouldat'
+//   | 'YouTube'
+//   | 'Shows'
+//   | 'SoundCloud'
 
 export type Platform = 'desktop' | 'mobile' | 'both'
 
 export interface Project {
-  title: Title
+  title: string
   url: string
   stack: string[] | null
   type: string | null
@@ -239,16 +239,16 @@ export const projects: Project[] = [
   //   platforms: 'both',
   // },
   {
-    title: 'SoundCloud',
+    title: 'Music',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio'],
-    type: 'Original Music & Art',
+    type: 'Original Music',
     bullets: [
       'Classical & Electronic Music',
       // 'Electronic Music',
       'All Original Music & Art',
     ],
-    icon: 'soundcloud.png',
+    icon: 'fruit.png',
     image: null,
     gif: 'soundcloud.gif',
     video: 'soundcloud.mp4',
@@ -261,10 +261,10 @@ export const projects: Project[] = [
       'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
   },
   {
-    title: 'YouTube',
+    title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe Premiere & After Effects'],
-    type: 'Original Music & Video Effects',
+    type: 'Video Effects',
     bullets: [
       'Classical & Electronic Music',
       // 'Electronic Music',
@@ -280,7 +280,7 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Go to',
     description:
-      'Music I have created over the years - but with visuals generated using the Adobe Creative Suite.',
+      'Adobe Creative Suite - adding stunning visuals to original music.',
   },
 ]
 

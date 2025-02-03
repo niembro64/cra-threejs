@@ -5,14 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import {
-  ConnectionQualityType,
-  extraTimeLazyLoad,
-  mediaBasePath,
-  Project,
-} from '../data/projects'
-import { isMobile } from './Main'
+import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
+import { isMobile } from './Main'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false

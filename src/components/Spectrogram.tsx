@@ -24,6 +24,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
   const previousMelBandsRef = useRef<number[]>([])
 
+  const [hoverAudioButton, setHoverAudioButton] = useState(false)
+
   const startAudio = () => {
     if (audioStarted) return
     setAudioStarted(true)
@@ -99,8 +101,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     const normalizedValue = melValue / 15
                     const height = normalizedValue * canvas.height
 
-                    ctx.fillStyle = 'rgba(255, 255, 255)'
-                    flippedCtx.fillStyle = 'rgba(255, 255, 255)'
+                    ctx.fillStyle = 'rgb(59, 130, 246)'
+                    flippedCtx.fillStyle = 'rgb(59, 130, 246)'
+                    // ctx.fillStyle = 'rgba(255, 255, 255)'
+                    // flippedCtx.fillStyle = 'rgba(255, 255, 255)'
 
                     const isLastIndex = index === currentMelBands.length - 1
 
@@ -177,10 +181,16 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           <canvas className="h-[200px] w-full" ref={canvasRef}></canvas>
 
           <div
+            onMouseEnter={() => {
+              setHoverAudioButton(true)
+            }}
+            onMouseLeave={() => {
+              setHoverAudioButton(false)
+            }}
             data-tooltip-content={
               'The audio controls the rotation of the icosahedron'
             }
-            className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center px-4 py-2 hover:bg-fuchsia-100/50 active:bg-fuchsia-200 active:text-blue-500 ${play ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+            className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-white active:text-white/50`}
             onClick={() => {
               startAudio()
               setPlay(!play)
@@ -195,7 +205,9 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 alt="Niemo Audio Logo"
               />
             </div> */}
-            <h4 className={`text-5xl font-bold`}>{play ? 'PAUSE' : 'PLAY'}</h4>
+            <h4 className={`text-2xl font-bold`}>
+              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
+            </h4>
           </div>
           <canvas className="h-[200px] w-full" ref={canvasFlippedRef}></canvas>
         </>
