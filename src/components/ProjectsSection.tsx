@@ -4,7 +4,7 @@ import React from 'react'
 import { useResumeStore } from '../store/audioStore'
 import { isMobile } from './Main'
 import ProjectDemo from './ProjectDemo'
-import { projects } from '../data/projects'
+import { projects, showEmojis } from '../data/projects'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ProjectsSectionProps {}
@@ -21,7 +21,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
       className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
     >
       <div className="mb-24 text-center">
-        <h1 className="mb-4 text-6xl font-bold">⚙️</h1>
+        {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
         <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1>
         <p className="pixel-font pt-4 text-2xl text-blue-300">
           Original Apps, Music, &amp; Games for Mobile &amp; Desktop

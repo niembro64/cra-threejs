@@ -4,6 +4,8 @@ export const tooltipDelay = 500
 
 export const extraTimeLazyLoad = 0
 
+export const showEmojis: boolean = false
+
 export type ConnectionQualityType = 'low' | 'medium' | 'high'
 
 export const toolTipStyle: CSSProperties = {
@@ -249,7 +251,7 @@ export const projects: Project[] = [
     title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['FL Studio', 'Adobe Premiere & After Effects'],
-    type: 'Video Effects',
+    type: 'Visual Effects',
     bullets: [
       'Classical & Electronic Music',
       // 'Electronic Music',
