@@ -427,8 +427,6 @@ const Main: React.FC = () => {
           </div>
 
           <div className="h-40" />
-          <div className="h-40" />
-          <div className="h-40" />
 
           <div className="bg-black/50">
             <ContactSection
