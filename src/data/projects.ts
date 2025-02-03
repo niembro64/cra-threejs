@@ -38,7 +38,6 @@ export interface Project {
   gif: string | null
   video: string | null
   image: string | null
-  platforms: Platform
   supportsMobile: boolean
   supportsDesktop: boolean
   hasSound: boolean
@@ -67,7 +66,6 @@ export const projects: Project[] = [
     image: 'smashed.jpg',
     gif: 'smashed.gif',
     video: 'smashed.mp4',
-    platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
@@ -91,7 +89,6 @@ export const projects: Project[] = [
     image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
-    platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
@@ -113,7 +110,6 @@ export const projects: Project[] = [
     image: 'galaxydestroyer.jpg',
     gif: 'galaxydestroyer.gif',
     video: 'galaxydestroyer.mp4',
-    platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
@@ -136,7 +132,6 @@ export const projects: Project[] = [
     image: 'tanks.jpg',
     gif: 'tanks.gif',
     video: 'tanks.mp4',
-    platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
@@ -145,21 +140,32 @@ export const projects: Project[] = [
       'A unique "bullet gate" mechanic - various gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
+    title: 'Navigation Game',
+    url: 'https://projects.niemo.io',
+    stack: ['Phaser', 'React'],
+    type: 'Phaser-React Fusion',
+    bullets: ['Mouse & Keyboard Controls', 'Mobile Touch Controls'],
+    icon: 'phaser-icon.png',
+    image: null,
+    gif: null,
+    video: null,
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Play',
+    description:
+      'A unique blend of Phaser and React - move kirby around the map and jump on a box to navigate!',
+  },
+  {
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
     type: 'Exercises in Web Styling',
-    bullets: [
-      // 'No Libraries',
-      // 'No Frameworks',
-      'Vanilla Web Development',
-      'All Original Content',
-    ],
+    bullets: ['Vanilla Web Development', 'All Original Content'],
     icon: 'html_css_js.png',
     image: 'design.jpg',
     gif: 'design.gif',
     video: 'design.mp4',
-    platforms: 'desktop',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
@@ -200,7 +206,6 @@ export const projects: Project[] = [
     image: 'events.jpg',
     gif: 'events.gif',
     video: 'events.mp4',
-    platforms: 'both',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
@@ -241,7 +246,6 @@ export const projects: Project[] = [
     image: 'soundcloud.jpg',
     gif: 'soundcloud.gif',
     video: 'soundcloud.mp4',
-    platforms: 'both',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
@@ -263,7 +267,6 @@ export const projects: Project[] = [
     image: 'youtube.jpg',
     gif: 'youtube.gif',
     video: 'youtube.mp4',
-    platforms: 'both',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
