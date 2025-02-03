@@ -124,13 +124,17 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
   useEffect(() => {
     if (connectionQuality === 'low') {
-      setMediaSrc(mediaBasePath + project.image)
+      setMediaSrc(project.image)
     } else if (connectionQuality === 'medium') {
-      setMediaSrc(mediaBasePath + project.gif)
+      setMediaSrc(project.gif)
     } else {
-      setMediaSrc(mediaBasePath + project.video)
+      setMediaSrc(project.video)
     }
   }, [connectionQuality, project])
+
+  useEffect(() => {
+    console.log('mediaSrc:', mediaSrc)
+  }, [mediaSrc])
 
   // Handle navigating to project page
   const handleProjectClick = () => {
@@ -264,7 +268,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             {isVideo(mediaSrc) && (
               <video
                 className="h-auto w-full rounded-3xl"
-                src={mediaSrc}
+                src={mediaBasePath + mediaSrc}
                 autoPlay
                 muted={isMuted}
                 loop
@@ -273,14 +277,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             {isGif(mediaSrc) && (
               <img
                 className="w-full rounded-md object-cover"
-                src={mediaSrc}
+                src={mediaBasePath + mediaSrc}
                 alt="gif"
               />
             )}
             {isImage(mediaSrc) && (
               <img
                 className="w-full rounded-md object-cover"
-                src={mediaSrc}
+                src={mediaBasePath + mediaSrc}
                 alt="static fallback"
               />
             )}
