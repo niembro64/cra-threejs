@@ -2,7 +2,7 @@ import { CSSProperties } from 'react'
 
 export const tooltipDelay = 500
 
-export const extraTimeLazyLoad = 100
+export const extraTimeLazyLoad = 0
 
 export type ConnectionQualityType = 'low' | 'medium' | 'high'
 
@@ -20,22 +20,7 @@ export const toolTipStyle: CSSProperties = {
   paddingLeft: '30px',
   borderRadius: '25px',
   zIndex: 1000,
-  // fontSize: '1.5em',
 }
-
-// export type Title =
-//   | 'Resume'
-//   | 'Home'
-//   | 'Design'
-//   | 'Smashed'
-//   | 'Pirates'
-//   | 'Events'
-//   | 'Tanks'
-//   | 'Galaxy Destroyer'
-//   | 'Seouldat'
-//   | 'YouTube'
-//   | 'Shows'
-//   | 'SoundCloud'
 
 export type Platform = 'desktop' | 'mobile' | 'both'
 
@@ -75,7 +60,7 @@ export const projects: Project[] = [
       // 'Evolving AI Bots',
     ],
     icon: 'phaser-icon.png',
-    image: null,
+    image: 'smashed.jpg',
     gif: 'smashed.gif',
     video: 'smashed.mp4',
     platforms: 'desktop',
@@ -99,7 +84,7 @@ export const projects: Project[] = [
       'Server-Client Reconciliation',
     ],
     icon: 'phaser-icon.png',
-    image: null,
+    image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
     platforms: 'desktop',
@@ -121,7 +106,7 @@ export const projects: Project[] = [
       // 'Original Sounds Effects',
     ],
     icon: 'phaser-icon.png',
-    image: null,
+    image: 'galaxydestroyer.jpg',
     gif: 'galaxydestroyer.gif',
     video: 'galaxydestroyer.mp4',
     platforms: 'desktop',
@@ -144,7 +129,7 @@ export const projects: Project[] = [
       // 'Original Music & Sounds',
     ],
     icon: 'phaser-icon.png',
-    image: null,
+    image: 'tanks.jpg',
     gif: 'tanks.gif',
     video: 'tanks.mp4',
     platforms: 'desktop',
@@ -167,7 +152,7 @@ export const projects: Project[] = [
       'All Original Content',
     ],
     icon: 'html_css_js.png',
-    image: null,
+    image: 'design.jpg',
     gif: 'design.gif',
     video: 'design.mp4',
     platforms: 'desktop',
@@ -208,7 +193,7 @@ export const projects: Project[] = [
       'Front & Backend Validation',
     ],
     icon: 'csharp.png',
-    image: null,
+    image: 'events.jpg',
     gif: 'events.gif',
     video: 'events.mp4',
     platforms: 'both',
@@ -249,7 +234,7 @@ export const projects: Project[] = [
       'All Original Music & Art',
     ],
     icon: 'fruit.png',
-    image: null,
+    image: 'soundcloud.jpg',
     gif: 'soundcloud.gif',
     video: 'soundcloud.mp4',
     platforms: 'both',
@@ -271,7 +256,7 @@ export const projects: Project[] = [
       'All Original Music & Art',
     ],
     icon: 'YouTube.png',
-    image: null,
+    image: 'youtube.jpg',
     gif: 'youtube.gif',
     video: 'youtube.mp4',
     platforms: 'both',

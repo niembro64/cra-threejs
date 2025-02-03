@@ -71,8 +71,6 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   useEffect(() => {
     if (connectionQuality === 'low') {
       setMediaSrc(project.image)
-    } else if (connectionQuality === 'medium') {
-      setMediaSrc(project.gif)
     } else {
       setMediaSrc(project.video)
     }
