@@ -107,18 +107,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     }
   }, [])
   // 3. Construct the path for different media types
-  const mediaBasePath =
-    process.env.PUBLIC_URL + '/videos2/' + removeSpacesFromString(project.title)
+  const mediaBasePath = process.env.PUBLIC_URL + '/videos2/'
   let mediaSrc = ''
   if (connectionQuality === 'low') {
-    // Some static image fallback path
-    // e.g. you might store "myProject.jpg" in "public/videos2/"
-    mediaSrc = mediaBasePath + '.jpg'
+    mediaSrc = mediaBasePath + project.image
   } else if (connectionQuality === 'medium') {
-    mediaSrc = mediaBasePath + '.gif'
+    mediaSrc = mediaBasePath + project.gif
   } else {
-    // Default to MP4 if video
-    mediaSrc = mediaBasePath + '.mp4'
+    mediaSrc = mediaBasePath + project.video
   }
   // Handle navigating to project page
   const handleProjectClick = () => {
