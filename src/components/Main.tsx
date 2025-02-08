@@ -10,7 +10,7 @@ import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
 
 // is less than 900 px
-export const isThin: boolean = window.innerWidth < 1100
+export const isThin: boolean = window.innerWidth < 1200
 export const isMobile: boolean =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent,
@@ -403,7 +403,7 @@ const Main: React.FC = () => {
           </h1>
 
           <button
-            className="mb-4 w-[90%] rounded px-4 py-2 text-2xl uppercase transition-all hover:bg-fuchsia-500/50 active:bg-fuchsia-500/0"
+            className="mb-4 w-full rounded-full px-4 py-2 text-2xl uppercase transition-all hover:bg-blue-500 active:bg-blue-500/0"
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
