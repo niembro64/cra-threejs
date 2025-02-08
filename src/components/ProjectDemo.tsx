@@ -74,8 +74,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       case 'low':
         setMediaSrc(project.image)
         break
-      case 'mobile':
-      case 'desktop':
+      case 'good-mobile':
+      case 'good-desktop':
         if (isMobile) {
           setMediaSrc(project.gif)
         } else {
@@ -249,7 +249,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
 
         {/* MUTE BUTTON for video with sound */}
-        {project.hasSound && connectionQuality === 'desktop' && inView && (
+        {project.hasSound && connectionQuality === 'good-desktop' && inView && (
           <button
             data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
             className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"

@@ -326,9 +326,9 @@ const Main: React.FC = () => {
 
   const setDefaultHighQuality = () => {
     if (isMobile) {
-      setConnectionQuality('mobile')
+      setConnectionQuality('good-mobile')
     } else {
-      setConnectionQuality('desktop')
+      setConnectionQuality('good-desktop')
     }
   }
 
@@ -349,7 +349,7 @@ const Main: React.FC = () => {
         if (downlinkMbps < 1) {
           setConnectionQuality('low')
         } else if (downlinkMbps < 2) {
-          setConnectionQuality('mobile')
+          setConnectionQuality('good-mobile')
         } else {
           setDefaultHighQuality()
         }
@@ -359,7 +359,7 @@ const Main: React.FC = () => {
         if (effectiveType.includes('2g')) {
           setConnectionQuality('low')
         } else if (effectiveType === '3g') {
-          setConnectionQuality('mobile')
+          setConnectionQuality('good-mobile')
         } else {
           setDefaultHighQuality()
         }

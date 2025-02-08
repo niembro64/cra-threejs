@@ -354,9 +354,9 @@ const Main: React.FC = () => {
     // DEFAULTS
     ////////////////////////
     if (isMobile) {
-      setConnectionQuality('mobile')
+      setConnectionQuality('good-mobile')
     } else {
-      setConnectionQuality('desktop')
+      setConnectionQuality('good-desktop')
     }
   }, [])
 
