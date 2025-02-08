@@ -40,9 +40,9 @@ function Demo(): ReactElement {
 
   /**
    * Debounce function to save input to localStorage after a delay.
+   * We simulate an asynchronous save (with a 500ms delay) so the spinner can show.
    */
   const scheduleSave = (key: LocalStorageKey, value: string) => {
-    setIsSaving(true)
     // Clear any existing timeout
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current)
@@ -50,9 +50,17 @@ function Demo(): ReactElement {
 
     // Schedule a new save operation
     saveTimeoutRef.current = setTimeout(() => {
-      localStorage.setItem(key, value)
-      setIsSaving(false)
-    }, 500) // 500ms debounce - adjust as necessary
+      setIsSaving(true)
+      // Simulate an asynchronous save by wrapping in a Promise
+      new Promise<void>((resolve) => {
+        // Synchronously save to localStorage
+        localStorage.setItem(key, value)
+        // Simulate a delay (500ms) so the spinner is visible
+        setTimeout(resolve, 500)
+      }).then(() => {
+        setIsSaving(false)
+      })
+    }, 1000) // 1000ms debounce delay (adjust as needed)
   }
 
   /**
@@ -77,8 +85,15 @@ function Demo(): ReactElement {
 
   return (
     <div className="mx-auto max-w-sm p-4 text-center">
-      {(isLoading || isSaving) && (
-        <div className="mb-4 flex items-center justify-center">
+      <h1 className="mb-4 text-2xl font-bold">Coach's Demo App</h1>
+      <p>We will build your functionality here as a beta.</p>
+      <p>
+        Then I'll build it into an Android & iOS App and put it on the App
+        stores.
+      </p>
+
+      <div className="mb-4 flex h-10 items-center justify-center">
+        {(isLoading || isSaving) && (
           <svg className="h-5 w-5 animate-spin text-white" viewBox="0 0 24 24">
             <circle
               className="opacity-25"
@@ -95,14 +110,8 @@ function Demo(): ReactElement {
               d="M4 12a8 8 0 018-8v8H4z"
             />
           </svg>
-        </div>
-      )}
-      <h1 className="mb-4 text-2xl font-bold">Coach's Demo App</h1>
-      <p>We will build your functionality here as a beta.</p>
-      <p>
-        Then I'll build it into an Android & iOS App and put it on the App
-        stores.
-      </p>
+        )}
+      </div>
 
       <div className="mt-6">
         <label className="mb-2 block text-left">
