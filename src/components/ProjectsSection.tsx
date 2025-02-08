@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useResumeStore } from '../store/audioStore'
-import { isMobile } from './Main'
+import { isThin } from './Main'
 import ProjectDemo from './ProjectDemo'
 import { projects, showEmojis } from '../data/projects'
 
@@ -17,9 +17,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
   } = useResumeStore()
 
   return (
-    <section
-      className={`px-8 py-12 ${isMobile ? 'bg-black/70' : ''} shadow-lg`}
-    >
+    <section className={`px-8 py-12 ${isThin ? 'bg-black/70' : ''} shadow-lg`}>
       <div className="mb-24 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
         <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1>
@@ -31,7 +29,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         {projects.map((project, index) => (
           <div
             key={project.title + index}
-            className={`${isMobile ? 'w-full' : 'w-[45vw]'}`}
+            className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
           >
             {index !== 0 && <div className="h-16 w-full"></div>}
             <ProjectDemo

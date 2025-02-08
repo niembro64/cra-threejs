@@ -3,7 +3,7 @@
 import React from 'react'
 import { EricResumeDescription } from '../data/projects'
 import { educations } from '../data/resumeData'
-import { isMobile } from './Main'
+import { isThin } from './Main'
 
 // NEW IMPORTS
 import EducationSection from './EducationSection'
@@ -18,7 +18,7 @@ interface ResumeProps {}
 export const Resume: React.FC<ResumeProps> = () => {
   return (
     <div className="w-full py-4 md:px-12">
-      {isMobile && (
+      {isThin && (
         <>
           <div className="h-40" />
           <div className="h-40" />
@@ -30,9 +30,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <section
-            className={`px-4 py-12 ${
-              isMobile ? 'bg-black/70' : ''
-            } text-center`}
+            className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} text-center`}
           >
             <div className="flex flex-row items-center justify-center">
               <img
@@ -66,17 +64,17 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <ProjectsSection />
 
-      {isMobile && (
+      {isThin && (
         <>
           <div className="h-40" />
           <div className="h-40" />
         </>
       )}
 
-      {!isMobile && (
+      {!isThin && (
         <section
           className={`px-4 py-12 ${
-            isMobile ? 'bg-slate-900/50' : ''
+            isThin ? 'bg-slate-900/50' : ''
           } text-center`}
         >
           <div className="h-40" />

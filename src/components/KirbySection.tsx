@@ -1,16 +1,15 @@
 // KirbySection.tsx
 
 import React from 'react'
+import { isThin } from './Main'
 
 interface KirbySectionProps {
   animateKirby: boolean
-  isMobile: boolean
   onKirbyClick: () => void
 }
 
 const KirbySection: React.FC<KirbySectionProps> = ({
   animateKirby,
-  isMobile,
   onKirbyClick,
 }) => {
   return (
@@ -20,7 +19,7 @@ const KirbySection: React.FC<KirbySectionProps> = ({
         src={process.env.PUBLIC_URL + '/kirby.png'}
         className={`tooltip pixel-art w-[40px] cursor-pointer ${
           animateKirby
-            ? isMobile
+            ? isThin
               ? 'kirby-bounce-mobile'
               : 'kirby-bounce-desktop'
             : ''

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import KirbySection from './KirbySection'
-import { isMobile } from './Main'
+import { isThin } from './Main'
 import { showEmojis, showKirbyGame } from '../data/projects'
 import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
 
@@ -107,7 +107,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
       <KirbySection
         animateKirby={animateKirby}
-        isMobile={isMobile}
         onKirbyClick={handleKirbyClick}
       />
     </div>

@@ -8,7 +8,7 @@ export const showEmojis: boolean = false
 
 export const showKirbyGame: boolean = false
 
-export type ConnectionQualityType = 'low' | 'good-mobile' | 'good-desktop'
+export type ConnectionQualityType = 'low' | 'medium' | 'high'
 
 export const toolTipStyle: CSSProperties = {
   // color: 'white',

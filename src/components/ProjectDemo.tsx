@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
-import { isMobile } from './Main'
+import { isMobile, isThin } from './Main'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false
@@ -74,8 +74,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       case 'low':
         setMediaSrc(project.image)
         break
-      case 'good-mobile':
-      case 'good-desktop':
+      case 'medium':
+      case 'high':
         if (isMobile) {
           setMediaSrc(project.gif)
         } else {
@@ -119,7 +119,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         </div>
       </div>
 
-      {isMobile ? (
+      {isThin ? (
         <>
           {project.type && (
             <div className="pixel-font mb-2 text-3xl uppercase text-blue-300">
@@ -197,8 +197,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       <div className="h-6" />
 
       {/* BUTTON TO VISIT THE PROJECT */}
-      {(isMobile && project.supportsMobile) ||
-      (!isMobile && project.supportsDesktop) ? (
+      {(isThin && project.supportsMobile) ||
+      (!isThin && project.supportsDesktop) ? (
         <button
           className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
           onClick={handleProjectClick}
@@ -214,7 +214,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           onClick={handleProjectClick}
           disabled
         >
-          {isMobile ? 'Desktop Only' : 'Mobile Only'}
+          {isThin ? 'Desktop Only' : 'Mobile Only'}
         </button>
       )}
 
@@ -249,26 +249,30 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
 
         {/* MUTE BUTTON for video with sound */}
-        {project.hasSound && connectionQuality === 'good-desktop' && inView && (
-          <button
-            data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
-            className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
-            onClick={toggleMute}
-          >
-            <img
-              src={
-                process.env.PUBLIC_URL +
-                '/' +
-                (isMuted ? 'no-sound.png' : 'sound.png')
-              }
-              alt={isMuted ? 'Unmute' : 'Mute'}
-              className="h-12 w-12"
-            />
-            {!hasTouchedAMuteButton && (
-              <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
-            )}
-          </button>
-        )}
+        {project.hasSound &&
+          !isMobile &&
+          connectionQuality !== 'low' &&
+          inView && (
+            <button
+              type="button"
+              data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
+              className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"
+              onClick={toggleMute}
+            >
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  '/' +
+                  (isMuted ? 'no-sound.png' : 'sound.png')
+                }
+                alt={isMuted ? 'Unmute' : 'Mute'}
+                className="h-12 w-12"
+              />
+              {!hasTouchedAMuteButton && (
+                <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
+              )}
+            </button>
+          )}
       </div>
     </div>
   )

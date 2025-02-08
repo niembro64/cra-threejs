@@ -2,12 +2,12 @@
 
 import React from 'react'
 import { jobs } from '../data/resumeData'
-import { isMobile } from './Main'
+import { isThin } from './Main'
 import { showEmojis } from '../data/projects'
 
 const WorkExperienceSection: React.FC = () => {
   return (
-    <section className={`px-4 py-12 ${isMobile ? 'bg-black/70' : ''}`}>
+    <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">👔</h1>}
         <h1 className="pixel-font text-6xl font-bold">WORK EXPERIENCE</h1>

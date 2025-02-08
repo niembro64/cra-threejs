@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { Tooltip } from 'react-tooltip'
 import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
-import { __DEV__, isMobile } from '../components/Main'
+import { __DEV__, isThin } from '../components/Main'
 import ContactSection from '../components/ContactSection'
 import { Resume } from '../components/Resume'
 import AudioSpectrogram from '../components/Spectrogram'
@@ -123,7 +123,7 @@ const Main: React.FC = () => {
 
   // --- ONLY ON MOBILE, TRACK SCROLL TO ACHIEVE PARALLAX ---
   useEffect(() => {
-    if (!isMobile) return
+    if (!isThin) return
     const handleMobileScroll = () => {
       setMobileScrollY(window.scrollY)
     }
@@ -154,7 +154,7 @@ const Main: React.FC = () => {
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
 
-    const globalX = isMobile ? -50 : 0
+    const globalX = isThin ? -50 : 0
 
     const geometry = new THREE.IcosahedronGeometry(90, 1)
     const material = new THREE.MeshPhongMaterial({
@@ -268,7 +268,7 @@ const Main: React.FC = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z
 
-      if (isMobile || !audioRef.current || audioRef.current.paused) {
+      if (isThin || !audioRef.current || audioRef.current.paused) {
         ball.rotation.x =
           percentKeep * ball.rotation.x +
           (1 - percentKeep) *
@@ -353,10 +353,10 @@ const Main: React.FC = () => {
     ////////////////////////
     // DEFAULTS
     ////////////////////////
-    if (isMobile) {
-      setConnectionQuality('good-mobile')
+    if (isThin) {
+      setConnectionQuality('medium')
     } else {
-      setConnectionQuality('good-desktop')
+      setConnectionQuality('high')
     }
   }, [])
 
@@ -364,13 +364,13 @@ const Main: React.FC = () => {
     <div className="relative min-h-screen w-full" ref={topElementRef}>
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
 
-      {!isMobile && (
+      {!isThin && (
         <div
           className="fixed left-[-50%] top-0 -z-10 h-full w-full"
           ref={refContainer}
         />
       )}
-      {isMobile && (
+      {isThin && (
         <div
           className="fixed left-0 top-0 -z-10 h-full w-full"
           ref={refContainer}
@@ -378,7 +378,7 @@ const Main: React.FC = () => {
       )}
 
       {/* Desktop Resume & AudioSpectrogram */}
-      {!isMobile && (
+      {!isThin && (
         <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center">
           <div className="h-40" />
           <h1 className="pixel-font mb-4 text-6xl font-bold uppercase">
@@ -410,7 +410,7 @@ const Main: React.FC = () => {
       )}
 
       <div className="left-0 top-0 z-0 flex h-full w-full flex-col items-end">
-        <div className={`relative ${isMobile ? 'w-full' : 'w-[70%]'} h-full`}>
+        <div className={`relative ${isThin ? 'w-full' : 'w-[70%]'} h-full`}>
           <div className="h-auto w-full">
             <Resume />
           </div>
@@ -427,7 +427,7 @@ const Main: React.FC = () => {
 
             <section
               className={`${
-                isMobile
+                isThin
                   ? showDemoNavigationGame
                     ? 'h-[500px]'
                     : 'h-[200px]'
@@ -439,13 +439,13 @@ const Main: React.FC = () => {
               {showDemoNavigationGame ? (
                 <>
                   <iframe
-                    className={`${isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
+                    className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
                     src="https://projects.niemo.io"
                     title="Projects"
                     allowFullScreen
                   ></iframe>
                   <img
-                    className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isMobile ? 'top-28' : 'top-2 opacity-50'}`}
+                    className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isThin ? 'top-28' : 'top-2 opacity-50'}`}
                     src="/remove.png"
                     alt="Close"
                     onClick={() => setShowDemoNavigationGame(false)}
@@ -456,7 +456,7 @@ const Main: React.FC = () => {
                   {showKirbyGame && (
                     <div
                       className={`${
-                        isMobile ? 'h-[400px] w-full' : 'h-[800px] w-full'
+                        isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'
                       } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
                     >
                       <img
