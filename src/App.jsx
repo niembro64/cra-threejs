@@ -1,12 +1,19 @@
 import React from 'react'
-import Main from './components/Main'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Main from './screens/Main'
+import Demo from './screens/Demo'
 import './App.scss'
 
 function App() {
   return (
-    <div className="App flex min-h-screen flex-col">
-      <Main />
-    </div>
+    <Router>
+      <div className="App flex min-h-screen flex-col">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/demo" element={<Demo />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
