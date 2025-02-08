@@ -322,14 +322,6 @@ const Main: React.FC = () => {
     }
   }, [height, pageHeight])
 
-  const setDefaultHighQuality = () => {
-    if (isMobile) {
-      setConnectionQuality('medium')
-    } else {
-      setConnectionQuality('high')
-    }
-  }
-
   useEffect(() => {
     // @ts-ignore
     const connection =
@@ -346,26 +338,25 @@ const Main: React.FC = () => {
         console.log('Downlink (Mbps):', downlinkMbps)
         if (downlinkMbps < 1) {
           setConnectionQuality('low')
-        } else if (downlinkMbps < 2) {
-          setConnectionQuality('medium')
-        } else {
-          setDefaultHighQuality()
+          return
         }
       } else if (connection.effectiveType) {
         const effectiveType = connection.effectiveType
         console.log('Effective type:', effectiveType)
         if (effectiveType.includes('2g')) {
           setConnectionQuality('low')
-        } else if (effectiveType === '3g') {
-          setConnectionQuality('medium')
-        } else {
-          setDefaultHighQuality()
+          return
         }
-      } else {
-        setDefaultHighQuality()
       }
+    }
+
+    ////////////////////////
+    // DEFAULTS
+    ////////////////////////
+    if (isMobile) {
+      setConnectionQuality('mobile')
     } else {
-      setDefaultHighQuality()
+      setConnectionQuality('desktop')
     }
   }, [])
 

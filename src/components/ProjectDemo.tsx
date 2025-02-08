@@ -69,12 +69,13 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }, [])
 
   useEffect(() => {
+    console.log('connectionQuality:', connectionQuality)
     switch (connectionQuality) {
       case 'low':
         setMediaSrc(project.image)
         break
-      case 'medium':
-      case 'high':
+      case 'mobile':
+      case 'desktop':
         if (isMobile) {
           setMediaSrc(project.gif)
         } else {
@@ -248,7 +249,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
 
         {/* MUTE BUTTON for video with sound */}
-        {project.hasSound && connectionQuality === 'high' && inView && (
+        {project.hasSound && connectionQuality === 'desktop' && inView && (
           <button
             data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
             className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-transparent p-2 text-white shadow-xl transition-all hover:bg-white/50"

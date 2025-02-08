@@ -8,7 +8,7 @@ export const showEmojis: boolean = false
 
 export const showKirbyGame: boolean = false
 
-export type ConnectionQualityType = 'low' | 'medium' | 'high'
+export type ConnectionQualityType = 'low' | 'mobile' | 'desktop'
 
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
@@ -25,8 +25,6 @@ export const toolTipStyle: CSSProperties = {
   borderRadius: '25px',
   zIndex: 1000,
 }
-
-export type Platform = 'desktop' | 'mobile' | 'both'
 
 export interface Project {
   title: string
