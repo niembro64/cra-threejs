@@ -21,6 +21,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null)
   const cUpper = useRef<HTMLCanvasElement | null>(null)
   const cLower = useRef<HTMLCanvasElement | null>(null)
+  const cUpperLowpass = useRef<HTMLCanvasElement | null>(null)
+  const cLowerLowpass = useRef<HTMLCanvasElement | null>(null)
 
   const previousMelBandsRef = useRef<number[]>([])
 
@@ -66,16 +68,40 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 features &&
                 (features as any).melBands &&
                 cUpper.current &&
-                cLower.current
+                cLower.current &&
+                cUpperLowpass.current &&
+                cLowerLowpass.current
               ) {
                 const cUpperC = cUpper.current
                 const cLowerC = cLower.current
+                const cUpperLowpassC = cUpperLowpass.current
+                const cLowerLowpassC = cLowerLowpass.current
+
                 const ctxUpper = cUpperC.getContext('2d')
                 const ctxLower = cLowerC.getContext('2d')
+                const ctxUpperLowpass = cUpperLowpassC.getContext('2d')
+                const ctxLowerLowpass = cLowerLowpassC.getContext('2d')
 
-                if (ctxUpper && ctxLower) {
+                if (
+                  ctxUpper &&
+                  ctxLower &&
+                  ctxUpperLowpass &&
+                  ctxLowerLowpass
+                ) {
                   ctxUpper.clearRect(0, 0, cUpperC.width, cUpperC.height)
                   ctxLower.clearRect(0, 0, cLowerC.width, cLowerC.height)
+                  ctxUpperLowpass.clearRect(
+                    0,
+                    0,
+                    cUpperLowpassC.width,
+                    cUpperLowpassC.height,
+                  )
+                  ctxLowerLowpass.clearRect(
+                    0,
+                    0,
+                    cLowerLowpassC.width,
+                    cLowerLowpassC.height,
+                  )
 
                   const decayFactor = 0.5
                   const currentMelBands = (features as any).melBands
@@ -92,13 +118,21 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
                   const bandWidth = cUpperC.width / currentMelBands.length
 
+                  const fillStyleBlue = 'rgb(59, 130, 246)'
+                  const fillStyleBlueDark = 'rgb(0, 100, 200)'
+                  const fillStyleRed = 'rgb(255, 0, 0)'
+                  const fillStyleRedDark = 'rgb(200, 100, 0)'
+
                   // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
                     const normalizedValue = melValue / 15
                     const height = normalizedValue * cUpperC.height
 
-                    ctxUpper.fillStyle = 'rgb(59, 130, 246)'
-                    ctxLower.fillStyle = 'rgb(59, 130, 246)'
+                    ctxUpper.fillStyle = fillStyleBlue
+                    ctxLower.fillStyle = fillStyleRed
+
+                    ctxUpperLowpass.fillStyle = fillStyleBlueDark
+                    ctxLowerLowpass.fillStyle = fillStyleRedDark
 
                     const isLastIndex = index === currentMelBands.length - 1
                     const bwMultiplier: number = 2.08
@@ -113,6 +147,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       height,
                     )
                     ctxLower.fillRect(startX, 0, bwCurr, height)
+                    ctxUpperLowpass.fillRect(
+                      startX,
+                      cUpperLowpassC.height - height,
+                      bwCurr,
+                      height,
+                    )
+                    ctxLowerLowpass.fillRect(startX, 0, bwCurr, height)
                   })
 
                   // Update references
@@ -169,40 +210,40 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          <canvas className="h-[200px] w-full" ref={cUpper}></canvas>
+          <div className="relative flex w-full flex-col items-center justify-center">
+            <canvas className="z-10 h-[200px] w-full" ref={cUpper}></canvas>
+            <canvas
+              className="absolute left-0 top-0 z-0 h-[200px] w-full"
+              ref={cUpperLowpass}
+            ></canvas>
 
-          <div
-            onMouseEnter={() => {
-              setHoverAudioButton(true)
-            }}
-            onMouseLeave={() => {
-              setHoverAudioButton(false)
-            }}
-            data-tooltip-content={
-              'The audio controls the rotation of the icosahedron'
-            }
-            className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-white active:text-white/50 ${
-              play ? '' : 'rounded-full'
-            }`}
-            onClick={() => {
-              startAudio()
-              setPlay(!play)
-            }}
-          >
-            {/* <div className="mr-2">
-     
-              <img
-                className="h-[50px] object-contain   
-                  filter invert"
-                src="/NA_white_on_trans.png"
-                alt="Niemo Audio Logo"
-              />
-            </div> */}
-            <h4 className={`text-2xl font-bold`}>
+            <button
+              type="button"
+              onMouseEnter={() => {
+                setHoverAudioButton(true)
+              }}
+              onMouseLeave={() => {
+                setHoverAudioButton(false)
+              }}
+              data-tooltip-content={
+                'The audio controls the rotation of the icosahedron'
+              }
+              className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
+                play ? '' : 'rounded-full'
+              }`}
+              onClick={() => {
+                startAudio()
+                setPlay(!play)
+              }}
+            >
               {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
-            </h4>
+            </button>
+            <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
+            <canvas
+              className="absolute bottom-0 left-0 z-0 h-[200px] w-full"
+              ref={cLowerLowpass}
+            ></canvas>
           </div>
-          <canvas className="h-[200px] w-full" ref={cLower}></canvas>
         </>
       )}
     </div>
