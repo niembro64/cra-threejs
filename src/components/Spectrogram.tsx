@@ -103,25 +103,17 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
                     ctx.fillStyle = 'rgb(59, 130, 246)'
                     flippedCtx.fillStyle = 'rgb(59, 130, 246)'
-                    // ctx.fillStyle = 'rgba(255, 255, 255)'
-                    // flippedCtx.fillStyle = 'rgba(255, 255, 255)'
 
                     const isLastIndex = index === currentMelBands.length - 1
+                    const bwMultiplier: number = 2.08
+                    const bwCurr: number =
+                      bandWidth * (isLastIndex ? 1 : bwMultiplier)
+                    const startX: number = index * bandWidth
 
                     // Original canvas
-                    ctx.fillRect(
-                      index * bandWidth,
-                      canvas.height - height,
-                      bandWidth * (isLastIndex ? 1 : 1.2),
-                      height,
-                    )
+                    ctx.fillRect(startX, canvas.height - height, bwCurr, height)
                     // Flipped canvas
-                    flippedCtx.fillRect(
-                      index * bandWidth,
-                      0,
-                      bandWidth * (isLastIndex ? 1 : 1.2),
-                      height,
-                    )
+                    flippedCtx.fillRect(startX, 0, bwCurr, height)
                   })
 
                   // Update references
