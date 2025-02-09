@@ -137,9 +137,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   // const fillStyleRed = 'rgb(255, 0, 0)'
                   // const fillStyleRedDark = 'rgb(200, 100, 0)'
 
+                  const powerDivisor: number = 20
                   // Draw mel bands
                   myMelBands.forEach((melValue, index) => {
-                    const normalizedValue = melValue / 15
+                    const normalizedValue = melValue / powerDivisor
                     const height = normalizedValue * cUpperC.height
 
                     ctxUpper.fillStyle = fillStyleBlue
@@ -161,17 +162,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       height,
                     )
                     ctxLower.fillRect(startX, 0, bwCurr, height)
-                    // ctxUpperLowpass.fillRect(
-                    //   startX,
-                    //   cUpperLowpassC.height - height,
-                    //   bwCurr,
-                    //   height,
-                    // )
-                    // ctxLowerLowpass.fillRect(startX, 0, bwCurr, height)
                   })
                   // Draw mel bands
                   myMelBandsLowPass.current.forEach((melValue, index) => {
-                    const normalizedValue = melValue / 15
+                    const normalizedValue = melValue / powerDivisor
                     const height = normalizedValue * cUpperC.height
 
                     ctxUpper.fillStyle = fillStyleBlue
@@ -186,13 +180,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       bandWidth * (isLastIndex ? 1 : bwMultiplier)
                     const startX: number = index * bandWidth
 
-                    // ctxUpper.fillRect(
-                    //   startX,
-                    //   cUpperC.height - height,
-                    //   bwCurr,
-                    //   height,
-                    // )
-                    // ctxLower.fillRect(startX, 0, bwCurr, height)
                     ctxUpperLowpass.fillRect(
                       startX,
                       cUpperLowpassC.height - height,
