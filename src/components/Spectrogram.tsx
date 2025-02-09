@@ -69,12 +69,12 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               ) {
                 const canvas = canvasRef.current
                 const flippedCanvas = canvasFlippedRef.current
-                const ctx = canvas.getContext('2d')
-                const flippedCtx = flippedCanvas.getContext('2d')
+                const ctxUpper = canvas.getContext('2d')
+                const ctxLower = flippedCanvas.getContext('2d')
 
-                if (ctx && flippedCtx) {
-                  ctx.clearRect(0, 0, canvas.width, canvas.height)
-                  flippedCtx.clearRect(
+                if (ctxUpper && ctxLower) {
+                  ctxUpper.clearRect(0, 0, canvas.width, canvas.height)
+                  ctxLower.clearRect(
                     0,
                     0,
                     flippedCanvas.width,
@@ -101,8 +101,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     const normalizedValue = melValue / 15
                     const height = normalizedValue * canvas.height
 
-                    ctx.fillStyle = 'rgb(59, 130, 246)'
-                    flippedCtx.fillStyle = 'rgb(59, 130, 246)'
+                    ctxUpper.fillStyle = 'rgb(59, 130, 246)'
+                    ctxLower.fillStyle = 'rgb(59, 130, 246)'
 
                     const isLastIndex = index === currentMelBands.length - 1
                     const bwMultiplier: number = 2.08
@@ -110,10 +110,13 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       bandWidth * (isLastIndex ? 1 : bwMultiplier)
                     const startX: number = index * bandWidth
 
-                    // Original canvas
-                    ctx.fillRect(startX, canvas.height - height, bwCurr, height)
-                    // Flipped canvas
-                    flippedCtx.fillRect(startX, 0, bwCurr, height)
+                    ctxUpper.fillRect(
+                      startX,
+                      canvas.height - height,
+                      bwCurr,
+                      height,
+                    )
+                    ctxLower.fillRect(startX, 0, bwCurr, height)
                   })
 
                   // Update references
