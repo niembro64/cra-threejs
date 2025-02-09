@@ -390,7 +390,7 @@ const Main: React.FC = () => {
 
           <button
             type="button"
-            className={`active:bg-blue-500/ w-full rounded-full px-4 py-2 text-2xl uppercase transition-all transition-none hover:bg-blue-500 active:bg-transparent ${showEmail ? 'font-bold' : ''}`}
+            className={`active:bg-blue-500/ w-full rounded-full px-4 py-2 text-2xl uppercase transition-all transition-none hover:bg-blue-500 active:bg-blue-500/50 ${showEmail ? 'font-bold' : ''}`}
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}

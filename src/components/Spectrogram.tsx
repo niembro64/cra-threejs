@@ -275,7 +275,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 'The audio controls the rotation of the icosahedron'
               }
               className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
-                play ? '' : 'rounded-full'
+                play ? '' : ''
               }`}
               onClick={() => {
                 startAudio()
