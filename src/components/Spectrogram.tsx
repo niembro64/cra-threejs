@@ -3,6 +3,16 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
 import React, { useEffect, useRef, useState } from 'react'
 import { ProjectStore } from '../store/ProjectStore'
 
+export const numMelBands = 80
+
+export const melBandsHigIndexes = [
+  Math.ceil(numMelBands * (1 / 3)),
+  numMelBands,
+]
+export const melBandsLowIndexes = [0, Math.ceil(numMelBands * 0.1)]
+
+Meyda.melBands = numMelBands
+
 interface AudioSpectrogramProps {
   highFreqPowerRef: React.MutableRefObject<number>
   lowFreqPowerRef: React.MutableRefObject<number>
@@ -25,8 +35,6 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const cLowerLowpass = useRef<HTMLCanvasElement | null>(null)
 
   const myMelBandsLowPass = useRef<number[]>([])
-
-  Meyda.melBands = 80
 
   const [hoverAudioButton, setHoverAudioButton] = useState(false)
 
@@ -191,16 +199,16 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     ctxLowerLowpass.fillRect(startX, 0, bwCurr, height)
                   })
 
-                  // Update references
-                  highFreqPowerRef.current = myMelBands
-                    .slice(0, 1)
-                    // @ts-ignore
-                    .reduce((sum, value) => sum + value, 0)
+                  highFreqPowerRef.current =
+                    myMelBands
+                      .slice(melBandsLowIndexes[0], melBandsLowIndexes[1])
+                      .reduce((sum, value) => sum + value, 0) /
+                    (melBandsLowIndexes[1] - melBandsLowIndexes[0])
                   lowFreqPowerRef.current =
                     myMelBands
-                      .slice(18, 26)
-                      // @ts-ignore
-                      .reduce((sum, value) => sum + value, 0) / 2
+                      .slice(melBandsHigIndexes[0], melBandsHigIndexes[1])
+                      .reduce((sum, value) => sum + value, 0) /
+                    (melBandsHigIndexes[1] - melBandsHigIndexes[0])
                 }
               }
             },
