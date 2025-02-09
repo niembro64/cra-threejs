@@ -19,8 +19,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const [audioStarted, setAudioStarted] = useState(false)
   const audioContextRef = useRef<AudioContext | null>(null)
   const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const canvasFlippedRef = useRef<HTMLCanvasElement | null>(null)
+  const cUpper = useRef<HTMLCanvasElement | null>(null)
+  const cLower = useRef<HTMLCanvasElement | null>(null)
 
   const previousMelBandsRef = useRef<number[]>([])
 
@@ -60,26 +60,22 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             source,
             bufferSize: 512,
             featureExtractors: ['melBands'],
+
             callback: (features: MeydaFeaturesObject) => {
               if (
                 features &&
                 (features as any).melBands &&
-                canvasRef.current &&
-                canvasFlippedRef.current
+                cUpper.current &&
+                cLower.current
               ) {
-                const canvas = canvasRef.current
-                const flippedCanvas = canvasFlippedRef.current
-                const ctxUpper = canvas.getContext('2d')
-                const ctxLower = flippedCanvas.getContext('2d')
+                const cUpperC = cUpper.current
+                const cLowerC = cLower.current
+                const ctxUpper = cUpperC.getContext('2d')
+                const ctxLower = cLowerC.getContext('2d')
 
                 if (ctxUpper && ctxLower) {
-                  ctxUpper.clearRect(0, 0, canvas.width, canvas.height)
-                  ctxLower.clearRect(
-                    0,
-                    0,
-                    flippedCanvas.width,
-                    flippedCanvas.height,
-                  )
+                  ctxUpper.clearRect(0, 0, cUpperC.width, cUpperC.height)
+                  ctxLower.clearRect(0, 0, cLowerC.width, cLowerC.height)
 
                   const decayFactor = 0.5
                   const currentMelBands = (features as any).melBands
@@ -94,12 +90,12 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       })
                   }
 
-                  const bandWidth = canvas.width / currentMelBands.length
+                  const bandWidth = cUpperC.width / currentMelBands.length
 
                   // Draw mel bands
                   previousMelBandsRef.current.forEach((melValue, index) => {
                     const normalizedValue = melValue / 15
-                    const height = normalizedValue * canvas.height
+                    const height = normalizedValue * cUpperC.height
 
                     ctxUpper.fillStyle = 'rgb(59, 130, 246)'
                     ctxLower.fillStyle = 'rgb(59, 130, 246)'
@@ -112,7 +108,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
                     ctxUpper.fillRect(
                       startX,
-                      canvas.height - height,
+                      cUpperC.height - height,
                       bwCurr,
                       height,
                     )
@@ -173,7 +169,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             Your browser does not support the audio element.
           </audio>
 
-          <canvas className="h-[200px] w-full" ref={canvasRef}></canvas>
+          <canvas className="h-[200px] w-full" ref={cUpper}></canvas>
 
           <div
             onMouseEnter={() => {
@@ -206,7 +202,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
             </h4>
           </div>
-          <canvas className="h-[200px] w-full" ref={canvasFlippedRef}></canvas>
+          <canvas className="h-[200px] w-full" ref={cLower}></canvas>
         </>
       )}
     </div>
