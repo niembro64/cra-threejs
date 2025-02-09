@@ -26,6 +26,8 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
 
   const myMelBandsLowPass = useRef<number[]>([])
 
+  Meyda.melBands = 80
+
   const [hoverAudioButton, setHoverAudioButton] = useState(false)
 
   const startAudio = () => {
@@ -60,7 +62,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext,
             source,
-            bufferSize: 512,
+            bufferSize: 512 * 2,
             featureExtractors: ['melBands'],
 
             callback: (features: MeydaFeaturesObject) => {
@@ -137,7 +139,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   // const fillStyleRed = 'rgb(255, 0, 0)'
                   // const fillStyleRedDark = 'rgb(200, 100, 0)'
 
-                  const powerDivisor: number = 20
+                  const powerDivisor: number = 30
                   // Draw mel bands
                   myMelBands.forEach((melValue, index) => {
                     const normalizedValue = melValue / powerDivisor
