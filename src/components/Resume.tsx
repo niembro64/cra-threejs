@@ -46,7 +46,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               Stamford, Connecticut
             </p>
 
-            <div className="flex h-40 flex-row items-center justify-center">
+            <div className="mb-4 flex flex-row items-center justify-center">
               <img
                 className="pixel-art w-4/5"
                 src="/smashed_small.gif"

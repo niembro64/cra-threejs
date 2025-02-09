@@ -1,28 +1,25 @@
 import React, { useState } from 'react'
+import { FaClipboardCheck, FaRegClipboard } from 'react-icons/fa'
+import { showEmojis } from '../data/projects'
 import KirbySection from './KirbySection'
-import { isThin } from './Main'
-import { showEmojis, showKirbyGame } from '../data/projects'
-import { FaRegClipboard, FaClipboardCheck } from 'react-icons/fa'
+import { email, phoneNumber } from './Main'
 
 const duration = 1500
 
 interface ContactSectionProps {
   onPhoneClick: () => void
-  email: string
   handleKirbyClick: () => void
   animateKirby: boolean
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
   onPhoneClick,
-  email,
   handleKirbyClick,
   animateKirby,
 }) => {
   // States for visual feedback on buttons
   const [copiedPhone, setCopiedPhone] = useState(false)
   const [copiedEmail, setCopiedEmail] = useState(false)
-  const phoneNumber = '618-616-3380'
 
   const copyToClipboard = async (
     text: string,

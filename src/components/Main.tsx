@@ -9,7 +9,8 @@ import { Tooltip } from 'react-tooltip'
 import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/projects'
 import { useResumeStore } from '../store/audioStore'
 
-// is less than 900 px
+export const phoneNumber = '618-616-3380'
+export const email = 'niemeyer.eric@gmail.com'
 export const isThin: boolean = window.innerWidth < 1200
 export const isMobile: boolean =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -65,7 +66,6 @@ const Main: React.FC = () => {
     }, bounceDuration)
   }
 
-  const email = 'niemeyer.eric@gmail.com'
   const [showEmail, setShowEmail] = useState(false)
 
   const copyToClipboard = useCallback(async () => {
@@ -78,7 +78,6 @@ const Main: React.FC = () => {
   }, [email])
 
   // --- NEW STATE & EFFECT FOR PARALLAX ON MOBILE ---
-  const [mobileScrollY, setMobileScrollY] = useState(0)
 
   useEffect(() => {
     function onMessage(event: MessageEvent) {
@@ -129,19 +128,6 @@ const Main: React.FC = () => {
     }
   }, [])
 
-  // --- ONLY ON MOBILE, TRACK SCROLL TO ACHIEVE PARALLAX ---
-  useEffect(() => {
-    if (!isThin) return
-    const handleMobileScroll = () => {
-      setMobileScrollY(window.scrollY)
-    }
-    window.addEventListener('scroll', handleMobileScroll)
-    return () => {
-      window.removeEventListener('scroll', handleMobileScroll)
-    }
-  }, [])
-
-  // 3D Setup
   useEffect(() => {
     if (height === 0 || pageHeight === 0) return
 
@@ -396,14 +382,15 @@ const Main: React.FC = () => {
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isThin && (
-        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center">
+        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center px-4">
           <div className="h-40" />
           <h1 className="pixel-font mb-4 text-6xl font-bold uppercase">
             Eric Niemeyer
           </h1>
 
           <button
-            className="mb-4 w-full rounded-full px-4 py-2 text-2xl uppercase transition-all hover:bg-blue-500 active:bg-blue-500/0"
+            type="button"
+            className={`active:bg-blue-500/ w-full rounded-full px-4 py-2 text-2xl uppercase transition-all transition-none hover:bg-blue-500 active:bg-transparent ${showEmail ? 'font-bold' : ''}`}
             onMouseEnter={() => setShowEmail(true)}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
@@ -438,7 +425,6 @@ const Main: React.FC = () => {
             <ContactSection
               animateKirby={animateKirby}
               onPhoneClick={() => window.open('tel:618-616-3380')}
-              email={email}
               handleKirbyClick={handleKirbyClick}
             />
 
