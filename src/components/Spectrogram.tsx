@@ -3,13 +3,13 @@ import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
 import React, { useEffect, useRef, useState } from 'react'
 import { ProjectStore } from '../store/ProjectStore'
 
-export const numMelBands = 80
+export const numMelBands = 40
 
 export const melBandsHigIndexes = [
   Math.ceil(numMelBands * (1 / 3)),
   numMelBands,
 ]
-export const melBandsLowIndexes = [0, Math.ceil(numMelBands * 0.1)]
+export const melBandsLowIndexes = [0, Math.floor(numMelBands * (1 / 10))]
 
 Meyda.melBands = numMelBands
 
@@ -70,7 +70,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
           meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
             audioContext,
             source,
-            bufferSize: 512 * 2,
+            bufferSize: 512,
             featureExtractors: ['melBands'],
 
             callback: (features: MeydaFeaturesObject) => {
@@ -134,11 +134,11 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   const colorG: number = 130
                   const colorB: number = 246
 
-                  const divisor: number = 4
+                  const colorDivisor: number = 2
 
-                  const coloRHalf: number = Math.floor(colorR / divisor)
-                  const coloGHalf: number = Math.floor(colorG / divisor)
-                  const coloBHalf: number = Math.floor(colorB / divisor)
+                  const coloRHalf: number = Math.floor(colorR / colorDivisor)
+                  const coloGHalf: number = Math.floor(colorG / colorDivisor)
+                  const coloBHalf: number = Math.floor(colorB / colorDivisor)
 
                   const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`
                   const fillStyleBlueDark = `rgb(${coloRHalf}, ${coloGHalf}, ${coloBHalf})`
@@ -199,13 +199,15 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     ctxLowerLowpass.fillRect(startX, 0, bwCurr, height)
                   })
 
+                  const bandsToUseForPower = myMelBandsLowPass.current
+
                   highFreqPowerRef.current =
-                    myMelBands
+                    bandsToUseForPower
                       .slice(melBandsLowIndexes[0], melBandsLowIndexes[1])
                       .reduce((sum, value) => sum + value, 0) /
                     (melBandsLowIndexes[1] - melBandsLowIndexes[0])
                   lowFreqPowerRef.current =
-                    myMelBands
+                    bandsToUseForPower
                       .slice(melBandsHigIndexes[0], melBandsHigIndexes[1])
                       .reduce((sum, value) => sum + value, 0) /
                     (melBandsHigIndexes[1] - melBandsHigIndexes[0])
@@ -249,7 +251,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
       ) : (
         <>
           <audio ref={audioRef} loop>
-            <source src="song.mp3" type="audio/mp3" />
+            <source src="song-2.mp3" type="audio/mp3" />
             Your browser does not support the audio element.
           </audio>
 
@@ -279,7 +281,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 setPlay(!play)
               }}
             >
-              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
+              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO AUDIO'}
             </button>
             <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
             <canvas

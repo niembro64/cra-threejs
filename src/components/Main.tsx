@@ -31,8 +31,8 @@ const Main: React.FC = () => {
   const topElementRef = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number>(0)
 
-  const lowerPowerRawRef = useRef<number>(0)
-  const upperPowerRawRef = useRef<number>(0)
+  const highFreqPowerRef = useRef<number>(0)
+  const lowFreqPowerRef = useRef<number>(0)
 
   const lowerPowerAccumulatedRef = useRef<number>(0)
   const upperPowerAccumulatedRef = useRef<number>(0)
@@ -262,7 +262,7 @@ const Main: React.FC = () => {
         percentKeepMouse * mousePositionPrev.current.z +
         (1 - percentKeepMouse) * mousePositionCurr.current.z
 
-      if (isThin || !audioRef.current || audioRef.current.paused) {
+      if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
         ball.rotation.x =
           percentKeep * ball.rotation.x +
           (1 - percentKeep) *
@@ -277,15 +277,23 @@ const Main: React.FC = () => {
       } else {
         lowerPowerAccumulatedRef.current =
           (lowerPowerAccumulatedRef.current +
-            Math.pow(lowerPowerRawRef.current, 1) * 0.0008) %
+            Math.pow(highFreqPowerRef.current, 2) * 0.0005) %
           360
         upperPowerAccumulatedRef.current =
           (upperPowerAccumulatedRef.current +
-            Math.pow(upperPowerRawRef.current, 3) * 0.00003) %
+            Math.pow(lowFreqPowerRef.current, 3) * 0.002) %
           360
+        // lowerPowerAccumulatedRef.current =
+        //   (lowerPowerAccumulatedRef.current +
+        //     Math.pow(highFreqPowerRef.current, 1) * 0.002) %
+        //   360
+        // upperPowerAccumulatedRef.current =
+        //   (upperPowerAccumulatedRef.current +
+        //     Math.pow(lowFreqPowerRef.current, 3) * 0.001) %
+        //   360
 
-        const percentKeepPowerShort = 0.1
-        const percentKeepPowerLong = 0.92
+        const percentKeepPowerShort = 0.5
+        const percentKeepPowerLong = 0.5
 
         ball.rotation.x =
           ball.rotation.x * percentKeepPowerShort +
@@ -297,10 +305,10 @@ const Main: React.FC = () => {
 
         pointLightRed.intensity =
           pointLightRed.intensity * percentKeepPowerLong +
-          (0.5 + lowerPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong)
+          (0.5 + highFreqPowerRef.current * 0.2) * (1 - percentKeepPowerLong)
         pointLightBlue.intensity =
           pointLightBlue.intensity * percentKeepPowerLong +
-          (0.5 + upperPowerRawRef.current * 0.2) * (1 - percentKeepPowerLong)
+          (0.5 + lowFreqPowerRef.current * 0.2) * (1 - percentKeepPowerLong)
         pointLightGreen.intensity =
           (pointLightBlue.intensity + pointLightRed.intensity) / 2
       }
@@ -406,8 +414,8 @@ const Main: React.FC = () => {
           <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
           <h1 className="mb-4 text-2xl">618-616-338O</h1>
           <AudioSpectrogram
-            highFreqPowerRef={lowerPowerRawRef}
-            lowFreqPowerRef={upperPowerRawRef}
+            highFreqPowerRef={highFreqPowerRef}
+            lowFreqPowerRef={lowFreqPowerRef}
             audioRef={audioRef}
           />
         </div>
