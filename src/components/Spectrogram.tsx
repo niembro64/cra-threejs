@@ -4,14 +4,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ProjectStore } from '../store/ProjectStore'
 
 interface AudioSpectrogramProps {
-  lowerPowerRef: React.MutableRefObject<number>
-  upperPowerRef: React.MutableRefObject<number>
+  highFreqPowerRef: React.MutableRefObject<number>
+  lowFreqPowerRef: React.MutableRefObject<number>
   audioRef: React.RefObject<HTMLAudioElement>
 }
 
 const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
-  lowerPowerRef,
-  upperPowerRef,
+  highFreqPowerRef,
+  lowFreqPowerRef,
   audioRef,
 }) => {
   const { play, setPlay } = ProjectStore()
@@ -24,7 +24,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   const cUpperLowpass = useRef<HTMLCanvasElement | null>(null)
   const cLowerLowpass = useRef<HTMLCanvasElement | null>(null)
 
-  const previousMelBandsRef = useRef<number[]>([])
+  const myMelBandsLowPass = useRef<number[]>([])
 
   const [hoverAudioButton, setHoverAudioButton] = useState(false)
 
@@ -103,28 +103,42 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     cLowerLowpassC.height,
                   )
 
-                  const decayFactor = 0.5
-                  const currentMelBands = (features as any).melBands
+                  const decayFactor = 0.97
+                  // @ts-ignore
+                  const myMelBands: number[] = features.melBands
 
-                  if (previousMelBandsRef.current.length === 0) {
-                    previousMelBandsRef.current = currentMelBands
+                  if (myMelBandsLowPass.current.length === 0) {
+                    myMelBandsLowPass.current = myMelBands
                   } else {
-                    previousMelBandsRef.current =
-                      previousMelBandsRef.current.map((prevValue, index) => {
-                        const currentValue = currentMelBands[index]
+                    myMelBandsLowPass.current = myMelBandsLowPass.current.map(
+                      (prevValue, index) => {
+                        const currentValue = myMelBands[index]
                         return Math.max(currentValue, prevValue * decayFactor)
-                      })
+                      },
+                    )
                   }
 
-                  const bandWidth = cUpperC.width / currentMelBands.length
+                  const bandWidth = cUpperC.width / myMelBands.length
 
-                  const fillStyleBlue = 'rgb(59, 130, 246)'
-                  const fillStyleBlueDark = 'rgb(0, 100, 200)'
-                  const fillStyleRed = 'rgb(255, 0, 0)'
-                  const fillStyleRedDark = 'rgb(200, 100, 0)'
+                  const colorR: number = 59
+                  const colorG: number = 130
+                  const colorB: number = 246
+
+                  const divisor: number = 4
+
+                  const coloRHalf: number = Math.floor(colorR / divisor)
+                  const coloGHalf: number = Math.floor(colorG / divisor)
+                  const coloBHalf: number = Math.floor(colorB / divisor)
+
+                  const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`
+                  const fillStyleBlueDark = `rgb(${coloRHalf}, ${coloGHalf}, ${coloBHalf})`
+                  const fillStyleRed = fillStyleBlue
+                  const fillStyleRedDark = fillStyleBlueDark
+                  // const fillStyleRed = 'rgb(255, 0, 0)'
+                  // const fillStyleRedDark = 'rgb(200, 100, 0)'
 
                   // Draw mel bands
-                  previousMelBandsRef.current.forEach((melValue, index) => {
+                  myMelBands.forEach((melValue, index) => {
                     const normalizedValue = melValue / 15
                     const height = normalizedValue * cUpperC.height
 
@@ -134,7 +148,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                     ctxUpperLowpass.fillStyle = fillStyleBlueDark
                     ctxLowerLowpass.fillStyle = fillStyleRedDark
 
-                    const isLastIndex = index === currentMelBands.length - 1
+                    const isLastIndex = index === myMelBands.length - 1
                     const bwMultiplier: number = 2.08
                     const bwCurr: number =
                       bandWidth * (isLastIndex ? 1 : bwMultiplier)
@@ -147,6 +161,38 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                       height,
                     )
                     ctxLower.fillRect(startX, 0, bwCurr, height)
+                    // ctxUpperLowpass.fillRect(
+                    //   startX,
+                    //   cUpperLowpassC.height - height,
+                    //   bwCurr,
+                    //   height,
+                    // )
+                    // ctxLowerLowpass.fillRect(startX, 0, bwCurr, height)
+                  })
+                  // Draw mel bands
+                  myMelBandsLowPass.current.forEach((melValue, index) => {
+                    const normalizedValue = melValue / 15
+                    const height = normalizedValue * cUpperC.height
+
+                    ctxUpper.fillStyle = fillStyleBlue
+                    ctxLower.fillStyle = fillStyleRed
+
+                    ctxUpperLowpass.fillStyle = fillStyleBlueDark
+                    ctxLowerLowpass.fillStyle = fillStyleRedDark
+
+                    const isLastIndex = index === myMelBands.length - 1
+                    const bwMultiplier: number = 2.08
+                    const bwCurr: number =
+                      bandWidth * (isLastIndex ? 1 : bwMultiplier)
+                    const startX: number = index * bandWidth
+
+                    // ctxUpper.fillRect(
+                    //   startX,
+                    //   cUpperC.height - height,
+                    //   bwCurr,
+                    //   height,
+                    // )
+                    // ctxLower.fillRect(startX, 0, bwCurr, height)
                     ctxUpperLowpass.fillRect(
                       startX,
                       cUpperLowpassC.height - height,
@@ -157,12 +203,12 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                   })
 
                   // Update references
-                  lowerPowerRef.current = currentMelBands
+                  highFreqPowerRef.current = myMelBands
                     .slice(0, 1)
                     // @ts-ignore
                     .reduce((sum, value) => sum + value, 0)
-                  upperPowerRef.current =
-                    currentMelBands
+                  lowFreqPowerRef.current =
+                    myMelBands
                       .slice(18, 26)
                       // @ts-ignore
                       .reduce((sum, value) => sum + value, 0) / 2
@@ -191,7 +237,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
         audioElement.removeEventListener('canplay', setupMeyda)
       }
     }
-  }, [audioRef, audioStarted, lowerPowerRef, upperPowerRef])
+  }, [audioRef, audioStarted, highFreqPowerRef, lowFreqPowerRef])
 
   return (
     <div className="flex w-[100%] flex-col items-center justify-center">

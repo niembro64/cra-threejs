@@ -406,8 +406,8 @@ const Main: React.FC = () => {
           <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
           <h1 className="mb-4 text-2xl">618-616-338O</h1>
           <AudioSpectrogram
-            lowerPowerRef={lowerPowerRawRef}
-            upperPowerRef={upperPowerRawRef}
+            highFreqPowerRef={lowerPowerRawRef}
+            lowFreqPowerRef={upperPowerRawRef}
             audioRef={audioRef}
           />
         </div>
