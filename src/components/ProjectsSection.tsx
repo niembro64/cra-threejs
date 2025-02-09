@@ -1,7 +1,7 @@
 // ProjectsSection.tsx
 
 import React from 'react'
-import { useResumeStore } from '../store/audioStore'
+import { ProjectStore } from '../store/ProjectStore'
 import { isThin } from './Main'
 import ProjectDemo from './ProjectDemo'
 import { projects, showEmojis } from '../data/projects'
@@ -14,7 +14,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
     mutedArray: isMutedArray,
     setMuted: setIsMuted,
     hasTouchedAudioButton,
-  } = useResumeStore()
+  } = ProjectStore()
 
   return (
     <section className={`px-8 py-12 ${isThin ? 'bg-black/70' : ''} shadow-lg`}>

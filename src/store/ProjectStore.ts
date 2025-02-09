@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { ConnectionQualityType, Project, projects } from '../data/projects'
 
-interface AudioState {
+interface ProjectStoreProps {
   play: boolean
   setPlay: (m: boolean) => void
   mutedArray: boolean[]
@@ -11,7 +11,7 @@ interface AudioState {
   setConnectionQuality: (quality: ConnectionQualityType) => void
 }
 
-export const useResumeStore = create<AudioState>((set) => ({
+export const ProjectStore = create<ProjectStoreProps>((set) => ({
   hasTouchedAudioButton: false,
   mutedArray: [...projects.map((p: Project) => true)],
   play: true,
@@ -24,7 +24,7 @@ export const useResumeStore = create<AudioState>((set) => ({
   setMuted: (index: number, isMuted: boolean) => {
     set({ hasTouchedAudioButton: true })
     set({ play: false })
-    set((state: AudioState) => {
+    set((state: ProjectStoreProps) => {
       const m: boolean[] = [...projects.map((p) => true)]
       m[index] = isMuted
 

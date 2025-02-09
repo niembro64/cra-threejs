@@ -7,7 +7,7 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/projects'
-import { useResumeStore } from '../store/audioStore'
+import { ProjectStore } from '../store/ProjectStore'
 
 export const phoneNumber = '618-616-3380'
 export const email = 'niemeyer.eric@gmail.com'
@@ -20,7 +20,7 @@ export const isMobile: boolean =
 export const __DEV__ = process.env.NODE_ENV === 'development'
 
 const Main: React.FC = () => {
-  const { setConnectionQuality } = useResumeStore()
+  const { setConnectionQuality } = ProjectStore()
 
   const refContainer = useRef<HTMLDivElement | null>(null)
   const mousePositionCurr = useRef(new THREE.Vector3())

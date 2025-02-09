@@ -1,7 +1,7 @@
 import Meyda, { MeydaFeaturesObject } from 'meyda'
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
 import React, { useEffect, useRef, useState } from 'react'
-import { useResumeStore } from '../store/audioStore'
+import { ProjectStore } from '../store/ProjectStore'
 
 interface AudioSpectrogramProps {
   lowerPowerRef: React.MutableRefObject<number>
@@ -14,7 +14,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
   upperPowerRef,
   audioRef,
 }) => {
-  const { play, setPlay } = useResumeStore()
+  const { play, setPlay } = ProjectStore()
 
   const [audioStarted, setAudioStarted] = useState(false)
   const audioContextRef = useRef<AudioContext | null>(null)

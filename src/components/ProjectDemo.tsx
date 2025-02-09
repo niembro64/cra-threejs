@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react'
 import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/projects'
-import { useResumeStore } from '../store/audioStore'
+import { ProjectStore } from '../store/ProjectStore'
 import { isMobile, isThin } from './Main'
 
 const isVideo = (mediaSource: string | null) => {
@@ -37,7 +37,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   isMuted,
   hasTouchedAMuteButton,
 }) => {
-  const { connectionQuality } = useResumeStore()
+  const { connectionQuality } = ProjectStore()
 
   const mediaRef = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)
