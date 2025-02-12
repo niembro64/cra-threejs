@@ -73,7 +73,11 @@ export const jobs: Job[] = [
       },
       {
         title: 'Built games for adults and kids, mobile & desktop.',
-        lines: ['Phaser', 'React Native Game Engine'],
+        lines: [
+          'Phaser',
+          'React Native Game Engine',
+          'Angular Material Drag & Drop',
+        ],
       },
     ],
   },
