@@ -90,7 +90,7 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <div className="h-40" />
 
-      <EducationSection educations={educations} />
+      <EducationSection />
 
       <div className="h-40" />
 

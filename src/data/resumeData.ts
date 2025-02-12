@@ -1,17 +1,22 @@
 // resumeData.ts
 
+export interface BulletObject {
+  title: string
+  lines: string[]
+}
+
 export interface Job {
   company: string
   title: string
   location: string
   dates: string
-  bullets: string[]
+  details: BulletObject[]
 }
 
 export interface Education {
   degree: string
   school: string
-  details: string[]
+  details: BulletObject[]
 }
 
 export const jobs: Job[] = [
@@ -20,8 +25,11 @@ export const jobs: Job[] = [
     title: 'Head of Engineering',
     location: 'Stamford, Connecticut',
     dates: '2025 - Present',
-    bullets: [
-      'Architecting and implementing in-house AI systems to prevent senior phone fraud.',
+    details: [
+      {
+        title: 'Architecting and implementing in-house AI systems.',
+        lines: [],
+      },
     ],
   },
   {
@@ -29,10 +37,44 @@ export const jobs: Job[] = [
     title: 'Lead Software Engineer',
     location: 'Stamford, Connecticut',
     dates: '2022 - 2025',
-    bullets: [
-      'Full-Stack Development: Implemented mobile apps (React Native, Vue, TypeScript, Laravel, SQL).',
-      'Creative AI Solutions: Trained and built acoustic analysis AI video-generation apps (RNN-based, BrainJS), audio & video processing (FFT, MFCC, FFMPG, etc), interactive experiences.',
-      'Web Games: Designed and built games for adults and kids, mobile & desktop (Phaser 3, Angular, Angular Material).',
+    details: [
+      {
+        title: 'Implemented complex fullstack web + mobile apps.',
+        lines: [
+          'Vue',
+          'Angular',
+          'React',
+          'React Native CLI',
+          'React Native Expo',
+          'Node',
+          'Express',
+          'Laravel',
+          'MongoDB',
+          'SQL',
+          "API's",
+          'Websockets',
+          'S3',
+          'AWS',
+        ],
+      },
+      {
+        title:
+          'Designed, trained, and deployed various AI model architectures.',
+        lines: [
+          'Pytorch',
+          'BrainJS',
+          'Feedforward',
+          'LSTMs',
+          'Transformers',
+          'Text Classifiers',
+          'Audio Classifiers',
+          'Game AI',
+        ],
+      },
+      {
+        title: 'Built games for adults and kids, mobile & desktop.',
+        lines: ['Phaser', 'React Native Game Engine'],
+      },
     ],
   },
   {
@@ -40,30 +82,34 @@ export const jobs: Job[] = [
     title: 'Software Engineer II',
     location: 'St. Louis, Missouri',
     dates: '2018 - 2022',
-    bullets: [
-      'On-Site MES Configuration: Deployed and maintained industrial systems for clients like Lucid Motors, 3M, Cooper Tires, Continental Tire, and Maple Leaf Foods.',
-      'System Integration: Coordinated third-party connectivity, debugged production issues, and managed legacy systems (Java, Pnuts) with Jira-based tracking.',
-      'Team Leadership: Managed small dev teams, overseeing requirements updates, scheduling, and deliverables.',
+    details: [
+      {
+        title:
+          'Configured industrial software systems for fortune 500 companies.',
+        lines: [
+          '3M',
+          'Lucid Motors',
+          'Cooper Tires',
+          'Continental Tires',
+          'Maple Leaf Foods',
+        ],
+      },
     ],
   },
-  // {
-  //   company: 'Republic of Korea Ultimate',
-  //   title: 'Executive Manager — 35-Team National Sports League',
-  //   location: 'South Korea',
-  //   dates: '2015 - 2017',
-  //   bullets: [
-  //     'Oversaw seasonal budgets of $150k, scheduling for 35 teams across multiple cities, and logistics for uniforms, equipment, and rosters.',
-  //     'Worked closely with a Korean secretary to handle administration, league pools, and official meetings.',
-  //   ],
-  // },
   {
     company: '대구과학고등학교 영재고',
     title: 'High School ESL & Science Instructor',
     location: 'Daegu, South Korea',
     dates: '2013 - 2017',
-    bullets: [
-      'Built custom software to compile faculty schedules from a cryptic database and streamlined administrative processes.',
-      'Taught advanced, immersion-focused STEM-based ESL courses to gifted high-school students.',
+    details: [
+      {
+        title: 'Taught STEM-based ESL courses to gifted high-school students.',
+        lines: [],
+      },
+      {
+        title: 'Built custom software to compile faculty schedules.',
+        lines: [],
+      },
     ],
   },
   {
@@ -71,8 +117,11 @@ export const jobs: Job[] = [
     title: 'ESL Lead Instructor',
     location: 'Sanremo, Italy',
     dates: '2008 - 2013',
-    bullets: [
-      'Delivered over 25 immersive English courses and 12 pedagogy training sessions in 15 cities, serving diverse student groups.',
+    details: [
+      {
+        title: 'Designed and delivered english courses in 25 cities.',
+        lines: [],
+      },
     ],
   },
 ]
@@ -82,25 +131,72 @@ export const educations: Education[] = [
     degree: 'B.S. Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
-      'With Honors, 3.73 GPA - 2018',
-      'Major in Computer Engineering: Digital Design, Circuits, PCB, Microcontrollers, Digital Signal Processing, Signal Communication',
-      'Minor in Computer Science: Data Structures & Algorithms, OS Design, Linux',
-      'Minor in Mathematics: Calculus III, Differential Equations, Discrete Math, Engineering Statistics',
+      {
+        title: 'With Honors, 3.73 GPA - 2018',
+        lines: [],
+      },
+      {
+        title: 'Major in Computer Engineering',
+
+        lines: [
+          'Advanced Circuits',
+          'Digital Design',
+          'Verilog',
+          'Printed Circuit Board Design',
+          'Microcontrollers',
+          'Embedded Systems',
+          'Digital Signal Processing',
+          'Signal Communication',
+        ],
+      },
+      {
+        title: 'Minor in Computer Science',
+        lines: [
+          'Data Structures & Algorithms',
+          'C, C++, Java',
+          'x86, RISC-V, LR35902 Assembly',
+          'OS Design',
+        ],
+      },
+      {
+        title: 'Minor in Mathematics',
+        lines: [
+          'Calculus III',
+          'Differential Equations',
+          'Discrete Mathematics',
+          'Engineering Statistics',
+        ],
+      },
     ],
   },
   {
     degree: 'Web Dev Bootcamp',
     school: 'Coding Dojo',
-    details: ['Black Belt Certification - 2022'],
+    details: [
+      {
+        title: 'Cert w/ Honors - 2022',
+        lines: ['Python Stack', 'MERN Stack', 'C# Fullstack'],
+      },
+    ],
   },
   {
     degree: 'B.S. Secondary Education',
     school: 'Southern Illinois University Edwardsville',
-    details: ['Highschool Science Teaching Certification - 2013'],
+    details: [
+      {
+        title: 'HS Teaching Cert - 2013',
+        lines: ['Biology', 'Chemistry', 'Physics', 'Computer Science'],
+      },
+    ],
   },
   {
     degree: 'A.A. Music Education',
     school: 'Lewis & Clark Community College',
-    details: ['Violin Performance, Music Theory - 2010'],
+    details: [
+      {
+        title: 'Violin Performance - 2010',
+        lines: [],
+      },
+    ],
   },
 ]

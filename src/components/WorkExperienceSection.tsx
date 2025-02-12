@@ -1,9 +1,9 @@
 // WorkExperienceSection.tsx
 
 import React from 'react'
+import { showEmojis } from '../data/projects'
 import { jobs } from '../data/resumeData'
 import { isThin } from './Main'
-import { showEmojis } from '../data/projects'
 
 const WorkExperienceSection: React.FC = () => {
   return (
@@ -20,9 +20,16 @@ const WorkExperienceSection: React.FC = () => {
             {job.location} • {job.dates}
           </p>
           <ul className="ml-6 mt-2 list-disc text-xl">
-            {job.bullets.map((b, i) => (
-              <li key={b + i} className="mb-2">
-                {b}
+            {job.details.map((detail, i) => (
+              <li key={i} className="mb-3">
+                {detail.title}
+                <ul
+                  className={`ml-6 mt-1 w-[90%] list-disc text-sm ${detail.lines.length > 7 && 'grid grid-flow-row grid-cols-2 lg:w-[40%]'}`}
+                >
+                  {detail.lines.map((l, j) => (
+                    <li key={j}>{l}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

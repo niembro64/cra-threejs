@@ -1,15 +1,11 @@
 // EducationSection.tsx
 
 import React from 'react'
-import { isThin } from './Main'
-import { Education } from '../data/resumeData'
 import { showEmojis } from '../data/projects'
+import { educations } from '../data/resumeData'
+import { isThin } from './Main'
 
-interface EducationSectionProps {
-  educations: Education[]
-}
-
-const EducationSection: React.FC<EducationSectionProps> = ({ educations }) => {
+const EducationSection: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
@@ -22,8 +18,15 @@ const EducationSection: React.FC<EducationSectionProps> = ({ educations }) => {
           <p className="text-xl italic text-fuchsia-300">{edu.school}</p>
           <ul className="ml-6 mt-2 list-disc text-xl">
             {edu.details.map((detail, i) => (
-              <li key={i} className="mb-2">
-                {detail}
+              <li key={i} className="mb-3">
+                {detail.title}
+                <ul
+                  className={`ml-6 mt-1 w-[90%] list-disc text-sm ${detail.lines.length > 7 && 'grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:w-1/2'}`}
+                >
+                  {detail.lines.map((l, j) => (
+                    <li key={j}>{l}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

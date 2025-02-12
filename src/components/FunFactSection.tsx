@@ -107,7 +107,7 @@ const FunFactSection: React.FC = () => {
           Niemo began mining Bitcoin with professional-grade ASIC miners in
           2017, when it was valued at just $1,000. Through this experience, he
           gained a deep understanding of blockchain and cryptocurrency, which he
-          now leverages to advise friends on their investments.
+          now leverages to advise friends and coworkers.
         </p>
       </div>
     </section>

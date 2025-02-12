@@ -39,7 +39,7 @@ const SocialMediaSection: React.FC = () => {
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">👀</h1>}
-        <h1 className="pixel-font text-6xl font-bold">FOLLOW ME</h1>
+        <h1 className="pixel-font text-6xl font-bold">FOLLOW</h1>
       </div>
       <div
         className={`flex justify-center ${isThin ? 'space-x-4' : 'space-x-10'}`}
