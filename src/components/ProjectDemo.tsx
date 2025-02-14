@@ -8,6 +8,7 @@ import React, {
 import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/projects'
 import { ProjectStore } from '../store/ProjectStore'
 import { isMobile, isThin } from './Main'
+import ReactGA from 'react-ga4'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false
@@ -200,8 +201,17 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {(isThin && project.supportsMobile) ||
       (!isThin && project.supportsDesktop) ? (
         <button
+          type="button"
           className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
-          onClick={handleProjectClick}
+          onClick={() => {
+            handleProjectClick()
+
+            ReactGA.event({
+              category: 'User',
+              action: 'Visit Project',
+              label: project.title,
+            })
+          }}
         >
           <strong>
             {project.buttonStartText.toUpperCase()}{' '}
@@ -210,8 +220,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         </button>
       ) : (
         <button
+          type="button"
           className="mb-4 w-full rounded-3xl bg-gray-500/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
-          onClick={handleProjectClick}
           disabled
         >
           {isThin ? 'Desktop Only' : 'Mobile Only'}

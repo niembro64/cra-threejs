@@ -2,6 +2,7 @@ import Meyda, { MeydaFeaturesObject } from 'meyda'
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa'
 import React, { useEffect, useRef, useState } from 'react'
 import { ProjectStore } from '../store/ProjectStore'
+import ReactGA from 'react-ga4'
 
 export const numMelBands = 40
 
@@ -265,6 +266,10 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
             <button
               type="button"
               onMouseEnter={() => {
+                ReactGA.event({
+                  category: 'User',
+                  action: 'Hover Audio Button',
+                })
                 setHoverAudioButton(true)
               }}
               onMouseLeave={() => {

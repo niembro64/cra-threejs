@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Main from './components/Main'
 import Demo from './screens/Demo'
 import './App.scss'
+import usePageTracking from '../src/components/usePageTracking'
 
 function App() {
+  usePageTracking() // Track every route change
   return (
     <Router>
       <div className="App flex min-h-screen flex-col">

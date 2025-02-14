@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import ContactSection from './ContactSection'
+import ReactGA from 'react-ga4'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
@@ -76,8 +77,6 @@ const Main: React.FC = () => {
       __DEV__ && console.error('Failed to copy email: ', err)
     }
   }, [email])
-
-  // --- NEW STATE & EFFECT FOR PARALLAX ON MOBILE ---
 
   useEffect(() => {
     function onMessage(event: MessageEvent) {
@@ -399,7 +398,14 @@ const Main: React.FC = () => {
           <button
             type="button"
             className={`active:bg-blue-500/ w-full rounded-full px-4 py-2 text-2xl uppercase transition-all transition-none hover:bg-blue-500 active:bg-blue-500/50 ${showEmail ? 'font-bold' : ''}`}
-            onMouseEnter={() => setShowEmail(true)}
+            onMouseEnter={() => {
+              ReactGA.event({
+                category: 'User',
+                action: 'Hover Email',
+                label: email,
+              })
+              setShowEmail(true)
+            }}
             onMouseLeave={() => setShowEmail(false)}
             onClick={copyToClipboard}
           >

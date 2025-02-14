@@ -3,6 +3,7 @@
 import React from 'react'
 import { isThin } from './Main'
 import { showEmojis } from '../data/projects'
+import ReactGA from 'react-ga4'
 
 const FunFactSection: React.FC = () => {
   return (
@@ -26,6 +27,13 @@ const FunFactSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Wikipedia',
+                action: 'Click',
+                label: 'Small Talk (Build IV)',
+              })
+            }}
           >
             "Small Talk (Build IV)"
           </a>{' '}
@@ -36,6 +44,13 @@ const FunFactSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Wikipedia',
+                action: 'Click',
+                label: 'Drum and Bass',
+              })
+            }}
           >
             Drum and Bass
           </a>{' '}
@@ -45,6 +60,13 @@ const FunFactSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Wikipedia',
+                action: 'Click',
+                label: 'Liquid Funk',
+              })
+            }}
           >
             Liquid Funk
           </a>{' '}
@@ -68,6 +90,13 @@ const FunFactSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Ultimate Frisbee',
+                action: 'Click',
+                label: 'ROK-U',
+              })
+            }}
           >
             Republic of Korea Ultimate (ROK-U)
           </a>{' '}
@@ -78,6 +107,13 @@ const FunFactSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Ultimate Frisbee',
+                action: 'Click',
+                label: 'WUDI',
+              })
+            }}
           >
             Westchester Ultimate Disc Inc (WUDI)
           </a>

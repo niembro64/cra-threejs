@@ -5,6 +5,7 @@ import React, {
   ChangeEvent,
   ReactElement,
 } from 'react'
+import ReactGA from 'react-ga4'
 
 // Define the keys for localStorage as a type
 type LocalStorageKey = 'input1' | 'input2'
@@ -51,6 +52,13 @@ function Demo(): ReactElement {
     // Schedule a new save operation
     saveTimeoutRef.current = setTimeout(() => {
       setIsSaving(true)
+
+      ReactGA.event({
+        category: 'Coach Demo',
+        action: key,
+        label: value,
+      })
+
       // Simulate an asynchronous save by wrapping in a Promise
       new Promise<void>((resolve) => {
         // Synchronously save to localStorage

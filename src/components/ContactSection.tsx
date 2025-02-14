@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { FaClipboardCheck, FaRegClipboard } from 'react-icons/fa'
 import { showEmojis } from '../data/projects'
 import KirbySection from './KirbySection'
+import ReactGA from 'react-ga4'
+
 import { email, phoneNumber } from './Main'
 
 const duration = 1500
@@ -72,13 +74,28 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
       {/* Phone Number with Copy Button */}
       <div className="mb-2 flex items-center space-x-2">
-        <h2 onClick={onPhoneClick} className="cursor-pointer text-2xl">
+        <h2
+          onClick={() => {
+            onPhoneClick()
+            ReactGA.event({
+              category: 'Contact',
+              action: 'Click',
+              label: 'Phone Number',
+            })
+          }}
+          className="cursor-pointer text-2xl"
+        >
           {phoneNumber}
         </h2>
         <button
-          onClick={() =>
+          onClick={() => {
             copyToClipboard(phoneNumber, setCopiedPhone, 'Phone number copied!')
-          }
+            ReactGA.event({
+              category: 'Contact',
+              action: 'Click',
+              label: 'Copy Phone Number',
+            })
+          }}
           className="text-2xl focus:outline-none"
           aria-label="Copy phone number to clipboard"
         >
@@ -88,13 +105,29 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
       {/* Email Address with Copy Button */}
       <div className="mb-6 flex items-center space-x-2 text-2xl">
-        <a href={`mailto:${email}`} className="cursor-pointer">
+        <a
+          href={`mailto:${email}`}
+          className="cursor-pointer"
+          onClick={() => {
+            ReactGA.event({
+              category: 'Contact',
+              action: 'Click',
+              label: 'Email Address',
+            })
+          }}
+        >
           {email}
         </a>
         <button
-          onClick={() =>
+          onClick={() => {
             copyToClipboard(email, setCopiedEmail, 'Email address copied!')
-          }
+
+            ReactGA.event({
+              category: 'Contact',
+              action: 'Click',
+              label: 'Copy Email Address',
+            })
+          }}
           className="text-2xl focus:outline-none"
           aria-label="Copy email address to clipboard"
         >

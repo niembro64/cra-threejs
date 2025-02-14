@@ -1,6 +1,7 @@
 import React from 'react'
 import { isThin } from './Main'
 import { showEmojis } from '../data/projects'
+import ReactGA from 'react-ga4'
 
 export type SocialMedia = {
   platform: string
@@ -51,6 +52,13 @@ const SocialMediaSection: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-4xl hover:text-white/50"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Social Media',
+                action: 'Click',
+                label: social.platform,
+              })
+            }}
           >
             <i className={`fab fa-${social.platform.toLowerCase()}`}></i>
           </a>

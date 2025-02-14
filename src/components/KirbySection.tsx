@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { isThin } from './Main'
+import ReactGA from 'react-ga4'
 
 interface KirbySectionProps {
   animateKirby: boolean
@@ -25,7 +26,14 @@ const KirbySection: React.FC<KirbySectionProps> = ({
             : ''
         }`}
         alt="project-icon"
-        onClick={onKirbyClick}
+        onClick={() => {
+          onKirbyClick()
+          ReactGA.event({
+            category: 'Kirby',
+            action: 'Click',
+            label: 'Kirby',
+          })
+        }}
       />
     </div>
   )
