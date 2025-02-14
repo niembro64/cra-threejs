@@ -17,6 +17,7 @@
     "react-scripts": "5.0.1",
     "react-tooltip": "^5.28.0",
     "sass": "^1.83.1",
+    "strip-ansi": "6.0.1",
     "three": "^0.150.1",
     "web-vitals": "^2.1.4",
     "zustand": "^5.0.3"
@@ -55,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "strip-ansi": "6.0.1"
   }
 }
