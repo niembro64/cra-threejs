@@ -1,8 +1,7 @@
 // EducationSection.tsx
 
 import React from 'react'
-import { showEmojis } from '../data/projects'
-import { educations } from '../data/resumeData'
+import { educations, showEmojis } from '../data/resumeData'
 import { isThin } from './Main'
 
 const EducationSection: React.FC = () => {

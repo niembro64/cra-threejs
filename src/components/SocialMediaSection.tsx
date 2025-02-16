@@ -1,41 +1,9 @@
 import React from 'react'
 import { isThin } from './Main'
-import { showEmojis } from '../data/projects'
 import ReactGA from 'react-ga4'
-
-export type SocialMedia = {
-  platform: string
-  url: string
-}
+import { showEmojis, socialMedia } from '../data/resumeData'
 
 const SocialMediaSection: React.FC = () => {
-  const socialMedia: SocialMedia[] = [
-    {
-      platform: 'SoundCloud',
-      url: 'https://soundcloud.com/niemoaudio/ars-niemo-laser-commander',
-    },
-    {
-      platform: 'Instagram',
-      url: 'https://www.instagram.com/ericniemo/',
-    },
-    {
-      platform: 'YouTube',
-      url: 'https://www.youtube.com/@niemoaudio',
-    },
-    {
-      platform: 'Facebook',
-      url: 'https://www.facebook.com/NiemoAudio',
-    },
-    {
-      platform: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/eric-niemo/',
-    },
-    {
-      platform: 'GitHub',
-      url: 'https://github.com/niembro64',
-    },
-  ]
-
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">

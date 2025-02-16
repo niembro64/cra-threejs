@@ -1,8 +1,7 @@
 // Resume.tsx
 
 import React from 'react'
-import { EricResumeDescription } from '../data/projects'
-import { educations } from '../data/resumeData'
+import { educations, EricResumeDescription } from '../data/resumeData'
 import { isThin } from './Main'
 
 // NEW IMPORTS

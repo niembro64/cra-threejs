@@ -5,10 +5,10 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/projects'
 import { ProjectStore } from '../store/ProjectStore'
 import { isMobile, isThin } from './Main'
 import ReactGA from 'react-ga4'
+import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/resumeData'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false

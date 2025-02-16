@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FaClipboardCheck, FaRegClipboard } from 'react-icons/fa'
-import { showEmojis } from '../data/projects'
 import KirbySection from './KirbySection'
 import ReactGA from 'react-ga4'
 
 import { email, phoneNumber } from './Main'
+import { showEmojis } from '../data/resumeData'
 
 const duration = 1500
 

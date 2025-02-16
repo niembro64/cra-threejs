@@ -1,8 +1,7 @@
 // WorkExperienceSection.tsx
 
 import React from 'react'
-import { showEmojis } from '../data/projects'
-import { jobs } from '../data/resumeData'
+import { jobs, showEmojis } from '../data/resumeData'
 import { isThin } from './Main'
 
 const WorkExperienceSection: React.FC = () => {
