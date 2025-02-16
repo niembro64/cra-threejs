@@ -3,7 +3,7 @@
 import React from 'react'
 import { isThin } from './Main'
 import ReactGA from 'react-ga4'
-import { showEmojis } from '../data/resumeData'
+import { showEmojis } from '../data/myData'
 
 const FunFactSection: React.FC = () => {
   return (

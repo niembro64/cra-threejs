@@ -8,7 +8,7 @@ import React, {
 import { ProjectStore } from '../store/ProjectStore'
 import { isMobile, isThin } from './Main'
 import ReactGA from 'react-ga4'
-import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/resumeData'
+import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/myData'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false

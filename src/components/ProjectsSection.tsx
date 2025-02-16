@@ -4,7 +4,7 @@ import React from 'react'
 import { ProjectStore } from '../store/ProjectStore'
 import { isThin } from './Main'
 import ProjectDemo from './ProjectDemo'
-import { projects, showEmojis } from '../data/resumeData'
+import { projects, showEmojis } from '../data/myData'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ProjectsSectionProps {}

@@ -8,7 +8,7 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 import { ProjectStore } from '../store/ProjectStore'
-import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/resumeData'
+import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/myData'
 
 export const phoneNumber = '618-616-3380'
 export const email = 'niemeyer.eric@gmail.com'

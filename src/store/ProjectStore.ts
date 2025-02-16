@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga4'
 import { create } from 'zustand'
-import { ConnectionQualityType, projects } from '../data/resumeData'
+import { ConnectionQualityType, projects } from '../data/myData'
 interface ProjectStoreProps {
   play: boolean
   setPlay: (m: boolean) => void

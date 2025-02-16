@@ -4,7 +4,7 @@ import KirbySection from './KirbySection'
 import ReactGA from 'react-ga4'
 
 import { email, phoneNumber } from './Main'
-import { showEmojis } from '../data/resumeData'
+import { showEmojis } from '../data/myData'
 
 const duration = 1500
 
