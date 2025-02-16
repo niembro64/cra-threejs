@@ -275,9 +275,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               onMouseLeave={() => {
                 setHoverAudioButton(false)
               }}
-              data-tooltip-content={
-                'The audio controls the rotation of the icosahedron'
-              }
+              data-tooltip-content={'The audio also controls the 3D shape'}
               className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
                 play ? '' : ''
               }`}
@@ -286,7 +284,7 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
                 setPlay(!play)
               }}
             >
-              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO AUDIO'}
+              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
             </button>
             <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
             <canvas

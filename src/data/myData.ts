@@ -1,5 +1,55 @@
 // resumeData.ts
 
+// ERIC NIEMEYER
+// niemeyer.eric@gmail.com ❖ 618-616-3380 ❖ Stamford, CT ❖ Website: https://niemo.io
+
+// Eric is an engineer specializing in web and mobile development,  neural networks, web applications, and games. He prioritizes defensive programming, strict type safety, and elegant solutions.
+
+// WORK EXPERIENCE
+
+// Venturetec								           	         May 2022 – Present
+// Principle Engineer, Chief Architect					                  Stamford, Connecticut
+// Lead engineer & developer for AI-based phone safety application
+// Lead engineer & developer of an AI standup-comedy mobile app
+// Lead developer for a mobile app that digital-twins many aspects of the spray foam industry
+// Lead frontend developer for a game website for children: puzzles, sticker books, games
+
+// Rockwell Automation										 2018 – 2022
+// Software Engineer II									  St. Louis, Missouri
+// Scripted and configured machine execution systems for several fortune 500 companies
+
+// EDUCATION
+
+// B.S Computer Engineering			                     	        			     December, 2018
+// Southern Illinois University Edwardsville							Edwardsville, Illinois
+// GPA 3.73 / 4.0
+// Digital Design, PSpice, Circuits, PCB Design, Microcontrollers, Digital Signal Processing, Signal Communication, Data Structures & Algorithms, OS Design, Linux, Differential Equations, Discrete Mathematics, Engr Statistics
+// Varsity Ultimate Frisbee
+
+// SKILLS
+// Programming Languages & Frameworks
+// TypeScript, JavaScript, Python, Pytorch, Java, C#, C++, C, MIPS/x86/etc Assembly Languages, Verilog, Matlab, SQL Certified (MTA), MongoDB NoSQL, HTML, CSS, SCSS, React, React-Native CLI, React Native Expo, Angular 2+, Vue, Flask, Django, ASP.NET, Laravel, Express, Phaser Game Engine, AWS, S3, EC2, Amazon Transcribe, Amazon Polly, Socket.IO
+// Technical
+// Machine Learning / Neural Networks / AI, Game Development, 3D Animation, Audio Engineering, Image/Video/Audio Editing, Adobe Creative Suite, Servers, AWS EC2, AWS S3, Networking, Raspberry Pi Cluster, Arduino, Cryptocurrency Mining, Network Storage, PCB Design, PCB Repair, Excel Expert, Retro Game ROM Hacking
+// Human Languages
+// Italian (Conversational), Spanish (Intermediate), Korean (Basic)
+// Other Interests
+// Ultimate Frisbee, Wedding DJ, Music Production, Concert Violinist, Piano Composer, Music Featured on Wikipedia
+
+// LINKS
+
+// https://niemo.io
+// https://smashed.niemo.io
+// https://games.niemo.io/tanks/
+// https://games.niemo.io/space/
+// https://www.linkedin.com/in/eric-niemo/
+// https://github.com/niembro64
+
+// WORK ENVIRONMENT
+
+// Comfortable developing with MacOS, Linux, Windows
+// Home Lab: high-end laptop docking stations, conference equipment, hobbyist servers
+
 export interface BulletObject {
   title: string
   lines: string[]
@@ -55,6 +105,14 @@ export const jobs: Job[] = [
           'Websockets',
           'S3',
           'AWS',
+          'JavaScript',
+          'TypeScript',
+          'Python',
+          'PHP',
+          'HTML',
+          'CSS',
+          'SCSS',
+          'Tailwind',
         ],
       },
       {
@@ -74,7 +132,7 @@ export const jobs: Job[] = [
       {
         title: 'Built games for adults and kids, mobile & desktop.',
         lines: [
-          'Phaser',
+          'Phaser Game Engine',
           'React Native Game Engine',
           'Angular Material Drag & Drop',
         ],
@@ -518,3 +576,137 @@ export type SocialMedia = {
   platform: string
   url: string
 }
+
+export type SkillCategory = {
+  title: string
+  skills: Skill[]
+}
+
+export type Skill = {
+  title: string
+  details: string[]
+}
+
+export const skills: SkillCategory[] = [
+  {
+    title: 'Web Development',
+    skills: [
+      {
+        title: 'Frontend',
+        details: [
+          'React',
+          'Vue',
+          'Angular',
+          'Svelte',
+          'HTML',
+          'CSS',
+          'JavaScript',
+          'TypeScript',
+          'SCSS',
+          'Tailwind',
+          'Bootstrap',
+        ],
+      },
+      {
+        title: 'Backend',
+        details: [
+          'Node',
+          'Express',
+          'Laravel',
+          'Django',
+          'Flask',
+          'C#',
+          'ASP.NET Core',
+          'Python',
+          'PHP',
+        ],
+      },
+      {
+        title: 'Databases',
+        details: ['MongoDB', 'SQL', 'MySQL', 'PostgreSQL', 'SQLite'],
+      },
+      {
+        title: 'APIs',
+        details: ['REST', 'Websockets', 'Socket.io'],
+      },
+      {
+        title: 'Deployment',
+        details: ['AWS', 'Docker'],
+      },
+    ],
+  },
+  {
+    title: 'AI & Machine Learning',
+    skills: [
+      {
+        title: 'Frameworks',
+        details: ['Pytorch', 'BrainJS'],
+      },
+      {
+        title: 'Models',
+        details: ['Feedforward', 'LSTMs', 'Transformers'],
+      },
+      {
+        title: 'Applications',
+        details: ['Text Classification', 'Audio Classification', 'Game AI'],
+      },
+    ],
+  },
+  {
+    title: 'Game Development',
+    skills: [
+      {
+        title: 'Engines',
+        details: ['Phaser', 'Unity'],
+      },
+    ],
+  },
+  {
+    title: 'Music & Audio Production',
+    skills: [
+      {
+        title: 'Software',
+        details: ['FL Studio', 'Audacity'],
+      },
+      {
+        title: 'Instruments',
+        details: ['Violin', 'Piano', 'Flamenco Guitar', 'DJ Controller'],
+      },
+    ],
+  },
+  {
+    title: 'Human Languages',
+    skills: [
+      {
+        title: 'Spoken',
+        details: [
+          'English',
+          'Italian (Conversational)',
+          'Spanish (Functional)',
+          'Korean (Basic)',
+        ],
+      },
+    ],
+  },
+  {
+    title: 'Technical',
+    skills: [
+      {
+        title: 'Media Production',
+        details: [
+          'Adobe Creative Suite',
+          'Photoshop',
+          'Premiere',
+          'After Effects',
+          'Illustrator',
+          'Gimp',
+          'FL Studio',
+        ],
+      },
+      {
+        title: 'Operating Systems',
+        details: ['Linux', 'MacOS', 'Windows'],
+      },
+    ],
+  },
+]
