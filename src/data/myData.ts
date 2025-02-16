@@ -595,31 +595,17 @@ export const skills: SkillCategory[] = [
         title: 'Frontend',
         details: [
           'React',
+          'React Native',
           'Vue',
           'Angular',
-          'Svelte',
-          'HTML',
-          'CSS',
-          'JavaScript',
           'TypeScript',
           'SCSS',
           'Tailwind',
-          'Bootstrap',
         ],
       },
       {
         title: 'Backend',
-        details: [
-          'Node',
-          'Express',
-          'Laravel',
-          'Django',
-          'Flask',
-          'C#',
-          'ASP.NET Core',
-          'Python',
-          'PHP',
-        ],
+        details: ['Node', 'Express', 'Laravel', 'Flask', 'C#', 'Python', 'PHP'],
       },
       {
         title: 'Databases',
@@ -636,7 +622,7 @@ export const skills: SkillCategory[] = [
     ],
   },
   {
-    title: 'AI & Machine Learning',
+    title: 'AI & ML',
     skills: [
       {
         title: 'Frameworks',
@@ -644,11 +630,11 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Models',
-        details: ['Feedforward', 'LSTMs', 'Transformers'],
+        details: ['Feedforward', 'LSTM', 'Transformer Encoder'],
       },
       {
         title: 'Applications',
-        details: ['Text Classification', 'Audio Classification', 'Game AI'],
+        details: ['Text Classification', 'Audio Classification', 'Game Bot AI'],
       },
     ],
   },
@@ -665,26 +651,40 @@ export const skills: SkillCategory[] = [
     title: 'Music & Audio Production',
     skills: [
       {
+        title: 'Instruments',
+        details: ['Violin', 'Piano', 'Guitar', 'DJ Equipment'],
+      },
+      {
+        title: 'Genres',
+        details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass'],
+      },
+      {
         title: 'Software',
         details: ['FL Studio', 'Audacity'],
       },
-      {
-        title: 'Instruments',
-        details: ['Violin', 'Piano', 'Flamenco Guitar', 'DJ Controller'],
-      },
     ],
   },
+  // 'Italian (Conversational)',
+  // 'Spanish (Functional)',
+  // 'Korean (Basic)',
   {
     title: 'Human Languages',
     skills: [
       {
-        title: 'Spoken',
-        details: [
-          'English',
-          'Italian (Conversational)',
-          'Spanish (Functional)',
-          'Korean (Basic)',
-        ],
+        title: 'English',
+        details: ['Native'],
+      },
+      {
+        title: 'Italian',
+        details: ['Conversational'],
+      },
+      {
+        title: 'Spanish',
+        details: ['Intermediate'],
+      },
+      {
+        title: 'Korean',
+        details: ['Basic'],
       },
     ],
   },
@@ -694,7 +694,7 @@ export const skills: SkillCategory[] = [
       {
         title: 'Media Production',
         details: [
-          'Adobe Creative Suite',
+          'Adobe CS',
           'Photoshop',
           'Premiere',
           'After Effects',
