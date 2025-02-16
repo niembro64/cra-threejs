@@ -617,7 +617,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Deployment',
-        details: ['AWS', 'Docker'],
+        details: ['AWS', 'Docker', 'GitLab', 'Github'],
       },
     ],
   },
