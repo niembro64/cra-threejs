@@ -634,7 +634,11 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Applications',
-        details: ['Text Classification', 'Audio Classification', 'Game Bot AI'],
+        details: [
+          'Text Classification',
+          'Audio Classification',
+          'Video Game Bot AI',
+        ],
       },
     ],
   },
