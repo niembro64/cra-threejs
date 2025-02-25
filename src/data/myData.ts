@@ -647,7 +647,7 @@ export const skills: SkillCategory[] = [
     skills: [
       {
         title: 'Engines',
-        details: ['Phaser', 'Unity'],
+        details: ['Phaser', 'RN Game Engine', 'Unity'],
       },
     ],
   },
