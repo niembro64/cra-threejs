@@ -18,10 +18,7 @@ const WorkEnvironment: React.FC = () => {
         className={`grid ${isThin ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-10'}`}
       >
         {workEnvironments.map((desk, index) => (
-          <div
-            key={index}
-            className="bg-black/30 shadow-lg transition-all hover:bg-black/40 hover:shadow-xl"
-          >
+          <div key={index}>
             <div className="h-100 overflow-hidden rounded-2xl">
               <img
                 src={process.env.PUBLIC_URL + desk.image}
@@ -48,6 +45,7 @@ const WorkEnvironment: React.FC = () => {
                 ))}
               </ul>
             </div>
+            {isThin && <div className="h-8" />}
           </div>
         ))}
       </div>
