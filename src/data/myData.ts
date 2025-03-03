@@ -680,12 +680,12 @@ const laptop_docking_station =
 
 export const workEnvironments: DeskEnvironment[] = [
   {
-    image: '/wfh.jpg',
+    image: '/wfh_cut.jpg',
     title: 'Main Desk',
     description: [
       '42U Server Rack for Home Lab',
       '4x 4K TVs for Multitasking',
-      'Many Servers',
+      'Various Servers',
       'Raspberry Pi Cluster',
       'Network Storage',
       laptop_docking_station,
@@ -698,24 +698,24 @@ export const workEnvironments: DeskEnvironment[] = [
     description: [
       laptop_docking_station,
       conference_call_equipment,
-      'Minimalist design to reduce distractions',
+      'Minimalist Design to Reduce Distractions',
     ],
   },
   {
-    image: '/office.jpg',
+    image: '/office_cut.jpg',
     title: 'Office Desk',
     description: [
       laptop_docking_station,
       conference_call_equipment,
 
-      'Hard-wired iOS and Android devices for App Development',
+      'Hard-Wired iOS and Android devices for App Development',
     ],
   },
   {
     image: '/gpus.JPG',
     title: 'AI Development',
     description: [
-      'Ubuntu Linux w/ NVIDIA & AMD GPUs for neural network training',
+      'Ubuntu Linux w/ NVIDIA & AMD GPUs for Neural Network Training',
     ],
   },
 ]
