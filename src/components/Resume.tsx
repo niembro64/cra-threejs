@@ -11,6 +11,7 @@ import ProjectsSection from './ProjectsSection'
 import SocialMediaSection from './SocialMediaSection'
 import WorkExperienceSection from './WorkExperienceSection'
 import SkillsSection from './SkillsSection'
+import WorkEnvironment from './WorkEnvironment'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ResumeProps {}
@@ -95,6 +96,10 @@ export const Resume: React.FC<ResumeProps> = () => {
       <div className="h-40" />
 
       <SkillsSection />
+
+      <div className="h-40" />
+
+      <WorkEnvironment />
 
       <div className="h-40" />
 

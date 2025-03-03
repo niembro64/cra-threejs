@@ -714,3 +714,67 @@ export const skills: SkillCategory[] = [
     ],
   },
 ]
+
+export interface DeskEnvironment {
+  image: string
+  title: string
+  description: string[]
+}
+
+// WORK ENVIRONMENT
+
+// Comfortable developing in all operating systems MacOS, Linux, Windows
+// Experienced in both remote & office settings
+
+// Home - Main Desk
+
+// 42U server tower with many x86 devices and raspberry pis doing various tasks
+
+// Laptop docking station slot for Macbook or Windows laptop connection to full system
+
+// High-end webcam and jabra conference call equipment
+
+// Office - Main Desk
+
+// Home - Laptop Desk
+
+// Laptop docking station slot for Macbook or Windows laptop connection to full system
+
+// High-end webcam and jabra conference call equipment
+
+// Office - AI Development
+
+export const workEnvironments: DeskEnvironment[] = [
+  {
+    image: '/wfh.jpg',
+    title: 'Home - Main Desk',
+    description: [
+      '42U server tower with many x86 devices and raspberry pis doing various tasks',
+      'Laptop docking station slot for Macbook or Windows laptop connection to full system',
+      'High-end webcam and jabra conference call equipment',
+    ],
+  },
+  {
+    image: '/bedroom.jpg',
+    title: 'Home - Bedroom Desk',
+    description: [
+      'Laptop docking station for Macbook or Windows laptop connection to full system',
+      'High-end webcam and jabra conference call equipment',
+      'Minimalist design to reduce distractions',
+    ],
+  },
+  {
+    image: '/office.jpg',
+    title: 'Office - Main Desk',
+    description: [
+      'Laptop docking station for Macbook or Windows laptop connection to full system',
+      'High-end webcam and jabra conference call equipment',
+      'Dual monitor setup for productivity',
+    ],
+  },
+  {
+    image: '/gpus.JPG',
+    title: 'Office - AI Development',
+    description: ['NVIDIA & AMD GPUs for neural network training'],
+  },
+]
