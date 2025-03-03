@@ -713,6 +713,8 @@ export const workEnvironments: DeskEnvironment[] = [
   {
     image: '/gpus.JPG',
     title: 'AI Development',
-    description: ['NVIDIA & AMD GPUs for neural network training'],
+    description: [
+      'Ubuntu Linux w/ NVIDIA & AMD GPUs for neural network training',
+    ],
   },
 ]
