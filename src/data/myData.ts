@@ -675,7 +675,8 @@ export interface DeskEnvironment {
 }
 
 const conference_call_equipment = 'High-end conference call equipment'
-const laptop_docking_station = 'Docking Station for Macbook & Windows Laptops'
+const laptop_docking_station =
+  'Docking Station for Macbook Pro & Windows Laptops'
 
 export const workEnvironments: DeskEnvironment[] = [
   {
