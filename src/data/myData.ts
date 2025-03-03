@@ -693,7 +693,7 @@ export const workEnvironments: DeskEnvironment[] = [
     ],
   },
   {
-    image: '/bedroom.jpg',
+    image: '/bedroom.JPG',
     title: 'Bedroom Desk',
     description: [
       laptop_docking_station,
