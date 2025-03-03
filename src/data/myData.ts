@@ -721,29 +721,6 @@ export interface DeskEnvironment {
   description: string[]
 }
 
-// WORK ENVIRONMENT
-
-// Comfortable developing in all operating systems MacOS, Linux, Windows
-// Experienced in both remote & office settings
-
-// Home - Main Desk
-
-// 42U server tower with many x86 devices and raspberry pis doing various tasks
-
-// Laptop docking station slot for Macbook or Windows laptop connection to full system
-
-// High-end webcam and jabra conference call equipment
-
-// Office - Main Desk
-
-// Home - Laptop Desk
-
-// Laptop docking station slot for Macbook or Windows laptop connection to full system
-
-// High-end webcam and jabra conference call equipment
-
-// Office - AI Development
-
 export const workEnvironments: DeskEnvironment[] = [
   {
     image: '/wfh.jpg',
