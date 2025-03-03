@@ -36,7 +36,7 @@ const WorkEnvironment: React.FC = () => {
             </div>
 
             <div className="p-6">
-              <h3 className="pixel-font mb-4 text-3xl text-blue-300">
+              <h3 className="pixel-font mb-4 text-3xl text-teal-300">
                 {desk.title}
               </h3>
 
