@@ -34,7 +34,11 @@ export const Resume: React.FC<ResumeProps> = () => {
             className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} text-center`}
           >
             <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
-              <img className="" src="/eric.jpg" alt="Picture of Eric" />
+              <img
+                className="transition-transform duration-500 hover:scale-105"
+                src="/eric.jpg"
+                alt="Picture of Eric"
+              />
             </div>
             <h3 className="pixel-font mb-2 text-6xl font-bold">
               ERIC NIEMEYER
@@ -77,7 +81,11 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="my-8 flex flex-row items-center justify-center overflow-hidden">
             <div className={`w-1/2 overflow-hidden rounded-2xl`}>
-              <img className="" src="/eric.jpg" alt="Picture of Eric" />
+              <img
+                className="transition-transform duration-500 hover:scale-105"
+                src="/eric.jpg"
+                alt="Picture of Eric"
+              />
             </div>
           </div>
           <p className="bold text-2xl">{EricResumeDescription}</p>
