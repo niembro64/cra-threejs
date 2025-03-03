@@ -9,10 +9,8 @@ const WorkEnvironment: React.FC = () => {
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🖥️</h1>}
         <h1 className="pixel-font text-6xl font-bold">WORK ENVIRONMENT</h1>
         <p className="pixel-font pt-4 text-2xl text-blue-300">
-          Comfortable Developing with MacOS, Linux, Windows
-        </p>
-        <p className="pixel-font text-2xl text-teal-300">
-          Experienced in Both Remote & Office Settings
+          Comfortable Developing with MacOS, Linux, Windows; Experiencen in Both
+          Remote & Office Settings
         </p>
       </div>
 
@@ -24,7 +22,7 @@ const WorkEnvironment: React.FC = () => {
             key={index}
             className="bg-black/30 shadow-lg transition-all hover:bg-black/40 hover:shadow-xl"
           >
-            <div className="h-100 overflow-hidden rounded-2xl rounded-t-2xl border border-white">
+            <div className="h-100 overflow-hidden rounded-2xl">
               <img
                 src={process.env.PUBLIC_URL + desk.image}
                 alt={desk.title}

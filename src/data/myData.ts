@@ -721,37 +721,36 @@ export interface DeskEnvironment {
   description: string[]
 }
 
+const conference_call_equipment = 'High-end conference call equipment'
+const laptop_docking_station = 'Docking Station for Macbook & Windows Laptops'
+
 export const workEnvironments: DeskEnvironment[] = [
   {
     image: '/wfh.jpg',
-    title: 'Home - Main Desk',
+    title: 'Main Desk',
     description: [
       '42U server tower with many x86 devices and raspberry pis doing various tasks',
-      'Laptop docking station slot for Macbook or Windows laptop connection to full system',
-      'High-end webcam and jabra conference call equipment',
+      laptop_docking_station,
+      conference_call_equipment,
     ],
   },
   {
     image: '/bedroom.jpg',
-    title: 'Home - Bedroom Desk',
+    title: 'Bedroom Desk',
     description: [
-      'Laptop docking station for Macbook or Windows laptop connection to full system',
-      'High-end webcam and jabra conference call equipment',
+      laptop_docking_station,
+      conference_call_equipment,
       'Minimalist design to reduce distractions',
     ],
   },
   {
     image: '/office.jpg',
-    title: 'Office - Main Desk',
-    description: [
-      'Laptop docking station for Macbook or Windows laptop connection to full system',
-      'High-end webcam and jabra conference call equipment',
-      'Dual monitor setup for productivity',
-    ],
+    title: 'Office Desk',
+    description: [laptop_docking_station, conference_call_equipment],
   },
   {
     image: '/gpus.JPG',
-    title: 'Office - AI Development',
+    title: 'AI Development',
     description: ['NVIDIA & AMD GPUs for neural network training'],
   },
 ]
