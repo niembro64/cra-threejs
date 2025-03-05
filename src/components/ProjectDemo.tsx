@@ -198,8 +198,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       <div className="h-6" />
 
       {/* BUTTON TO VISIT THE PROJECT */}
-      {(isThin && project.supportsMobile) ||
-      (!isThin && project.supportsDesktop) ? (
+      {project.projectStatus === 'ok' &&
+      ((isThin && project.supportsMobile) ||
+        (!isThin && project.supportsDesktop)) ? (
         <button
           type="button"
           className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
@@ -224,7 +225,11 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           className="mb-4 w-full rounded-3xl bg-gray-500/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
           disabled
         >
-          {isThin ? 'Desktop Only' : 'Mobile Only'}
+          {project.projectStatus !== 'ok'
+            ? 'Project Offline'
+            : isThin
+              ? 'Desktop Only'
+              : 'Mobile Only'}
         </button>
       )}
 

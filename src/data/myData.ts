@@ -240,7 +240,10 @@ export const toolTipStyle: CSSProperties = {
   zIndex: 1000,
 }
 
+export type ProjectStatus = 'ok' | 'disabled' | 'hide'
+
 export interface Project {
+  projectStatus: ProjectStatus
   title: string
   url: string
   stack: string[] | null
@@ -264,6 +267,7 @@ const phaserIcon = 'phaser-icon.png'
 
 export const projects: Project[] = [
   {
+    projectStatus: 'ok',
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
@@ -289,6 +293,7 @@ export const projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
+    projectStatus: 'ok',
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
@@ -312,6 +317,7 @@ export const projects: Project[] = [
       "Grab your keyboard, aim your mouse, and enter the fight! Open the game again in a second tab on your computer, or tell a friend to join you - it's time to battle online!",
   },
   {
+    projectStatus: 'ok',
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
@@ -333,6 +339,7 @@ export const projects: Project[] = [
       "Niemo's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
   {
+    projectStatus: 'ok',
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser', 'React', 'FL Studio'],
@@ -341,7 +348,6 @@ export const projects: Project[] = [
       '2-Thumbs Mobile Controls',
       'Desktop Mouse & Keyboard',
       'Best Experience = Desktop',
-      // 'Original Music & Sounds',
     ],
     icon: phaserIcon,
     image: 'tanks.jpg',
@@ -355,6 +361,7 @@ export const projects: Project[] = [
       'A unique "bullet gate" mechanic - various gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
+    projectStatus: 'ok',
     title: 'Navigation Game',
     url: 'https://projects.niemo.io',
     stack: ['Phaser', 'React'],
@@ -372,6 +379,7 @@ export const projects: Project[] = [
       'An unholy blending of Phaser and React - make Kirby run around with your finger or mouse.',
   },
   {
+    projectStatus: 'ok',
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
@@ -388,25 +396,25 @@ export const projects: Project[] = [
     description:
       'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
-  // {
-  //   title: 'Pirates',
-  //   url: 'https://pirates.niemo.io',
-  //   stack: ['React', 'Express', 'MongoDB'],
-  //   stackIcon: null,
-  //   description: ['Exercise in Form Validation'],
-  //   bullets: [
-  //     'CRUD Operations',
-  //     'Both Front-End and Back-End Validation',
-  //     'Validations from Back-End for Data Integrity',
-  //     'Validations on Front-End for User Experience',
-  //   ],
-  //   dbImage: null,
-  //   icon: 'react.png',
-  //   gif: false,
-  //   video: true,
-  //   platforms: 'both',
-  // },
   {
+    projectStatus: 'disabled',
+    title: 'Pirates',
+    url: 'https://pirates.niemo.io',
+    stack: ['React', 'Express', 'MongoDB'],
+    description: 'A simple, clean, pirate management system.',
+    bullets: ['CRUD Operations', 'Frontend Validation', 'Backend Validation'],
+    icon: 'react.png',
+    image: 'pirates.jpg',
+    gif: 'pirates.gif',
+    video: 'pirates.mp4',
+    supportsDesktop: true,
+    type: 'React Fullstack',
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'View',
+  },
+  {
+    projectStatus: 'ok',
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
@@ -429,6 +437,7 @@ export const projects: Project[] = [
       'A simple, clean, event management system with user authentication, validation, and CRUD database operations.',
   },
   {
+    projectStatus: 'ok',
     title: 'Shows',
     url: 'https://shows.niemo.io',
     stack: ['Python', 'Flask', 'MySQL'],
@@ -451,6 +460,7 @@ export const projects: Project[] = [
     buttonStartText: 'View',
   },
   {
+    projectStatus: 'ok',
     title: 'Music',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio'],
@@ -472,6 +482,7 @@ export const projects: Project[] = [
       'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
   },
   {
+    projectStatus: 'ok',
     title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['Adobe Premiere', 'After Effects', 'Photoshop'],
