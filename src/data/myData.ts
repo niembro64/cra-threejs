@@ -375,7 +375,7 @@ export const projects: Project[] = [
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    type: 'Exercises in Web Styling',
+    type: 'Web Styling Fun',
     bullets: ['Vanilla Web Development', 'All Original Content'],
     icon: 'html_css_js.png',
     image: 'design.jpg',
@@ -410,7 +410,7 @@ export const projects: Project[] = [
     title: 'Events',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
-    type: 'Exercise in C# Fullstack',
+    type: 'C# Fullstack',
     bullets: [
       'Create, Read, Update, Delete',
 
@@ -445,7 +445,7 @@ export const projects: Project[] = [
     gif: 'shows.gif',
     video: 'shows.mp4',
     supportsDesktop: true,
-    type: 'Exercise in Simple Python Fullstack',
+    type: 'Python Fullstack',
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'View',
