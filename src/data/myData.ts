@@ -401,8 +401,9 @@ export const projects: Project[] = [
     title: 'Pirates',
     url: 'https://pirates.niemo.io',
     stack: ['React', 'Express', 'MongoDB'],
-    description: 'A simple, clean, pirate management system.',
-    bullets: ['CRUD Operations', 'Frontend Validation', 'Backend Validation'],
+    description:
+      'A simple, clean, pirate management system, with CRUD database operations.',
+    bullets: ['Create, Read, Update, Delete', 'Front & Backend Validation'],
     icon: 'react.png',
     image: 'pirates.jpg',
     gif: 'pirates.gif',
@@ -421,7 +422,6 @@ export const projects: Project[] = [
     type: 'C# Fullstack',
     bullets: [
       'Create, Read, Update, Delete',
-
       'EF Core LINQ ORM (SQL)',
       'Front & Backend Validation',
     ],
@@ -442,7 +442,7 @@ export const projects: Project[] = [
     url: 'https://shows.niemo.io',
     stack: ['Python', 'Flask', 'MySQL'],
     bullets: [
-      'CRUD Operations',
+      'Create, Read, Update, Delete',
       'Form Validation',
       'Bcrypt Password Hashing',
       'Direct SQL Query',
