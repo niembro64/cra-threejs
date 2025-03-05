@@ -69,7 +69,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
     <div className="relative flex w-full flex-col items-center justify-center pt-12">
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🤗</h1>}
-        <h1 className="pixel-font text-6xl font-bold">SEND ME AN EMAIL</h1>
+        <h1 className="pixel-font text-6xl font-bold">CONTACT</h1>
       </div>
 
       {/* Phone Number with Copy Button */}
