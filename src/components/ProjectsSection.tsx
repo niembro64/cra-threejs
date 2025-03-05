@@ -22,7 +22,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
         <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1>
         <p className="pixel-font pt-4 text-2xl text-blue-300">
-          Original Apps, Music, &amp; Games for Mobile &amp; Desktop
+          Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
         </p>
       </div>
       <div className="mb-8 flex flex-col items-center">
