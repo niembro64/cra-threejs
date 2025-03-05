@@ -408,7 +408,7 @@ export const projects: Project[] = [
     gif: 'pirates.gif',
     video: 'pirates.mp4',
     supportsDesktop: true,
-    type: 'React Fullstack',
+    type: 'JavaScript Fullstack',
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'View',
