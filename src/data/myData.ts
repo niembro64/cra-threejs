@@ -362,10 +362,10 @@ export const projects: Project[] = [
   },
   {
     projectStatus: 'ok',
-    title: 'Navigation Game',
+    title: 'Kirby Run',
     url: 'https://projects.niemo.io',
     stack: ['Phaser', 'React'],
-    type: 'Phaser-React Fusion',
+    type: 'Navigation Game',
     bullets: ['Mouse & Keyboard Controls', 'Mobile Touch Controls'],
     icon: phaserIcon,
     image: 'projects.jpg',
@@ -376,7 +376,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      'An unholy blending of Phaser and React - make Kirby run around with your finger or mouse.',
+      'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
     projectStatus: 'ok',
@@ -384,7 +384,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
-    bullets: ['Choose Strategies', 'Choose Rules', 'Watch the Tournament'],
+    bullets: ['Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
     icon: phaserIcon,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
