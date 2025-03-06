@@ -380,7 +380,7 @@ export const projects: Project[] = [
   },
   {
     projectStatus: 'ok',
-    title: 'Expanded Axelrod',
+    title: 'Axelrod',
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
