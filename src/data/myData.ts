@@ -380,15 +380,11 @@ export const projects: Project[] = [
   },
   {
     projectStatus: 'ok',
-    title: "Axelrod's Ecology",
+    title: 'Expanded Axelrod',
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
-    bullets: [
-      'Choose Strategies',
-      'Choose Environment',
-      'Watch the Tournament',
-    ],
+    bullets: ['Choose Strategies', 'Choose Rules', 'Watch the Tournament'],
     icon: phaserIcon,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
@@ -398,7 +394,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'A unique 2D physical extension of the Axelrod Tournament - watch as strategies compete for dominance. Should you cooperate or defect?',
+      'A unique 2D ethics ecological simulation that extends the Axelrod Tournament - will they cooperate or defect? ',
   },
   {
     projectStatus: 'ok',
