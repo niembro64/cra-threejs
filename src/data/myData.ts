@@ -380,6 +380,28 @@ export const projects: Project[] = [
   },
   {
     projectStatus: 'ok',
+    title: "Axelrod's Tournament",
+    url: 'https://games.niemo.io/axelrod',
+    stack: ['Phaser', 'React'],
+    type: 'Game Theory Simulation',
+    bullets: [
+      'Choose Strategies',
+      'Choose Environment',
+      'Watch the Tournament',
+    ],
+    icon: phaserIcon,
+    image: 'axelrod.jpg',
+    gif: 'axelrod.gif',
+    video: 'axelrod.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Run',
+    description:
+      'A unique 2D physical extension of the Axelrod Tournament - watch as strategies compete for dominance. Should you cooperate or defect?',
+  },
+  {
+    projectStatus: 'ok',
     title: 'Design',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
