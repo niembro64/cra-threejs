@@ -1,7 +1,11 @@
 // Resume.tsx
 
 import React from 'react'
-import { educations, EricResumeDescription } from '../data/myData'
+import {
+  educations,
+  EricResumeDescription,
+  showSmashedGif,
+} from '../data/myData'
 import { isThin } from './Main'
 
 // NEW IMPORTS
@@ -48,11 +52,15 @@ export const Resume: React.FC<ResumeProps> = () => {
             </p>
 
             <div className="mb-4 flex flex-row items-center justify-center">
-              <img
-                className="pixel-art w-4/5"
-                src="/smashed_small.gif"
-                alt="gif"
-              />
+              {showSmashedGif ? (
+                <img
+                  className="pixel-art w-4/5"
+                  src="/smashed_small.gif"
+                  alt="gif"
+                />
+              ) : (
+                <div className="mb-20" />
+              )}
             </div>
             <p className="mb-4 text-2xl text-blue-100">
               {EricResumeDescription}
