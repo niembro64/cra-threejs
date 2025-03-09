@@ -1,4 +1,6 @@
 // resumeData.ts
+export const showSmashedGif: boolean = false
+
 export interface BulletObject {
   title: string
   lines: string[]

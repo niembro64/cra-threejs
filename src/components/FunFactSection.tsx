@@ -84,7 +84,7 @@ const FunFactSection: React.FC = () => {
           Ultimate Frisbee
         </h4>
         <p className="mt-2 text-xl">
-          Niemo was executive manager of{' '}
+          Niemo plays ultimate frisbee for fun, he was executive manager of{' '}
           <a
             href="https://www.rokultimate.net/"
             target="_blank"

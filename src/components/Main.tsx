@@ -8,7 +8,12 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 import { ProjectStore } from '../store/ProjectStore'
-import { showKirbyGame, tooltipDelay, toolTipStyle } from '../data/myData'
+import {
+  showKirbyGame,
+  showSmashedGif,
+  tooltipDelay,
+  toolTipStyle,
+} from '../data/myData'
 
 export const phoneNumber = '618-616-3380'
 export const email = 'niemeyer.eric@gmail.com'
@@ -411,12 +416,16 @@ const Main: React.FC = () => {
           >
             {showEmail ? 'Copy Email' : email}
           </button>
-          <img
-            data-tooltip-content={'His 2017 gif spawned a 2022 game'}
-            className="pixel-art tooltip mb-4 w-[70%] object-cover"
-            src="/smashed_small.gif"
-            alt="gif"
-          />
+          {showSmashedGif ? (
+            <img
+              data-tooltip-content={'His 2017 gif spawned a 2022 game'}
+              className="pixel-art tooltip mb-4 w-[70%] object-cover"
+              src="/smashed_small.gif"
+              alt="gif"
+            />
+          ) : (
+            <div className="mb-20" />
+          )}
           <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
           <h1 className="mb-4 text-2xl">618-616-338O</h1>
           <AudioSpectrogram

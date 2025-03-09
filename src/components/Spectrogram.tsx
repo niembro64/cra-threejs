@@ -275,7 +275,9 @@ const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
               onMouseLeave={() => {
                 setHoverAudioButton(false)
               }}
-              data-tooltip-content={'The audio also controls the 3D shape'}
+              data-tooltip-content={
+                'The audio also controls the movement of the 3D shape'
+              }
               className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
                 play ? '' : ''
               }`}
