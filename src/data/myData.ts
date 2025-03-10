@@ -12,13 +12,11 @@ export interface Job {
   location: string
   dates: string
   details: BulletObject[]
-  // start_year: string
-  // end_year: string | null
 }
 
 export interface Education {
   image: string | null
-  year: string
+  dates: string
   degree: string
   school: string
   details: BulletObject[]
@@ -154,9 +152,9 @@ export const jobs: Job[] = [
 
 export const educations: Education[] = [
   {
-    year: '2018',
+    dates: '2018',
     image: 'diploma_clean_01.png',
-    degree: 'B.S. Computer Engineering',
+    degree: 'Bachelor of Science Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
@@ -198,9 +196,9 @@ export const educations: Education[] = [
     ],
   },
   {
-    year: '2022',
+    dates: '2022',
     image: 'coding_dojo_cert.png',
-    degree: 'Web Dev Bootcamp',
+    degree: 'Web Development Bootcamp',
     school: 'Coding Dojo',
     details: [
       {
@@ -218,9 +216,9 @@ export const educations: Education[] = [
     ],
   },
   {
-    year: '2013',
+    dates: '2013',
     image: null,
-    degree: 'B.S. Secondary Education',
+    degree: 'Bachelor of Science Secondary Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
@@ -230,7 +228,7 @@ export const educations: Education[] = [
     ],
   },
   {
-    year: '2010',
+    dates: '2010',
     image: null,
     degree: 'A.A. Music Education',
     school: 'Lewis & Clark Community College',
@@ -275,6 +273,7 @@ export type ProjectStatus = 'ok' | 'disabled' | 'hide'
 
 export interface Project {
   projectStatus: ProjectStatus
+  dates: string
   title: string
   url: string
   stack: string[] | null
@@ -298,6 +297,7 @@ const phaserIcon = 'phaser-icon.png'
 
 export const projects: Project[] = [
   {
+    dates: '2022 - Present',
     projectStatus: 'ok',
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
@@ -321,6 +321,7 @@ export const projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
+    dates: '2024 - Present',
     projectStatus: 'ok',
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
@@ -345,6 +346,7 @@ export const projects: Project[] = [
       "Grab your keyboard, aim your mouse, and enter the fight! Open the game again in a second tab on your computer, or tell a friend to join you - it's time to battle online!",
   },
   {
+    dates: '2024',
     projectStatus: 'ok',
     title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
@@ -367,6 +369,7 @@ export const projects: Project[] = [
       "Niemo's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
   {
+    dates: '2024',
     projectStatus: 'ok',
     title: 'Tanks',
     url: 'https://games.niemo.io/tanks',
@@ -389,6 +392,7 @@ export const projects: Project[] = [
       'A unique "bullet gate" mechanic - various gate types mirror, transmit, refract, and multiply bullets.',
   },
   {
+    dates: '2023',
     projectStatus: 'ok',
     title: 'Kirby Run',
     url: 'https://projects.niemo.io',
@@ -407,6 +411,7 @@ export const projects: Project[] = [
       'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
+    dates: '2025 - Present',
     projectStatus: 'ok',
     title: 'Axelrod',
     url: 'https://games.niemo.io/axelrod',
@@ -422,9 +427,10 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'A unique 2D ethics ecological simulation that extends the Axelrod Tournament - will they cooperate or defect? ',
+      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - should the creatures cooperate or defect? ",
   },
   {
+    dates: '2022',
     projectStatus: 'ok',
     title: 'Design',
     url: 'https://design.niemo.io',
@@ -443,6 +449,7 @@ export const projects: Project[] = [
       'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
   {
+    dates: '2022',
     projectStatus: 'disabled',
     title: 'Pirates',
     url: 'https://pirates.niemo.io',
@@ -461,6 +468,7 @@ export const projects: Project[] = [
     buttonStartText: 'View',
   },
   {
+    dates: '2022',
     projectStatus: 'ok',
     title: 'Events',
     url: 'https://events.niemo.io',
@@ -483,6 +491,7 @@ export const projects: Project[] = [
       'A simple, clean, event management system with user authentication, validation, and CRUD database operations.',
   },
   {
+    dates: '2022',
     projectStatus: 'ok',
     title: 'Shows',
     url: 'https://shows.niemo.io',
@@ -506,6 +515,7 @@ export const projects: Project[] = [
     buttonStartText: 'View',
   },
   {
+    dates: '2002 - Present',
     projectStatus: 'ok',
     title: 'Music',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
@@ -528,6 +538,7 @@ export const projects: Project[] = [
       'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
   },
   {
+    dates: '2013 - Present',
     projectStatus: 'ok',
     title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
@@ -588,6 +599,7 @@ export type SocialMedia = {
 
 export type SkillCategory = {
   title: string
+  dates: string
   skills: Skill[]
 }
 
@@ -599,6 +611,7 @@ export type Skill = {
 export const skills: SkillCategory[] = [
   {
     title: 'Web Development',
+    dates: '2019 - Present',
     skills: [
       {
         title: 'Frontend',
@@ -632,6 +645,7 @@ export const skills: SkillCategory[] = [
   },
   {
     title: 'AI & ML',
+    dates: '2022 - Present',
     skills: [
       {
         title: 'Frameworks',
@@ -646,13 +660,14 @@ export const skills: SkillCategory[] = [
         details: [
           'Text Classification',
           'Audio Classification',
-          'Video Game Bot AI',
+          'Game Robot AI',
         ],
       },
     ],
   },
   {
     title: 'Game Development',
+    dates: '2019 - Present',
     skills: [
       {
         title: 'Engines',
@@ -662,12 +677,14 @@ export const skills: SkillCategory[] = [
           'Canvas',
           'React Native Game Engine',
           'Unity',
+          'Nintendo 64',
         ],
       },
     ],
   },
   {
     title: 'Music & Audio Production',
+    dates: '2002 - Present',
     skills: [
       {
         title: 'Instruments',
@@ -686,6 +703,7 @@ export const skills: SkillCategory[] = [
 
   {
     title: 'Human Languages',
+    dates: '2008 - Present',
     skills: [
       {
         title: 'English',
@@ -707,6 +725,7 @@ export const skills: SkillCategory[] = [
   },
   {
     title: 'Technical',
+    dates: '2002 - Present',
     skills: [
       {
         title: 'Media Production',

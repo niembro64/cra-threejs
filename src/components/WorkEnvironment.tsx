@@ -25,7 +25,6 @@ const WorkEnvironment: React.FC = () => {
                 alt={desk.title}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 onError={(e) => {
-                  // Fallback if image doesn't exist
                   ;(e.target as HTMLImageElement).src =
                     process.env.PUBLIC_URL + '/qwhite_hardpixels_transbg.png'
                 }}

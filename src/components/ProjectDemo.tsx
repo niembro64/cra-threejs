@@ -119,6 +119,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           <strong>{project.title}</strong>
         </div>
       </div>
+      <p className="mb-4 text-xl text-gray-500">{project.dates}</p>
 
       {isThin ? (
         <>

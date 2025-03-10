@@ -16,6 +16,7 @@ const SkillsSection: React.FC = () => {
           <h2 className="mb-2 text-3xl font-bold text-blue-300">
             {category.title}
           </h2>
+          <p className="mb-2 text-xl text-gray-500">{category.dates}</p>
           <div
             className={`mt-1 grid list-disc grid-flow-row grid-cols-2 text-sm ${
               !isThin &&

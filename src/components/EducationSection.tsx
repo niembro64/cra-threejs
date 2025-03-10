@@ -14,14 +14,15 @@ const EducationSection: React.FC = () => {
 
       {educations.map((edu, idx) => (
         <div key={idx} className="mb-8">
-          <h4 className="text-3xl font-bold text-blue-300">{edu.degree}</h4>
+          <h4 className="mb-2 text-3xl font-bold text-blue-300">
+            {edu.degree}
+          </h4>
           <div className="mb-4">
-            <p className="text-xl italic text-fuchsia-300">{edu.school}</p>
-            <p className="text-xl italic text-gray-500">{edu.year}</p>
+            <p className="mb-2 text-xl italic text-fuchsia-300">{edu.school}</p>
+            <p className="text-xl text-gray-500">{edu.dates}</p>
           </div>
 
           {isThin ? (
-            // Normal layout when isThin is true
             <>
               {edu.image && (
                 <a href={edu.image} target="_blank" rel="noopener noreferrer">
@@ -38,8 +39,9 @@ const EducationSection: React.FC = () => {
                     {detail.title}
                     <ul
                       className={`text-md ml-6 mt-1 w-[90%] list-disc ${
-                        detail.lines.length > 7 &&
-                        'grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:w-1/2'
+                        detail.lines.length > 7
+                          ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:w-1/2'
+                          : ''
                       }`}
                     >
                       {detail.lines.map((l, j) => (
@@ -51,7 +53,6 @@ const EducationSection: React.FC = () => {
               </ul>
             </>
           ) : (
-            // New layout when isThin is false: two columns of equal width (50% each)
             <div className="flex flex-row gap-4">
               <div className="w-1/2">
                 <ul className="ml-6 mt-2 list-disc text-xl">
@@ -60,8 +61,9 @@ const EducationSection: React.FC = () => {
                       {detail.title}
                       <ul
                         className={`text-md ml-6 mt-1 w-[90%] list-disc ${
-                          detail.lines.length > 7 &&
-                          'grid grid-flow-row grid-cols-1 md:grid-cols-2'
+                          detail.lines.length > 7
+                            ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2'
+                            : ''
                         }`}
                       >
                         {detail.lines.map((l, j) => (
