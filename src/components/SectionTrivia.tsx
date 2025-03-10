@@ -129,11 +129,27 @@ const TriviaSection: React.FC = () => {
           Musician
         </h4>
         <p className="mt-2 text-xl">
-          Niemo is a versatile musician—concert violinist, piano composer,
-          flamenco guitarist, and electronic music DJ. He has performed with
-          numerous orchestras, bands, and quartets and has composed music for
-          television and video games. His DJing experience spans weddings,
-          parties, and clubs across the USA and Korea.
+          Niemo is a versatile{' '}
+          <a
+            href="https://en.wikipedia.org/wiki/Concertmaster"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xl text-blue-300 underline"
+            onClick={() => {
+              ReactGA.event({
+                category: 'Wikipedia',
+                action: 'Click',
+                label: 'Concertmaster',
+              })
+            }}
+          >
+            musician
+          </a>{' '}
+          concert violinist, piano composer, flamenco guitarist, and electronic
+          music DJ. He has performed with numerous orchestras, bands, and
+          quartets and has composed music for television and video games. His
+          DJing experience spans weddings, parties, and clubs across the USA and
+          Korea.
         </p>
       </div>
       {/* /////////////////////////////////////////////// */}
