@@ -17,7 +17,7 @@ const SkillsSection: React.FC = () => {
             {category.title}
           </h2>
           <div
-            className={`ml-6 mt-1 grid list-disc grid-flow-row grid-cols-2 text-sm ${
+            className={`mt-1 grid list-disc grid-flow-row grid-cols-2 text-sm ${
               !isThin &&
               (() => {
                 switch (category.skills.length) {
@@ -36,7 +36,7 @@ const SkillsSection: React.FC = () => {
             }`}
           >
             {category.skills.map((skill, i) => (
-              <div key={i} className="mb-4 ml-4">
+              <div key={i} className="mb-4">
                 <h3 className="mb-2 text-2xl font-semibold text-fuchsia-300">
                   {skill.title}
                 </h3>

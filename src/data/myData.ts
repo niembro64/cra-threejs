@@ -47,8 +47,9 @@ export const jobs: Job[] = [
           'Vue',
           'Angular',
           'React',
-          'React Native CLI',
-          'React Native Expo',
+          'React Native',
+          'RN CLI',
+          'RN Expo',
           'Node',
           'Express',
           'Laravel',
@@ -77,8 +78,8 @@ export const jobs: Job[] = [
           'Feedforward',
           'LSTMs',
           'Transformers',
-          'Text Classifiers',
-          'Audio Classifiers',
+          'Text Class.',
+          'Audio Class.',
           'Game AI',
         ],
       },
@@ -159,10 +160,10 @@ export const educations: Education[] = [
           'Advanced Circuits',
           'Digital Design',
           'Verilog',
-          'Printed Circuit Board Design',
+          'PCB Design',
           'Microcontrollers',
           'Embedded Systems',
-          'Digital Signal Processing',
+          'Signal Processing',
           'Signal Communication',
         ],
       },
@@ -170,8 +171,8 @@ export const educations: Education[] = [
         title: 'Minor in Computer Science',
         lines: [
           'Data Structures & Algorithms',
-          'C, C++, Java',
-          'x86, RISC-V, LR35902 Assembly',
+          'Assembly, C, C++, Java',
+          'x86, RISC-V, LR35902',
           'OS Design',
         ],
       },
@@ -193,15 +194,23 @@ export const educations: Education[] = [
     school: 'Coding Dojo',
     details: [
       {
-        title: 'Cert w/ Honors',
-        lines: ['Python Stack', 'MERN Stack', 'C# Fullstack'],
+        title: 'Certificate w/ Honors',
+        lines: ['Fundamentals', 'Python Stack', 'MERN Stack', 'C# Stack'],
+      },
+      {
+        title: '80 Hours per Week',
+        lines: [],
+      },
+      {
+        title: 'Four Month Course',
+        lines: [],
       },
     ],
   },
   {
     year: '2013',
     image: null,
-    degree: 'B.S. Secondary Education',
+    degree: 'B.S. Second Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
@@ -230,7 +239,7 @@ export const tooltipDelay = 500
 
 export const extraTimeLazyLoad = 0
 
-export const showEmojis: boolean = false
+export const showEmojis: boolean = true
 
 export const showKirbyGame: boolean = false
 
@@ -623,7 +632,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Models',
-        details: ['Feedforward', 'LSTM', 'Transformer Encoder'],
+        details: ['Feedforward', 'LSTM', 'Convolutional', 'Transformer'],
       },
       {
         title: 'Applications',
@@ -725,7 +734,7 @@ const laptop_docking_station =
 export const workEnvironments: DeskEnvironment[] = [
   {
     image: '/wfh_cut.jpg',
-    title: 'Main Desk',
+    title: 'Home WorkStation',
     description: [
       '42U Server Rack for Home Lab',
       '4x 4K TVs for Multitasking',

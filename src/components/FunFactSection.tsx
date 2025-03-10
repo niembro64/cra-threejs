@@ -10,7 +10,7 @@ const FunFactSection: React.FC = () => {
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">✨</h1>}
-        <h1 className="pixel-font text-6xl font-bold">FUN FACTS</h1>
+        <h1 className="pixel-font text-6xl font-bold">TRIVIA</h1>
       </div>
 
       {/* /////////////////////////////////////////////// */}
@@ -84,7 +84,8 @@ const FunFactSection: React.FC = () => {
           Ultimate Frisbee
         </h4>
         <p className="mt-2 text-xl">
-          Niemo plays ultimate frisbee for fun, he was executive manager of{' '}
+          Niemo plays a sport called Ultimate Frisbee, which is a competitive
+          mixed-gender team sport. He was executive manager of{' '}
           <a
             href="https://www.rokultimate.net/"
             target="_blank"

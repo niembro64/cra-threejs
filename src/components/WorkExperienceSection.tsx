@@ -9,7 +9,7 @@ const WorkExperienceSection: React.FC = () => {
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">👔</h1>}
-        <h1 className="pixel-font text-6xl font-bold">WORK EXPERIENCE</h1>
+        <h1 className="pixel-font text-6xl font-bold">WORK</h1>
       </div>
       {jobs.map((job, idx) => (
         <div key={job.title + idx} className="mb-8">
@@ -23,7 +23,7 @@ const WorkExperienceSection: React.FC = () => {
               <li key={i} className="mb-3">
                 {detail.title}
                 <ul
-                  className={`ml-6 mt-1 w-[90%] list-disc text-sm ${detail.lines.length > 7 && 'grid grid-flow-row grid-cols-2 lg:w-[40%]'}`}
+                  className={`text-md ml-6 mt-1 w-[90%] list-disc ${detail.lines.length > 7 && 'grid grid-flow-row grid-cols-2 lg:w-[40%]'}`}
                 >
                   {detail.lines.map((l, j) => (
                     <li key={j}>{l}</li>
