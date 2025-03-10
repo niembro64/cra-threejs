@@ -29,7 +29,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         {projects.map((project, index) => (
           <div
             key={project.title + index}
-            className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
+            // className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
           >
             {index !== 0 && <div className="h-16 w-full"></div>}
             <ProjectDemo
