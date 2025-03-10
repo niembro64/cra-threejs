@@ -107,7 +107,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }
   return (
     <div className={`relative w-full rounded-2xl`}>
-      <div className="mb-4 flex flex-row items-center">
+      <div className="mb-4 flex flex-row items-center justify-center text-center">
         {project.icon && (
           <img
             src={process.env.PUBLIC_URL + '/' + project.icon}
@@ -119,7 +119,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           <strong>{project.title}</strong>
         </div>
       </div>
-      <p className="mb-4 text-xl text-gray-500">{project.dates}</p>
+      <p className={`mb-4 text-center text-xl text-white/50`}>
+        {project.dates}
+      </p>
 
       {isThin ? (
         <>
@@ -223,7 +225,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       ) : (
         <button
           type="button"
-          className="mb-4 w-full rounded-3xl bg-gray-500/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
+          className="mb-4 w-full rounded-3xl bg-white/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
           disabled
         >
           {project.projectStatus !== 'ok'

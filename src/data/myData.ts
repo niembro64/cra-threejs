@@ -154,7 +154,7 @@ export const educations: Education[] = [
   {
     dates: '2018',
     image: 'diploma_clean_01.png',
-    degree: 'Bachelor of Science Computer Engineering',
+    degree: 'BS Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
@@ -218,7 +218,7 @@ export const educations: Education[] = [
   {
     dates: '2013',
     image: null,
-    degree: 'Bachelor of Science Secondary Education',
+    degree: 'BS Secondary Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
@@ -230,7 +230,7 @@ export const educations: Education[] = [
   {
     dates: '2010',
     image: null,
-    degree: 'A.A. Music Education',
+    degree: 'AA Music Education',
     school: 'Lewis & Clark Community College',
     details: [
       {
@@ -348,7 +348,7 @@ export const projects: Project[] = [
   {
     dates: '2024',
     projectStatus: 'ok',
-    title: 'Galaxy Destroyer',
+    title: 'Space',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Vertical Scrolling Shooter',

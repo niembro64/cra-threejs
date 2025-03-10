@@ -5,7 +5,7 @@ import { isThin } from './Main'
 import ReactGA from 'react-ga4'
 import { showEmojis } from '../data/myData'
 
-const FunFactSection: React.FC = () => {
+const TriviaSection: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
@@ -17,7 +17,7 @@ const FunFactSection: React.FC = () => {
       {/* Wikipedia */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
-        <h4 className="text-3xl font-bold text-fuchsia-300">
+        <h4 className="text-center text-3xl font-bold text-fuchsia-300">
           Wikipedia-Famous
         </h4>
         <p className="mt-2 text-xl">
@@ -80,7 +80,7 @@ const FunFactSection: React.FC = () => {
       {/* Ultimate Frisbee League */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
-        <h4 className="text-3xl font-bold text-fuchsia-300">
+        <h4 className="text-center text-3xl font-bold text-fuchsia-300">
           Ultimate Frisbee
         </h4>
         <p className="mt-2 text-xl">
@@ -118,15 +118,16 @@ const FunFactSection: React.FC = () => {
           >
             Westchester Ultimate Disc Inc (WUDI)
           </a>
-          {', '}
-          an ultimate frisbee league in Westchester, NY.
+          {', '}a league in Westchester, NY.
         </p>
       </div>
       {/* /////////////////////////////////////////////// */}
       {/* MUSIC */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
-        <h4 className="text-3xl font-bold text-fuchsia-300">Musician</h4>
+        <h4 className="text-center text-3xl font-bold text-fuchsia-300">
+          Musician
+        </h4>
         <p className="mt-2 text-xl">
           Niemo is a versatile musician—concert violinist, piano composer,
           flamenco guitarist, and electronic music DJ. He has performed with
@@ -139,7 +140,9 @@ const FunFactSection: React.FC = () => {
       {/* BITCOIN */}
       {/* /////////////////////////////////////////////// */}
       <div className="mb-8">
-        <h4 className="text-3xl font-bold text-fuchsia-300">Crypto</h4>
+        <h4 className="text-center text-3xl font-bold text-fuchsia-300">
+          Crypto
+        </h4>
         <p className="mt-2 text-xl">
           Niemo began mining Bitcoin with professional-grade ASIC miners in
           2017, when it was valued at just $1,000. Through this experience, he
@@ -151,4 +154,4 @@ const FunFactSection: React.FC = () => {
   )
 }
 
-export default FunFactSection
+export default TriviaSection

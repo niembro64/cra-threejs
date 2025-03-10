@@ -10,7 +10,7 @@ import { isThin } from './Main'
 
 // NEW IMPORTS
 import EducationSection from './EducationSection'
-import FunFactSection from './FunFactSection'
+import TriviaSection from './SectionTrivia'
 import ProjectsSection from './ProjectsSection'
 import SocialMediaSection from './SocialMediaSection'
 import WorkExperienceSection from './WorkExperienceSection'
@@ -117,7 +117,7 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <div className="h-40" />
 
-      <FunFactSection />
+      <TriviaSection />
 
       <div className="h-40" />
 
