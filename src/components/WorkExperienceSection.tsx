@@ -15,9 +15,8 @@ const WorkExperienceSection: React.FC = () => {
         <div key={job.title + idx} className="mb-8">
           <h4 className="text-3xl font-bold text-blue-300">{job.company}</h4>
           <p className="text-2xl italic text-fuchsia-300">{job.title}</p>
-          <p className="text-xl text-teal-300">
-            {job.location} • {job.dates}
-          </p>
+          <p className="text-xl text-teal-300">{job.location}</p>
+          <p className="text-xl text-gray-500">{job.dates}</p>
           <ul className="ml-6 mt-2 list-disc text-xl">
             {job.details.map((detail, i) => (
               <li key={i} className="mb-3">

@@ -12,6 +12,8 @@ export interface Job {
   location: string
   dates: string
   details: BulletObject[]
+  // start_year: string
+  // end_year: string | null
 }
 
 export interface Education {
@@ -24,6 +26,8 @@ export interface Education {
 
 export const jobs: Job[] = [
   {
+    // start_year: '2025',
+    // end_year: null,
     company: 'Sentien',
     title: 'Head of Engineering',
     location: 'Stamford, Connecticut',
@@ -76,7 +80,7 @@ export const jobs: Job[] = [
           'Pytorch',
           'BrainJS',
           'Feedforward',
-          'LSTMs',
+          'RNNs',
           'Transformers',
           'Text Class.',
           'Audio Class.',
@@ -97,18 +101,24 @@ export const jobs: Job[] = [
     company: 'Rockwell Automation',
     title: 'Software Engineer II',
     location: 'St. Louis, Missouri',
-    dates: '2018 - 2022',
+    dates: '2020 - 2022',
     details: [
       {
         title:
           'Configured industrial software systems for fortune 500 companies.',
-        lines: [
-          '3M',
-          'Lucid Motors',
-          'Cooper Tires',
-          'Continental Tires',
-          'Maple Leaf Foods',
-        ],
+        lines: ['3M', 'Lucid Motors', 'Cooper Tires', 'Continental Tires'],
+      },
+    ],
+  },
+  {
+    company: 'Maverick Technologies',
+    title: 'JR Software Engineer',
+    location: 'St. Louis, Missouri',
+    dates: '2018 - 2020',
+    details: [
+      {
+        title: 'Configured industrial software systems.',
+        lines: ['Maple Leaf Foods'],
       },
     ],
   },
@@ -298,9 +308,6 @@ export const projects: Project[] = [
       'USB Controller Support',
       'Scripted Bots',
       'Neural Network Bots',
-      // 'Finite State Machine Bots',
-      // 'Neural-Network Bots',
-      // 'Evolving AI Bots',
     ],
     icon: phaserIcon,
     image: 'smashed.jpg',
@@ -632,7 +639,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Models',
-        details: ['Feedforward', 'LSTM', 'Convolutional', 'Transformer'],
+        details: ['FeedForward', 'RNN', 'Convolutional', 'Transformer'],
       },
       {
         title: 'Applications',

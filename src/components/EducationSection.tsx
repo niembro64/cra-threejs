@@ -17,7 +17,7 @@ const EducationSection: React.FC = () => {
           <h4 className="text-3xl font-bold text-blue-300">{edu.degree}</h4>
           <div className="mb-4">
             <p className="text-xl italic text-fuchsia-300">{edu.school}</p>
-            <p className="text-xl italic text-cyan-300">{edu.year}</p>
+            <p className="text-xl italic text-gray-500">{edu.year}</p>
           </div>
 
           {isThin ? (
