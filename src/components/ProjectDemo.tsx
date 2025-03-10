@@ -107,7 +107,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   }
   return (
     <div className={`relative w-full rounded-2xl`}>
-      <div className="flex flex-row items-center">
+      <div className="mb-4 flex flex-row items-center">
         {project.icon && (
           <img
             src={process.env.PUBLIC_URL + '/' + project.icon}
@@ -115,7 +115,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             className="mb-2 mr-3 h-12 w-auto"
           />
         )}
-        <div className="pixel-font mb-2 text-5xl uppercase">
+        <div className="pixel-font text-5xl uppercase">
           <strong>{project.title}</strong>
         </div>
       </div>
@@ -129,7 +129,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           )}
 
           {project.description && (
-            <div className="mb-2 text-xl text-blue-100">
+            <div className="mb-4 text-xl text-blue-100">
               {project.description}
             </div>
           )}
@@ -139,7 +139,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               <div className="pixel-font text-3xl text-fuchsia-300">
                 <strong>STACK</strong>
               </div>
-              <div className="mb-2 text-xl text-fuchsia-100">
+              <div className="mb-4 text-xl text-fuchsia-100">
                 {project.stack.join(', ')}
               </div>
             </>

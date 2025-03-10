@@ -210,7 +210,7 @@ export const educations: Education[] = [
   {
     year: '2013',
     image: null,
-    degree: 'B.S. Second Education',
+    degree: 'B.S. Secondary Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
