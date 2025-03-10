@@ -9,8 +9,7 @@ const WorkEnvironment: React.FC = () => {
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🖥️</h1>}
         <h1 className="pixel-font text-6xl font-bold">WORKSPACE</h1>
         <p className="pixel-font pt-4 text-2xl text-blue-300">
-          Native fluency developing with MacOS, Linux, & Windows - Remote &
-          Office
+          MacOS, Linux, & Windows - Remote & Office
         </p>
       </div>
 
