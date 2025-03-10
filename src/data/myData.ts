@@ -15,6 +15,8 @@ export interface Job {
 }
 
 export interface Education {
+  image: string | null
+  year: string
   degree: string
   school: string
   details: BulletObject[]
@@ -141,11 +143,13 @@ export const jobs: Job[] = [
 
 export const educations: Education[] = [
   {
+    year: '2018',
+    image: 'diploma_clean_01.png',
     degree: 'B.S. Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
-        title: 'With Honors, 3.73 GPA - 2018',
+        title: 'With Honors, 3.73 GPA',
         lines: [],
       },
       {
@@ -183,31 +187,37 @@ export const educations: Education[] = [
     ],
   },
   {
+    year: '2022',
+    image: 'coding_dojo_cert.png',
     degree: 'Web Dev Bootcamp',
     school: 'Coding Dojo',
     details: [
       {
-        title: 'Cert w/ Honors - 2022',
+        title: 'Cert w/ Honors',
         lines: ['Python Stack', 'MERN Stack', 'C# Fullstack'],
       },
     ],
   },
   {
+    year: '2013',
+    image: null,
     degree: 'B.S. Secondary Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
-        title: 'HS Teaching Cert - 2013',
+        title: 'High School Teaching Certificate',
         lines: ['Biology', 'Chemistry', 'Physics', 'Computer Science'],
       },
     ],
   },
   {
+    year: '2010',
+    image: null,
     degree: 'A.A. Music Education',
     school: 'Lewis & Clark Community College',
     details: [
       {
-        title: 'Violin Performance - 2010',
+        title: 'Violin Performance',
         lines: [],
       },
     ],
