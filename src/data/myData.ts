@@ -563,7 +563,7 @@ export const projects: Project[] = [
 ]
 
 export const EricResumeDescription =
-  'An engineer specializing in web & mobile development, neural network training, and game design. \n\nHe emphasizes defensive programming, strict type safety, and elegant solutions.'
+  'An engineer specializing in web & mobile apps, neural network training, and game design. \n\nHe emphasizes defensive programming, strict type safety, and elegant solutions.'
 
 export const socialMedia: SocialMedia[] = [
   {
