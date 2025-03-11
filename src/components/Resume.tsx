@@ -62,7 +62,7 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <div className="mb-20" />
               )}
             </div>
-            <p className="mb-4 text-2xl text-blue-100">
+            <p className="mb-4 p-8 text-2xl text-blue-100">
               {EricResumeDescription}
             </p>
           </section>
@@ -96,7 +96,9 @@ export const Resume: React.FC<ResumeProps> = () => {
               />
             </div>
           </div>
-          <p className="bold text-2xl">{EricResumeDescription}</p>
+          <div className="mb-8 flex flex-col items-center justify-center">
+            <p className="bold w-1/2 text-2xl">{EricResumeDescription}</p>
+          </div>
           <div className="h-40" />
         </section>
       )}

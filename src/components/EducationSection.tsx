@@ -56,7 +56,7 @@ const EducationSection: React.FC = () => {
               </ul>
             </>
           ) : (
-            <div className="flex flex-row gap-4">
+            <div className="flex w-full flex-row gap-4">
               <div className="w-1/2">
                 <ul className="ml-6 mt-2 list-disc text-xl">
                   {edu.details.map((detail, i) => (
@@ -78,7 +78,7 @@ const EducationSection: React.FC = () => {
                 </ul>
               </div>
               <div className="flex w-1/2 items-start justify-end">
-                {edu.image && (
+                {edu.image ? (
                   <a href={edu.image} target="_blank" rel="noopener noreferrer">
                     <img
                       className="w-full cursor-pointer rounded-2xl transition-transform duration-500 hover:scale-105"
@@ -86,7 +86,7 @@ const EducationSection: React.FC = () => {
                       alt={edu.degree}
                     />
                   </a>
-                )}
+                ) : null}
               </div>
             </div>
           )}

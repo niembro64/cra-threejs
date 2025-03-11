@@ -26,12 +26,14 @@ const WorkExperienceSection: React.FC = () => {
             {job.location}
           </p>
           <p className="mb-2 text-center text-xl text-white/50">{job.dates}</p>
-          <ul className="ml-6 mt-2 list-disc text-xl">
+          <ul
+            className={`ml-6 mt-2 ${isThin ? 'w-full' : 'w-2/3'} list-disc text-xl`}
+          >
             {job.details.map((detail, i) => (
               <li key={i} className="mb-3">
                 {detail.title}
                 <ul
-                  className={`text-md ml-6 mt-1 w-[90%] list-disc ${detail.lines.length > 10 && 'grid grid-flow-row grid-cols-2'}`}
+                  className={`text-md ml-6 mt-1 w-[90%] list-disc ${'grid grid-flow-row grid-cols-2'}`}
                 >
                   {detail.lines.map((l, j) => (
                     <li key={j}>{l}</li>

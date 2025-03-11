@@ -1,4 +1,4 @@
-// resumeData.ts
+// myData.ts
 export const showSmashedGif: boolean = false
 
 export interface BulletObject {
@@ -80,8 +80,8 @@ export const jobs: Job[] = [
           'Feedforward',
           'RNNs',
           'Transformers',
-          'Text Class.',
-          'Audio Class.',
+          'Text Classifiers',
+          'Audio Classifiers',
           'Game AI',
         ],
       },
@@ -90,7 +90,7 @@ export const jobs: Job[] = [
         lines: [
           'Phaser Game Engine',
           'React Native Game Engine',
-          'Angular Material Drag & Drop',
+          'Material Drag & Drop',
         ],
       },
     ],
@@ -115,8 +115,9 @@ export const jobs: Job[] = [
     dates: '2018 - 2020',
     details: [
       {
-        title: 'Configured industrial software systems.',
-        lines: ['Maple Leaf Foods'],
+        title:
+          'Configured industrial software systems (machine execution systems).',
+        lines: ['Maple Leaf Foods', 'Green Leaf Foods'],
       },
     ],
   },
@@ -202,34 +203,31 @@ export const educations: Education[] = [
     school: 'Coding Dojo',
     details: [
       {
-        title: 'Certificate w/ Honors',
+        title: 'Certificate w/ Highest Honors',
         lines: ['Fundamentals', 'Python Stack', 'MERN Stack', 'C# Stack'],
       },
       {
-        title: '80 Hours per Week',
-        lines: [],
-      },
-      {
-        title: 'Four Month Course',
+        title:
+          'Four-Month Course, 80 Hours per Week, with Four Specialized Instructors',
         lines: [],
       },
     ],
   },
   {
     dates: '2013',
-    image: null,
+    image: 'siue.jpg',
     degree: 'BS Secondary Education',
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
-        title: 'High School Teaching Certificate',
+        title: "High School Teacher's Certificate",
         lines: ['Biology', 'Chemistry', 'Physics', 'Computer Science'],
       },
     ],
   },
   {
     dates: '2010',
-    image: null,
+    image: 'lcc.png',
     degree: 'AA Music Education',
     school: 'Lewis & Clark Community College',
     details: [
@@ -598,6 +596,7 @@ export type SocialMedia = {
 }
 
 export type SkillCategory = {
+  emoji: string
   title: string
   dates: string
   skills: Skill[]
@@ -610,6 +609,7 @@ export type Skill = {
 
 export const skills: SkillCategory[] = [
   {
+    emoji: '💻',
     title: 'Web Development',
     dates: '2019 - Present',
     skills: [
@@ -633,10 +633,10 @@ export const skills: SkillCategory[] = [
         title: 'Databases',
         details: ['MongoDB', 'SQL', 'MySQL', 'PostgreSQL', 'SQLite'],
       },
-      {
-        title: 'APIs',
-        details: ['REST', 'Websockets', 'Socket.io'],
-      },
+      // {
+      //   title: 'APIs',
+      //   details: ['REST', 'Websockets', 'Socket.io'],
+      // },
       {
         title: 'Deployment',
         details: ['AWS', 'Docker', 'GitLab', 'Github'],
@@ -644,70 +644,99 @@ export const skills: SkillCategory[] = [
     ],
   },
   {
+    // brain
+    emoji: '🧠',
     title: 'AI & ML',
     dates: '2022 - Present',
     skills: [
+      // {
+      //   title: 'Frameworks',
+      //   details: ['Pytorch', 'BrainJS'],
+      // },
       {
-        title: 'Frameworks',
-        details: ['Pytorch', 'BrainJS'],
-      },
-      {
-        title: 'Models',
-        details: ['FeedForward', 'RNN', 'Convolutional', 'Transformer'],
+        title: 'Architectures',
+        details: [
+          'Pytorch',
+          'BrainJS',
+          'FeedForward',
+          'RNN',
+          'Convolutional',
+          'Transformer',
+        ],
       },
       {
         title: 'Applications',
         details: [
           'Text Classification',
           'Audio Classification',
-          'Game Robot AI',
+          'Image Classification',
+          'Bot AI for Games',
         ],
       },
     ],
   },
   {
-    title: 'Game Development',
+    emoji: '🕹️',
+    title: 'Game Engines',
     dates: '2019 - Present',
     skills: [
       {
-        title: 'Engines',
+        title: 'Web',
+        details: ['Phaser JS', 'Three JS', 'Canvas'],
+      },
+      {
+        title: 'Device',
         details: [
-          'Phaser JS',
-          'Three JS',
-          'Canvas',
           'React Native Game Engine',
+          'N64 ROM Hacking',
+          'Raspberry Pi',
           'Unity',
-          'Nintendo 64',
         ],
       },
     ],
   },
   {
-    title: 'Music & Audio Production',
-    dates: '2002 - Present',
+    emoji: '🎨',
+    title: 'Artistic',
+    dates: '',
     skills: [
+      {
+        title: 'Media',
+        details: [
+          'Adobe CS',
+          'Photoshop',
+          'Premiere Pro',
+          'After Effects',
+          'Illustrator',
+          'Gimp',
+          'FL Studio',
+          'Audacity',
+        ],
+      },
+
       {
         title: 'Instruments',
         details: ['Violin', 'Piano', 'Guitar', 'DJ Equipment'],
       },
-      {
-        title: 'Genres',
-        details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass'],
-      },
-      {
-        title: 'Software',
-        details: ['FL Studio', 'Audacity'],
-      },
+      // {
+      //   title: 'Genres',
+      //   details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass'],
+      // },
+      // {
+      //   title: 'Software',
+      //   details: ['FL Studio', 'Audacity'],
+      // },
     ],
   },
 
   {
+    emoji: '🌏',
     title: 'Human Languages',
     dates: '2008 - Present',
     skills: [
       {
         title: 'English',
-        details: ['Native'],
+        details: ['Native USA'],
       },
       {
         title: 'Italian',
@@ -720,28 +749,6 @@ export const skills: SkillCategory[] = [
       {
         title: 'Korean',
         details: ['Basic'],
-      },
-    ],
-  },
-  {
-    title: 'Technical',
-    dates: '2002 - Present',
-    skills: [
-      {
-        title: 'Media Production',
-        details: [
-          'Adobe CS',
-          'Photoshop',
-          'Premiere',
-          'After Effects',
-          'Illustrator',
-          'Gimp',
-          'FL Studio',
-        ],
-      },
-      {
-        title: 'Operating Systems',
-        details: ['Linux', 'MacOS', 'Windows'],
       },
     ],
   },
@@ -763,7 +770,7 @@ export const workEnvironments: DeskEnvironment[] = [
     title: 'Home WorkStation',
     description: [
       '42U Server Rack for Home Lab',
-      '4x 4K TVs for Multitasking',
+      '4 x 4K TVs for Multitasking',
       'Various Servers',
       'Raspberry Pi Cluster',
       'Network Storage',
@@ -778,6 +785,7 @@ export const workEnvironments: DeskEnvironment[] = [
       laptop_docking_station,
       conference_call_equipment,
       'Minimalist Design to Reduce Distractions',
+      '4 x 2K Monitors for Multitasking',
     ],
   },
   {
