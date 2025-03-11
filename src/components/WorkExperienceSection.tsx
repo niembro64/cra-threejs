@@ -27,10 +27,10 @@ const WorkExperienceSection: React.FC = () => {
           </p>
           <p className="mb-2 text-center text-xl text-white/50">{job.dates}</p>
           <ul
-            className={`ml-6 mt-2 ${isThin ? 'w-full' : 'w-2/3'} list-disc text-xl`}
+            className={`ml-6 mt-2 ${isThin ? 'w-full' : 'w-1/2'} list-disc text-xl`}
           >
             {job.details.map((detail, i) => (
-              <li key={i} className="mb-3">
+              <li key={i} className="mb-8">
                 {detail.title}
                 <ul
                   className={`text-md ml-6 mt-1 w-[90%] list-disc ${'grid grid-flow-row grid-cols-2'}`}

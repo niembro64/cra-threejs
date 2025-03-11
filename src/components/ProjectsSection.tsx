@@ -25,26 +25,28 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
         </p>
       </div>
-      <div className="mb-8 flex flex-col items-center">
-        {projects.map((project, index) => (
-          <div
-            key={project.title + index}
-            // className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
-          >
-            {index !== 0 && <div className="h-16 w-full"></div>}
-            <ProjectDemo
-              key={index}
-              project={project}
-              isMuted={isMutedArray[index]}
-              setIsMuted={() => {
-                const nextState: boolean = !isMutedArray[index]
-                setIsMuted(index, nextState)
-              }}
-              hasTouchedAMuteButton={hasTouchedAudioButton}
-            />
-            <div className="h-16 w-full"></div>
-          </div>
-        ))}
+      <div className="flex flex-col items-center">
+        <div className="mb-8 flex max-w-[800px] flex-col items-center">
+          {projects.map((project, index) => (
+            <div
+              key={project.title + index}
+              // className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
+            >
+              {index !== 0 && <div className="h-16 w-full"></div>}
+              <ProjectDemo
+                key={index}
+                project={project}
+                isMuted={isMutedArray[index]}
+                setIsMuted={() => {
+                  const nextState: boolean = !isMutedArray[index]
+                  setIsMuted(index, nextState)
+                }}
+                hasTouchedAMuteButton={hasTouchedAudioButton}
+              />
+              <div className="h-16 w-full"></div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

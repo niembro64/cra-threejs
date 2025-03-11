@@ -56,11 +56,11 @@ const EducationSection: React.FC = () => {
               </ul>
             </>
           ) : (
-            <div className="flex w-full flex-row gap-4">
+            <div className="flex w-full max-w-[1000px] flex-row gap-4">
               <div className="w-1/2">
                 <ul className="ml-6 mt-2 list-disc text-xl">
                   {edu.details.map((detail, i) => (
-                    <li key={i} className="mb-3">
+                    <li key={i} className="mb-8">
                       {detail.title}
                       <ul
                         className={`text-md ml-6 mt-1 w-[90%] list-disc ${

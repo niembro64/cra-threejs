@@ -32,7 +32,8 @@ export const jobs: Job[] = [
     dates: '2025 - Present',
     details: [
       {
-        title: 'Architecting and implementing in-house AI systems.',
+        title:
+          'Architecting and implementing in-house AI systems to detect and prevent fraud.',
         lines: [],
       },
     ],
@@ -44,7 +45,8 @@ export const jobs: Job[] = [
     dates: '2022 - 2025',
     details: [
       {
-        title: 'Implemented complex fullstack web + mobile apps.',
+        title:
+          'Diagrammed, and implemented complex fullstack web + mobile apps.',
         lines: [
           'Vue',
           'Angular',
@@ -233,6 +235,14 @@ export const educations: Education[] = [
     details: [
       {
         title: 'Violin Performance',
+        lines: [],
+      },
+      {
+        title: 'Music Theory',
+        lines: [],
+      },
+      {
+        title: 'Languages',
         lines: [],
       },
     ],
