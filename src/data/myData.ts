@@ -431,7 +431,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - should the creatures cooperate or defect? ",
+      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - should the creatures cooperate or defect? Best experience is on desktop for now.",
   },
   {
     dates: '2022',
