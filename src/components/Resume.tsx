@@ -1,21 +1,17 @@
 // Resume.tsx
 
 import React from 'react'
-import {
-  educations,
-  EricResumeDescription,
-  showSmashedGif,
-} from '../data/myData'
+import { EricResumeDescription, showSmashedGif } from '../data/myData'
 import { isThin } from './Main'
+import PixelArtText from './PixelArtText'
 
-// NEW IMPORTS
 import EducationSection from './EducationSection'
-import TriviaSection from './SectionTrivia'
 import ProjectsSection from './ProjectsSection'
-import SocialMediaSection from './SocialMediaSection'
-import WorkExperienceSection from './WorkExperienceSection'
+import TriviaSection from './SectionTrivia'
 import SkillsSection from './SkillsSection'
+import SocialMediaSection from './SocialMediaSection'
 import WorkEnvironment from './WorkEnvironment'
+import WorkExperienceSection from './WorkExperienceSection'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ResumeProps {}
@@ -28,9 +24,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <h3 className="pixel-font mb-2 w-full text-center text-6xl font-bold">
-            ERIC NIEMEYER
-          </h3>
+          <PixelArtText pixelColor="#fff" text="NIEMO.IO" />
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
