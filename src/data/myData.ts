@@ -303,7 +303,7 @@ export const projects: Project[] = [
   {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
-    title: 'Smashed',
+    title: 'Smashed Brothers',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
     type: 'Multiplayer Platform Fighter',
@@ -325,9 +325,9 @@ export const projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
-    dates: '2024',
+    dates: '2024 - Ongoing',
     projectStatus: 'ok',
-    title: 'Seouldat',
+    title: 'Shooter',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
     type: 'Online Multiplayer Arena Shooter',
