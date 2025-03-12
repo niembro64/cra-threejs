@@ -6,6 +6,8 @@ interface PixelArtTextProps {
   text: string
   pixelColor?: string
   scrollContainerSelector?: string // Optional selector for custom scroll container
+  totalHorzPixels?: number // Maximum horizontal pixels for the element
+  colorOptions?: string[] // Array of hex colors to use for random color selection
 }
 
 const LETTERS_TO_USE = LETTERS_NICE
@@ -14,6 +16,8 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   text,
   pixelColor = '#000',
   scrollContainerSelector,
+  totalHorzPixels = 100,
+  colorOptions = ['#3B82F6', '#D946EF', '#06B6D4'],
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -92,17 +96,46 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   }
 
   // Convert the combined rows into a 2D boolean grid.
-  const grid: boolean[][] = combinedRows.map((row) =>
+  let grid: boolean[][] = combinedRows.map((row) =>
     row.split('').map((pixel) => (pixel === '#' ? true : false)),
   )
+
+  // Apply horizontal padding if totalHorzPixels is provided
+  if (totalHorzPixels !== undefined) {
+    const currentWidth = grid[0].length
+
+    if (totalHorzPixels > currentWidth) {
+      // Calculate how much padding to add on each side
+      const totalPadding = totalHorzPixels - currentWidth
+      const leftPadding = Math.floor(totalPadding / 2)
+      const rightPadding = totalPadding - leftPadding
+
+      // Add padding to each row
+      grid = grid.map((row) => {
+        // Create left padding array (all false values)
+        const leftPad = Array(leftPadding).fill(false)
+        // Create right padding array (all false values)
+        const rightPad = Array(rightPadding).fill(false)
+        // Return padded row
+        return [...leftPad, ...row, ...rightPad]
+      })
+    }
+  }
 
   const numRows = grid.length
   const numCols = grid[0].length
   // Calculate aspect ratio (for "contain" scaling)
   const aspectRatio = (numRows / numCols) * 100
 
-  // Helper to generate a random hex color.
+  // Helper to generate a random hex color or select from provided colorOptions
   const getRandomColor = (): string => {
+    // If colorOptions array is provided and not empty, use it to select a random color
+    if (colorOptions && colorOptions.length > 0) {
+      const randomIndex = Math.floor(Math.random() * colorOptions.length)
+      return colorOptions[randomIndex]
+    }
+
+    // Otherwise, generate a random color
     return (
       '#' +
       Math.floor(Math.random() * 0xffffff)
