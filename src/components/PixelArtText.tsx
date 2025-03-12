@@ -1,6 +1,7 @@
 // PixelArtText.tsx
 import React, { useEffect, useRef, useState } from 'react'
 import { LETTERS_NICE } from '../data/textMappers'
+import { isThin } from './Main'
 
 interface PixelArtTextProps {
   text: string
@@ -100,13 +101,15 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     row.split('').map((pixel) => (pixel === '#' ? true : false)),
   )
 
+  const totalHorizPixelsToUse = isThin ? null : totalHorzPixels
+
   // Apply horizontal padding if totalHorzPixels is provided
-  if (totalHorzPixels !== undefined) {
+  if (totalHorizPixelsToUse) {
     const currentWidth = grid[0].length
 
-    if (totalHorzPixels > currentWidth) {
+    if (totalHorizPixelsToUse > currentWidth) {
       // Calculate how much padding to add on each side
-      const totalPadding = totalHorzPixels - currentWidth
+      const totalPadding = totalHorizPixelsToUse - currentWidth
       const leftPadding = Math.floor(totalPadding / 2)
       const rightPadding = totalPadding - leftPadding
 

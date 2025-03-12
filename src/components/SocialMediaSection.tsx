@@ -11,7 +11,7 @@ const SocialMediaSection: React.FC = () => {
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">👀</h1>}
         {/* <h1 className="pixel-font text-6xl font-bold">FOLLOW</h1> */}
 
-        <div className="mb-4 mt-10">
+        <div className="mb-4 mt-4">
           <PixelArtText
             scrollContainerSelector=".pixel-text-follow"
             pixelColor="#fff"

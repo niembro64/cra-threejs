@@ -445,8 +445,8 @@ const Main: React.FC = () => {
 
           <div className="h-40" />
 
-          <div className="bg-black/50">
-            <div className="mb-4 mt-10">
+          <div className="border border-black/0 bg-black/50">
+            <div className="mb-4 mt-16">
               <PixelArtText
                 scrollContainerSelector=".pixel-text-contact"
                 pixelColor="#fff"
