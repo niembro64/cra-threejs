@@ -18,13 +18,17 @@ interface ResumeProps {}
 
 export const Resume: React.FC<ResumeProps> = () => {
   return (
-    <div className="w-full py-4 md:px-12">
+    <div className="main-top w-full py-4 md:px-12">
       {isThin && (
         <>
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <PixelArtText pixelColor="#fff" text=" NIEMO.IO " />
+          <PixelArtText
+            scrollContainerSelector=".pixel-text-niemo-io"
+            pixelColor="#fff"
+            text=" NIEMO.IO "
+          />
 
           <div className="h-40" />
           <div className="h-40" />
@@ -39,10 +43,13 @@ export const Resume: React.FC<ResumeProps> = () => {
                 alt="Picture of Eric"
               />
             </div>
-            <h3 className="pixel-font mb-2 text-6xl font-bold">
-              ERIC NIEMEYER
-            </h3>
-            <p className="pixel-font text-2xl uppercase text-blue-300">
+
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-eric-niemeyer"
+              pixelColor="#fff"
+              text=" ERIC NIEMEYER "
+            />
+            <p className="pixel-font mt-4 text-2xl uppercase text-blue-300">
               Stamford, Connecticut
             </p>
 
