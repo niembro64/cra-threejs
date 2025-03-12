@@ -38,10 +38,7 @@ const LETTERS: { [key: string]: string[] } = {
   '.': ['     ', '     ', '     ', '     ', '     ', '     ', '  ## '],
 }
 
-const PixelArtText: React.FC<PixelArtTextProps> = ({
-  text,
-  pixelColor = '#000',
-}) => {
+const PixelArtText: React.FC<PixelArtTextProps> = ({ text, pixelColor }) => {
   // Validate that every character in the text is a capital letter A-Z.
   for (let i = 0; i < text.length; i++) {
     const char = text[i]
