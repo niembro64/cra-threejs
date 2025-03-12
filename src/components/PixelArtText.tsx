@@ -6,8 +6,7 @@ interface PixelArtTextProps {
   pixelColor?: string
 }
 
-// A 5x7 pixel representation for each capital letter A-Z.
-// Each string represents a row and '#' means a lit pixel.
+// A 5x7 pixel representation for each capital letter A-Z (plus '.' for demo).
 const LETTERS: { [key: string]: string[] } = {
   A: ['  #  ', ' # # ', '#   #', '#####', '#   #', '#   #', '#   #'],
   B: ['#### ', '#   #', '#   #', '#### ', '#   #', '#   #', '#### '],
@@ -38,7 +37,10 @@ const LETTERS: { [key: string]: string[] } = {
   '.': ['     ', '     ', '     ', '     ', '     ', '     ', '  ## '],
 }
 
-const PixelArtText: React.FC<PixelArtTextProps> = ({ text, pixelColor }) => {
+const PixelArtText: React.FC<PixelArtTextProps> = ({
+  text,
+  pixelColor = '#000',
+}) => {
   // Validate that every character in the text is a capital letter A-Z.
   for (let i = 0; i < text.length; i++) {
     const char = text[i]
@@ -77,6 +79,16 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({ text, pixelColor }) => {
   // Calculate aspect ratio (for "contain" scaling)
   const aspectRatio = (numRows / numCols) * 100
 
+  // Helper to generate a random hex color.
+  const getRandomColor = (): string => {
+    return (
+      '#' +
+      Math.floor(Math.random() * 0xffffff)
+        .toString(16)
+        .padStart(6, '0')
+    )
+  }
+
   return (
     <div className="pixel-art-wrapper">
       <div
@@ -92,18 +104,30 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({ text, pixelColor }) => {
             if (!isPixel) {
               return <div key={`${rowIndex}-${colIndex}`} />
             }
-            // Delay based on pixel's position in reading order.
-            const delay = (rowIndex * numCols + colIndex) * 0.05
+            // Instead of sequential delays, use random delays.
+            const randomDelay = (Math.random() * 1).toFixed(2) + 's'
+            // Random starting offset (in pixels) for coming in from different directions.
+            const randomX = (Math.random() * 100 - 50).toFixed(0) + 'px'
+            const randomY = (Math.random() * 100 - 50).toFixed(0) + 'px'
+            const randomTransform = `translate(${randomX}, ${randomY})`
+            // Generate a random color to transition through.
+            const randomColor = getRandomColor()
+
             return (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className="pixel"
-                style={{
-                  backgroundColor: pixelColor,
-                  opacity: 0,
-                  animation: `fadeIn 0.3s forwards`,
-                  animationDelay: `${delay}s`,
-                }}
+                style={
+                  {
+                    opacity: 0,
+                    animation: `fadeIn 0.6s forwards`,
+                    animationDelay: randomDelay,
+                    // CSS variables used in the keyframes.
+                    '--startTransform': randomTransform,
+                    '--randomColor': randomColor,
+                    '--finalColor': pixelColor,
+                  } as React.CSSProperties
+                }
               />
             )
           }),
@@ -124,8 +148,21 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({ text, pixelColor }) => {
           bottom: 0;
         }
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          0% {
+            opacity: 0;
+            transform: var(--startTransform);
+            background-color: transparent;
+          }
+          50% {
+            opacity: 1;
+            transform: translate(0, 0);
+            background-color: var(--randomColor);
+          }
+          100% {
+            opacity: 1;
+            transform: translate(0, 0);
+            background-color: var(--finalColor);
+          }
         }
       `}</style>
     </div>
