@@ -1,41 +1,13 @@
 // PixelArtText.tsx
 import React from 'react'
+import { LETTERS_NICE } from '../data/textMappers'
 
 interface PixelArtTextProps {
   text: string
   pixelColor?: string
 }
 
-// A 5x7 pixel representation for each capital letter A-Z (plus '.' for demo).
-const LETTERS: { [key: string]: string[] } = {
-  A: ['  #  ', ' # # ', '#   #', '#####', '#   #', '#   #', '#   #'],
-  B: ['#### ', '#   #', '#   #', '#### ', '#   #', '#   #', '#### '],
-  C: [' ####', '#    ', '#    ', '#    ', '#    ', '#    ', ' ####'],
-  D: ['#### ', '#   #', '#   #', '#   #', '#   #', '#   #', '#### '],
-  E: ['#####', '#    ', '#    ', '#####', '#    ', '#    ', '#####'],
-  F: ['#####', '#    ', '#    ', '#####', '#    ', '#    ', '#    '],
-  G: [' ####', '#    ', '#    ', '#  ##', '#   #', '#   #', ' ####'],
-  H: ['#   #', '#   #', '#   #', '#####', '#   #', '#   #', '#   #'],
-  I: [' ### ', '  #  ', '  #  ', '  #  ', '  #  ', '  #  ', ' ### '],
-  J: ['  ###', '   # ', '   # ', '   # ', '#  # ', '#  # ', ' ##  '],
-  K: ['#   #', '#  # ', '# #  ', '##   ', '# #  ', '#  # ', '#   #'],
-  L: ['#    ', '#    ', '#    ', '#    ', '#    ', '#    ', '#####'],
-  M: ['#   #', '## ##', '# # #', '#   #', '#   #', '#   #', '#   #'],
-  N: ['#   #', '##  #', '# # #', '#  ##', '#   #', '#   #', '#   #'],
-  O: [' ### ', '#   #', '#   #', '#   #', '#   #', '#   #', ' ### '],
-  P: ['#### ', '#   #', '#   #', '#### ', '#    ', '#    ', '#    '],
-  Q: [' ### ', '#   #', '#   #', '#   #', '# # #', '#  # ', ' ## #'],
-  R: ['#### ', '#   #', '#   #', '#### ', '# #  ', '#  # ', '#   #'],
-  S: [' ####', '#    ', '#    ', ' ### ', '    #', '    #', '#### '],
-  T: ['#####', '  #  ', '  #  ', '  #  ', '  #  ', '  #  ', '  #  '],
-  U: ['#   #', '#   #', '#   #', '#   #', '#   #', '#   #', ' ### '],
-  V: ['#   #', '#   #', '#   #', '#   #', '#   #', ' # # ', '  #  '],
-  W: ['#   #', '#   #', '#   #', '# # #', '# # #', '## ##', '#   #'],
-  X: ['#   #', '#   #', ' # # ', '  #  ', ' # # ', '#   #', '#   #'],
-  Y: ['#   #', '#   #', ' # # ', '  #  ', '  #  ', '  #  ', '  #  '],
-  Z: ['#####', '    #', '   # ', '  #  ', ' #   ', '#    ', '#####'],
-  '.': ['     ', '     ', '     ', '     ', '     ', '     ', '  ## '],
-}
+const LETTERS_TO_USE = LETTERS_NICE
 
 const PixelArtText: React.FC<PixelArtTextProps> = ({
   text,
@@ -44,22 +16,21 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   // Validate that every character in the text is a capital letter A-Z.
   for (let i = 0; i < text.length; i++) {
     const char = text[i]
-    if (!LETTERS[char]) {
+    if (!LETTERS_TO_USE[char]) {
       throw new Error(
         `Unsupported character: "${char}". Only capital letters A-Z are allowed.`,
       )
     }
   }
 
-  const letterHeight = 7
-  const letterWidth = 5
+  const letterHeight = LETTERS_TO_USE['A'].length
   const spacing = 1 // one column of spacing between letters
 
   // Build the combined pixel grid rows.
   const combinedRows: string[] = Array(letterHeight).fill('')
   for (let i = 0; i < text.length; i++) {
     const letter = text[i]
-    const letterPattern = LETTERS[letter]
+    const letterPattern = LETTERS_TO_USE[letter]
     for (let row = 0; row < letterHeight; row++) {
       combinedRows[row] += letterPattern[row]
       // Add spacing between letters (except after the last one)
@@ -101,9 +72,18 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
       >
         {grid.flatMap((row, rowIndex) =>
           row.map((isPixel, colIndex) => {
-            if (!isPixel) {
-              return <div key={`${rowIndex}-${colIndex}`} />
+            // Common base style for all grid cells to ensure consistent sizing
+            const baseStyle: React.CSSProperties = {
+              width: '100%',
+              height: '100%',
+              minWidth: '1px',
+              minHeight: '1px',
             }
+
+            if (!isPixel) {
+              return <div key={`${rowIndex}-${colIndex}`} style={baseStyle} />
+            }
+
             // Instead of sequential delays, use random delays.
             const randomDelay = (Math.random() * 1).toFixed(2) + 's'
             // Random starting offset (in pixels) for coming in from different directions.
@@ -119,6 +99,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
                 className="pixel"
                 style={
                   {
+                    ...baseStyle,
                     opacity: 0,
                     animation: `fadeIn 0.6s forwards`,
                     animationDelay: randomDelay,
@@ -146,6 +127,9 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
           left: 0;
           right: 0;
           bottom: 0;
+        }
+        .pixel-art-grid > div {
+          aspect-ratio: 1 / 1;
         }
         @keyframes fadeIn {
           0% {

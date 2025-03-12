@@ -24,7 +24,8 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <PixelArtText pixelColor="#fff" text="NIEMO.IO" />
+          <PixelArtText pixelColor="#fff" text=" NIEMO.IO " />
+
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
