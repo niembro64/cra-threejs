@@ -32,7 +32,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               key={project.title + index}
               // className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
             >
-              {index !== 0 && <div className="h-16 w-full"></div>}
+              {index !== 0 && <div className="h-24 w-full"></div>}
               <ProjectDemo
                 key={index}
                 project={project}

@@ -222,8 +222,12 @@ export const educations: Education[] = [
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
-        title: "High School Teacher's Certificate",
+        title: 'High School Teacher Certification',
         lines: ['Biology', 'Chemistry', 'Physics', 'Computer Science'],
+      },
+      {
+        title: 'Certified to Teach Sciences in Three States',
+        lines: ['Illinois', 'Missouri', 'New York'],
       },
     ],
   },
@@ -234,16 +238,8 @@ export const educations: Education[] = [
     school: 'Lewis & Clark Community College',
     details: [
       {
-        title: 'Violin Performance',
-        lines: [],
-      },
-      {
-        title: 'Music Theory',
-        lines: [],
-      },
-      {
-        title: 'Languages',
-        lines: [],
+        title: 'Areas of Study',
+        lines: ['Violin Performance', 'Music Theory', 'Languages'],
       },
     ],
   },
@@ -305,7 +301,7 @@ const phaserIcon = 'phaser-icon.png'
 
 export const projects: Project[] = [
   {
-    dates: '2022 - Present',
+    dates: '2022 - Ongoing',
     projectStatus: 'ok',
     title: 'Smashed',
     url: 'https://smashed.niemo.io',
@@ -329,7 +325,7 @@ export const projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
-    dates: '2024 - Present',
+    dates: '2024',
     projectStatus: 'ok',
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
@@ -419,7 +415,7 @@ export const projects: Project[] = [
       'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
-    dates: '2025 - Present',
+    dates: '2025 - Ongoing',
     projectStatus: 'ok',
     title: 'Axelrod',
     url: 'https://games.niemo.io/axelrod',
@@ -523,7 +519,7 @@ export const projects: Project[] = [
     buttonStartText: 'View',
   },
   {
-    dates: '2002 - Present',
+    dates: '2002 - Ongoing',
     projectStatus: 'ok',
     title: 'Music',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
@@ -543,10 +539,10 @@ export const projects: Project[] = [
     hasSound: true,
     buttonStartText: 'Go to',
     description:
-      'A collection of original music I have created over the years. Check out the comments on the track, "Small Talk".',
+      "A collection of Niemo's original music created over the years.",
   },
   {
-    dates: '2013 - Present',
+    dates: '2013 - 2021',
     projectStatus: 'ok',
     title: 'Videos',
     url: 'https://www.youtube.com/@niemoaudio',
@@ -565,8 +561,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Go to',
-    description:
-      'Adobe Creative Suite - adding stunning visuals to original music.',
+    description: 'Branded visualizations added to original music.',
   },
 ]
 
@@ -691,11 +686,11 @@ export const skills: SkillCategory[] = [
     dates: '2019 - Present',
     skills: [
       {
-        title: 'Web',
+        title: 'Browser-Based',
         details: ['Phaser JS', 'Three JS', 'Canvas'],
       },
       {
-        title: 'Device',
+        title: 'Device-Based',
         details: [
           'React Native Game Engine',
           'N64 ROM Hacking',
@@ -711,31 +706,28 @@ export const skills: SkillCategory[] = [
     dates: '',
     skills: [
       {
-        title: 'Media',
-        details: [
-          'Adobe CS',
-          'Photoshop',
-          'Premiere Pro',
-          'After Effects',
-          'Illustrator',
-          'Gimp',
-          'FL Studio',
-          'Audacity',
-        ],
+        title: 'Audio',
+        details: ['FL Studio', 'Audacity', 'Virtual DJ'],
       },
-
       {
         title: 'Instruments',
         details: ['Violin', 'Piano', 'Guitar', 'DJ Equipment'],
       },
-      // {
-      //   title: 'Genres',
-      //   details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass'],
-      // },
-      // {
-      //   title: 'Software',
-      //   details: ['FL Studio', 'Audacity'],
-      // },
+      {
+        title: 'Visual',
+        details: [
+          'Aseprite',
+          'Blender',
+          'Photoshop',
+          'Illustrator',
+          'After Effects',
+          'OBS Studio',
+        ],
+      },
+      {
+        title: 'Genres',
+        details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass', 'Pixel Art'],
+      },
     ],
   },
 

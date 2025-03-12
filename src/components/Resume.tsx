@@ -29,7 +29,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <h3 className="pixel-font mb-2 w-full text-center text-6xl font-bold">
-            niemo.io
+            ERIC NIEMEYER
           </h3>
           <div className="h-40" />
           <div className="h-40" />

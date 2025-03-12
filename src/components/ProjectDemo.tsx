@@ -229,7 +229,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
           disabled
         >
           {project.projectStatus !== 'ok'
-            ? 'Project Offline'
+            ? 'Offline'
             : isThin
               ? 'Desktop Only'
               : 'Mobile Only'}

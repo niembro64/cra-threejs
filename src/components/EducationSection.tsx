@@ -38,7 +38,7 @@ const EducationSection: React.FC = () => {
               )}
               <ul className="ml-6 mt-2 w-full list-disc text-xl">
                 {edu.details.map((detail, i) => (
-                  <li key={i} className="mb-3">
+                  <li key={i} className="mb-8">
                     {detail.title}
                     <ul
                       className={`text-md my-2 ml-6 list-disc ${

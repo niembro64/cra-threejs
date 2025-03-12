@@ -8,8 +8,11 @@ const WorkEnvironment: React.FC = () => {
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🖥️</h1>}
         <h1 className="pixel-font text-6xl font-bold">WORKSPACE</h1>
-        <p className="pixel-font pt-4 text-2xl text-blue-300">
-          MacOS, Linux, & Windows - Remote & Office
+        <p className="pixel-font pt-4 text-2xl uppercase text-blue-300">
+          MacOS, Linux, & Windows
+        </p>
+        <p className="pixel-font text-2xl uppercase text-fuchsia-300">
+          Remote & Office
         </p>
       </div>
 

@@ -7,7 +7,7 @@ import { isThin } from './Main'
 const WorkExperienceSection: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
-      <div className="mb-8 text-center">
+      <div className="mb-16 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">👔</h1>}
         <h1 className="pixel-font text-6xl font-bold">WORK</h1>
       </div>
@@ -16,16 +16,16 @@ const WorkExperienceSection: React.FC = () => {
           key={job.title + idx}
           className="mb-16 flex flex-col items-center justify-center"
         >
-          <h4 className="mb-2 text-center text-3xl font-bold text-blue-300">
+          <h4 className="mb-1 text-center text-3xl font-bold text-blue-300">
             {job.company}
           </h4>
-          <p className="mb-2 text-center text-2xl italic text-fuchsia-300">
+          <p className="mb-1 text-center text-2xl italic text-fuchsia-300">
             {job.title}
           </p>
-          <p className="mb-2 text-center text-xl text-teal-300">
+          <p className="mb-0 text-center text-xl text-teal-300">
             {job.location}
           </p>
-          <p className="mb-2 text-center text-xl text-white/50">{job.dates}</p>
+          <p className="mb-6 text-center text-xl text-white/50">{job.dates}</p>
           <ul
             className={`ml-6 mt-2 ${isThin ? 'w-full' : 'w-1/2'} list-disc text-xl`}
           >
