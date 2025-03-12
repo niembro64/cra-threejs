@@ -155,7 +155,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
 
   return (
     <div
-      className={wrapperClass}
+      className={`${wrapperClass} overflow-hidden`}
       ref={wrapperRef}
       data-visible={isVisible}
       data-instance-id={instanceId}
