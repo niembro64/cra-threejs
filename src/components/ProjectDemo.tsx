@@ -9,6 +9,7 @@ import { ProjectStore } from '../store/ProjectStore'
 import { isMobile, isThin } from './Main'
 import ReactGA from 'react-ga4'
 import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/myData'
+import FancyButton from './FancyButton'
 
 const isVideo = (mediaSource: string | null) => {
   if (mediaSource === null) return false
@@ -204,24 +205,32 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {project.projectStatus === 'ok' &&
       ((isThin && project.supportsMobile) ||
         (!isThin && project.supportsDesktop)) ? (
-        <button
-          type="button"
-          className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
-          onClick={() => {
-            handleProjectClick()
+        // <button
+        //   type="button"
+        //   className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
+        //   onClick={() => {
+        //     handleProjectClick()
 
-            ReactGA.event({
-              category: 'User',
-              action: 'Visit Project',
-              label: project.title,
-            })
-          }}
-        >
-          <strong>
-            {project.buttonStartText.toUpperCase()}{' '}
-            {project.title.toUpperCase()}
-          </strong>
-        </button>
+        //     ReactGA.event({
+        //       category: 'User',
+        //       action: 'Visit Project',
+        //       label: project.title,
+        //     })
+        //   }}
+        // >
+        //   <strong>
+        //     {project.buttonStartText.toUpperCase()}{' '}
+        //     {project.title.toUpperCase()}
+        //   </strong>
+        // </button>
+        <FancyButton
+          text={
+            project.buttonStartText.toUpperCase() +
+            ' ' +
+            project.title.toUpperCase()
+          }
+          onClick={handleProjectClick}
+        />
       ) : (
         <button
           type="button"
