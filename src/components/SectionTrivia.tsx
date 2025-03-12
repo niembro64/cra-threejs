@@ -4,13 +4,21 @@ import React from 'react'
 import { isThin } from './Main'
 import ReactGA from 'react-ga4'
 import { showEmojis } from '../data/myData'
+import PixelArtText from './PixelArtText'
 
 const TriviaSection: React.FC = () => {
   return (
     <section className={`py-12 ${isThin ? 'bg-black/70 px-4' : 'px-60'}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">✨</h1>}
-        <h1 className="pixel-font text-6xl font-bold">TRIVIA</h1>
+        {/* <h1 className="pixel-font text-6xl font-bold">TRIVIA</h1> */}
+        <div className="mb-4 mt-10">
+          <PixelArtText
+            scrollContainerSelector=".pixel-text-trivia"
+            pixelColor="#fff"
+            text=" TRIVIA "
+          />
+        </div>
       </div>
 
       {/* /////////////////////////////////////////////// */}

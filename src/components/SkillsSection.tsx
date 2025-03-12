@@ -3,6 +3,7 @@
 import React from 'react'
 import { skills, showEmojis } from '../data/myData'
 import { isThin } from './Main'
+import PixelArtText from './PixelArtText'
 
 const SkillsSection: React.FC = () => {
   if (isThin) {
@@ -10,7 +11,15 @@ const SkillsSection: React.FC = () => {
       <section className="bg-black/70 px-4 py-12">
         <div className="mb-8 text-center">
           {showEmojis && <h1 className="mb-4 text-6xl font-bold">🛠</h1>}
-          <h1 className="pixel-font text-6xl font-bold">SKILLS</h1>
+          {/* <h1 className="pixel-font text-6xl font-bold">SKILLS</h1> */}
+
+          <div className="mb-4 mt-10">
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-skills"
+              pixelColor="#fff"
+              text=" SKILLS "
+            />
+          </div>
         </div>
         {skills.map((category, idx) => (
           <div key={idx} className="mb-8">
@@ -43,7 +52,15 @@ const SkillsSection: React.FC = () => {
       <section className="px-4 py-12">
         <div className="mb-8 text-center">
           {showEmojis && <h1 className="mb-4 text-6xl font-bold">🛠</h1>}
-          <h1 className="pixel-font text-6xl font-bold">SKILLS</h1>
+          {/* <h1 className="pixel-font text-6xl font-bold">SKILLS</h1> */}
+
+          <div className="mb-4 mt-10">
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-skills"
+              pixelColor="#fff"
+              text=" SKILLS "
+            />
+          </div>
         </div>
         {skills.map((category, idx) => (
           <div key={idx} className="mb-8">

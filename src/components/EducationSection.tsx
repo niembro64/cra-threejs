@@ -3,13 +3,22 @@
 import React from 'react'
 import { educations, showEmojis } from '../data/myData'
 import { isThin } from './Main'
+import PixelArtText from './PixelArtText'
 
 const EducationSection: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🎓</h1>}
-        <h1 className="pixel-font text-center text-6xl font-bold">EDUCATION</h1>
+        {/* <h1 className="pixel-font text-center text-6xl font-bold">EDUCATION</h1> */}
+
+        <div className="mb-4 mt-10">
+          <PixelArtText
+            scrollContainerSelector=".pixel-text-education"
+            pixelColor="#fff"
+            text=" EDUCATION "
+          />
+        </div>
       </div>
 
       {educations.map((edu, idx) => (

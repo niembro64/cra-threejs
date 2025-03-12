@@ -1,13 +1,22 @@
 import React from 'react'
 import { isThin } from './Main'
 import { showEmojis, workEnvironments } from '../data/myData'
+import PixelArtText from './PixelArtText'
 
 const WorkEnvironment: React.FC = () => {
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🖥️</h1>}
-        <h1 className="pixel-font text-6xl font-bold">WORKSPACE</h1>
+        {/* <h1 className="pixel-font text-6xl font-bold">WORKSPACE</h1> */}
+        <div className="mb-4 mt-10">
+          <PixelArtText
+            scrollContainerSelector=".pixel-text-workspace"
+            pixelColor="#fff"
+            text=" WORKSPACE "
+          />
+        </div>
+
         <p className="pixel-font pt-4 text-2xl uppercase text-blue-300">
           MacOS, Linux, & Windows
         </p>

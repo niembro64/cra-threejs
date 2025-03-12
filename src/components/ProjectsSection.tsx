@@ -5,6 +5,7 @@ import { ProjectStore } from '../store/ProjectStore'
 import { isThin } from './Main'
 import ProjectDemo from './ProjectDemo'
 import { projects, showEmojis } from '../data/myData'
+import PixelArtText from './PixelArtText'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ProjectsSectionProps {}
@@ -20,7 +21,15 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
     <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} shadow-lg`}>
       <div className="mb-24 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
-        <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1>
+        {/* <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1> */}
+
+        <div className="mb-4 mt-10">
+          <PixelArtText
+            scrollContainerSelector=".pixel-text-projects"
+            pixelColor="#fff"
+            text=" PROJECTS "
+          />
+        </div>
         <p className="pixel-font pt-4 text-2xl text-blue-300">
           Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
         </p>

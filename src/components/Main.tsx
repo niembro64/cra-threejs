@@ -14,6 +14,7 @@ import {
   tooltipDelay,
   toolTipStyle,
 } from '../data/myData'
+import PixelArtText from './PixelArtText'
 
 export const phoneNumber = '618-616-3380'
 export const email = 'niemeyer.eric@gmail.com'
@@ -445,6 +446,13 @@ const Main: React.FC = () => {
           <div className="h-40" />
 
           <div className="bg-black/50">
+            <div className="mb-4 mt-10">
+              <PixelArtText
+                scrollContainerSelector=".pixel-text-contact"
+                pixelColor="#fff"
+                text=" CONTACT "
+              />
+            </div>
             <ContactSection
               animateKirby={animateKirby}
               onPhoneClick={() => window.open('tel:618-616-3380')}

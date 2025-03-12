@@ -251,7 +251,7 @@ export const tooltipDelay = 500
 
 export const extraTimeLazyLoad = 0
 
-export const showEmojis: boolean = true
+export const showEmojis: boolean = false
 
 export const showKirbyGame: boolean = false
 
