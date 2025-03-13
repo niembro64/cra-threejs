@@ -228,23 +228,24 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
           aspect-ratio: 1 / 1;
         }
         .${pixelClass}.${animateClass} {
+          border: 0.5px solid white;
           animation: fadeIn-${instanceId} 0.6s forwards;
           animation-delay: var(--delay);
         }
         @keyframes fadeIn-${instanceId} {
           0% {
             opacity: 0;
-            transform: var(--startTransform);
+            transform: var(--startTransform) scale(.1);
             background-color: transparent;
           }
           50% {
             opacity: 1;
-            transform: translate(0, 0);
+            transform: translate(0, 0) scale(.8);
             background-color: var(--randomColor);
           }
           100% {
             opacity: 1;
-            transform: translate(0, 0);
+            transform: translate(0, 0) scale(1);
             background-color: var(--finalColor);
           }
         }
