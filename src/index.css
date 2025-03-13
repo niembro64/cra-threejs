@@ -207,3 +207,27 @@ body {
 .btn-fancy:hover:not(:disabled) span:nth-child(20) {
   transition-delay: 0.38s;
 }
+
+.btn-fancy:hover:not(:disabled) span:nth-child(21) {
+  transition-delay: 0.4s;
+}
+
+.btn-fancy:hover:not(:disabled) span:nth-child(22) {
+  transition-delay: 0.42s;
+}
+
+.btn-fancy:hover:not(:disabled) span:nth-child(23) {
+  transition-delay: 0.44s;
+}
+
+.btn-fancy:hover:not(:disabled) span:nth-child(24) {
+  transition-delay: 0.46s;
+}
+
+.btn-fancy:hover:not(:disabled) span:nth-child(25) {
+  transition-delay: 0.48s;
+}
+
+.btn-fancy:hover:not(:disabled) span:nth-child(26) {
+  transition-delay: 0.5s;
+}
