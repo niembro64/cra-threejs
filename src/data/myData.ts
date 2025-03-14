@@ -303,7 +303,7 @@ export const projects: Project[] = [
   {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
-    title: 'Smashed Brothers',
+    title: 'Smashed Bros',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
     type: 'Multiplayer Platform Fighter',
@@ -566,7 +566,7 @@ export const projects: Project[] = [
 ]
 
 export const EricResumeDescription =
-  'An engineer specializing in web & mobile apps, neural network training, and game design. \n\nHe emphasizes defensive programming, strict type safety, and elegant solutions.'
+  'Engineer specializing in web & mobile apps, neural network training, and game design. \n\nHe emphasizes defensive programming, strict type safety, and elegant solutions.'
 
 export const socialMedia: SocialMedia[] = [
   {
