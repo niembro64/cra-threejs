@@ -773,9 +773,11 @@ export const workEnvironments: DeskEnvironment[] = [
     description: [
       '42U Server Rack for Home Lab',
       '4 x 4K TVs for Multitasking',
-      'Various Servers',
       'Raspberry Pi Cluster',
-      'Network Storage',
+      'Movie Server (Plex)',
+      'G-Suite Replicant Server (Synology)',
+      'Network Storage (Synology)',
+      'Home Automation (Google Home)',
       laptop_docking_station,
       conference_call_equipment,
     ],
