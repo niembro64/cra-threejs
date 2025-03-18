@@ -235,17 +235,17 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
         @keyframes fadeIn-${instanceId} {
           0% {
             opacity: 0;
-            transform: var(--startTransform) scale(.1);
+            transform: var(--startTransform);
             background-color: transparent;
           }
           50% {
             opacity: 1;
-            transform: translate(0, 0) scale(.8);
+            transform: translate(0, 0);
             background-color: var(--randomColor);
           }
           100% {
             opacity: 1;
-            transform: translate(0, 0) scale(1);
+            transform: translate(0, 0);
             background-color: var(--finalColor);
           }
         }
