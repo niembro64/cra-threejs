@@ -162,19 +162,6 @@ const Main: React.FC = () => {
 
     const globalX: number = isThin ? -50 : 0
 
-    const geometry: THREE.IcosahedronGeometry = new THREE.IcosahedronGeometry(
-      90,
-      1,
-    )
-
-    const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      shininess: 300,
-      flatShading: true,
-      wireframe: false,
-      shadowSide: THREE.DoubleSide,
-      side: THREE.DoubleSide,
-    })
     const loader = new GLTFLoader()
     loader.load(
       appleModelUrl,
@@ -183,13 +170,15 @@ const Main: React.FC = () => {
 
         // Apply scaling to match the size of the previous icosahedron
 
-        const scale = 2000
+        const scale = 0.3
 
         apple.scale.set(scale, scale, scale)
         // apple.scale.set(90, 90, 90)
 
+        const screenWidth = window.innerWidth
+
         // Set position
-        apple.position.x = globalX
+        apple.position.x = globalX + (isThin ? 0 : -screenWidth / 20)
 
         // Add the model to the scene
         scene.add(apple)
@@ -413,14 +402,15 @@ const Main: React.FC = () => {
   }, [])
 
   return (
-    <div className="relative min-h-screen w-full" ref={topElementRef}>
+    <div
+      className="relative min-h-screen w-full overflow-x-hidden"
+      ref={topElementRef}
+    >
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full bg-black"></div>
 
       {!isThin && (
-        <div
-          className="fixed left-[-50%] top-0 -z-10 h-full w-full"
-          ref={refContainer}
-        />
+        // overflow is totally visible
+        <div className="fixed top-0 -z-10 h-full" ref={refContainer} />
       )}
       {isThin && (
         <div
@@ -481,7 +471,7 @@ const Main: React.FC = () => {
 
           <div className="h-40" />
 
-          <div className="border border-black/0 bg-black/50">
+          <div className={!isThin ? '' : 'border border-black/0 bg-black/50'}>
             <div className="mb-4 mt-16">
               <PixelArtText
                 scrollContainerSelector=".pixel-text-contact"

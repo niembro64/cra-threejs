@@ -23,9 +23,11 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [animationKey, setAnimationKey] = useState(0)
-  const [instanceId] = useState(
-    () => `pixel-art-${Math.random().toString(36).substring(2, 9)}`,
-  )
+  const [instanceId] = useState(() => {
+    const randomNumber = Math.random()
+
+    return `pixel-art-${randomNumber.toString(36).substring(2, 9)}`
+  })
 
   // Validate that every character in the text is a capital letter A-Z.
   for (let i = 0; i < text.length; i++) {
@@ -182,11 +184,17 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
               return <div key={`${rowIndex}-${colIndex}`} style={baseStyle} />
             }
 
+            const offsetAmount = 200
+
             // Instead of sequential delays, use random delays.
             const randomDelay = (Math.random() * 1).toFixed(2) + 's'
             // Random starting offset (in pixels) for coming in from different directions.
-            const randomX = (Math.random() * 100 - 50).toFixed(0) + 'px'
-            const randomY = (Math.random() * 100 - 50).toFixed(0) + 'px'
+            const randomX =
+              (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) +
+              'px'
+            const randomY =
+              (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) +
+              'px'
             const randomTransform = `translate(${randomX}, ${randomY})`
             // Generate a random color to transition through.
             const randomColor = getRandomColor()
