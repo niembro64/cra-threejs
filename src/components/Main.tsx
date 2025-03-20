@@ -4,9 +4,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import ContactSection from './ContactSection'
 import ReactGA from 'react-ga4'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
+// @ts-ignore
+import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore'
 import {
   showKirbyGame,
@@ -30,6 +33,9 @@ const Main: React.FC = () => {
   const { setConnectionQuality } = ProjectStore()
 
   const refContainer = useRef<HTMLDivElement | null>(null)
+
+  const appleRef = { current: null as THREE.Object3D | null }
+
   const mousePositionCurr = useRef(new THREE.Vector3())
   const mousePositionPrev = useRef(new THREE.Vector3())
   const scrollPosition = useRef(0)
@@ -169,9 +175,30 @@ const Main: React.FC = () => {
       shadowSide: THREE.DoubleSide,
       side: THREE.DoubleSide,
     })
-    const ball = new THREE.Mesh(geometry, material)
-    scene.add(ball)
-    ball.position.x = globalX
+    const loader = new GLTFLoader()
+    loader.load(
+      appleModelUrl,
+      (gltf) => {
+        const apple = gltf.scene
+
+        // Apply scaling to match the size of the previous icosahedron
+
+        const scale = 2000
+
+        apple.scale.set(scale, scale, scale)
+        // apple.scale.set(90, 90, 90)
+
+        // Set position
+        apple.position.x = globalX
+
+        // Add the model to the scene
+        scene.add(apple)
+
+        // Store reference to the model for animations
+        appleRef.current = apple
+      },
+      // Progress and error handlers...
+    )
 
     camera.position.z = 150
 
@@ -257,8 +284,12 @@ const Main: React.FC = () => {
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current
 
-      ball.rotation.z =
-        (percentKeepMouse * ball.position.z +
+      if (!appleRef.current) {
+        return
+      }
+
+      appleRef.current.rotation.z =
+        (percentKeepMouse * appleRef.current.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1
 
@@ -273,16 +304,16 @@ const Main: React.FC = () => {
         (1 - percentKeepMouse) * mousePositionCurr.current.z
 
       if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
-        ball.rotation.x =
-          percentKeep * ball.rotation.x +
+        appleRef.current.rotation.x =
+          percentKeep * appleRef.current.rotation.x +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x)
-        ball.rotation.y =
-          percentKeep * ball.rotation.y +
+        appleRef.current.rotation.y =
+          percentKeep * appleRef.current.rotation.y +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y)
-        ball.rotation.z =
-          percentKeep * ball.rotation.z +
+        appleRef.current.rotation.z =
+          percentKeep * appleRef.current.rotation.z +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * z))
       } else {
         lowerPowerAccumulatedRef.current =
@@ -305,12 +336,12 @@ const Main: React.FC = () => {
         const percentKeepPowerShort = 0.5
         const percentKeepPowerLong = 0.5
 
-        ball.rotation.x =
-          ball.rotation.x * percentKeepPowerShort +
+        appleRef.current.rotation.x =
+          appleRef.current.rotation.x * percentKeepPowerShort +
           lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
-        ball.rotation.y =
-          ball.rotation.y * percentKeepPowerShort +
+        appleRef.current.rotation.y =
+          appleRef.current.rotation.y * percentKeepPowerShort +
           upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
         pointLightRed.intensity =
