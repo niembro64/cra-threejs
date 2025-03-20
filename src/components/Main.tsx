@@ -34,7 +34,9 @@ const Main: React.FC = () => {
 
   const refContainer = useRef<HTMLDivElement | null>(null)
 
-  const appleRef = { current: null as THREE.Object3D | null }
+  const [backgroundShape, setBackgroundShape] = useState<THREE.Object3D | null>(
+    null,
+  )
 
   const mousePositionCurr = useRef(new THREE.Vector3())
   const mousePositionPrev = useRef(new THREE.Vector3())
@@ -184,7 +186,7 @@ const Main: React.FC = () => {
         scene.add(apple)
 
         // Store reference to the model for animations
-        appleRef.current = apple
+        setBackgroundShape(apple)
       },
       // Progress and error handlers...
     )
@@ -273,12 +275,12 @@ const Main: React.FC = () => {
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current
 
-      if (!appleRef.current) {
+      if (!backgroundShape || !backgroundShape?.rotation?.z) {
         return
       }
 
-      appleRef.current.rotation.z =
-        (percentKeepMouse * appleRef.current.position.z +
+      backgroundShape.rotation.z =
+        (percentKeepMouse * backgroundShape.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1
 
@@ -293,16 +295,16 @@ const Main: React.FC = () => {
         (1 - percentKeepMouse) * mousePositionCurr.current.z
 
       if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
-        appleRef.current.rotation.x =
-          percentKeep * appleRef.current.rotation.x +
+        backgroundShape.rotation.x =
+          percentKeep * backgroundShape.rotation.x +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x)
-        appleRef.current.rotation.y =
-          percentKeep * appleRef.current.rotation.y +
+        backgroundShape.rotation.y =
+          percentKeep * backgroundShape.rotation.y +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y)
-        appleRef.current.rotation.z =
-          percentKeep * appleRef.current.rotation.z +
+        backgroundShape.rotation.z =
+          percentKeep * backgroundShape.rotation.z +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * z))
       } else {
         lowerPowerAccumulatedRef.current =
@@ -325,12 +327,12 @@ const Main: React.FC = () => {
         const percentKeepPowerShort = 0.5
         const percentKeepPowerLong = 0.5
 
-        appleRef.current.rotation.x =
-          appleRef.current.rotation.x * percentKeepPowerShort +
+        backgroundShape.rotation.x =
+          backgroundShape.rotation.x * percentKeepPowerShort +
           lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
-        appleRef.current.rotation.y =
-          appleRef.current.rotation.y * percentKeepPowerShort +
+        backgroundShape.rotation.y =
+          backgroundShape.rotation.y * percentKeepPowerShort +
           upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
         pointLightRed.intensity =
@@ -401,6 +403,17 @@ const Main: React.FC = () => {
     }
   }, [])
 
+  if (!backgroundShape) {
+    return (
+      <div
+        className="relative min-h-screen w-full overflow-x-hidden"
+        ref={topElementRef}
+      >
+        <p>asdf</p>
+      </div>
+    )
+  }
+
   return (
     <div
       className="relative min-h-screen w-full overflow-x-hidden"
@@ -463,85 +476,84 @@ const Main: React.FC = () => {
         </div>
       )}
 
-      <div className="left-0 top-0 z-0 flex h-full w-full flex-col items-end">
-        <div className={`relative ${isThin ? 'w-full' : 'w-[70%]'} h-full`}>
-          <div className="h-auto w-full">
-            <Resume />
-          </div>
-
-          <div className="h-40" />
-
-          <div className={!isThin ? '' : 'border border-black/0 bg-black/50'}>
-            <div className="mb-4 mt-16">
-              <PixelArtText
-                scrollContainerSelector=".pixel-text-contact"
-                pixelColor="#fff"
-                text=" CONTACT "
-              />
+      <>
+        <div className="left-0 top-0 z-0 flex h-full w-full flex-col items-end">
+          <div className={`relative ${isThin ? 'w-full' : 'w-[70%]'} h-full`}>
+            <div className="h-auto w-full">
+              <Resume />
             </div>
-            <ContactSection
-              animateKirby={animateKirby}
-              onPhoneClick={() => window.open('tel:618-616-3380')}
-              handleKirbyClick={handleKirbyClick}
-            />
 
-            <section
-              className={`${
-                isThin
-                  ? showDemoNavigationGame
-                    ? 'h-[500px]'
-                    : 'h-[200px]'
-                  : showDemoNavigationGame
-                    ? 'h-[700px]'
-                    : 'h-[300px]'
-              } relative z-30 flex flex-col items-center justify-end`}
-            >
-              {showDemoNavigationGame ? (
-                <>
-                  <iframe
-                    className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
-                    src="https://projects.niemo.io"
-                    title="Projects"
-                    allowFullScreen
-                  ></iframe>
-                  <img
-                    className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isThin ? 'top-28' : 'top-2 opacity-50'}`}
-                    src="/remove.png"
-                    alt="Close"
-                    onClick={() => setShowDemoNavigationGame(false)}
-                  />
-                </>
-              ) : (
-                <>
-                  {showKirbyGame && (
-                    <div
-                      className={`${
-                        isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'
-                      } flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
-                    >
-                      <img
-                        className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
-                        src="/qwhite_hardpixels_transbg.png"
-                        alt="Question Mark"
-                        onClick={handleKirbyClick}
-                      />
-                    </div>
-                  )}
-                </>
-              )}
-            </section>
+            <div className="h-40" />
+
+            <div className={!isThin ? '' : 'border border-black/0 bg-black/50'}>
+              <div className="mb-4 mt-16">
+                <PixelArtText
+                  scrollContainerSelector=".pixel-text-contact"
+                  pixelColor="#fff"
+                  text=" CONTACT "
+                />
+              </div>
+              <ContactSection
+                animateKirby={animateKirby}
+                onPhoneClick={() => window.open('tel:618-616-3380')}
+                handleKirbyClick={handleKirbyClick}
+              />
+
+              <section
+                className={`${
+                  isThin
+                    ? showDemoNavigationGame
+                      ? 'h-[500px]'
+                      : 'h-[200px]'
+                    : showDemoNavigationGame
+                      ? 'h-[700px]'
+                      : 'h-[300px]'
+                } relative z-30 flex flex-col items-center justify-end`}
+              >
+                {showDemoNavigationGame ? (
+                  <>
+                    <iframe
+                      className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
+                      src="https://projects.niemo.io"
+                      title="Projects"
+                      allowFullScreen
+                    ></iframe>
+                    <img
+                      className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isThin ? 'top-28' : 'top-2 opacity-50'}`}
+                      src="/remove.png"
+                      alt="Close"
+                      onClick={() => setShowDemoNavigationGame(false)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {showKirbyGame && (
+                      <div
+                        className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
+                      >
+                        <img
+                          className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
+                          src="/qwhite_hardpixels_transbg.png"
+                          alt="Question Mark"
+                          onClick={handleKirbyClick}
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              </section>
+            </div>
           </div>
         </div>
-      </div>
-
-      <Tooltip
-        opacity={1}
-        anchorSelect=".tooltip"
-        place="top"
-        delayHide={tooltipDelay}
-        delayShow={tooltipDelay}
-        style={toolTipStyle}
-      />
+        <Tooltip
+          opacity={1}
+          anchorSelect=".tooltip"
+          place="top"
+          delayHide={tooltipDelay}
+          delayShow={tooltipDelay}
+          style={toolTipStyle}
+        />
+      </>
     </div>
   )
 }
