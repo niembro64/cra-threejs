@@ -327,7 +327,7 @@ export const projects: Project[] = [
   {
     dates: '2024 - Ongoing',
     projectStatus: 'ok',
-    title: 'Shooter',
+    title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
     type: 'Online Multiplayer Arena Shooter',
@@ -352,7 +352,7 @@ export const projects: Project[] = [
   {
     dates: '2024',
     projectStatus: 'ok',
-    title: 'Space',
+    title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Vertical Scrolling Shooter',
