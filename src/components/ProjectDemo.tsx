@@ -107,7 +107,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     setIsMuted(!isMuted)
   }
   return (
-    <div className={`relative w-full rounded-2xl`}>
+    <div className={`rounded-2xl p-4`}>
       <div className="mb-4 flex flex-row items-center justify-center text-center">
         {project.icon && (
           <img

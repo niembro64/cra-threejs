@@ -9,7 +9,9 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 // @ts-ignore
-import appleModelUrl from '../assets/apple.glb'
+import appleModelUrl from '../assets/snes_pal_controller.glb'
+// // @ts-ignore
+// import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore'
 import {
   showKirbyGame,
@@ -145,7 +147,7 @@ const Main: React.FC = () => {
     const scene: THREE.Scene = new THREE.Scene()
 
     const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
-      75,
+      750,
       window.innerWidth / window.innerHeight,
       0.2,
       10000,
@@ -170,7 +172,7 @@ const Main: React.FC = () => {
 
         // Apply scaling to match the size of the previous icosahedron
 
-        const scale = 0.3
+        const scale = 1000
 
         apple.scale.set(scale, scale, scale)
         // apple.scale.set(90, 90, 90)
@@ -191,24 +193,28 @@ const Main: React.FC = () => {
 
     camera.position.z = 150
 
+    const intensityLights = 0.4
+    const intensityAmbient = 0.4
+
     const pointLightRed = new THREE.PointLight(0xff0000)
     pointLightRed.position.set(500 + globalX, 1000, -5)
-    pointLightRed.intensity = 1
+    pointLightRed.intensity = intensityLights
     scene.add(pointLightRed)
 
     const pointLightGreen = new THREE.PointLight(0x00ff00)
     pointLightGreen.position.set(550 + globalX, 1000, -150)
-    pointLightGreen.intensity = 1
+    pointLightGreen.intensity = intensityLights
     scene.add(pointLightGreen)
 
     const pointLightBlue = new THREE.PointLight(0x0000ff)
     pointLightBlue.position.set(600 + globalX, 1000, -5)
-    pointLightBlue.intensity = 1
+    pointLightBlue.intensity = intensityLights
     scene.add(pointLightBlue)
 
     const ambientLightThree = new THREE.AmbientLight(0xffffff)
+    ambientLightThree.intensity = intensityAmbient
+
     scene.add(ambientLightThree)
-    ambientLightThree.intensity = 0
 
     const getScenePositionFromScreen = (
       x: number,

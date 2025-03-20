@@ -18,7 +18,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
   } = ProjectStore()
 
   return (
-    <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} shadow-lg`}>
+    <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} `}>
       <div className="mb-24 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
         {/* <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1> */}
@@ -39,7 +39,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           {projects.map((project, index) => (
             <div
               key={project.title + index}
-              // className={`${isThin ? 'w-full' : 'w-[45vw]'}`}
+              className={`${isThin ? '' : 'px-4'}`}
             >
               {index !== 0 && <div className="h-24 w-full"></div>}
               <ProjectDemo
