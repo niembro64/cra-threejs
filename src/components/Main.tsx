@@ -136,27 +136,32 @@ const Main: React.FC = () => {
   useEffect(() => {
     if (height === 0 || pageHeight === 0) return
 
-    const scene = new THREE.Scene()
+    const scene: THREE.Scene = new THREE.Scene()
 
-    const camera: any = new THREE.PerspectiveCamera(
+    const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.2,
       10000,
     )
-    const renderer = new THREE.WebGLRenderer({
+    const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
       preserveDrawingBuffer: true,
       failIfMajorPerformanceCaveat: false,
     })
+
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
 
-    const globalX = isThin ? -50 : 0
+    const globalX: number = isThin ? -50 : 0
 
-    const geometry = new THREE.IcosahedronGeometry(90, 1)
-    const material = new THREE.MeshPhongMaterial({
+    const geometry: THREE.IcosahedronGeometry = new THREE.IcosahedronGeometry(
+      90,
+      1,
+    )
+
+    const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       shininess: 300,
       flatShading: true,

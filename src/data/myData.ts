@@ -297,7 +297,7 @@ export interface Project {
 export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
 
 const phaserIcon = 'phaser-icon.png'
-// const phaserIcon = 'icon-raygun.png'
+const threeJsIcon = 'threejs.png'
 
 export const projects: Project[] = [
   {
@@ -421,7 +421,12 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
-    bullets: ['Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
+    bullets: [
+      'Vibe Coding',
+      'Choose Strategies',
+      'Set the Rules',
+      'Watch the Tournament',
+    ],
     icon: phaserIcon,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
@@ -440,8 +445,8 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/drive',
     stack: ['ThreeJS', 'React'],
     type: '3D Driving Simulation',
-    bullets: ['Keyboard Controls'],
-    icon: phaserIcon,
+    bullets: ['Keyboard Controls', 'Vibe Coding'],
+    icon: threeJsIcon,
     image: 'drive.jpg',
     gif: 'drive.gif',
     video: 'drive.mp4',
@@ -449,7 +454,8 @@ export const projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'Play',
-    description: 'A simple 3D driving simulation - in progress.',
+    description:
+      'A simple 3D driving simulation - in progress - heavy vibe coding with human cleanup tweaks.',
   },
   {
     dates: '2022',
