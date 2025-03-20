@@ -34,9 +34,7 @@ const Main: React.FC = () => {
 
   const refContainer = useRef<HTMLDivElement | null>(null)
 
-  const [backgroundShape, setBackgroundShape] = useState<THREE.Object3D | null>(
-    null,
-  )
+  const backgroundShapeRef = { current: null as THREE.Object3D | null }
 
   const mousePositionCurr = useRef(new THREE.Vector3())
   const mousePositionPrev = useRef(new THREE.Vector3())
@@ -186,7 +184,7 @@ const Main: React.FC = () => {
         scene.add(apple)
 
         // Store reference to the model for animations
-        setBackgroundShape(apple)
+        backgroundShapeRef.current = apple
       },
       // Progress and error handlers...
     )
@@ -275,12 +273,12 @@ const Main: React.FC = () => {
         percentKeepMouse * scrollPositionAverage.current +
         (1 - percentKeepMouse) * scrollPosition.current
 
-      if (!backgroundShape || !backgroundShape?.rotation?.z) {
+      if (!backgroundShapeRef.current) {
         return
       }
 
-      backgroundShape.rotation.z =
-        (percentKeepMouse * backgroundShape.position.z +
+      backgroundShapeRef.current.rotation.z =
+        (percentKeepMouse * backgroundShapeRef.current.position.z +
           (1 - percentKeepMouse) * scrollPositionAverage.current) *
         0.1
 
@@ -295,16 +293,16 @@ const Main: React.FC = () => {
         (1 - percentKeepMouse) * mousePositionCurr.current.z
 
       if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
-        backgroundShape.rotation.x =
-          percentKeep * backgroundShape.rotation.x +
+        backgroundShapeRef.current.rotation.x =
+          percentKeep * backgroundShapeRef.current.rotation.x +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x)
-        backgroundShape.rotation.y =
-          percentKeep * backgroundShape.rotation.y +
+        backgroundShapeRef.current.rotation.y =
+          percentKeep * backgroundShapeRef.current.rotation.y +
           (1 - percentKeep) *
             (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y)
-        backgroundShape.rotation.z =
-          percentKeep * backgroundShape.rotation.z +
+        backgroundShapeRef.current.rotation.z =
+          percentKeep * backgroundShapeRef.current.rotation.z +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * z))
       } else {
         lowerPowerAccumulatedRef.current =
@@ -327,12 +325,12 @@ const Main: React.FC = () => {
         const percentKeepPowerShort = 0.5
         const percentKeepPowerLong = 0.5
 
-        backgroundShape.rotation.x =
-          backgroundShape.rotation.x * percentKeepPowerShort +
+        backgroundShapeRef.current.rotation.x =
+          backgroundShapeRef.current.rotation.x * percentKeepPowerShort +
           lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
-        backgroundShape.rotation.y =
-          backgroundShape.rotation.y * percentKeepPowerShort +
+        backgroundShapeRef.current.rotation.y =
+          backgroundShapeRef.current.rotation.y * percentKeepPowerShort +
           upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort)
 
         pointLightRed.intensity =
@@ -402,17 +400,6 @@ const Main: React.FC = () => {
       setDefaultHighQuality()
     }
   }, [])
-
-  if (!backgroundShape) {
-    return (
-      <div
-        className="relative min-h-screen w-full overflow-x-hidden"
-        ref={topElementRef}
-      >
-        <p>asdf</p>
-      </div>
-    )
-  }
 
   return (
     <div
