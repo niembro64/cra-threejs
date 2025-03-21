@@ -39,7 +39,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         {projects.map((project, index) => (
           <div
             key={project.title + index}
-            className={`${isThin ? '' : 'px-32'} `}
+            className={`${isThin ? '' : 'max-w-[800px]'} `}
           >
             <ProjectDemo
               key={index}
