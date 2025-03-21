@@ -34,7 +34,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <section
-            className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} text-center`}
+            className={`px-4 py-12 ${isThin ? 'bg-black/50' : ''} text-center`}
           >
             <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
               <img

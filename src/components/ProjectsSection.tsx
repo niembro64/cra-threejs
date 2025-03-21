@@ -18,10 +18,11 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
   } = ProjectStore()
 
   return (
-    <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''} `}>
+    <section
+      className={`align-center flex flex-col justify-center px-4 py-12 ${isThin ? 'bg-black/50' : ''} `}
+    >
       <div className="mb-24 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}
-        {/* <h1 className="pixel-font text-6xl font-bold">PROJECTS</h1> */}
 
         <div className="mb-4 mt-10">
           <PixelArtText
@@ -34,28 +35,25 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
         </p>
       </div>
-      <div className="flex flex-col items-center">
-        <div className="mb-8 flex max-w-[800px] flex-col items-center">
-          {projects.map((project, index) => (
-            <div
-              key={project.title + index}
-              className={`${isThin ? '' : 'px-4'}`}
-            >
-              {index !== 0 && <div className="h-24 w-full"></div>}
-              <ProjectDemo
-                key={index}
-                project={project}
-                isMuted={isMutedArray[index]}
-                setIsMuted={() => {
-                  const nextState: boolean = !isMutedArray[index]
-                  setIsMuted(index, nextState)
-                }}
-                hasTouchedAMuteButton={hasTouchedAudioButton}
-              />
-              <div className="h-16 w-full"></div>
-            </div>
-          ))}
-        </div>
+      <div className={`flex flex-col items-center ${isThin ? '' : ''}`}>
+        {projects.map((project, index) => (
+          <div
+            key={project.title + index}
+            className={`${isThin ? '' : 'px-32'} `}
+          >
+            <ProjectDemo
+              key={index}
+              project={project}
+              isMuted={isMutedArray[index]}
+              setIsMuted={() => {
+                const nextState: boolean = !isMutedArray[index]
+                setIsMuted(index, nextState)
+              }}
+              hasTouchedAMuteButton={hasTouchedAudioButton}
+            />
+            <div className="h-16 w-full"></div>
+          </div>
+        ))}
       </div>
     </section>
   )

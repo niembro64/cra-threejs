@@ -352,7 +352,7 @@ export const projects: Project[] = [
   {
     dates: '2024',
     projectStatus: 'ok',
-    title: 'Galaxy Destroyer',
+    title: 'Space',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Vertical Scrolling Shooter',

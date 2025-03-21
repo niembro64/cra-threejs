@@ -107,7 +107,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
     setIsMuted(!isMuted)
   }
   return (
-    <div className={`rounded-2xl p-4`}>
+    <div className={`w-full rounded-2xl ${isThin ? '' : ''}"`}>
       <div className="mb-4 flex flex-row items-center justify-center text-center">
         {project.icon && (
           <img
@@ -125,7 +125,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       </p>
 
       {isThin ? (
-        <>
+        <div className="">
           {project.type && (
             <div className="pixel-font mb-2 text-3xl uppercase text-blue-300">
               <strong>{project.type}</strong>
@@ -161,7 +161,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               </ul>
             </>
           )}
-        </>
+        </div>
       ) : (
         <div className="flex flex-row">
           {/* Desktop Layout */}
@@ -201,28 +201,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
 
       <div className="h-6" />
 
-      {/* BUTTON TO VISIT THE PROJECT */}
       {project.projectStatus === 'ok' &&
       ((isThin && project.supportsMobile) ||
         (!isThin && project.supportsDesktop)) ? (
-        // <button
-        //   type="button"
-        //   className="mb-4 w-full rounded-3xl bg-blue-500 px-4 py-2 text-2xl capitalize text-white transition-all hover:bg-blue-600"
-        //   onClick={() => {
-        //     handleProjectClick()
-
-        //     ReactGA.event({
-        //       category: 'User',
-        //       action: 'Visit Project',
-        //       label: project.title,
-        //     })
-        //   }}
-        // >
-        //   <strong>
-        //     {project.buttonStartText.toUpperCase()}{' '}
-        //     {project.title.toUpperCase()}
-        //   </strong>
-        // </button>
         <FancyButton
           text={
             project.buttonStartText.toUpperCase() +
@@ -234,7 +215,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       ) : (
         <button
           type="button"
-          className="mb-4 w-full rounded-3xl bg-white/50 px-4 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white"
+          className={`mb-4 w-full rounded-3xl bg-white/50 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white ${isThin ? '' : ''}`}
           disabled
         >
           {project.projectStatus !== 'ok'
@@ -246,7 +227,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       )}
 
       {/* LAZY LOADED MEDIA */}
-      <div ref={mediaRef} className="relative">
+      <div ref={mediaRef} className={`relative ${isThin ? '' : ''}`}>
         {inView && mediaSrc && (
           <>
             {isVideo(mediaSrc) && (

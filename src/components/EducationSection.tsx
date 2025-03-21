@@ -7,7 +7,7 @@ import PixelArtText from './PixelArtText'
 
 const EducationSection: React.FC = () => {
   return (
-    <section className={`px-4 py-12 ${isThin ? 'bg-black/70' : ''}`}>
+    <section className={`px-4 py-12 ${isThin ? 'bg-black/50' : ''}`}>
       <div className="mb-8 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">🎓</h1>}
         {/* <h1 className="pixel-font text-center text-6xl font-bold">EDUCATION</h1> */}
