@@ -9,7 +9,7 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 // @ts-ignore
-import appleModelUrl from '../assets/wd40.glb'
+import appleModelUrl from '../assets/w.glb'
 // @ts-ignore
 // import appleModelUrl from '../assets/snes_pal_controller.glb'
 // // @ts-ignore
