@@ -19,7 +19,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
 
   return (
     <section
-      className={`align-center flex flex-col justify-center px-4 py-12 ${isThin ? 'bg-black/50' : ''} `}
+      className={`align-center flex flex-col justify-center px-4 py-12 ${isThin ? 'bg-black/80' : ''} `}
     >
       <div className="mb-24 text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">⚙️</h1>}

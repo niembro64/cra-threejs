@@ -164,7 +164,9 @@ const Main: React.FC = () => {
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
 
-    const globalX: number = isThin ? -50 : 0
+    const screenWidth = window.innerWidth
+
+    const globalX: number = isThin ? 0 : -screenWidth / 30
 
     const loader = new GLTFLoader()
     loader.load(
@@ -179,10 +181,8 @@ const Main: React.FC = () => {
         apple.scale.set(scale, scale, scale)
         // apple.scale.set(90, 90, 90)
 
-        const screenWidth = window.innerWidth
-
         // Set position
-        apple.position.x = globalX + (isThin ? 0 : -screenWidth / 30)
+        apple.position.x = globalX
 
         // Add the model to the scene
         scene.add(apple)
@@ -195,8 +195,10 @@ const Main: React.FC = () => {
 
     camera.position.z = 150
 
-    const intensityLights = 0.6
-    const intensityAmbient = 0.4
+    const intensity = isThin ? 0.7 : 0.4
+
+    const intensityLights = intensity
+    const intensityAmbient = intensity
 
     const pointLightRed = new THREE.PointLight(0xff0000)
     pointLightRed.position.set(500 + globalX, 1000, -5)
@@ -480,7 +482,7 @@ const Main: React.FC = () => {
 
             <div className="h-40" />
 
-            <div className={!isThin ? '' : 'border border-black/0 bg-black/50'}>
+            <div className={!isThin ? '' : 'border border-black/0 bg-black/80'}>
               <div className="mb-4 mt-16">
                 <PixelArtText
                   scrollContainerSelector=".pixel-text-contact"
