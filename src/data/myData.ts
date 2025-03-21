@@ -11,6 +11,7 @@ export interface Job {
   title: string
   location: string
   dates: string
+  image: string | null
   details: BulletObject[]
 }
 
@@ -26,6 +27,7 @@ export const jobs: Job[] = [
   {
     // start_year: '2025',
     // end_year: null,
+    image: 'sentien.png',
     company: 'Sentien',
     title: 'Head of Engineering',
     location: 'Stamford, Connecticut',
@@ -39,6 +41,7 @@ export const jobs: Job[] = [
     ],
   },
   {
+    image: 'venturetec.png',
     company: 'Venturetec',
     title: 'Lead Software Engineer',
     location: 'Stamford, Connecticut',
@@ -98,6 +101,7 @@ export const jobs: Job[] = [
     ],
   },
   {
+    image: 'ra.svg',
     company: 'Rockwell Automation',
     title: 'Software Engineer II',
     location: 'St. Louis, Missouri',
@@ -111,6 +115,7 @@ export const jobs: Job[] = [
     ],
   },
   {
+    image: 'maverick_trans.png',
     company: 'Maverick Technologies',
     title: 'JR Software Engineer',
     location: 'St. Louis, Missouri',
@@ -124,6 +129,7 @@ export const jobs: Job[] = [
     ],
   },
   {
+    image: 'dshs_trans.png',
     company: '대구과학고등학교 영재고',
     title: 'High School ESL & Science Instructor',
     location: 'Daegu, South Korea',
@@ -140,6 +146,7 @@ export const jobs: Job[] = [
     ],
   },
   {
+    image: 'acle.png',
     company: 'A.C.L.E.',
     title: 'ESL Lead Instructor',
     location: 'Sanremo, Italy',

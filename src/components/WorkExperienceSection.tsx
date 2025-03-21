@@ -25,6 +25,11 @@ const WorkExperienceSection: React.FC = () => {
           key={job.title + idx}
           className="mb-16 flex flex-col items-center justify-center"
         >
+          <img
+            src={process.env.PUBLIC_URL + '/' + job.image}
+            alt="logo"
+            className="mb-4 h-24 w-auto rounded-2xl"
+          />
           <h4 className="mb-1 text-center text-3xl font-bold text-blue-300">
             {job.company}
           </h4>
