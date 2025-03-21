@@ -174,7 +174,7 @@ const Main: React.FC = () => {
 
         // Apply scaling to match the size of the previous icosahedron
 
-        const scale = 100
+        const scale = 60
 
         apple.scale.set(scale, scale, scale)
         // apple.scale.set(90, 90, 90)
@@ -182,7 +182,7 @@ const Main: React.FC = () => {
         const screenWidth = window.innerWidth
 
         // Set position
-        apple.position.x = globalX + (isThin ? 0 : -screenWidth / 20)
+        apple.position.x = globalX + (isThin ? 0 : -screenWidth / 45)
 
         // Add the model to the scene
         scene.add(apple)
@@ -196,7 +196,7 @@ const Main: React.FC = () => {
     camera.position.z = 150
 
     const intensityLights = 0.4
-    const intensityAmbient = 0.4
+    const intensityAmbient = 0.2
 
     const pointLightRed = new THREE.PointLight(0xff0000)
     pointLightRed.position.set(500 + globalX, 1000, -5)
