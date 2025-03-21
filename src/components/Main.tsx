@@ -9,7 +9,9 @@ import { Resume } from './Resume'
 import AudioSpectrogram from './Spectrogram'
 import { Tooltip } from 'react-tooltip'
 // @ts-ignore
-import appleModelUrl from '../assets/snes_pal_controller.glb'
+import appleModelUrl from '../assets/wd40.glb'
+// @ts-ignore
+// import appleModelUrl from '../assets/snes_pal_controller.glb'
 // // @ts-ignore
 // import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore'
@@ -172,7 +174,7 @@ const Main: React.FC = () => {
 
         // Apply scaling to match the size of the previous icosahedron
 
-        const scale = 1000
+        const scale = 100
 
         apple.scale.set(scale, scale, scale)
         // apple.scale.set(90, 90, 90)
