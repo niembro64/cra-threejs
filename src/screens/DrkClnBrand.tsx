@@ -13,6 +13,8 @@ import { ContactSection } from '../components/drkcln/ContactSection'
 import { Footer } from '../components/drkcln/Footer'
 // @ts-ignore
 import appleModelUrl from '../assets/w.glb'
+// import appleModelUrl from '../assets/snes_pal_controller.glb'
+// import appleModelUrl from '../assets/apple.glb'
 import '../drkcln.scss'
 
 const DrkClnBrand: React.FC = () => {
@@ -135,7 +137,7 @@ const DrkClnBrand: React.FC = () => {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black font-mono text-green-400">
+    <div className="relative min-h-screen bg-black font-mono text-green-400">
       {/* Matrix code background */}
       <MatrixCodeBackground />
 
