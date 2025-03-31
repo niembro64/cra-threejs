@@ -137,7 +137,7 @@ const DrkClnBrand: React.FC = () => {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-black font-mono text-green-400">
+    <div className="relative min-h-screen overflow-x-hidden bg-black font-mono text-green-400">
       {/* Matrix code background */}
       <MatrixCodeBackground />
 
