@@ -1,6 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const findNumbersAndMakePhoneNumber = (str: string): string => {
+  let numbersString = ''
+
+  // go through each character in the string, only add if it is a number
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charAt(i)
+    if (char >= '0' && char <= '9') {
+      numbersString += char
+    }
+  }
+
+  // check if the string is 10 digits long
+  if (numbersString.length === 10) {
+    // format the string as a phone number
+    return `(${numbersString.slice(0, 3)}) ${numbersString.slice(
+      3,
+      6,
+    )}-${numbersString.slice(6)}`
+  } else {
+    // if not, return the original string
+    return str
+  }
+}
+
+const replaceAmpWithAnd = (str: string): string => {
+  return str.replace(/&amp;/g, '&')
+}
+
 const numberToDollarAmountString = (number: number): string => {
   if (isNaN(number)) return ''
 
@@ -130,6 +158,11 @@ type PublicAuctionNotice = {
   // New field: dollar amount found in the
   dollarAmountString: string
   dollarAmountNumber: number
+
+  // Detailed committee information
+  committeeName: string
+  committeePhone: string
+  committeeEmail: string
 }
 
 type CityInfo = {
@@ -155,31 +188,26 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     return element ? (element.textContent?.trim() ?? '') : ''
   }
 
+  // --- Retain original logic for extracting the address ---
   let address = ''
-
-  // Attempt 1: Try to extract from the heading element's innerHTML.
   const headingElement = doc.getElementById('ctl00_cphBody_lblHeading')
   if (headingElement) {
     const headingHtml = headingElement.innerHTML
-    // This regex will look for "ADDRESS:" followed by optional whitespace and <br> tags.
-    // It then captures the next non-HTML text.
+    // Look for "ADDRESS:" followed by optional <br> tags and capture the text
     const addressRegex = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
     const match = headingHtml.match(addressRegex)
     if (match) {
       address = match[1].trim()
-      // Optionally check for a second line after a <br> tag.
+      // Optionally check if a second line exists to append
       const afterMatch = headingHtml.split(match[0])[1]
       if (afterMatch) {
         const secondLineMatch = afterMatch.match(/<br\s*\/?>\s*([^<]+)/i)
         if (secondLineMatch && secondLineMatch[1].trim() !== '') {
-          // Append the second line to the address.
           address += ', ' + secondLineMatch[1].trim()
         }
       }
     }
   }
-
-  // Attempt 2: If no address was found in the heading, search in the full HTML.
   if (!address) {
     const addressRegex2 = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
     const fullMatch = htmlString.match(addressRegex2)
@@ -188,40 +216,113 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     }
   }
 
-  // search through document to find a dollar amount (i.e. $5000)
-  // have it stop when we find a non-number
+  // --- Original extraction for the dollar amount ---
   const dollarAmountFound =
     htmlString.match(/\$[0-9,]+(\.[0-9]{2})?/)?.[0] || ''
 
+  // --- New: Parse granular committee information ---
+  // Initialize new committee fields to empty strings.
+  let committeeName = ''
+  let committeeOrganization = ''
+  // let committeeStreetAddress = ''
+  let committeeCity = ''
+  let committeeState = ''
+  let committeeZip = ''
+  let committeePhone = ''
+  let committeeFax = ''
+  let committeeEmail = ''
+
+  const committeeElement = doc.getElementById('ctl00_cphBody_lblCommittee')
+  // Retain original text value for the existing committee field.
+  const committeeOriginal = committeeElement
+    ? committeeElement.textContent?.trim() || ''
+    : ''
+
+  if (committeeElement) {
+    // Replace <br> tags with newline characters then split into lines.
+    const committeeRaw = committeeElement.innerHTML
+    const committeeLines = committeeRaw
+      .replace(/<br\s*\/?>/gi, '\n')
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+
+    // Use a simple heuristic based on your examples:
+    // - Line 0: committee contact name.
+    // - Line 1: may be the literal "Committee" (skip it if exactly "Committee").
+    // - Next available line: organization.
+    // - Next: street address.
+    // - Next: city, state and zip (split using a regex).
+    if (committeeLines.length > 0) {
+      committeeName = committeeLines[0]
+    }
+    let orgIndex = 1
+    if (committeeLines[1] && committeeLines[1].toLowerCase() === 'committee') {
+      orgIndex = 2
+    }
+    if (committeeLines.length > orgIndex) {
+      committeeOrganization = committeeLines[orgIndex] || ''
+    }
+    if (committeeLines.length > orgIndex + 1) {
+      // committeeStreetAddress = committeeLines[orgIndex + 1] || ''
+    }
+    if (committeeLines.length > orgIndex + 2) {
+      const cityStateZipLine = committeeLines[orgIndex + 2] || ''
+      // Use regex to capture "City STATE ZIP", e.g., "BRIDGEPORT CT 06606"
+      const cityStateZipRegex = /([\w\s.]+)\s+([A-Z]{2})\s+(\d{5})/
+
+      const match = cityStateZipLine.match(cityStateZipRegex)
+      if (match) {
+        committeeCity = match[1].trim()
+        committeeState = match[2].trim()
+        committeeZip = match[3].trim()
+      } else {
+        // If no match, use the whole string as the city.
+        committeeCity = cityStateZipLine
+      }
+    }
+    // Loop through all lines to pick out PHONE, FAX, and EMAIL.
+    committeeLines.forEach((line) => {
+      if (line.toUpperCase().startsWith('PHONE:')) {
+        committeePhone = line.split(':')[1]?.trim() || ''
+      } else if (line.toUpperCase().startsWith('FAX:')) {
+        committeeFax = line.split(':')[1]?.trim() || ''
+      } else if (line.toUpperCase().startsWith('EMAIL:')) {
+        committeeEmail = line.split(':')[1]?.trim() || ''
+      }
+    })
+  }
+
+  // --- Return the combined auction notice object ---
   return {
-    // Case and filing details
+    // --- Existing fields (untouched) ---
     caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
     fileDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblFileDate'),
     docketNumber: getText('ctl00_cphBody_uEfileCaseInfo1_hlnkDocketNo'),
     returnDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblRetDate'),
-
-    // Sale information details
     town: getText('ctl00_cphBody_hlnktown1'),
     saleDate: getText('ctl00_cphBody_lblSaleDate'),
     saleTime: getText('ctl00_cphBody_lblSaleTime'),
     inspectionCommencingAt: getText('ctl00_cphBody_lblInsp'),
     noticeFrom: getText('ctl00_cphBody_lblNoticeFrom'),
     noticeThru: getText('ctl00_cphBody_lblNoticeThru'),
-
-    // Notice header and body text
     heading: getText('ctl00_cphBody_lblHeading'),
     body: getText('ctl00_cphBody_lblBody'),
-
-    // Committee contact
-    committee: getText('ctl00_cphBody_lblCommittee'),
-
-    // Sale status
+    // Original committee field remains untouched.
+    committee: committeeOriginal,
     status: getText('ctl00_cphBody_lblStatus'),
-
-    // New field: address extracted via regex (and optional second line)
     address: address,
     dollarAmountString: dollarAmountFound,
     dollarAmountNumber: parseFloat(dollarAmountFound.replace(/[^0-9.-]+/g, '')),
+
+    // --- New, more granular committee fields ---
+    committeeName: committeeName,
+
+    // committeeStreetAddress: committeeStreetAddress,
+
+    committeePhone: committeePhone,
+
+    committeeEmail: committeeEmail,
   }
 }
 
@@ -732,6 +833,19 @@ const Lela = () => {
       } else if (sortConfig.key === 'dollarAmountFound') {
         aValue = a.auctionNotice?.dollarAmountNumber || 0
         bValue = b.auctionNotice?.dollarAmountNumber || 0
+      } else if (sortConfig.key === 'committeeName') {
+        aValue = a.auctionNotice?.committeeName || ''
+        bValue = b.auctionNotice?.committeeName || ''
+      } else if (sortConfig.key === 'committeePhone') {
+        aValue = findNumbersAndMakePhoneNumber(
+          a.auctionNotice?.committeePhone || '',
+        )
+        bValue = findNumbersAndMakePhoneNumber(
+          b.auctionNotice?.committeePhone || '',
+        )
+      } else if (sortConfig.key === 'committeeEmail') {
+        aValue = (a.auctionNotice?.committeeEmail || '').toLowerCase()
+        bValue = (b.auctionNotice?.committeeEmail || '').toLowerCase()
       }
 
       // Compare the values
@@ -1330,11 +1444,12 @@ const Lela = () => {
                           {getSortIndicator('address')}
                         </div>
                       </th>
+
                       <th
                         scope="col"
-                        onClick={() => requestSort('caseCaption')}
+                        onClick={() => requestSort('committeeName')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'caseCaption'
+                          sortConfig.key === 'city'
                             ? isDarkMode
                               ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
                               : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
@@ -1344,10 +1459,49 @@ const Lela = () => {
                         }`}
                       >
                         <div className="group flex items-center">
-                          <span>Case Caption</span>
-                          {getSortIndicator('caseCaption')}
+                          <span>C. Name</span>
+                          {getSortIndicator('companyName')}
                         </div>
                       </th>
+
+                      <th
+                        scope="col"
+                        onClick={() => requestSort('committeePhone')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'city'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="group flex items-center">
+                          <span>C. Phone</span>
+                          {getSortIndicator('companyPhone')}
+                        </div>
+                      </th>
+
+                      <th
+                        scope="col"
+                        onClick={() => requestSort('committeeEmail')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'city'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="group flex items-center">
+                          <span>C. Email</span>
+                          {getSortIndicator('companyEmail')}
+                        </div>
+                      </th>
+
                       <th
                         scope="col"
                         onClick={() => requestSort('saleDate')}
@@ -1362,7 +1516,7 @@ const Lela = () => {
                         }`}
                       >
                         <div className="group flex items-center">
-                          <span>Sale Date</span>
+                          <span>Sale</span>
                           {getSortIndicator('saleDate')}
                         </div>
                       </th>
@@ -1539,7 +1693,6 @@ const Lela = () => {
                               )}
                             </td>
 
-                            {/* Case Caption */}
                             {/* Address */}
 
                             <td
@@ -1550,14 +1703,52 @@ const Lela = () => {
                               {posting.auctionNotice?.address || 'N/A'}
                             </td>
 
-                            {/* Case Caption */}
+                            {/* Committee Name */}
                             <td
                               className={`px-6 py-4 text-sm ${
                                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {posting.auctionNotice?.caseCaption || 'N/A'}
+                              {posting.auctionNotice?.committeeName || 'N/A'}
                             </td>
+                            {/* Committee Organization */}
+
+                            {/* <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.committeeOrganization ||
+                                'N/A'}
+                            </td> */}
+                            {/* Committee Phone */}
+
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {findNumbersAndMakePhoneNumber(
+                                posting.auctionNotice?.committeePhone || '',
+                              ) || 'N/A'}
+                            </td>
+                            {/* Committee Email */}
+                            <td
+                              className={`px-6 py-4 text-sm lowercase ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.committeeEmail || 'N/A'}
+                            </td>
+
+                            {/* Case Caption */}
+                            {/* <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.caseCaption || 'N/A'}
+                            </td> */}
 
                             {/* Sale Date */}
                             <td
