@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // Function to extract city names from HTML
 // Define the type for a city's information
-interface CityInfo {
+type CityInfo = {
   name: string
   count: number
 }
