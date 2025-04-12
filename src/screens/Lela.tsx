@@ -113,6 +113,7 @@ type PublicAuctionNotice = {
 
   // Sale status (e.g., whether it is cancelled)
   status: string
+  address: string
 }
 
 type CityInfo = {
@@ -139,7 +140,11 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     return element ? (element.textContent?.trim() ?? '') : ''
   }
 
-  // Build and return the PublicAuctionNotice object with fields extracted by their IDs
+  // Search the raw HTML string for "ADDRESS:" and capture the text until the next "<"
+  const addressRegex = /ADDRESS:\s*([^<]+)/
+  const addressMatch = htmlString.match(addressRegex)
+  const address = addressMatch ? addressMatch[1].trim() : ''
+
   return {
     // Case and filing details
     caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
@@ -159,11 +164,14 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     heading: getText('ctl00_cphBody_lblHeading'),
     body: getText('ctl00_cphBody_lblBody'),
 
-    // Committee contact information
+    // Committee contact
     committee: getText('ctl00_cphBody_lblCommittee'),
 
-    // Sale status (e.g., "This Sale is Cancelled.")
+    // Sale status
     status: getText('ctl00_cphBody_lblStatus'),
+
+    // New field for the address (extracted from the raw HTML)
+    address: address,
   }
 }
 
@@ -309,7 +317,7 @@ const Lela = () => {
       setCityList(cities)
       console.log(`Fetched ${cities.length} cities`)
     } catch (err) {
-      setError('Failed to fetch city list. Please try again later.')
+      setError('Failed to fetch city list. Do you have the CORS extension on?')
       console.error('Error fetching city list:', err)
     } finally {
       setFetchingCities(false)
@@ -1221,6 +1229,23 @@ const Lela = () => {
                       </th>
                       <th
                         scope="col"
+                        // onClick={() => requestSort('city')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'city'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="group flex items-center">
+                          <span>Address</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
                         onClick={() => requestSort('caseCaption')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'caseCaption'
@@ -1413,6 +1438,16 @@ const Lela = () => {
                             {posting.auctionNotice?.town ||
                               posting.city ||
                               'N/A'}
+                          </td>
+
+                          {/* Address */}
+
+                          <td
+                            className={`px-6 py-4 text-sm ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                            }`}
+                          >
+                            {posting.auctionNotice?.address || 'N/A'}
                           </td>
 
                           {/* Case Caption */}
