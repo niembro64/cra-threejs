@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-
 interface ForeclosureSale {
   index: number
   saleDate: string
@@ -110,9 +109,26 @@ function extractCityInfo(htmlString: string): CityInfo[] {
   return cities
 }
 
+// Combined foreclosure sale interface that includes city info
+interface CombinedForeclosureSale {
+  city: string
+  cityCount: number
+  index: number
+  saleDate: string
+  docketNumber: string
+  saleInfo: string
+  viewFullNoticeUrl: string
+}
+
 const Lela = () => {
   const [rawHtml, setRawHtml] = useState<string>('')
   const [cityNames, setCityNames] = useState<CityInfo[]>([])
+  const [allForeclosureSales, setAllForeclosureSales] = useState<
+    CombinedForeclosureSale[]
+  >([])
+  const [selectedCities, setSelectedCities] = useState<string[]>([])
+  const [loadingCities, setLoadingCities] = useState(false)
+  const [loadedCitiesCount, setLoadedCitiesCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
@@ -132,6 +148,100 @@ const Lela = () => {
 
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
+
+  // Fetch foreclosure data for a specific city
+  const fetchCityForeclosureData = async (
+    cityName: string,
+    cityCount: number,
+  ) => {
+    try {
+      // Construct the URL for the city's foreclosure data
+      const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownDetails.aspx?town=${encodeURIComponent(cityName)}`
+
+      const response = await axios.get(url)
+      console.log(
+        `Fetched data for ${cityName}:`,
+        response.data.substring(0, 100) + '...',
+      )
+
+      // Extract foreclosure sales from the city-specific HTML
+      const cityForeclosureSales = extractForeclosureSales(response.data)
+
+      // Map the sales to include the city name
+      const salesWithCity = cityForeclosureSales.map((sale) => ({
+        ...sale,
+        city: cityName,
+        cityCount: cityCount,
+      }))
+
+      return salesWithCity
+    } catch (error) {
+      console.error(`Error fetching data for ${cityName}:`, error)
+      return []
+    }
+  }
+
+  // Fetch foreclosure data for selected cities
+  const fetchSelectedCitiesData = async (citiesToFetch: CityInfo[]) => {
+    if (citiesToFetch.length === 0) return
+
+    setLoadingCities(true)
+    setLoadedCitiesCount(0)
+    setAllForeclosureSales([])
+
+    try {
+      // Use Promise.all to fetch data for all cities concurrently
+      const allSalesPromises = citiesToFetch.map((city) =>
+        fetchCityForeclosureData(city.name, city.count),
+      )
+
+      // Process results as they come in
+      const results = await Promise.all(allSalesPromises)
+
+      // Flatten the array of arrays
+      const allSales = results.flat()
+      console.log('All foreclosure sales:', allSales)
+
+      setAllForeclosureSales(allSales)
+    } catch (error) {
+      console.error('Error fetching city foreclosure data:', error)
+      setError('Failed to fetch foreclosure data for selected cities.')
+    } finally {
+      setLoadingCities(false)
+    }
+  }
+
+  // Handle city selection
+  const handleCitySelection = (cityName: string) => {
+    setSelectedCities((prev) => {
+      // If already selected, remove it
+      if (prev.includes(cityName)) {
+        return prev.filter((name) => name !== cityName)
+      }
+      // Otherwise add it
+      return [...prev, cityName]
+    })
+  }
+
+  // Fetch all cities data
+  const handleFetchAllCities = (numCities: number): void => {
+    // Limit to first 5 cities if there are too many (to avoid overwhelming the browser)
+    const citiesToFetch = cityNames.slice(0, numCities)
+    fetchSelectedCitiesData(citiesToFetch)
+  }
+
+  // Fetch selected cities data
+  const handleFetchSelectedCities = () => {
+    if (selectedCities.length === 0) {
+      setError('Please select at least one city first.')
+      return
+    }
+
+    const citiesToFetch = cityNames.filter((city) =>
+      selectedCities.includes(city.name),
+    )
+    fetchSelectedCitiesData(citiesToFetch)
+  }
 
   const fetchData = async () => {
     try {
@@ -255,7 +365,7 @@ const Lela = () => {
 
         {!loading && !error && (
           <div className="mt-6">
-            {/* City Names List */}
+            {/* City Selection List */}
             <div className="mb-8">
               <div className="mb-4">
                 <h2
@@ -270,8 +380,36 @@ const Lela = () => {
                       : 'text-sm text-gray-600'
                   }
                 >
-                  {cityNames.length} cities found
+                  {cityNames.length} cities found - select cities to view
+                  foreclosure data
                 </p>
+              </div>
+
+              <div className="mb-4 flex flex-wrap gap-2">
+                <button
+                  onClick={() => {
+                    handleFetchAllCities(5)
+                  }}
+                  className={`rounded px-4 py-2 text-white transition ${
+                    isDarkMode
+                      ? 'bg-indigo-600 hover:bg-indigo-500'
+                      : 'bg-indigo-500 hover:bg-indigo-600'
+                  }`}
+                  disabled={loadingCities}
+                >
+                  Fetch First 5 Cities
+                </button>
+                <button
+                  onClick={handleFetchSelectedCities}
+                  className={`rounded px-4 py-2 text-white transition ${
+                    isDarkMode
+                      ? 'bg-green-600 hover:bg-green-500'
+                      : 'bg-green-500 hover:bg-green-600'
+                  }`}
+                  disabled={loadingCities || selectedCities.length === 0}
+                >
+                  Fetch Selected Cities ({selectedCities.length})
+                </button>
               </div>
 
               <div
@@ -285,7 +423,7 @@ const Lela = () => {
                   <h3
                     className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
                   >
-                    City List
+                    Select Cities
                   </h3>
                 </div>
 
@@ -297,15 +435,26 @@ const Lela = () => {
                       {cityNames.map((city, index) => (
                         <div
                           key={index}
-                          className={`rounded-lg p-3 ${
-                            isDarkMode
-                              ? 'bg-gray-700 hover:bg-gray-600'
-                              : 'bg-gray-50 hover:bg-gray-100'
-                          } transition`}
+                          onClick={() => handleCitySelection(city.name)}
+                          className={`cursor-pointer rounded-lg p-3 transition ${
+                            selectedCities.includes(city.name)
+                              ? isDarkMode
+                                ? 'bg-blue-700 hover:bg-blue-600'
+                                : 'bg-blue-100 hover:bg-blue-200'
+                              : isDarkMode
+                                ? 'bg-gray-700 hover:bg-gray-600'
+                                : 'bg-gray-50 hover:bg-gray-100'
+                          }`}
                         >
                           <span
                             className={
-                              isDarkMode ? 'text-gray-100' : 'text-gray-800'
+                              selectedCities.includes(city.name)
+                                ? isDarkMode
+                                  ? 'text-blue-100'
+                                  : 'text-blue-800'
+                                : isDarkMode
+                                  ? 'text-gray-100'
+                                  : 'text-gray-800'
                             }
                           >
                             {city.name} ({city.count})
@@ -324,6 +473,174 @@ const Lela = () => {
                 </div>
               </div>
             </div>
+
+            {/* Foreclosure Sales Table */}
+            {loadingCities && (
+              <div className="my-8 flex flex-col items-center justify-center">
+                <div
+                  className={`mb-4 h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 ${
+                    isDarkMode ? 'border-blue-400' : 'border-blue-500'
+                  }`}
+                ></div>
+                <p
+                  className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                >
+                  Fetching foreclosure data...
+                </p>
+              </div>
+            )}
+
+            {!loadingCities && allForeclosureSales.length > 0 && (
+              <div className="mb-8">
+                <div className="mb-4">
+                  <h2
+                    className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
+                  >
+                    Combined Foreclosure Sales Data
+                  </h2>
+                  <p
+                    className={
+                      isDarkMode
+                        ? 'text-sm text-gray-400'
+                        : 'text-sm text-gray-600'
+                    }
+                  >
+                    {allForeclosureSales.length} foreclosure sales from{' '}
+                    {new Set(allForeclosureSales.map((sale) => sale.city)).size}{' '}
+                    cities
+                  </p>
+                </div>
+
+                <div
+                  className={`overflow-x-auto rounded-lg border ${
+                    isDarkMode ? 'border-gray-700' : 'border-gray-200'
+                  }`}
+                >
+                  <table
+                    className={`min-w-full divide-y ${
+                      isDarkMode ? 'divide-gray-700' : 'divide-gray-200'
+                    }`}
+                  >
+                    <thead
+                      className={isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}
+                    >
+                      <tr>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
+                          City
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
+                          Sale Date
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
+                          Docket Number
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
+                          Sale Info
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      className={`divide-y ${
+                        isDarkMode
+                          ? 'divide-gray-700 bg-gray-800'
+                          : 'divide-gray-200 bg-white'
+                      }`}
+                    >
+                      {allForeclosureSales.map((sale, index) => (
+                        <tr
+                          key={index}
+                          className={`${
+                            isDarkMode
+                              ? 'hover:bg-gray-700'
+                              : 'hover:bg-gray-50'
+                          }`}
+                        >
+                          <td
+                            className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                              isDarkMode ? 'text-white' : 'text-gray-900'
+                            }`}
+                          >
+                            {sale.city}
+                          </td>
+                          <td
+                            className={`px-6 py-4 text-sm ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                            }`}
+                          >
+                            {sale.saleDate}
+                          </td>
+                          <td
+                            className={`px-6 py-4 text-sm ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                            }`}
+                          >
+                            {sale.docketNumber}
+                          </td>
+                          <td
+                            className={`px-6 py-4 text-sm ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                            }`}
+                          >
+                            {sale.saleInfo.replace(
+                              'PUBLIC AUCTION FORECLOSURE SALE:',
+                              '',
+                            )}
+                          </td>
+                          <td
+                            className={`whitespace-nowrap px-6 py-4 text-sm ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                            }`}
+                          >
+                            {sale.viewFullNoticeUrl && (
+                              <a
+                                href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${sale.viewFullNoticeUrl}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`text-sm font-medium ${
+                                  isDarkMode
+                                    ? 'text-blue-400 hover:text-blue-300'
+                                    : 'text-blue-600 hover:text-blue-800'
+                                }`}
+                              >
+                                View Notice
+                              </a>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
 
             {/* Raw HTML Display */}
             <div className="mb-4">
