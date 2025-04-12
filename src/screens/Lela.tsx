@@ -258,6 +258,7 @@ const Lela = () => {
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+  const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
   const [progress, setProgress] = useState({
     completed: 0,
     total: 0,
@@ -511,6 +512,28 @@ const Lela = () => {
     setSelectedCities(cityList.map((city) => city.name))
   }
 
+  // Select cities within distance from Greenwich
+  const selectCitiesByDistance = (distance: number) => {
+    // Find cities that are within the specified distance
+    const citiesWithinDistance = citiesByDistance
+      .filter((city) => city.distanceMiles <= distance)
+      .map((city) => city.city)
+
+    // Filter cityList to only include these cities (because some cities in distance list might not appear in the actual data)
+    const availableCitiesWithinDistance = cityList
+      .filter((city) => citiesWithinDistance.includes(city.name))
+      .map((city) => city.name)
+
+    setSelectedCities(availableCitiesWithinDistance)
+  }
+
+  // Update city selection when distance changes
+  useEffect(() => {
+    if (cityList.length > 0) {
+      selectCitiesByDistance(distanceFromGreenwich)
+    }
+  }, [distanceFromGreenwich, cityList])
+
   // Clear city selection
   const clearCitySelection = () => {
     setSelectedCities([])
@@ -628,6 +651,45 @@ const Lela = () => {
             <p>{error}</p>
           </div>
         )}
+
+        {/* Distance Filter */}
+        <div
+          className={`mb-6 rounded-lg p-4 ${
+            isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
+          }`}
+        >
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <label
+                className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+              >
+                Distance from Greenwich (mi):
+              </label>
+              <input
+                aria-label="Distance from Greenwich"
+                type="number"
+                min="0"
+                max="100"
+                value={distanceFromGreenwich}
+                onChange={(e) =>
+                  setDistanceFromGreenwich(Number(e.target.value))
+                }
+                className={`w-20 rounded border p-2 ${
+                  isDarkMode
+                    ? 'border-gray-600 bg-gray-700 text-white'
+                    : 'border-gray-300 bg-white text-gray-900'
+                }`}
+              />
+            </div>
+            <div>
+              <span
+                className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
+              >
+                ({selectedCities.length} cities selected)
+              </span>
+            </div>
+          </div>
+        </div>
 
         {/* Status Bar */}
         <div
@@ -840,9 +902,17 @@ const Lela = () => {
                           ? isDarkMode
                             ? 'bg-blue-700 hover:bg-blue-600'
                             : 'bg-blue-100 hover:bg-blue-200'
-                          : isDarkMode
-                            ? 'bg-gray-700 hover:bg-gray-600'
-                            : 'bg-gray-50 hover:bg-gray-100'
+                          : citiesByDistance.some(
+                                (c) =>
+                                  c.city === city.name &&
+                                  c.distanceMiles <= distanceFromGreenwich,
+                              )
+                            ? isDarkMode
+                              ? 'bg-emerald-900/40 hover:bg-emerald-800/40'
+                              : 'bg-emerald-50 hover:bg-emerald-100'
+                            : isDarkMode
+                              ? 'bg-gray-700 hover:bg-gray-600'
+                              : 'bg-gray-50 hover:bg-gray-100'
                       }`}
                     >
                       <span
@@ -851,9 +921,17 @@ const Lela = () => {
                             ? isDarkMode
                               ? 'text-blue-100'
                               : 'text-blue-800'
-                            : isDarkMode
-                              ? 'text-gray-100'
-                              : 'text-gray-800'
+                            : citiesByDistance.some(
+                                  (c) =>
+                                    c.city === city.name &&
+                                    c.distanceMiles <= distanceFromGreenwich,
+                                )
+                              ? isDarkMode
+                                ? 'text-emerald-300'
+                                : 'text-emerald-800'
+                              : isDarkMode
+                                ? 'text-gray-100'
+                                : 'text-gray-800'
                         }
                       >
                         {city.name} ({city.count})
