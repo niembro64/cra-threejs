@@ -3,12 +3,77 @@ import axios from 'axios'
 
 const showHTMLContent: boolean = false
 
-interface ForeclosureSale {
+// Define a type for all the information we want to extract
+type PublicAuctionNotice = {
+  // Case/filing details
+  caseCaption: string
+  fileDate: string
+  docketNumber: string
+  returnDate: string
+
+  // Sale information
+  town: string
+  saleDate: string
+  saleTime: string
+  inspectionCommencingAt: string
+  noticeFrom: string
+  noticeThru: string
+
+  // Notice details
+  heading: string
+  body: string
+
+  // Committee contact
+  committee: string
+}
+
+function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
+  // Create a new DOMParser instance and parse the HTML string
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(htmlString, 'text/html')
+
+  // Helper function to get the trimmed text content by id
+  const getText = (id: string): string => {
+    const element = doc.getElementById(id)
+    return element ? (element.textContent?.trim() ?? '') : ''
+  }
+
+  // Build the PublicAuctionNotice object with the fields extracted by id.
+  // These IDs correspond to the parts of the HTML we want to capture.
+  const notice: PublicAuctionNotice = {
+    // Case and filing details
+    caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
+    fileDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblFileDate'),
+    docketNumber: getText('ctl00_cphBody_uEfileCaseInfo1_hlnkDocketNo'),
+    returnDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblRetDate'),
+
+    // Sale information – these come from the lower table on the page
+    town: getText('ctl00_cphBody_hlnktown1'),
+    saleDate: getText('ctl00_cphBody_lblSaleDate'),
+    saleTime: getText('ctl00_cphBody_lblSaleTime'),
+    inspectionCommencingAt: getText('ctl00_cphBody_lblInsp'),
+    noticeFrom: getText('ctl00_cphBody_lblNoticeFrom'),
+    noticeThru: getText('ctl00_cphBody_lblNoticeThru'),
+
+    // Notice header and body details
+    heading: getText('ctl00_cphBody_lblHeading'),
+    body: getText('ctl00_cphBody_lblBody'),
+
+    // Committee contact information
+    committee: getText('ctl00_cphBody_lblCommittee'),
+  }
+
+  return notice
+}
+
+// Define a type for a foreclosure sale record including postingId
+type ForeclosureSale = {
   index: number
   saleDate: string
   docketNumber: string
   saleInfo: string
   viewFullNoticeUrl: string
+  postingId: string
 }
 
 function extractForeclosureSales(htmlString: string): ForeclosureSale[] {
@@ -16,7 +81,7 @@ function extractForeclosureSales(htmlString: string): ForeclosureSale[] {
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlString, 'text/html')
 
-  // Get the table that contains the foreclosure sales details by its id
+  // Get the table that holds the foreclosure sales records by its id
   const salesTable = doc.getElementById('ctl00_cphBody_GridView1')
   if (!salesTable) {
     return []
@@ -26,45 +91,53 @@ function extractForeclosureSales(htmlString: string): ForeclosureSale[] {
   const rows = salesTable.querySelectorAll('tr')
   const sales: ForeclosureSale[] = []
 
-  // Iterate over each row. Skip the header row (that contains <th> elements).
+  // Iterate over each row. Skip the header row (which contains <th> elements).
   rows.forEach((row) => {
     if (row.querySelector('th')) {
-      // Skip header row
+      // This is a header row – skip it.
       return
     }
 
-    // Each row is expected to have 5 <td> cells:
-    // 0: index, 1: sale date, 2: docket number, 3: sale details, 4: full notice link
     const cells = row.querySelectorAll('td')
     if (cells.length < 5) {
       return
     }
 
-    // Extract index from the first cell
+    // Extract the index from the first cell
     const indexText = cells[0].textContent?.trim() || '0'
     const saleIndex = parseInt(indexText, 10)
 
-    // Extract sale date from the second cell (may include a line break)
+    // Extract the sale date (possibly containing a <br> for time) from the second cell
     const saleDate = cells[1].textContent?.trim() || ''
 
     // Extract the docket number from the <a> tag in the third cell
-    const docketLink = cells[2].querySelector('a')
-    const docketNumber = docketLink?.textContent?.trim() || ''
+    const docketNumber = cells[2].querySelector('a')?.textContent?.trim() || ''
 
-    // Extract sale details (type and property address) from the <span> inside fourth cell
+    // Extract sale details (sale type and property address) from the fourth cell
     const saleInfo = cells[3].textContent?.trim() || ''
 
     // Extract the "View Full Notice" URL from the <a> tag in the fifth cell
     const viewNoticeLink = cells[4].querySelector('a')
     const viewFullNoticeUrl = viewNoticeLink?.getAttribute('href') || ''
 
-    // Push the record to our array
+    // Extract the posting_id from the URL query parameter
+    let postingId = ''
+    if (viewFullNoticeUrl) {
+      // Extract the query part after the "?" character
+      const queryPart = viewFullNoticeUrl.split('?')[1]
+      if (queryPart) {
+        postingId = new URLSearchParams(queryPart).get('PostingId') || ''
+      }
+    }
+
+    // Add the complete foreclosure sale record to our results array
     sales.push({
       index: saleIndex,
       saleDate,
       docketNumber,
       saleInfo,
       viewFullNoticeUrl,
+      postingId,
     })
   })
 
@@ -112,7 +185,7 @@ function extractCityInfo(htmlString: string): CityInfo[] {
 }
 
 // Combined foreclosure sale interface that includes city info
-interface CombinedForeclosureSale {
+type CombinedForeclosureSale = {
   city: string
   cityCount: number
   index: number
@@ -120,6 +193,7 @@ interface CombinedForeclosureSale {
   docketNumber: string
   saleInfo: string
   viewFullNoticeUrl: string
+  postingId: string
 }
 
 const Lela = () => {
@@ -193,7 +267,7 @@ const Lela = () => {
 
     try {
       // Use Promise.all to fetch data for all cities concurrently
-      const allSalesPromises = citiesToFetch.map((city) =>
+      const allSalesPromises = citiesToFetch.map((city: CityInfo) =>
         fetchCityForeclosureData(city.name, city.count),
       )
 
@@ -533,6 +607,14 @@ const Lela = () => {
                             isDarkMode ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
+                          Posting ID
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
                           City
                         </th>
                         <th
@@ -576,68 +658,77 @@ const Lela = () => {
                           : 'divide-gray-200 bg-white'
                       }`}
                     >
-                      {allForeclosureSales.map((sale, index) => (
-                        <tr
-                          key={index}
-                          className={`${
-                            isDarkMode
-                              ? 'hover:bg-gray-700'
-                              : 'hover:bg-gray-50'
-                          }`}
-                        >
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                              isDarkMode ? 'text-white' : 'text-gray-900'
+                      {allForeclosureSales.map(
+                        (sale: CombinedForeclosureSale, index: number) => (
+                          <tr
+                            key={index}
+                            className={`${
+                              isDarkMode
+                                ? 'hover:bg-gray-700'
+                                : 'hover:bg-gray-50'
                             }`}
                           >
-                            {sale.city}
-                          </td>
-                          <td
-                            className={`px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                            }`}
-                          >
-                            {sale.saleDate}
-                          </td>
-                          <td
-                            className={`px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                            }`}
-                          >
-                            {sale.docketNumber}
-                          </td>
-                          <td
-                            className={`px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                            }`}
-                          >
-                            {sale.saleInfo.replace(
-                              'PUBLIC AUCTION FORECLOSURE SALE:',
-                              '',
-                            )}
-                          </td>
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                            }`}
-                          >
-                            {sale.viewFullNoticeUrl && (
-                              <a
-                                href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${sale.viewFullNoticeUrl}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`text-sm font-medium ${
-                                  isDarkMode
-                                    ? 'text-blue-400 hover:text-blue-300'
-                                    : 'text-blue-600 hover:text-blue-800'
-                                }`}
-                              >
-                                View Notice
-                              </a>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
+                              {sale.postingId}
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
+                              {sale.city}
+                            </td>
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                              }`}
+                            >
+                              {sale.saleDate}
+                            </td>
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                              }`}
+                            >
+                              {sale.docketNumber}
+                            </td>
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                              }`}
+                            >
+                              {sale.saleInfo.replace(
+                                'PUBLIC AUCTION FORECLOSURE SALE:',
+                                '',
+                              )}
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                              }`}
+                            >
+                              {sale.viewFullNoticeUrl && (
+                                <a
+                                  href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${sale.viewFullNoticeUrl}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`text-sm font-medium ${
+                                    isDarkMode
+                                      ? 'text-blue-400 hover:text-blue-300'
+                                      : 'text-blue-600 hover:text-blue-800'
+                                  }`}
+                                >
+                                  View Notice
+                                </a>
+                              )}
+                            </td>
+                          </tr>
+                        ),
+                      )}
                     </tbody>
                   </table>
                 </div>
