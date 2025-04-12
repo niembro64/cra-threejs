@@ -25,21 +25,23 @@ type PublicAuctionNotice = {
 
   // Committee contact
   committee: string
+
+  // New field for the sale status (e.g., whether it is cancelled)
+  status: string
 }
 
 function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
-  // Create a new DOMParser instance and parse the HTML string
+  // Create a new DOMParser instance and parse the HTML string into a document
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlString, 'text/html')
 
-  // Helper function to get the trimmed text content by id
+  // Helper function to get the trimmed text content by element ID
   const getText = (id: string): string => {
     const element = doc.getElementById(id)
     return element ? (element.textContent?.trim() ?? '') : ''
   }
 
-  // Build the PublicAuctionNotice object with the fields extracted by id.
-  // These IDs correspond to the parts of the HTML we want to capture.
+  // Build and return the PublicAuctionNotice object with fields extracted by their IDs
   const notice: PublicAuctionNotice = {
     // Case and filing details
     caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
@@ -47,7 +49,7 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     docketNumber: getText('ctl00_cphBody_uEfileCaseInfo1_hlnkDocketNo'),
     returnDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblRetDate'),
 
-    // Sale information – these come from the lower table on the page
+    // Sale information details
     town: getText('ctl00_cphBody_hlnktown1'),
     saleDate: getText('ctl00_cphBody_lblSaleDate'),
     saleTime: getText('ctl00_cphBody_lblSaleTime'),
@@ -55,12 +57,15 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     noticeFrom: getText('ctl00_cphBody_lblNoticeFrom'),
     noticeThru: getText('ctl00_cphBody_lblNoticeThru'),
 
-    // Notice header and body details
+    // Notice header and body text
     heading: getText('ctl00_cphBody_lblHeading'),
     body: getText('ctl00_cphBody_lblBody'),
 
     // Committee contact information
     committee: getText('ctl00_cphBody_lblCommittee'),
+
+    // Sale status (e.g., "This Sale is Cancelled.")
+    status: getText('ctl00_cphBody_lblStatus'),
   }
 
   return notice
@@ -194,17 +199,34 @@ type CombinedForeclosureSale = {
   saleInfo: string
   viewFullNoticeUrl: string
   postingId: string
+  detailsLoaded: boolean
+  detailsLoading?: boolean
+  detailsError?: string
+  status?: string
+  auctionNotice?: PublicAuctionNotice
+}
+
+// Define an extended foreclosure sale interface that includes auction notice details
+interface ForeclosureSaleWithDetails extends CombinedForeclosureSale {
+  auctionNotice?: PublicAuctionNotice
+  detailsLoaded: boolean
+  detailsLoading?: boolean
+  detailsError?: string
 }
 
 const Lela = () => {
   const [rawHtml, setRawHtml] = useState<string>('')
   const [cityNames, setCityNames] = useState<CityInfo[]>([])
   const [allForeclosureSales, setAllForeclosureSales] = useState<
-    CombinedForeclosureSale[]
+    ForeclosureSaleWithDetails[]
   >([])
   const [selectedCities, setSelectedCities] = useState<string[]>([])
   const [loadingCities, setLoadingCities] = useState(false)
   const [loadedCitiesCount, setLoadedCitiesCount] = useState(0)
+  const [selectedSale, setSelectedSale] = useState<string | null>(null) // Store postingId of selected sale
+  const [auctionNotices, setAuctionNotices] = useState<
+    Record<string, PublicAuctionNotice>
+  >({}) // Map of postingId to auction notice
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
@@ -274,10 +296,13 @@ const Lela = () => {
       // Process results as they come in
       const results = await Promise.all(allSalesPromises)
 
-      // Flatten the array of arrays
-      const allSales = results.flat()
-      console.log('All foreclosure sales:', allSales)
+      // Flatten the array of arrays and add detail loading state
+      const allSales = results.flat().map((sale) => ({
+        ...sale,
+        detailsLoaded: false,
+      }))
 
+      console.log('All foreclosure sales:', allSales)
       setAllForeclosureSales(allSales)
     } catch (error) {
       console.error('Error fetching city foreclosure data:', error)
@@ -360,6 +385,98 @@ const Lela = () => {
   useEffect(() => {
     fetchData()
   }, [])
+
+  // Fetch details for a specific auction
+  const fetchAuctionDetails = async (postingId: string) => {
+    // Find the sale in our list
+    const saleIndex = allForeclosureSales.findIndex(
+      (sale) => sale.postingId === postingId,
+    )
+    if (saleIndex === -1) return
+
+    try {
+      // Mark this sale as loading details
+      const updatedSales = [...allForeclosureSales]
+      updatedSales[saleIndex] = {
+        ...updatedSales[saleIndex],
+        detailsLoading: true,
+        detailsError: undefined,
+      }
+      setAllForeclosureSales(updatedSales)
+
+      // Construct the URL for the auction notice
+      const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${postingId}`
+
+      // Fetch the auction notice HTML
+      const response = await axios.get(url)
+      console.log(
+        `Fetched auction details for posting ID ${postingId}:`,
+        response.data.substring(0, 200) + '...',
+      )
+
+      // Parse the auction notice HTML
+      const auctionNotice: PublicAuctionNotice = parsePublicAuctionNotice(
+        response.data,
+      )
+
+      if (auctionNotice) {
+        // Save the auction notice in our state
+        setAuctionNotices((prev) => ({
+          ...prev,
+          [postingId]: auctionNotice,
+        }))
+
+        // Update the sale with the auction notice
+        const newUpdatedSales: ForeclosureSaleWithDetails[] = [
+          ...allForeclosureSales,
+        ]
+
+        newUpdatedSales[saleIndex] = {
+          ...newUpdatedSales[saleIndex],
+          auctionNotice,
+          detailsLoaded: true,
+          detailsLoading: false,
+        }
+        setAllForeclosureSales(newUpdatedSales)
+
+        // Set this as the selected sale
+        setSelectedSale(postingId)
+      } else {
+        throw new Error('Failed to parse auction notice')
+      }
+    } catch (error) {
+      console.error(
+        `Error fetching auction details for posting ID ${postingId}:`,
+        error,
+      )
+
+      // Update the sale with the error
+      const newUpdatedSales = [...allForeclosureSales]
+      newUpdatedSales[saleIndex] = {
+        ...newUpdatedSales[saleIndex],
+        detailsLoading: false,
+        detailsError: 'Failed to load auction details',
+      }
+      setAllForeclosureSales(newUpdatedSales)
+    }
+  }
+
+  // Load details for multiple auctions
+  const loadBatchAuctionDetails = async (count: number = 5) => {
+    // Find sales that don't have details loaded yet
+    const salesToLoad = allForeclosureSales
+      .filter(
+        (sale) => !sale.detailsLoaded && !sale.detailsLoading && sale.postingId,
+      )
+      .slice(0, count)
+
+    if (salesToLoad.length === 0) return
+
+    // Load details for each sale in parallel
+    await Promise.all(
+      salesToLoad.map((sale) => fetchAuctionDetails(sale.postingId)),
+    )
+  }
 
   // Toggle dark mode manually
   const toggleDarkMode = () => {
@@ -607,6 +724,14 @@ const Lela = () => {
                             isDarkMode ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          }`}
+                        >
                           Posting ID
                         </th>
                         <th
@@ -673,6 +798,13 @@ const Lela = () => {
                                 isDarkMode ? 'text-white' : 'text-gray-900'
                               }`}
                             >
+                              {sale.status}
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
                               {sale.postingId}
                             </td>
                             <td
@@ -711,26 +843,324 @@ const Lela = () => {
                                 isDarkMode ? 'text-gray-300' : 'text-gray-500'
                               }`}
                             >
-                              {sale.viewFullNoticeUrl && (
-                                <a
-                                  href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${sale.viewFullNoticeUrl}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={`text-sm font-medium ${
-                                    isDarkMode
-                                      ? 'text-blue-400 hover:text-blue-300'
-                                      : 'text-blue-600 hover:text-blue-800'
-                                  }`}
-                                >
-                                  View Notice
-                                </a>
-                              )}
+                              <div className="flex flex-col space-y-2">
+                                {sale.postingId && (
+                                  <button
+                                    onClick={() =>
+                                      fetchAuctionDetails(sale.postingId)
+                                    }
+                                    disabled={sale.detailsLoading}
+                                    className={`text-sm font-medium ${
+                                      sale.detailsLoading
+                                        ? 'cursor-wait opacity-70'
+                                        : sale.detailsLoaded
+                                          ? isDarkMode
+                                            ? 'text-green-400 hover:text-green-300'
+                                            : 'text-green-600 hover:text-green-800'
+                                          : isDarkMode
+                                            ? 'text-blue-400 hover:text-blue-300'
+                                            : 'text-blue-600 hover:text-blue-800'
+                                    }`}
+                                  >
+                                    {sale.detailsLoading
+                                      ? 'Loading...'
+                                      : sale.detailsLoaded
+                                        ? 'Auction Details Loaded'
+                                        : 'Load Auction Details'}
+                                  </button>
+                                )}
+
+                                {sale.detailsError && (
+                                  <span className="text-xs text-red-500">
+                                    {sale.detailsError}
+                                  </span>
+                                )}
+
+                                {sale.viewFullNoticeUrl && (
+                                  <a
+                                    href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${sale.viewFullNoticeUrl}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`text-sm font-medium ${
+                                      isDarkMode
+                                        ? 'text-blue-400 hover:text-blue-300'
+                                        : 'text-blue-600 hover:text-blue-800'
+                                    }`}
+                                  >
+                                    View on Website
+                                  </a>
+                                )}
+                              </div>
                             </td>
                           </tr>
                         ),
                       )}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            )}
+
+            {/* Auction Details Table */}
+            {!loadingCities &&
+              selectedSale &&
+              allForeclosureSales.find(
+                (sale) => sale.postingId === selectedSale,
+              )?.detailsLoaded && (
+                <div className="mb-8">
+                  <div className="mb-4">
+                    <h2
+                      className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
+                    >
+                      Public Auction Notice Details
+                    </h2>
+                    <p
+                      className={
+                        isDarkMode
+                          ? 'text-sm text-gray-400'
+                          : 'text-sm text-gray-600'
+                      }
+                    >
+                      Detailed information for selected foreclosure sale
+                    </p>
+                  </div>
+
+                  {(() => {
+                    // Find the selected sale and its notice
+                    const selectedSaleData = allForeclosureSales.find(
+                      (sale) => sale.postingId === selectedSale,
+                    )
+                    const notice = selectedSaleData?.auctionNotice
+
+                    if (!notice) return null
+
+                    return (
+                      <div
+                        className={`overflow-hidden rounded-lg border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+                      >
+                        <div
+                          className={`p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
+                        >
+                          <h3
+                            className={`mb-4 text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                          >
+                            {notice.heading || 'Public Auction Notice'}
+                          </h3>
+
+                          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            {/* Case Information */}
+                            <div
+                              className={`rounded-lg p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}
+                            >
+                              <h4
+                                className={`text-md mb-3 font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+                              >
+                                Case Information
+                              </h4>
+
+                              <dl className="grid grid-cols-1 gap-3">
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Caption
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.caseCaption || 'N/A'}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Docket Number
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.docketNumber || 'N/A'}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    File Date
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.fileDate || 'N/A'}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Return Date
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.returnDate || 'N/A'}
+                                  </dd>
+                                </div>
+                              </dl>
+                            </div>
+
+                            {/* Sale Information */}
+                            <div
+                              className={`rounded-lg p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}
+                            >
+                              <h4
+                                className={`text-md mb-3 font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+                              >
+                                Sale Information
+                              </h4>
+
+                              <dl className="grid grid-cols-1 gap-3">
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Town
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.town || 'N/A'}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Sale Date and Time
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.saleDate}{' '}
+                                    {notice.saleTime
+                                      ? `at ${notice.saleTime}`
+                                      : ''}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Inspection
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.inspectionCommencingAt ||
+                                      'None specified'}
+                                  </dd>
+                                </div>
+
+                                <div>
+                                  <dt
+                                    className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                                  >
+                                    Notice Period
+                                  </dt>
+                                  <dd
+                                    className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+                                  >
+                                    {notice.noticeFrom && notice.noticeThru
+                                      ? `${notice.noticeFrom} to ${notice.noticeThru}`
+                                      : 'N/A'}
+                                  </dd>
+                                </div>
+                              </dl>
+                            </div>
+                          </div>
+
+                          {/* Notice Body */}
+                          {notice.body && (
+                            <div className="mt-6">
+                              <h4
+                                className={`text-md mb-3 font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+                              >
+                                Notice Details
+                              </h4>
+                              <div
+                                className={`rounded-lg p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}
+                              >
+                                <p
+                                  className={`whitespace-pre-line text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                                >
+                                  {notice.body}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Committee Information */}
+                          {notice.committee && (
+                            <div className="mt-6">
+                              <h4
+                                className={`text-md mb-3 font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+                              >
+                                Committee Information
+                              </h4>
+                              <div
+                                className={`rounded-lg p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}
+                              >
+                                <p
+                                  className={`whitespace-pre-line text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                                >
+                                  {notice.committee}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })()}
+                </div>
+              )}
+
+            {/* Batch Processing Controls */}
+            {!loadingCities && allForeclosureSales.length > 0 && (
+              <div className="mb-8">
+                <div className="mb-4 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => loadBatchAuctionDetails(5)}
+                    className={`rounded px-4 py-2 text-white transition ${
+                      isDarkMode
+                        ? 'bg-purple-600 hover:bg-purple-500'
+                        : 'bg-purple-500 hover:bg-purple-600'
+                    }`}
+                    disabled={
+                      loadingCities ||
+                      allForeclosureSales.every(
+                        (sale) => sale.detailsLoaded || sale.detailsLoading,
+                      )
+                    }
+                  >
+                    Load Next 5 Auction Details
+                  </button>
+
+                  <div
+                    className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+                  >
+                    {
+                      allForeclosureSales.filter((sale) => sale.detailsLoaded)
+                        .length
+                    }{' '}
+                    of {allForeclosureSales.length} auction details loaded
+                  </div>
                 </div>
               </div>
             )}
