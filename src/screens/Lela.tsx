@@ -1298,7 +1298,7 @@ const Lela = () => {
                         }`}
                       >
                         <div className="group flex items-center">
-                          <span>Dollar Amount</span>
+                          <span>Deposit</span>
                           {getSortIndicator('dollarAmountFound')}
                         </div>
                       </th>
@@ -1589,7 +1589,7 @@ const Lela = () => {
                                     : 'text-blue-600 hover:text-blue-800'
                                 }`}
                               >
-                                View on Website
+                                Link
                               </a>
                             </td>
                           </tr>
