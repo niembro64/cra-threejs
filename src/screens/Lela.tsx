@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const showHTMLContent: boolean = false
+
 interface ForeclosureSale {
   index: number
   saleDate: string
@@ -336,7 +338,7 @@ const Lela = () => {
                     : 'bg-blue-500 hover:bg-blue-600'
                 }`}
               >
-                Refresh Data
+                Refresh City List
               </button>
             </div>
           </div>
@@ -386,7 +388,7 @@ const Lela = () => {
               </div>
 
               <div className="mb-4 flex flex-wrap gap-2">
-                <button
+                {/* <button
                   onClick={() => {
                     handleFetchAllCities(5)
                   }}
@@ -398,7 +400,7 @@ const Lela = () => {
                   disabled={loadingCities}
                 >
                   Fetch First 5 Cities
-                </button>
+                </button> */}
                 <button
                   onClick={handleFetchSelectedCities}
                   className={`rounded px-4 py-2 text-white transition ${
@@ -643,49 +645,52 @@ const Lela = () => {
             )}
 
             {/* Raw HTML Display */}
-            <div className="mb-4">
-              <h2
-                className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
-              >
-                HTML Content
-              </h2>
-              <p
-                className={
-                  isDarkMode ? 'text-sm text-gray-400' : 'text-sm text-gray-600'
-                }
-              >
-                Raw HTML from the source website:
-              </p>
-            </div>
-
-            <div
-              className={`mb-4 overflow-hidden rounded-lg border ${
-                isDarkMode ? 'border-gray-700' : 'border-gray-200'
-              }`}
-            >
-              <div
-                className={isDarkMode ? 'bg-gray-800 p-2' : 'bg-gray-100 p-2'}
-              >
-                <p
-                  className={`font-mono text-xs ${
-                    isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                  }`}
+            {showHTMLContent && (
+              <>
+                <div className="mb-4">
+                  <h2
+                    className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
+                  >
+                    HTML Content
+                  </h2>
+                  <p
+                    className={
+                      isDarkMode
+                        ? 'text-sm text-gray-400'
+                        : 'text-sm text-gray-600'
+                    }
+                  >
+                    Raw HTML from the source website:
+                  </p>
+                </div>
+                <div
+                  className={`mb-4 overflow-hidden rounded-lg border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
                 >
-                  Content Length: {rawHtml.length} characters
-                </p>
-              </div>
-              <div className="max-h-[50vh] overflow-auto p-4">
-                <pre
-                  className={`whitespace-pre-wrap break-words rounded p-4 font-mono text-xs ${
-                    isDarkMode
-                      ? 'border border-gray-700 bg-gray-800 text-gray-300'
-                      : 'bg-gray-50 text-gray-800'
-                  }`}
-                >
-                  {rawHtml}
-                </pre>
-              </div>
-            </div>
+                  <div
+                    className={
+                      isDarkMode ? 'bg-gray-800 p-2' : 'bg-gray-100 p-2'
+                    }
+                  >
+                    <p
+                      className={`font-mono text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                    >
+                      Content Length: {rawHtml.length} characters
+                    </p>
+                  </div>
+                  <div className="max-h-[50vh] overflow-auto p-4">
+                    <pre
+                      className={`whitespace-pre-wrap break-words rounded p-4 font-mono text-xs ${
+                        isDarkMode
+                          ? 'border border-gray-700 bg-gray-800 text-gray-300'
+                          : 'bg-gray-50 text-gray-800'
+                      }`}
+                    >
+                      {rawHtml}
+                    </pre>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
