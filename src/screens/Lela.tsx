@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const numberToDollarAmountString = (number: number): string => {
+  if (isNaN(number)) return ''
+
+  // don't show cents if it's a whole number
+  const formattedNumber = number.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  })
+  return formattedNumber
+}
+
 type CityDistanceObject = {
   city: string
   distanceMiles: number
@@ -116,7 +128,8 @@ type PublicAuctionNotice = {
   address: string
 
   // New field: dollar amount found in the
-  dollarAmountFound: string
+  dollarAmountString: string
+  dollarAmountNumber: number
 }
 
 type CityInfo = {
@@ -207,7 +220,8 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
 
     // New field: address extracted via regex (and optional second line)
     address: address,
-    dollarAmountFound: dollarAmountFound,
+    dollarAmountString: dollarAmountFound,
+    dollarAmountNumber: parseFloat(dollarAmountFound.replace(/[^0-9.-]+/g, '')),
   }
 }
 
@@ -707,8 +721,8 @@ const Lela = () => {
         aValue = a.auctionNotice?.address || ''
         bValue = b.auctionNotice?.address || ''
       } else if (sortConfig.key === 'dollarAmountFound') {
-        aValue = a.auctionNotice?.dollarAmountFound || ''
-        bValue = b.auctionNotice?.dollarAmountFound || ''
+        aValue = a.auctionNotice?.dollarAmountNumber || 0
+        bValue = b.auctionNotice?.dollarAmountNumber || 0
       }
 
       // Compare the values
@@ -1511,8 +1525,9 @@ const Lela = () => {
                                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {posting.auctionNotice?.dollarAmountFound ||
-                                'N/A'}
+                              {numberToDollarAmountString(
+                                posting.auctionNotice?.dollarAmountNumber || 0,
+                              )}
                             </td>
 
                             {/* Case Caption */}
