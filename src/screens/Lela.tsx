@@ -610,7 +610,14 @@ const Lela = () => {
   }, [])
 
   // Format sale date to YYYY-MM-DD HH:MM format
-  const formatSaleDate = (saleDate?: string, saleTime?: string): string => {
+  const formatSaleDate = (params: {
+    saleDate?: string
+    saleTime?: string
+    showTime: boolean
+  }): string => {
+    // Check if saleDate is provided
+    const { saleDate, showTime, saleTime } = params
+
     if (!saleDate) return ''
 
     // Parse the date parts
@@ -626,7 +633,7 @@ const Lela = () => {
 
       // Format the time part if available
       let formattedTime = ''
-      if (saleTime) {
+      if (showTime && saleTime) {
         // Extract hours and minutes from time string (expected format like "10:00 AM")
         const timeMatch = saleTime.match(/(\d+):(\d+)\s*(AM|PM)?/i)
         if (timeMatch) {
@@ -706,14 +713,16 @@ const Lela = () => {
         bValue = b.auctionNotice?.caseCaption || ''
       } else if (sortConfig.key === 'saleDate') {
         // For sale date, we want to compare dates in our formatted style
-        aValue = formatSaleDate(
-          a.auctionNotice?.saleDate,
-          a.auctionNotice?.saleTime,
-        )
-        bValue = formatSaleDate(
-          b.auctionNotice?.saleDate,
-          b.auctionNotice?.saleTime,
-        )
+        aValue = formatSaleDate({
+          saleDate: a.auctionNotice?.saleDate,
+          saleTime: a.auctionNotice?.saleTime,
+          showTime: false,
+        })
+        bValue = formatSaleDate({
+          saleDate: b.auctionNotice?.saleDate,
+          saleTime: b.auctionNotice?.saleTime,
+          showTime: false,
+        })
       } else if (sortConfig.key === 'docketNumber') {
         aValue = a.auctionNotice?.docketNumber || ''
         bValue = b.auctionNotice?.docketNumber || ''
@@ -1557,10 +1566,11 @@ const Lela = () => {
                               }`}
                             >
                               {posting.auctionNotice?.saleDate
-                                ? formatSaleDate(
-                                    posting.auctionNotice.saleDate,
-                                    posting.auctionNotice.saleTime,
-                                  )
+                                ? formatSaleDate({
+                                    saleDate: posting.auctionNotice.saleDate,
+                                    saleTime: posting.auctionNotice.saleTime,
+                                    showTime: false,
+                                  })
                                 : 'N/A'}
                             </td>
 
