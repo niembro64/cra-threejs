@@ -1,6 +1,75 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+
+interface ForeclosureSale {
+  index: number
+  saleDate: string
+  docketNumber: string
+  saleInfo: string
+  viewFullNoticeUrl: string
+}
+
+function extractForeclosureSales(htmlString: string): ForeclosureSale[] {
+  // Create a new DOMParser instance and parse the HTML string
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(htmlString, 'text/html')
+
+  // Get the table that contains the foreclosure sales details by its id
+  const salesTable = doc.getElementById('ctl00_cphBody_GridView1')
+  if (!salesTable) {
+    return []
+  }
+
+  // Get all the rows in the table
+  const rows = salesTable.querySelectorAll('tr')
+  const sales: ForeclosureSale[] = []
+
+  // Iterate over each row. Skip the header row (that contains <th> elements).
+  rows.forEach((row) => {
+    if (row.querySelector('th')) {
+      // Skip header row
+      return
+    }
+
+    // Each row is expected to have 5 <td> cells:
+    // 0: index, 1: sale date, 2: docket number, 3: sale details, 4: full notice link
+    const cells = row.querySelectorAll('td')
+    if (cells.length < 5) {
+      return
+    }
+
+    // Extract index from the first cell
+    const indexText = cells[0].textContent?.trim() || '0'
+    const saleIndex = parseInt(indexText, 10)
+
+    // Extract sale date from the second cell (may include a line break)
+    const saleDate = cells[1].textContent?.trim() || ''
+
+    // Extract the docket number from the <a> tag in the third cell
+    const docketLink = cells[2].querySelector('a')
+    const docketNumber = docketLink?.textContent?.trim() || ''
+
+    // Extract sale details (type and property address) from the <span> inside fourth cell
+    const saleInfo = cells[3].textContent?.trim() || ''
+
+    // Extract the "View Full Notice" URL from the <a> tag in the fifth cell
+    const viewNoticeLink = cells[4].querySelector('a')
+    const viewFullNoticeUrl = viewNoticeLink?.getAttribute('href') || ''
+
+    // Push the record to our array
+    sales.push({
+      index: saleIndex,
+      saleDate,
+      docketNumber,
+      saleInfo,
+      viewFullNoticeUrl,
+    })
+  })
+
+  return sales
+}
+
 // Function to extract city names from HTML
 // Define the type for a city's information
 type CityInfo = {
