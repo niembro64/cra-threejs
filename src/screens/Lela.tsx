@@ -259,6 +259,10 @@ const Lela = () => {
   const [timestamp, setTimestamp] = useState<string>('')
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
   const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
+  const [sortConfig, setSortConfig] = useState<{
+    key: string | null
+    direction: 'ascending' | 'descending' | null
+  }>({ key: null, direction: null })
   const [progress, setProgress] = useState({
     completed: 0,
     total: 0,
@@ -543,6 +547,120 @@ const Lela = () => {
   useEffect(() => {
     fetchCityList()
   }, [])
+
+  // Sort function for table columns
+  const requestSort = (key: string) => {
+    let direction: 'ascending' | 'descending' = 'ascending'
+
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending'
+    } else if (
+      sortConfig.key === key &&
+      sortConfig.direction === 'descending'
+    ) {
+      // If already descending, clear the sort
+      return setSortConfig({ key: null, direction: null })
+    }
+
+    setSortConfig({ key, direction })
+  }
+
+  // Get sorted postings
+  const getSortedPostings = () => {
+    if (!sortConfig.key || !sortConfig.direction) {
+      return postings
+    }
+
+    return [...postings].sort((a, b) => {
+      let aValue: any = ''
+      let bValue: any = ''
+
+      // Extract values based on sort key
+      if (sortConfig.key === 'status') {
+        // Special handling for status with cancelled items
+        if (
+          a.status === 'loaded' &&
+          a.auctionNotice?.status?.toLowerCase().includes('cancel')
+        ) {
+          aValue = 'cancelled'
+        } else {
+          aValue = a.status
+        }
+
+        if (
+          b.status === 'loaded' &&
+          b.auctionNotice?.status?.toLowerCase().includes('cancel')
+        ) {
+          bValue = 'cancelled'
+        } else {
+          bValue = b.status
+        }
+      } else if (sortConfig.key === 'city') {
+        aValue = a.auctionNotice?.town || a.city || ''
+        bValue = b.auctionNotice?.town || b.city || ''
+      } else if (sortConfig.key === 'caseCaption') {
+        aValue = a.auctionNotice?.caseCaption || ''
+        bValue = b.auctionNotice?.caseCaption || ''
+      } else if (sortConfig.key === 'saleDate') {
+        // For sale date, we want to compare dates if possible
+        const aDateStr = a.auctionNotice?.saleDate || ''
+        const bDateStr = b.auctionNotice?.saleDate || ''
+
+        // Simple string compare for dates (if they're in a sortable format)
+        aValue = aDateStr
+        bValue = bDateStr
+      } else if (sortConfig.key === 'docketNumber') {
+        aValue = a.auctionNotice?.docketNumber || ''
+        bValue = b.auctionNotice?.docketNumber || ''
+      }
+
+      // Compare the values
+      if (aValue < bValue) {
+        return sortConfig.direction === 'ascending' ? -1 : 1
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === 'ascending' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
+  // Get sort indicator for column headers
+  const getSortIndicator = (key: string) => {
+    if (sortConfig.key !== key) {
+      return null
+    }
+
+    return sortConfig.direction === 'ascending' ? (
+      <svg
+        className="ml-1 inline-block h-3 w-3"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M5 15l7-7 7 7"
+        />
+      </svg>
+    ) : (
+      <svg
+        className="ml-1 inline-block h-3 w-3"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    )
+  }
 
   // Calculate statistics
   const getStats = () => {
@@ -1007,43 +1125,48 @@ const Lela = () => {
                     <tr>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                        onClick={() => requestSort('status')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
                           isDarkMode ? 'text-gray-300' : 'text-gray-500'
                         }`}
                       >
-                        Status
+                        Status {getSortIndicator('status')}
                       </th>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                        onClick={() => requestSort('city')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
                           isDarkMode ? 'text-gray-300' : 'text-gray-500'
                         }`}
                       >
-                        City
+                        City {getSortIndicator('city')}
                       </th>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                        onClick={() => requestSort('caseCaption')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
                           isDarkMode ? 'text-gray-300' : 'text-gray-500'
                         }`}
                       >
-                        Case Caption
+                        Case Caption {getSortIndicator('caseCaption')}
                       </th>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                        onClick={() => requestSort('saleDate')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
                           isDarkMode ? 'text-gray-300' : 'text-gray-500'
                         }`}
                       >
-                        Sale Date
+                        Sale Date {getSortIndicator('saleDate')}
                       </th>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                        onClick={() => requestSort('docketNumber')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
                           isDarkMode ? 'text-gray-300' : 'text-gray-500'
                         }`}
                       >
-                        Docket Number
+                        Docket Number {getSortIndicator('docketNumber')}
                       </th>
                       <th
                         scope="col"
@@ -1063,7 +1186,7 @@ const Lela = () => {
                     }`}
                   >
                     {postings.length > 0 ? (
-                      postings.map((posting, index) => (
+                      getSortedPostings().map((posting, index) => (
                         <tr
                           key={`${posting.postingId}-${index}`}
                           className={
@@ -1079,19 +1202,98 @@ const Lela = () => {
                             }`}
                           >
                             {posting.status === 'loading' ? (
-                              <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                              <span className="inline-flex items-center rounded-full border border-yellow-400 bg-yellow-100/90 px-2.5 py-0.5 text-xs font-medium text-yellow-800 shadow-sm dark:border-yellow-500 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                <svg
+                                  className="mr-1 h-3 w-3 animate-spin text-yellow-600 dark:text-yellow-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  ></circle>
+                                  <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                  ></path>
+                                </svg>
                                 Loading...
                               </span>
                             ) : posting.status === 'loaded' ? (
-                              <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
-                                {posting.auctionNotice?.status || 'Loaded'}
-                              </span>
+                              posting.auctionNotice?.status
+                                ?.toLowerCase()
+                                .includes('cancel') ? (
+                                <span className="inline-flex items-center rounded-full border border-orange-400 bg-orange-100/90 px-2.5 py-0.5 text-xs font-medium text-orange-800 shadow-sm dark:border-orange-500 dark:bg-orange-900/30 dark:text-orange-300">
+                                  <svg
+                                    className="mr-1 h-3 w-3 text-orange-600 dark:text-orange-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                  Cancelled
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-full border border-green-400 bg-green-100/90 px-2.5 py-0.5 text-xs font-medium text-green-800 shadow-sm dark:border-green-500 dark:bg-green-900/30 dark:text-green-300">
+                                  <svg
+                                    className="mr-1 h-3 w-3 text-green-600 dark:text-green-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M5 13l4 4L19 7"
+                                    />
+                                  </svg>
+                                  Active
+                                </span>
+                              )
                             ) : posting.status === 'error' ? (
-                              <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                              <span className="inline-flex items-center rounded-full border border-red-400 bg-red-100/90 px-2.5 py-0.5 text-xs font-medium text-red-800 shadow-sm dark:border-red-500 dark:bg-red-900/30 dark:text-red-300">
+                                <svg
+                                  className="mr-1 h-3 w-3 text-red-600 dark:text-red-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                  />
+                                </svg>
                                 Error
                               </span>
                             ) : (
-                              <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                              <span className="inline-flex items-center rounded-full border border-blue-400 bg-blue-100/90 px-2.5 py-0.5 text-xs font-medium text-blue-800 shadow-sm dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300">
+                                <svg
+                                  className="mr-1 h-3 w-3 text-blue-600 dark:text-blue-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
                                 Pending
                               </span>
                             )}
