@@ -189,48 +189,37 @@ function extractCityInfo(htmlString: string): CityInfo[] {
   return cities
 }
 
-// Combined foreclosure sale interface that includes city info
-type CombinedForeclosureSale = {
+// Define interface for foreclosure sale with auction notice
+interface ForeclosureSaleWithNotice {
   city: string
   cityCount: number
-  index: number
+  postingId: string
   saleDate: string
   docketNumber: string
   saleInfo: string
   viewFullNoticeUrl: string
-  postingId: string
-  detailsLoaded: boolean
-  detailsLoading?: boolean
-  detailsError?: string
-  status?: string
+  status: 'loading' | 'loaded' | 'error' | 'pending'
   auctionNotice?: PublicAuctionNotice
-}
-
-// Define an extended foreclosure sale interface that includes auction notice details
-interface ForeclosureSaleWithDetails extends CombinedForeclosureSale {
-  auctionNotice?: PublicAuctionNotice
-  detailsLoaded: boolean
-  detailsLoading?: boolean
-  detailsError?: string
+  errorMessage?: string
 }
 
 const Lela = () => {
   const [rawHtml, setRawHtml] = useState<string>('')
   const [cityNames, setCityNames] = useState<CityInfo[]>([])
-  const [allForeclosureSales, setAllForeclosureSales] = useState<
-    ForeclosureSaleWithDetails[]
-  >([])
   const [selectedCities, setSelectedCities] = useState<string[]>([])
   const [loadingCities, setLoadingCities] = useState(false)
-  const [loadedCitiesCount, setLoadedCitiesCount] = useState(0)
-  const [selectedSale, setSelectedSale] = useState<string | null>(null) // Store postingId of selected sale
-  const [auctionNotices, setAuctionNotices] = useState<
-    Record<string, PublicAuctionNotice>
-  >({}) // Map of postingId to auction notice
+  const [foreclosureSales, setForeclosureSales] = useState<
+    ForeclosureSaleWithNotice[]
+  >([])
+  const [selectedSale, setSelectedSale] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+  const [filterStatus, setFilterStatus] = useState<string>('all')
+  const [searchText, setSearchText] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
 
   // Check user's preferred color scheme on component mount
   useEffect(() => {
@@ -270,6 +259,7 @@ const Lela = () => {
         ...sale,
         city: cityName,
         cityCount: cityCount,
+        status: 'pending' as const,
       }))
 
       return salesWithCity
@@ -284,26 +274,22 @@ const Lela = () => {
     if (citiesToFetch.length === 0) return
 
     setLoadingCities(true)
-    setLoadedCitiesCount(0)
-    setAllForeclosureSales([])
+    setForeclosureSales([])
 
     try {
       // Use Promise.all to fetch data for all cities concurrently
-      const allSalesPromises = citiesToFetch.map((city: CityInfo) =>
+      const allSalesPromises = citiesToFetch.map((city) =>
         fetchCityForeclosureData(city.name, city.count),
       )
 
       // Process results as they come in
       const results = await Promise.all(allSalesPromises)
 
-      // Flatten the array of arrays and add detail loading state
-      const allSales = results.flat().map((sale) => ({
-        ...sale,
-        detailsLoaded: false,
-      }))
-
+      // Flatten the array of arrays
+      const allSales = results.flat()
       console.log('All foreclosure sales:', allSales)
-      setAllForeclosureSales(allSales)
+
+      setForeclosureSales(allSales)
     } catch (error) {
       console.error('Error fetching city foreclosure data:', error)
       setError('Failed to fetch foreclosure data for selected cities.')
@@ -324,13 +310,6 @@ const Lela = () => {
     })
   }
 
-  // Fetch all cities data
-  const handleFetchAllCities = (numCities: number): void => {
-    // Limit to first 5 cities if there are too many (to avoid overwhelming the browser)
-    const citiesToFetch = cityNames.slice(0, numCities)
-    fetchSelectedCitiesData(citiesToFetch)
-  }
-
   // Fetch selected cities data
   const handleFetchSelectedCities = () => {
     if (selectedCities.length === 0) {
@@ -344,13 +323,13 @@ const Lela = () => {
     fetchSelectedCitiesData(citiesToFetch)
   }
 
+  // Fetch main page data
   const fetchData = async () => {
     try {
       setLoading(true)
       setError(null)
 
       // Make the actual request to the foreclosure website
-      // Note: This will work only with a CORS extension enabled in the browser
       const response = await axios.get(
         'https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx',
       )
@@ -382,27 +361,27 @@ const Lela = () => {
     }
   }
 
+  // Load initial data
   useEffect(() => {
     fetchData()
   }, [])
 
-  // Fetch details for a specific auction
+  // Fetch auction notice details for a posting
   const fetchAuctionDetails = async (postingId: string) => {
     // Find the sale in our list
-    const saleIndex = allForeclosureSales.findIndex(
+    const saleIndex = foreclosureSales.findIndex(
       (sale) => sale.postingId === postingId,
     )
     if (saleIndex === -1) return
 
     try {
-      // Mark this sale as loading details
-      const updatedSales = [...allForeclosureSales]
+      // Mark this sale as loading
+      const updatedSales = [...foreclosureSales]
       updatedSales[saleIndex] = {
         ...updatedSales[saleIndex],
-        detailsLoading: true,
-        detailsError: undefined,
+        status: 'loading',
       }
-      setAllForeclosureSales(updatedSales)
+      setForeclosureSales(updatedSales)
 
       // Construct the URL for the auction notice
       const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${postingId}`
@@ -415,29 +394,17 @@ const Lela = () => {
       )
 
       // Parse the auction notice HTML
-      const auctionNotice: PublicAuctionNotice = parsePublicAuctionNotice(
-        response.data,
-      )
+      const auctionNotice = parsePublicAuctionNotice(response.data)
 
       if (auctionNotice) {
-        // Save the auction notice in our state
-        setAuctionNotices((prev) => ({
-          ...prev,
-          [postingId]: auctionNotice,
-        }))
-
         // Update the sale with the auction notice
-        const newUpdatedSales: ForeclosureSaleWithDetails[] = [
-          ...allForeclosureSales,
-        ]
-
+        const newUpdatedSales = [...foreclosureSales]
         newUpdatedSales[saleIndex] = {
           ...newUpdatedSales[saleIndex],
           auctionNotice,
-          detailsLoaded: true,
-          detailsLoading: false,
+          status: 'loaded',
         }
-        setAllForeclosureSales(newUpdatedSales)
+        setForeclosureSales(newUpdatedSales)
 
         // Set this as the selected sale
         setSelectedSale(postingId)
@@ -451,23 +418,21 @@ const Lela = () => {
       )
 
       // Update the sale with the error
-      const newUpdatedSales = [...allForeclosureSales]
+      const newUpdatedSales = [...foreclosureSales]
       newUpdatedSales[saleIndex] = {
         ...newUpdatedSales[saleIndex],
-        detailsLoading: false,
-        detailsError: 'Failed to load auction details',
+        status: 'error',
+        errorMessage: 'Failed to load auction details',
       }
-      setAllForeclosureSales(newUpdatedSales)
+      setForeclosureSales(newUpdatedSales)
     }
   }
 
-  // Load details for multiple auctions
+  // Load multiple auction details
   const loadBatchAuctionDetails = async (count: number = 5) => {
     // Find sales that don't have details loaded yet
-    const salesToLoad = allForeclosureSales
-      .filter(
-        (sale) => !sale.detailsLoaded && !sale.detailsLoading && sale.postingId,
-      )
+    const salesToLoad = foreclosureSales
+      .filter((sale) => sale.status === 'pending')
       .slice(0, count)
 
     if (salesToLoad.length === 0) return
@@ -478,9 +443,41 @@ const Lela = () => {
     )
   }
 
-  // Toggle dark mode manually
+  // Toggle dark mode
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode)
+  }
+
+  // Calculate stats and summary data
+  const calculateStats = () => {
+    if (foreclosureSales.length === 0) return null
+
+    const loadedSales = foreclosureSales.filter((s) => s.status === 'loaded')
+    const cancelledSales = loadedSales.filter((s) =>
+      s.auctionNotice?.status?.toLowerCase().includes('cancel'),
+    )
+
+    // Count by town
+    const townCounts: Record<string, number> = {}
+    loadedSales.forEach((sale) => {
+      const town = sale.auctionNotice?.town || sale.city || 'Unknown'
+      townCounts[town] = (townCounts[town] || 0) + 1
+    })
+
+    // Sort towns by count (descending)
+    const topTowns = Object.entries(townCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+
+    return {
+      totalSales: foreclosureSales.length,
+      loadedSales: loadedSales.length,
+      cancelledSales: cancelledSales.length,
+      pendingSales: foreclosureSales.filter((s) => s.status === 'pending')
+        .length,
+      errorSales: foreclosureSales.filter((s) => s.status === 'error').length,
+      topTowns,
+    }
   }
 
   return (
@@ -579,19 +576,6 @@ const Lela = () => {
               </div>
 
               <div className="mb-4 flex flex-wrap gap-2">
-                {/* <button
-                  onClick={() => {
-                    handleFetchAllCities(5)
-                  }}
-                  className={`rounded px-4 py-2 text-white transition ${
-                    isDarkMode
-                      ? 'bg-indigo-600 hover:bg-indigo-500'
-                      : 'bg-indigo-500 hover:bg-indigo-600'
-                  }`}
-                  disabled={loadingCities}
-                >
-                  Fetch First 5 Cities
-                </button> */}
                 <button
                   onClick={handleFetchSelectedCities}
                   className={`rounded px-4 py-2 text-white transition ${
@@ -602,6 +586,31 @@ const Lela = () => {
                   disabled={loadingCities || selectedCities.length === 0}
                 >
                   Fetch Selected Cities ({selectedCities.length})
+                </button>
+                <button
+                  onClick={() => {
+                    const allCities = cityNames.map((city) => city.name)
+                    setSelectedCities(allCities)
+                  }}
+                  className={`rounded px-4 py-2 transition ${
+                    isDarkMode
+                      ? 'bg-gray-700 text-white hover:bg-gray-600'
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
+                  disabled={loadingCities || cityNames.length === 0}
+                >
+                  Select All Cities
+                </button>
+                <button
+                  onClick={() => setSelectedCities([])}
+                  className={`rounded px-4 py-2 transition ${
+                    isDarkMode
+                      ? 'bg-gray-700 text-white hover:bg-gray-600'
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
+                  disabled={loadingCities || selectedCities.length === 0}
+                >
+                  Clear Selection
                 </button>
               </div>
 
@@ -667,7 +676,7 @@ const Lela = () => {
               </div>
             </div>
 
-            {/* Foreclosure Sales Table */}
+            {/* Loading Indicator */}
             {loadingCities && (
               <div className="my-8 flex flex-col items-center justify-center">
                 <div
@@ -683,25 +692,239 @@ const Lela = () => {
               </div>
             )}
 
-            {!loadingCities && allForeclosureSales.length > 0 && (
+            {/* Auction Notices Table */}
+            {!loadingCities && foreclosureSales.length > 0 && (
               <div className="mb-8">
-                <div className="mb-4">
-                  <h2
-                    className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
-                  >
-                    Combined Foreclosure Sales Data
-                  </h2>
-                  <p
-                    className={
-                      isDarkMode
-                        ? 'text-sm text-gray-400'
-                        : 'text-sm text-gray-600'
-                    }
-                  >
-                    {allForeclosureSales.length} foreclosure sales from{' '}
-                    {new Set(allForeclosureSales.map((sale) => sale.city)).size}{' '}
-                    cities
-                  </p>
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h2
+                      className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
+                    >
+                      Public Auction Notice Data
+                    </h2>
+                    <p
+                      className={
+                        isDarkMode
+                          ? 'text-sm text-gray-400'
+                          : 'text-sm text-gray-600'
+                      }
+                    >
+                      {
+                        foreclosureSales.filter(
+                          (sale) => sale.status === 'loaded',
+                        ).length
+                      }{' '}
+                      of {foreclosureSales.length} auction details loaded
+                    </p>
+                  </div>
+
+                  {/* Stats Summary */}
+                  {(() => {
+                    const stats = calculateStats()
+                    if (!stats) return null
+
+                    return (
+                      <div
+                        className={`mt-2 w-full rounded-lg p-3 ${
+                          isDarkMode ? 'bg-gray-800' : 'bg-gray-50'
+                        }`}
+                      >
+                        <div className="mb-3 grid grid-cols-2 gap-3 md:grid-cols-4">
+                          <div
+                            className={`rounded p-2 ${
+                              isDarkMode
+                                ? 'bg-gray-700'
+                                : 'border border-gray-200 bg-white'
+                            }`}
+                          >
+                            <p
+                              className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                            >
+                              Total Sales
+                            </p>
+                            <p
+                              className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                            >
+                              {stats.totalSales}
+                            </p>
+                          </div>
+                          <div
+                            className={`rounded p-2 ${
+                              isDarkMode
+                                ? 'bg-gray-700'
+                                : 'border border-gray-200 bg-white'
+                            }`}
+                          >
+                            <p
+                              className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                            >
+                              Loaded Details
+                            </p>
+                            <p
+                              className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                            >
+                              {stats.loadedSales}
+                            </p>
+                          </div>
+                          <div
+                            className={`rounded p-2 ${
+                              isDarkMode
+                                ? 'bg-gray-700'
+                                : 'border border-gray-200 bg-white'
+                            }`}
+                          >
+                            <p
+                              className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                            >
+                              Cancelled Sales
+                            </p>
+                            <p
+                              className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                            >
+                              {stats.cancelledSales}
+                            </p>
+                          </div>
+                          <div
+                            className={`rounded p-2 ${
+                              isDarkMode
+                                ? 'bg-gray-700'
+                                : 'border border-gray-200 bg-white'
+                            }`}
+                          >
+                            <p
+                              className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                            >
+                              Pending Details
+                            </p>
+                            <p
+                              className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
+                            >
+                              {stats.pendingSales}
+                            </p>
+                          </div>
+                        </div>
+
+                        {stats.topTowns.length > 0 && (
+                          <div>
+                            <p
+                              className={`mb-1 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                            >
+                              Top Towns by Sale Count:
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {stats.topTowns.map(([town, count]) => (
+                                <span
+                                  key={town}
+                                  className={`rounded-full px-2 py-1 text-xs ${
+                                    isDarkMode
+                                      ? 'bg-blue-900 text-blue-100'
+                                      : 'bg-blue-100 text-blue-800'
+                                  }`}
+                                >
+                                  {town}: {count}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })()}
+
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      onClick={() => loadBatchAuctionDetails(5)}
+                      className={`rounded px-4 py-2 text-white transition ${
+                        isDarkMode
+                          ? 'bg-purple-600 hover:bg-purple-500'
+                          : 'bg-purple-500 hover:bg-purple-600'
+                      }`}
+                      disabled={
+                        loadingCities ||
+                        foreclosureSales.every(
+                          (sale) => sale.status !== 'pending',
+                        )
+                      }
+                    >
+                      Load Next 5 Auction Details
+                    </button>
+                    <button
+                      onClick={() =>
+                        loadBatchAuctionDetails(
+                          foreclosureSales.filter(
+                            (sale) => sale.status === 'pending',
+                          ).length,
+                        )
+                      }
+                      className={`rounded px-4 py-2 text-white transition ${
+                        isDarkMode
+                          ? 'bg-indigo-600 hover:bg-indigo-500'
+                          : 'bg-indigo-500 hover:bg-indigo-600'
+                      }`}
+                      disabled={
+                        loadingCities ||
+                        foreclosureSales.every(
+                          (sale) => sale.status !== 'pending',
+                        )
+                      }
+                    >
+                      Load All Remaining Details
+                    </button>
+                  </div>
+                </div>
+
+                {/* Search and Filter Controls */}
+                <div
+                  className={`mb-4 rounded-lg p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}
+                >
+                  <div className="flex flex-wrap gap-4">
+                    <div className="min-w-[200px] flex-1">
+                      <label
+                        className={`mb-1 block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                      >
+                        Search
+                      </label>
+                      <input
+                        type="text"
+                        value={searchText}
+                        onChange={(e) => {
+                          setSearchText(e.target.value)
+                          setCurrentPage(1) // Reset to first page on search
+                        }}
+                        placeholder="Search by case caption, docket number, or town..."
+                        className={`w-full rounded border p-2 ${
+                          isDarkMode
+                            ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400'
+                            : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+                        }`}
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className={`mb-1 block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                      >
+                        Filter Status
+                      </label>
+                      <select
+                        value={filterStatus}
+                        onChange={(e) => {
+                          setFilterStatus(e.target.value)
+                          setCurrentPage(1) // Reset to first page on filter change
+                        }}
+                        className={`rounded border p-2 ${
+                          isDarkMode
+                            ? 'border-gray-600 bg-gray-700 text-white'
+                            : 'border-gray-300 bg-white text-gray-900'
+                        }`}
+                      >
+                        <option value="all">All Notices</option>
+                        <option value="loaded">Loaded Details</option>
+                        <option value="pending">Pending Details</option>
+                        <option value="cancelled">Cancelled Sales</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
                 <div
@@ -732,7 +955,7 @@ const Lela = () => {
                             isDarkMode ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
-                          Posting ID
+                          Town
                         </th>
                         <th
                           scope="col"
@@ -740,7 +963,7 @@ const Lela = () => {
                             isDarkMode ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
-                          City
+                          Case Caption
                         </th>
                         <th
                           scope="col"
@@ -748,7 +971,7 @@ const Lela = () => {
                             isDarkMode ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
-                          Sale Date
+                          Sale Date/Time
                         </th>
                         <th
                           scope="col"
@@ -757,14 +980,6 @@ const Lela = () => {
                           }`}
                         >
                           Docket Number
-                        </th>
-                        <th
-                          scope="col"
-                          className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-                            isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                          }`}
-                        >
-                          Sale Info
                         </th>
                         <th
                           scope="col"
@@ -783,97 +998,184 @@ const Lela = () => {
                           : 'divide-gray-200 bg-white'
                       }`}
                     >
-                      {allForeclosureSales.map(
-                        (sale: CombinedForeclosureSale, index: number) => (
+                      {(() => {
+                        // Filter and search the foreclosure sales
+                        let filteredSales = [...foreclosureSales]
+
+                        // Apply status filter
+                        if (filterStatus === 'loaded') {
+                          filteredSales = filteredSales.filter(
+                            (sale) => sale.status === 'loaded',
+                          )
+                        } else if (filterStatus === 'pending') {
+                          filteredSales = filteredSales.filter(
+                            (sale) => sale.status === 'pending',
+                          )
+                        } else if (filterStatus === 'cancelled') {
+                          filteredSales = filteredSales.filter(
+                            (sale) =>
+                              sale.status === 'loaded' &&
+                              sale.auctionNotice?.status
+                                ?.toLowerCase()
+                                .includes('cancel'),
+                          )
+                        }
+
+                        // Apply search text filter
+                        if (searchText.trim()) {
+                          const search = searchText.toLowerCase()
+                          filteredSales = filteredSales.filter(
+                            (sale) =>
+                              (
+                                sale.auctionNotice?.caseCaption ||
+                                sale.saleInfo ||
+                                ''
+                              )
+                                .toLowerCase()
+                                .includes(search) ||
+                              (
+                                sale.auctionNotice?.docketNumber ||
+                                sale.docketNumber ||
+                                ''
+                              )
+                                .toLowerCase()
+                                .includes(search) ||
+                              (sale.auctionNotice?.town || sale.city || '')
+                                .toLowerCase()
+                                .includes(search),
+                          )
+                        }
+
+                        // Calculate pagination
+                        const totalPages = Math.ceil(
+                          filteredSales.length / itemsPerPage,
+                        )
+                        const startIndex = (currentPage - 1) * itemsPerPage
+                        const paginatedSales = filteredSales.slice(
+                          startIndex,
+                          startIndex + itemsPerPage,
+                        )
+
+                        // If no results after filtering
+                        if (filteredSales.length === 0) {
+                          return (
+                            <tr>
+                              <td
+                                colSpan={6}
+                                className={`px-6 py-4 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                              >
+                                No matching foreclosure sales found.
+                              </td>
+                            </tr>
+                          )
+                        }
+
+                        // Render the paginated list
+                        return paginatedSales.map((sale, index) => (
                           <tr
-                            key={index}
-                            className={`${
-                              isDarkMode
-                                ? 'hover:bg-gray-700'
-                                : 'hover:bg-gray-50'
-                            }`}
+                            key={`${sale.postingId}-${index}`}
+                            className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} ${selectedSale === sale.postingId ? (isDarkMode ? 'bg-blue-900/30' : 'bg-blue-50') : ''}`}
+                            onClick={() => {
+                              if (sale.status === 'loaded') {
+                                setSelectedSale(sale.postingId)
+                              } else if (sale.status === 'pending') {
+                                fetchAuctionDetails(sale.postingId)
+                              }
+                            }}
                           >
+                            {/* Status */}
                             <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {sale.status}
-                            </td>
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                                isDarkMode ? 'text-white' : 'text-gray-900'
-                              }`}
-                            >
-                              {sale.postingId}
-                            </td>
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                                isDarkMode ? 'text-white' : 'text-gray-900'
-                              }`}
-                            >
-                              {sale.city}
-                            </td>
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                              }`}
-                            >
-                              {sale.saleDate}
-                            </td>
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                              }`}
-                            >
-                              {sale.docketNumber}
-                            </td>
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                              }`}
-                            >
-                              {sale.saleInfo.replace(
-                                'PUBLIC AUCTION FORECLOSURE SALE:',
-                                '',
+                              {sale.status === 'loading' ? (
+                                <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                                  Loading...
+                                </span>
+                              ) : sale.status === 'loaded' ? (
+                                <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                  {sale.auctionNotice?.status || 'Loaded'}
+                                </span>
+                              ) : sale.status === 'error' ? (
+                                <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                  Error
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                                  Pending
+                                </span>
                               )}
                             </td>
+
+                            {/* Town */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
+                              {sale.auctionNotice?.town || sale.city || 'N/A'}
+                            </td>
+
+                            {/* Case Caption */}
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {sale.status === 'loaded'
+                                ? sale.auctionNotice?.caseCaption || 'N/A'
+                                : sale.saleInfo
+                                    ?.replace(
+                                      'PUBLIC AUCTION FORECLOSURE SALE:',
+                                      '',
+                                    )
+                                    .trim() || 'N/A'}
+                            </td>
+
+                            {/* Sale Date/Time */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {sale.auctionNotice?.saleDate
+                                ? `${sale.auctionNotice.saleDate} ${sale.auctionNotice.saleTime ? `at ${sale.auctionNotice.saleTime}` : ''}`
+                                : sale.saleDate}
+                            </td>
+
+                            {/* Docket Number */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {sale.auctionNotice?.docketNumber ||
+                                sale.docketNumber ||
+                                'N/A'}
+                            </td>
+
+                            {/* Actions */}
                             <td
                               className={`whitespace-nowrap px-6 py-4 text-sm ${
                                 isDarkMode ? 'text-gray-300' : 'text-gray-500'
                               }`}
+                              onClick={(e) => e.stopPropagation()}
                             >
                               <div className="flex flex-col space-y-2">
-                                {sale.postingId && (
+                                {sale.status === 'pending' && (
                                   <button
                                     onClick={() =>
                                       fetchAuctionDetails(sale.postingId)
                                     }
-                                    disabled={sale.detailsLoading}
                                     className={`text-sm font-medium ${
-                                      sale.detailsLoading
-                                        ? 'cursor-wait opacity-70'
-                                        : sale.detailsLoaded
-                                          ? isDarkMode
-                                            ? 'text-green-400 hover:text-green-300'
-                                            : 'text-green-600 hover:text-green-800'
-                                          : isDarkMode
-                                            ? 'text-blue-400 hover:text-blue-300'
-                                            : 'text-blue-600 hover:text-blue-800'
+                                      isDarkMode
+                                        ? 'text-blue-400 hover:text-blue-300'
+                                        : 'text-blue-600 hover:text-blue-800'
                                     }`}
                                   >
-                                    {sale.detailsLoading
-                                      ? 'Loading...'
-                                      : sale.detailsLoaded
-                                        ? 'Auction Details Loaded'
-                                        : 'Load Auction Details'}
+                                    Load Details
                                   </button>
-                                )}
-
-                                {sale.detailsError && (
-                                  <span className="text-xs text-red-500">
-                                    {sale.detailsError}
-                                  </span>
                                 )}
 
                                 {sale.viewFullNoticeUrl && (
@@ -893,20 +1195,190 @@ const Lela = () => {
                               </div>
                             </td>
                           </tr>
-                        ),
-                      )}
+                        ))
+                      })()}
                     </tbody>
                   </table>
                 </div>
+
+                {/* Pagination Controls */}
+                {(() => {
+                  // Filter sales for pagination calculation
+                  let filteredSales = [...foreclosureSales]
+
+                  // Apply status filter
+                  if (filterStatus === 'loaded') {
+                    filteredSales = filteredSales.filter(
+                      (sale) => sale.status === 'loaded',
+                    )
+                  } else if (filterStatus === 'pending') {
+                    filteredSales = filteredSales.filter(
+                      (sale) => sale.status === 'pending',
+                    )
+                  } else if (filterStatus === 'cancelled') {
+                    filteredSales = filteredSales.filter(
+                      (sale) =>
+                        sale.status === 'loaded' &&
+                        sale.auctionNotice?.status
+                          ?.toLowerCase()
+                          .includes('cancel'),
+                    )
+                  }
+
+                  // Apply search text filter
+                  if (searchText.trim()) {
+                    const search = searchText.toLowerCase()
+                    filteredSales = filteredSales.filter(
+                      (sale) =>
+                        (sale.auctionNotice?.caseCaption || sale.saleInfo || '')
+                          .toLowerCase()
+                          .includes(search) ||
+                        (
+                          sale.auctionNotice?.docketNumber ||
+                          sale.docketNumber ||
+                          ''
+                        )
+                          .toLowerCase()
+                          .includes(search) ||
+                        (sale.auctionNotice?.town || sale.city || '')
+                          .toLowerCase()
+                          .includes(search),
+                    )
+                  }
+
+                  const totalPages = Math.ceil(
+                    filteredSales.length / itemsPerPage,
+                  )
+
+                  if (totalPages <= 1) return null
+
+                  return (
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                      <div
+                        className={
+                          isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                        }
+                      >
+                        Page {currentPage} of {totalPages} (
+                        {filteredSales.length} results)
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setCurrentPage(1)}
+                          disabled={currentPage === 1}
+                          className={`rounded px-3 py-1 text-sm ${
+                            isDarkMode
+                              ? currentPage === 1
+                                ? 'cursor-not-allowed bg-gray-700 text-gray-500'
+                                : 'bg-gray-700 text-white hover:bg-gray-600'
+                              : currentPage === 1
+                                ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                        >
+                          First
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            setCurrentPage((p) => Math.max(1, p - 1))
+                          }
+                          disabled={currentPage === 1}
+                          className={`rounded px-3 py-1 text-sm ${
+                            isDarkMode
+                              ? currentPage === 1
+                                ? 'cursor-not-allowed bg-gray-700 text-gray-500'
+                                : 'bg-gray-700 text-white hover:bg-gray-600'
+                              : currentPage === 1
+                                ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                        >
+                          Previous
+                        </button>
+
+                        {/* Page numbers */}
+                        {Array.from(
+                          { length: Math.min(5, totalPages) },
+                          (_, i) => {
+                            // Display pages around current page
+                            let pageNum: number = 0
+                            if (totalPages <= 5) {
+                              pageNum = i + 1
+                            } else if (currentPage <= 3) {
+                              pageNum = i + 1
+                            } else if (currentPage >= totalPages - 2) {
+                              pageNum = totalPages - 4 + i
+                            } else {
+                              pageNum = currentPage - 2 + i
+                            }
+
+                            return (
+                              <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`rounded px-3 py-1 text-sm ${
+                                  pageNum === currentPage
+                                    ? isDarkMode
+                                      ? 'bg-blue-600 text-white'
+                                      : 'bg-blue-500 text-white'
+                                    : isDarkMode
+                                      ? 'bg-gray-700 text-white hover:bg-gray-600'
+                                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                                }`}
+                              >
+                                {pageNum}
+                              </button>
+                            )
+                          },
+                        )}
+
+                        <button
+                          onClick={() =>
+                            setCurrentPage((p) => Math.min(totalPages, p + 1))
+                          }
+                          disabled={currentPage === totalPages}
+                          className={`rounded px-3 py-1 text-sm ${
+                            isDarkMode
+                              ? currentPage === totalPages
+                                ? 'cursor-not-allowed bg-gray-700 text-gray-500'
+                                : 'bg-gray-700 text-white hover:bg-gray-600'
+                              : currentPage === totalPages
+                                ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                        >
+                          Next
+                        </button>
+
+                        <button
+                          onClick={() => setCurrentPage(totalPages)}
+                          disabled={currentPage === totalPages}
+                          className={`rounded px-3 py-1 text-sm ${
+                            isDarkMode
+                              ? currentPage === totalPages
+                                ? 'cursor-not-allowed bg-gray-700 text-gray-500'
+                                : 'bg-gray-700 text-white hover:bg-gray-600'
+                              : currentPage === totalPages
+                                ? 'cursor-not-allowed bg-gray-200 text-gray-400'
+                                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                          }`}
+                        >
+                          Last
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })()}
               </div>
             )}
 
-            {/* Auction Details Table */}
+            {/* Auction Notice Details */}
             {!loadingCities &&
               selectedSale &&
-              allForeclosureSales.find(
-                (sale) => sale.postingId === selectedSale,
-              )?.detailsLoaded && (
+              foreclosureSales.find((sale) => sale.postingId === selectedSale)
+                ?.status === 'loaded' && (
                 <div className="mb-8">
                   <div className="mb-4">
                     <h2
@@ -927,7 +1399,7 @@ const Lela = () => {
 
                   {(() => {
                     // Find the selected sale and its notice
-                    const selectedSaleData = allForeclosureSales.find(
+                    const selectedSaleData = foreclosureSales.find(
                       (sale) => sale.postingId === selectedSale,
                     )
                     const notice = selectedSaleData?.auctionNotice
@@ -946,6 +1418,14 @@ const Lela = () => {
                           >
                             {notice.heading || 'Public Auction Notice'}
                           </h3>
+
+                          {notice.status && (
+                            <div
+                              className={`mb-4 rounded-lg p-4 ${isDarkMode ? 'bg-red-900 text-red-100' : 'bg-red-100 text-red-800'}`}
+                            >
+                              <p className="font-medium">{notice.status}</p>
+                            </div>
+                          )}
 
                           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                             {/* Case Information */}
@@ -1124,46 +1604,44 @@ const Lela = () => {
                               </div>
                             </div>
                           )}
+
+                          {/* External Link */}
+                          <div className="mt-6 flex justify-end">
+                            {selectedSaleData.viewFullNoticeUrl && (
+                              <a
+                                href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/${selectedSaleData.viewFullNoticeUrl}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`inline-flex items-center gap-2 rounded px-4 py-2 text-sm font-medium ${
+                                  isDarkMode
+                                    ? 'bg-blue-600 text-white hover:bg-blue-500'
+                                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                                }`}
+                              >
+                                <span>View Official Notice</span>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                  />
+                                </svg>
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
                     )
                   })()}
                 </div>
               )}
-
-            {/* Batch Processing Controls */}
-            {!loadingCities && allForeclosureSales.length > 0 && (
-              <div className="mb-8">
-                <div className="mb-4 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => loadBatchAuctionDetails(5)}
-                    className={`rounded px-4 py-2 text-white transition ${
-                      isDarkMode
-                        ? 'bg-purple-600 hover:bg-purple-500'
-                        : 'bg-purple-500 hover:bg-purple-600'
-                    }`}
-                    disabled={
-                      loadingCities ||
-                      allForeclosureSales.every(
-                        (sale) => sale.detailsLoaded || sale.detailsLoading,
-                      )
-                    }
-                  >
-                    Load Next 5 Auction Details
-                  </button>
-
-                  <div
-                    className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
-                  >
-                    {
-                      allForeclosureSales.filter((sale) => sale.detailsLoaded)
-                        .length
-                    }{' '}
-                    of {allForeclosureSales.length} auction details loaded
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Raw HTML Display */}
             {showHTMLContent && (
