@@ -257,7 +257,7 @@ const Lela = () => {
   const [fetchingDetails, setFetchingDetails] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
   const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
   const [sortConfig, setSortConfig] = useState<{
     key: string | null
@@ -272,6 +272,8 @@ const Lela = () => {
 
   // Check user's preferred color scheme on component mount
   useEffect(() => {
+    return
+
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)',
     ).matches
@@ -792,7 +794,7 @@ const Lela = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button
+              {/* <button
                 onClick={toggleDarkMode}
                 className={`rounded px-4 py-2 text-sm font-medium transition ${
                   isDarkMode
@@ -801,7 +803,7 @@ const Lela = () => {
                 }`}
               >
                 {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-              </button>
+              </button> */}
               <button
                 onClick={fetchCityList}
                 className={`rounded px-4 py-2 text-white transition ${
