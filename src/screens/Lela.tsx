@@ -548,6 +548,48 @@ const Lela = () => {
     fetchCityList()
   }, [])
 
+  // Format sale date to YYYY-MM-DD HH:MM format
+  const formatSaleDate = (saleDate?: string, saleTime?: string): string => {
+    if (!saleDate) return ''
+
+    // Parse the date parts
+    // Expected formats: "January 1, 2023" or "Jan. 1, 2023" or similar
+    try {
+      const dateObj = new Date(saleDate)
+      if (isNaN(dateObj.getTime())) return saleDate // Return original if parsing fails
+
+      // Format the date part as YYYY-MM-DD
+      const year = dateObj.getFullYear()
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+      const day = String(dateObj.getDate()).padStart(2, '0')
+
+      // Format the time part if available
+      let formattedTime = ''
+      if (saleTime) {
+        // Extract hours and minutes from time string (expected format like "10:00 AM")
+        const timeMatch = saleTime.match(/(\d+):(\d+)\s*(AM|PM)?/i)
+        if (timeMatch) {
+          let hours = parseInt(timeMatch[1], 10)
+          const minutes = timeMatch[2]
+          const ampm = timeMatch[3]?.toUpperCase()
+
+          // Convert to 24-hour format if AM/PM is specified
+          if (ampm === 'PM' && hours < 12) hours += 12
+          if (ampm === 'AM' && hours === 12) hours = 0
+
+          formattedTime = ` ${String(hours).padStart(2, '0')}:${minutes}`
+        } else {
+          formattedTime = ` ${saleTime}`
+        }
+      }
+
+      return `${year}-${month}-${day}${formattedTime}`
+    } catch (e) {
+      console.error('Error formatting date:', e)
+      return saleDate
+    }
+  }
+
   // Sort function for table columns
   const requestSort = (key: string) => {
     let direction: 'ascending' | 'descending' = 'ascending'
@@ -602,13 +644,15 @@ const Lela = () => {
         aValue = a.auctionNotice?.caseCaption || ''
         bValue = b.auctionNotice?.caseCaption || ''
       } else if (sortConfig.key === 'saleDate') {
-        // For sale date, we want to compare dates if possible
-        const aDateStr = a.auctionNotice?.saleDate || ''
-        const bDateStr = b.auctionNotice?.saleDate || ''
-
-        // Simple string compare for dates (if they're in a sortable format)
-        aValue = aDateStr
-        bValue = bDateStr
+        // For sale date, we want to compare dates in our formatted style
+        aValue = formatSaleDate(
+          a.auctionNotice?.saleDate,
+          a.auctionNotice?.saleTime,
+        )
+        bValue = formatSaleDate(
+          b.auctionNotice?.saleDate,
+          b.auctionNotice?.saleTime,
+        )
       } else if (sortConfig.key === 'docketNumber') {
         aValue = a.auctionNotice?.docketNumber || ''
         bValue = b.auctionNotice?.docketNumber || ''
@@ -628,12 +672,26 @@ const Lela = () => {
   // Get sort indicator for column headers
   const getSortIndicator = (key: string) => {
     if (sortConfig.key !== key) {
-      return null
+      return (
+        <svg
+          className="ml-2 inline-block h-3 w-3 opacity-0 group-hover:opacity-25"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M5 15l7-7 7 7"
+          />
+        </svg>
+      )
     }
 
     return sortConfig.direction === 'ascending' ? (
       <svg
-        className="ml-1 inline-block h-3 w-3"
+        className="ml-2 inline-block h-3.5 w-3.5 text-blue-500 dark:text-blue-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -647,7 +705,7 @@ const Lela = () => {
       </svg>
     ) : (
       <svg
-        className="ml-1 inline-block h-3 w-3"
+        className="ml-2 inline-block h-3.5 w-3.5 text-blue-500 dark:text-blue-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -708,7 +766,7 @@ const Lela = () => {
 
   return (
     <div
-      className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} transition-colors duration-200`}
+      className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto transition-colors duration-200`}
     >
       <div className="container mx-auto px-4 py-8">
         <header className="mb-6 text-center">
@@ -717,10 +775,10 @@ const Lela = () => {
           >
             Connecticut Foreclosure Data
           </h1>
-          <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+          {/* <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
             From:
             https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx
-          </p>
+          </p> */}
         </header>
 
         <div className="mb-6">
@@ -1126,52 +1184,97 @@ const Lela = () => {
                       <th
                         scope="col"
                         onClick={() => requestSort('status')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'status'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
-                        Status {getSortIndicator('status')}
+                        <div className="group flex items-center">
+                          <span>Status</span>
+                          {getSortIndicator('status')}
+                        </div>
                       </th>
                       <th
                         scope="col"
                         onClick={() => requestSort('city')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'city'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
-                        City {getSortIndicator('city')}
+                        <div className="group flex items-center">
+                          <span>City</span>
+                          {getSortIndicator('city')}
+                        </div>
                       </th>
                       <th
                         scope="col"
                         onClick={() => requestSort('caseCaption')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'caseCaption'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
-                        Case Caption {getSortIndicator('caseCaption')}
+                        <div className="group flex items-center">
+                          <span>Case Caption</span>
+                          {getSortIndicator('caseCaption')}
+                        </div>
                       </th>
                       <th
                         scope="col"
                         onClick={() => requestSort('saleDate')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'saleDate'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
-                        Sale Date {getSortIndicator('saleDate')}
+                        <div className="group flex items-center">
+                          <span>Sale Date</span>
+                          {getSortIndicator('saleDate')}
+                        </div>
                       </th>
                       <th
                         scope="col"
                         onClick={() => requestSort('docketNumber')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider hover:bg-gray-700/20 ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'docketNumber'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
-                        Docket Number {getSortIndicator('docketNumber')}
+                        <div className="group flex items-center">
+                          <span>Docket Number</span>
+                          {getSortIndicator('docketNumber')}
+                        </div>
                       </th>
                       <th
                         scope="col"
                         className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                          isDarkMode ? 'text-gray-300' : 'text-gray-600'
                         }`}
                       >
                         Actions
@@ -1326,7 +1429,10 @@ const Lela = () => {
                             }`}
                           >
                             {posting.auctionNotice?.saleDate
-                              ? `${posting.auctionNotice.saleDate} ${posting.auctionNotice.saleTime ? `at ${posting.auctionNotice.saleTime}` : ''}`
+                              ? formatSaleDate(
+                                  posting.auctionNotice.saleDate,
+                                  posting.auctionNotice.saleTime,
+                                )
                               : 'N/A'}
                           </td>
 
