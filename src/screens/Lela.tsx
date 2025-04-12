@@ -114,6 +114,9 @@ type PublicAuctionNotice = {
   // Sale status (e.g., whether it is cancelled)
   status: string
   address: string
+
+  // New field: dollar amount found in the
+  dollarAmountFound: string
 }
 
 type CityInfo = {
@@ -172,6 +175,11 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     }
   }
 
+  // search through document to find a dollar amount (i.e. $5000)
+  // have it stop when we find a non-number
+  const dollarAmountFound =
+    htmlString.match(/\$[0-9,]+(\.[0-9]{2})?/)?.[0] || ''
+
   return {
     // Case and filing details
     caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
@@ -198,7 +206,8 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     status: getText('ctl00_cphBody_lblStatus'),
 
     // New field: address extracted via regex (and optional second line)
-    address,
+    address: address,
+    dollarAmountFound: dollarAmountFound,
   }
 }
 
@@ -294,6 +303,7 @@ const Lela = () => {
   const [timestamp, setTimestamp] = useState<string>('')
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
   const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
+
   const [sortConfig, setSortConfig] = useState<{
     key: string | null
     direction: 'ascending' | 'descending' | null
@@ -693,6 +703,12 @@ const Lela = () => {
       } else if (sortConfig.key === 'docketNumber') {
         aValue = a.auctionNotice?.docketNumber || ''
         bValue = b.auctionNotice?.docketNumber || ''
+      } else if (sortConfig.key === 'address') {
+        aValue = a.auctionNotice?.address || ''
+        bValue = b.auctionNotice?.address || ''
+      } else if (sortConfig.key === 'dollarAmountFound') {
+        aValue = a.auctionNotice?.dollarAmountFound || ''
+        bValue = b.auctionNotice?.dollarAmountFound || ''
       }
 
       // Compare the values
@@ -1256,7 +1272,26 @@ const Lela = () => {
                       </th>
                       <th
                         scope="col"
-                        // onClick={() => requestSort('city')}
+                        onClick={() => requestSort('dollarAmountFound')}
+                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                          sortConfig.key === 'city'
+                            ? isDarkMode
+                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                            : isDarkMode
+                              ? 'text-gray-300 hover:bg-gray-800'
+                              : 'text-gray-600 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="group flex items-center">
+                          <span>Dollar Amount</span>
+                          {getSortIndicator('dollarAmountFound')}
+                        </div>
+                      </th>
+
+                      <th
+                        scope="col"
+                        onClick={() => requestSort('address')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
                             ? isDarkMode
@@ -1269,6 +1304,7 @@ const Lela = () => {
                       >
                         <div className="group flex items-center">
                           <span>Address</span>
+                          {getSortIndicator('address')}
                         </div>
                       </th>
                       <th
@@ -1343,193 +1379,207 @@ const Lela = () => {
                     }`}
                   >
                     {postings.length > 0 ? (
-                      getSortedPostings().map((posting, index) => (
-                        <tr
-                          key={`${posting.postingId}-${index}`}
-                          className={
-                            isDarkMode
-                              ? 'hover:bg-gray-700'
-                              : 'hover:bg-gray-50'
-                          }
-                        >
-                          {/* Status */}
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                            }`}
+                      getSortedPostings().map(
+                        (posting: PostingInfo, index: number) => (
+                          <tr
+                            key={`${posting.postingId}-${index}`}
+                            className={
+                              isDarkMode
+                                ? 'hover:bg-gray-700'
+                                : 'hover:bg-gray-50'
+                            }
                           >
-                            {posting.status === 'loading' ? (
-                              <span className="inline-flex items-center rounded-full border border-yellow-400 bg-yellow-100/90 px-2.5 py-0.5 text-xs font-medium text-yellow-800 shadow-sm dark:border-yellow-500 dark:bg-yellow-900/30 dark:text-yellow-300">
-                                <svg
-                                  className="mr-1 h-3 w-3 animate-spin text-yellow-600 dark:text-yellow-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <circle
-                                    className="opacity-25"
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="currentColor"
-                                    strokeWidth="4"
-                                  ></circle>
-                                  <path
-                                    className="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                  ></path>
-                                </svg>
-                                Loading...
-                              </span>
-                            ) : posting.status === 'loaded' ? (
-                              posting.auctionNotice?.status
-                                ?.toLowerCase()
-                                .includes('cancel') ? (
-                                <span className="inline-flex items-center rounded-full border border-orange-400 bg-orange-100/90 px-2.5 py-0.5 text-xs font-medium text-orange-800 shadow-sm dark:border-orange-500 dark:bg-orange-900/30 dark:text-orange-300">
-                                  <svg
-                                    className="mr-1 h-3 w-3 text-orange-600 dark:text-orange-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                  </svg>
-                                  Cancelled
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center rounded-full border border-green-400 bg-green-100/90 px-2.5 py-0.5 text-xs font-medium text-green-800 shadow-sm dark:border-green-500 dark:bg-green-900/30 dark:text-green-300">
-                                  <svg
-                                    className="mr-1 h-3 w-3 text-green-600 dark:text-green-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M5 13l4 4L19 7"
-                                    />
-                                  </svg>
-                                  Active
-                                </span>
-                              )
-                            ) : posting.status === 'error' ? (
-                              <span className="inline-flex items-center rounded-full border border-red-400 bg-red-100/90 px-2.5 py-0.5 text-xs font-medium text-red-800 shadow-sm dark:border-red-500 dark:bg-red-900/30 dark:text-red-300">
-                                <svg
-                                  className="mr-1 h-3 w-3 text-red-600 dark:text-red-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                  />
-                                </svg>
-                                Error
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center rounded-full border border-blue-400 bg-blue-100/90 px-2.5 py-0.5 text-xs font-medium text-blue-800 shadow-sm dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300">
-                                <svg
-                                  className="mr-1 h-3 w-3 text-blue-600 dark:text-blue-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                Pending
-                              </span>
-                            )}
-                          </td>
-
-                          {/* City */}
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                              isDarkMode ? 'text-white' : 'text-gray-900'
-                            }`}
-                          >
-                            {posting.auctionNotice?.town ||
-                              posting.city ||
-                              'N/A'}
-                          </td>
-
-                          {/* Address */}
-
-                          <td
-                            className={`px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                            }`}
-                          >
-                            {posting.auctionNotice?.address || 'N/A'}
-                          </td>
-
-                          {/* Case Caption */}
-                          <td
-                            className={`px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                            }`}
-                          >
-                            {posting.auctionNotice?.caseCaption || 'N/A'}
-                          </td>
-
-                          {/* Sale Date */}
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                            }`}
-                          >
-                            {posting.auctionNotice?.saleDate
-                              ? formatSaleDate(
-                                  posting.auctionNotice.saleDate,
-                                  posting.auctionNotice.saleTime,
-                                )
-                              : 'N/A'}
-                          </td>
-
-                          {/* Docket Number */}
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                            }`}
-                          >
-                            {posting.auctionNotice?.docketNumber || 'N/A'}
-                          </td>
-
-                          {/* Actions */}
-                          <td
-                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                              isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                            }`}
-                          >
-                            <a
-                              href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={`text-sm font-medium ${
-                                isDarkMode
-                                  ? 'text-blue-400 hover:text-blue-300'
-                                  : 'text-blue-600 hover:text-blue-800'
+                            {/* Status */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              View on Website
-                            </a>
-                          </td>
-                        </tr>
-                      ))
+                              {posting.status === 'loading' ? (
+                                <span className="inline-flex items-center rounded-full border border-yellow-400 bg-yellow-100/90 px-2.5 py-0.5 text-xs font-medium text-yellow-800 shadow-sm dark:border-yellow-500 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                  <svg
+                                    className="mr-1 h-3 w-3 animate-spin text-yellow-600 dark:text-yellow-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <circle
+                                      className="opacity-25"
+                                      cx="12"
+                                      cy="12"
+                                      r="10"
+                                      stroke="currentColor"
+                                      strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                      className="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    ></path>
+                                  </svg>
+                                  Loading...
+                                </span>
+                              ) : posting.status === 'loaded' ? (
+                                posting.auctionNotice?.status
+                                  ?.toLowerCase()
+                                  .includes('cancel') ? (
+                                  <span className="inline-flex items-center rounded-full border border-orange-400 bg-orange-100/90 px-2.5 py-0.5 text-xs font-medium text-orange-800 shadow-sm dark:border-orange-500 dark:bg-orange-900/30 dark:text-orange-300">
+                                    <svg
+                                      className="mr-1 h-3 w-3 text-orange-600 dark:text-orange-400"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                    Cancelled
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center rounded-full border border-green-400 bg-green-100/90 px-2.5 py-0.5 text-xs font-medium text-green-800 shadow-sm dark:border-green-500 dark:bg-green-900/30 dark:text-green-300">
+                                    <svg
+                                      className="mr-1 h-3 w-3 text-green-600 dark:text-green-400"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M5 13l4 4L19 7"
+                                      />
+                                    </svg>
+                                    Active
+                                  </span>
+                                )
+                              ) : posting.status === 'error' ? (
+                                <span className="inline-flex items-center rounded-full border border-red-400 bg-red-100/90 px-2.5 py-0.5 text-xs font-medium text-red-800 shadow-sm dark:border-red-500 dark:bg-red-900/30 dark:text-red-300">
+                                  <svg
+                                    className="mr-1 h-3 w-3 text-red-600 dark:text-red-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M6 18L18 6M6 6l12 12"
+                                    />
+                                  </svg>
+                                  Error
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-full border border-blue-400 bg-blue-100/90 px-2.5 py-0.5 text-xs font-medium text-blue-800 shadow-sm dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300">
+                                  <svg
+                                    className="mr-1 h-3 w-3 text-blue-600 dark:text-blue-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                  Pending
+                                </span>
+                              )}
+                            </td>
+
+                            {/* City */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
+                                isDarkMode ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
+                              {posting.auctionNotice?.town ||
+                                posting.city ||
+                                'N/A'}
+                            </td>
+
+                            {/* Dollar Amount */}
+
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.dollarAmountFound ||
+                                'N/A'}
+                            </td>
+
+                            {/* Case Caption */}
+                            {/* Address */}
+
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.address || 'N/A'}
+                            </td>
+
+                            {/* Case Caption */}
+                            <td
+                              className={`px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.caseCaption || 'N/A'}
+                            </td>
+
+                            {/* Sale Date */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.saleDate
+                                ? formatSaleDate(
+                                    posting.auctionNotice.saleDate,
+                                    posting.auctionNotice.saleTime,
+                                  )
+                                : 'N/A'}
+                            </td>
+
+                            {/* Docket Number */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                              }`}
+                            >
+                              {posting.auctionNotice?.docketNumber || 'N/A'}
+                            </td>
+
+                            {/* Actions */}
+                            <td
+                              className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
+                              }`}
+                            >
+                              <a
+                                href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`text-sm font-medium ${
+                                  isDarkMode
+                                    ? 'text-blue-400 hover:text-blue-300'
+                                    : 'text-blue-600 hover:text-blue-800'
+                                }`}
+                              >
+                                View on Website
+                              </a>
+                            </td>
+                          </tr>
+                        ),
+                      )
                     ) : (
                       <tr>
                         <td
