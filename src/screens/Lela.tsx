@@ -129,21 +129,48 @@ type PostingInfo = {
   errorMessage?: string
 }
 
-// Parser functions
 function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlString, 'text/html')
 
-  // Helper function to get the trimmed text content by element ID
+  // Helper function to get the trimmed text content by element ID.
   const getText = (id: string): string => {
     const element = doc.getElementById(id)
     return element ? (element.textContent?.trim() ?? '') : ''
   }
 
-  // Search the raw HTML string for "ADDRESS:" and capture the text until the next "<"
-  const addressRegex = /ADDRESS:\s*([^<]+)/
-  const addressMatch = htmlString.match(addressRegex)
-  const address = addressMatch ? addressMatch[1].trim() : ''
+  let address = ''
+
+  // Attempt 1: Try to extract from the heading element's innerHTML.
+  const headingElement = doc.getElementById('ctl00_cphBody_lblHeading')
+  if (headingElement) {
+    const headingHtml = headingElement.innerHTML
+    // This regex will look for "ADDRESS:" followed by optional whitespace and <br> tags.
+    // It then captures the next non-HTML text.
+    const addressRegex = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
+    const match = headingHtml.match(addressRegex)
+    if (match) {
+      address = match[1].trim()
+      // Optionally check for a second line after a <br> tag.
+      const afterMatch = headingHtml.split(match[0])[1]
+      if (afterMatch) {
+        const secondLineMatch = afterMatch.match(/<br\s*\/?>\s*([^<]+)/i)
+        if (secondLineMatch && secondLineMatch[1].trim() !== '') {
+          // Append the second line to the address.
+          address += ', ' + secondLineMatch[1].trim()
+        }
+      }
+    }
+  }
+
+  // Attempt 2: If no address was found in the heading, search in the full HTML.
+  if (!address) {
+    const addressRegex2 = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
+    const fullMatch = htmlString.match(addressRegex2)
+    if (fullMatch) {
+      address = fullMatch[1].trim()
+    }
+  }
 
   return {
     // Case and filing details
@@ -170,8 +197,8 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     // Sale status
     status: getText('ctl00_cphBody_lblStatus'),
 
-    // New field for the address (extracted from the raw HTML)
-    address: address,
+    // New field: address extracted via regex (and optional second line)
+    address,
   }
 }
 
