@@ -1146,14 +1146,21 @@ walnuts@please.com
       <div className="container mx-auto px-4 py-8">
         <header className="mb-6 text-center">
           <h1
-            className={`mb-2 text-3xl font-bold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+            className={`mb-2 mb-8 text-3xl font-bold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
           >
             Connecticut Foreclosure Data
           </h1>
-          {/* <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
-            From:
-            https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx
-          </p> */}
+
+          <a
+            href="https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx"
+            className={`rounded px-4 py-2 ${
+              isDarkMode
+                ? 'bg-blue-700 text-white hover:bg-blue-600'
+                : 'bg-blue-500 text-white hover:bg-blue-600'
+            }`}
+          >
+            sso.eservices.jud.ct.gov
+          </a>
         </header>
 
         <div className="mb-6">
