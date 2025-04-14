@@ -1098,8 +1098,9 @@ I noted that this property (Docket #${docketNumber}) requires a deposit of ${dol
 I appreciate your assistance and look forward to your response.
 
 Thank you for your time,
-[Your Name]
-[Your Contact Information]
+Princess Lela
+walnuts@please.com
+555-555-5555
 `
   }
 
