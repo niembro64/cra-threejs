@@ -1085,7 +1085,7 @@ const Lela = () => {
       showTime: true,
     })
 
-    return `EMAIL ADDRESS: ${selectedAuction.committeeEmail}
+    const emailText: string = `EMAIL ADDRESS: ${selectedAuction.committeeEmail}
     
 Subject: Inquiry about property at ${address}, ${town}
 
@@ -1108,6 +1108,8 @@ Princess Lela
 walnuts@please.com
 555-555-5555
 `
+
+    return emailText
   }
 
   // Copy the email template to clipboard
