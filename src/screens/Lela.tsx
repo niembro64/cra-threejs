@@ -1144,7 +1144,7 @@ walnuts@please.com
 
   return (
     <div
-      className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto transition-colors duration-200`}
+      className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto p-4 transition-colors duration-200`}
     >
       <div className="mb-4 p-4">
         <a
@@ -1158,7 +1158,7 @@ walnuts@please.com
           niemo.io
         </a>
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="w-full py-8">
         <header className="mb-6 text-center">
           <h1
             className={`mb-2 mb-8 text-3xl font-bold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
@@ -1499,7 +1499,7 @@ walnuts@please.com
                   ></div>
                 </div>
               ) : cityList.length > 0 ? (
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-8">
                   {cityList.map((city, index) => (
                     <div
                       key={index}
@@ -1606,7 +1606,7 @@ walnuts@please.com
                 }`}
               >
                 <table
-                  className={`min-w-full divide-y ${
+                  className={`w-full divide-y ${
                     isDarkMode ? 'divide-gray-700' : 'divide-gray-200'
                   }`}
                 >
