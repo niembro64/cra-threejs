@@ -958,6 +958,14 @@ const Lela = () => {
     <div
       className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto transition-colors duration-200`}
     >
+      <div className="fixed left-4 top-4 z-50">
+        <a
+          href="https://niemo.io"
+          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          Back to niemo.io
+        </a>
+      </div>
       <div className="container mx-auto px-4 py-8">
         <header className="mb-6 text-center">
           <h1
