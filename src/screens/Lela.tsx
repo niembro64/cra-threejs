@@ -1125,12 +1125,16 @@ walnuts@please.com
     <div
       className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto transition-colors duration-200`}
     >
-      <div className="fixed left-4 top-4 z-50">
+      <div className="mb-4 p-4">
         <a
           href="https://niemo.io"
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          className={`rounded px-4 py-2 ${
+            isDarkMode
+              ? 'bg-blue-700 text-white hover:bg-blue-600'
+              : 'bg-blue-500 text-white hover:bg-blue-600'
+          }`}
         >
-          Back to niemo.io
+          niemo.io
         </a>
       </div>
       <div className="container mx-auto px-4 py-8">

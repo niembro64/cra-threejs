@@ -138,12 +138,12 @@ const DrkClnBrand: React.FC = () => {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-black font-mono text-green-400">
-      <div className="fixed left-4 top-4 z-50">
+      <div className="z-50 p-4">
         <a
           href="https://niemo.io"
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          className="rounded bg-green-800 px-4 py-2 text-green-400 hover:bg-green-700"
         >
-          Back to niemo.io
+          niemo.io
         </a>
       </div>
       {/* Matrix code background */}

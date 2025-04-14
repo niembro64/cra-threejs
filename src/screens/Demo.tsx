@@ -93,12 +93,12 @@ function Demo(): ReactElement {
 
   return (
     <div className="mx-auto max-w-sm p-4 text-center">
-      <div className="fixed left-4 top-4 z-50">
+      <div className="mb-4 text-left">
         <a
           href="https://niemo.io"
           className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          Back to niemo.io
+          niemo.io
         </a>
       </div>
       <h1 className="mb-4 text-2xl font-bold">Coach's Demo App</h1>
