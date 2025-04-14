@@ -1030,8 +1030,11 @@ const Lela = () => {
     const date = new Date()
     const formattedDate = date.toISOString().split('T')[0]
 
+    const formattedTime = date.toTimeString().split(' ')[0].replace(/:/g, '-')
+    const formattedDateTime = `${formattedDate}_${formattedTime}`
+
     link.setAttribute('href', url)
-    link.setAttribute('download', `foreclosure-data-${formattedDate}.csv`)
+    link.setAttribute('download', `foreclosure-data-${formattedDateTime}.csv`)
     link.style.visibility = 'hidden'
 
     document.body.appendChild(link)
@@ -1082,10 +1085,7 @@ const Lela = () => {
       showTime: true,
     })
 
-    return `
-    
-    
-EMAIL ADDRESS: ${selectedAuction.committeeEmail}
+    return `EMAIL ADDRESS: ${selectedAuction.committeeEmail}
     
 Subject: Inquiry about property at ${address}, ${town}
 
