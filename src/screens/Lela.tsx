@@ -932,6 +932,109 @@ const Lela = () => {
     }
   }
 
+  // Function to download table data as CSV
+  const downloadTableAsCSV = () => {
+    // Filter for loaded postings only
+    const loadedPostings = postings.filter((p) => p.status === 'loaded')
+
+    if (loadedPostings.length === 0) {
+      setError('No data available to download.')
+      return
+    }
+
+    // Define CSV headers
+    const headers = [
+      'Status',
+      'City',
+      'Deposit',
+      'Address',
+      'Committee Name',
+      'Committee Phone',
+      'Committee Email',
+      'Sale Date',
+      'Docket Number',
+    ]
+
+    // Convert postings to CSV rows
+    const rows = loadedPostings.map((posting) => {
+      const status = posting.auctionNotice?.status
+        ?.toLowerCase()
+        .includes('cancel')
+        ? 'Cancelled'
+        : 'Active'
+
+      const town = posting.auctionNotice?.town || posting.city || ''
+
+      const deposit = numberToDollarAmountString(
+        posting.auctionNotice?.dollarAmountNumber || 0,
+      )
+
+      const address = posting.auctionNotice?.address || ''
+
+      const committeeName = posting.auctionNotice?.committeeName || ''
+
+      const committeePhone = findNumbersAndMakePhoneNumber(
+        posting.auctionNotice?.committeePhone || '',
+      )
+
+      const committeeEmail = posting.auctionNotice?.committeeEmail || ''
+
+      const saleDate = posting.auctionNotice?.saleDate
+        ? formatSaleDate({
+            saleDate: posting.auctionNotice.saleDate,
+            saleTime: posting.auctionNotice.saleTime,
+            showTime: true,
+          })
+        : ''
+
+      const docketNumber = posting.auctionNotice?.docketNumber || ''
+
+      // Escape fields that might contain commas
+      const escapeCsvField = (field: string) => {
+        if (
+          field.includes(',') ||
+          field.includes('"') ||
+          field.includes('\n')
+        ) {
+          return `"${field.replace(/"/g, '""')}"`
+        }
+        return field
+      }
+
+      return [
+        escapeCsvField(status),
+        escapeCsvField(town),
+        escapeCsvField(deposit),
+        escapeCsvField(address),
+        escapeCsvField(committeeName),
+        escapeCsvField(committeePhone),
+        escapeCsvField(committeeEmail),
+        escapeCsvField(saleDate),
+        escapeCsvField(docketNumber),
+      ].join(',')
+    })
+
+    // Combine headers and rows
+    const csvContent = [headers.join(','), ...rows].join('\n')
+
+    // Create file and trigger download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+
+    // Format current date for filename
+    const date = new Date()
+    const formattedDate = date.toISOString().split('T')[0]
+
+    link.setAttribute('href', url)
+    link.setAttribute('download', `foreclosure-data-${formattedDate}.csv`)
+    link.style.visibility = 'hidden'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   // Display status message
   const getStatusMessage = () => {
     if (fetchingCities) {
@@ -1106,11 +1209,54 @@ const Lela = () => {
                 isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
               }`}
             >
-              <h2
-                className={`mb-3 text-lg font-semibold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
-              >
-                Foreclosure Data Summary
-              </h2>
+              <div className="mb-3 flex flex-wrap items-center justify-between">
+                <h2
+                  className={`text-lg font-semibold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
+                >
+                  Foreclosure Data Summary
+                </h2>
+
+                <div className="group relative">
+                  <button
+                    onClick={downloadTableAsCSV}
+                    className={`flex items-center rounded px-4 py-2 text-white transition ${
+                      isDarkMode
+                        ? 'bg-blue-600 hover:bg-blue-500'
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    disabled={
+                      fetchingDetails ||
+                      postings.filter((p) => p.status === 'loaded').length === 0
+                    }
+                    title="Download table data as CSV file"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      ></path>
+                    </svg>
+                    Download CSV
+                  </button>
+                  {/* <div
+                    className={`absolute z-10 -ml-16 -mt-2 w-48 origin-bottom scale-0 transform transition-transform duration-150 ease-in-out group-hover:scale-100 ${
+                      isDarkMode
+                        ? 'bg-gray-700 text-gray-200'
+                        : 'bg-white text-gray-700'
+                    } top-0 rounded p-2 text-center text-xs shadow-lg`}
+                  >
+                    Download all loaded foreclosure data as a CSV file
+                  </div> */}
+                </div>
+              </div>
 
               <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
                 {(() => {
