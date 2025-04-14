@@ -418,6 +418,10 @@ const Lela = () => {
   const [timestamp, setTimestamp] = useState<string>('')
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
   const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false)
+  const [selectedAuction, setSelectedAuction] =
+    useState<PublicAuctionNotice | null>(null)
+  const [emailCopied, setEmailCopied] = useState<boolean>(false)
 
   const [sortConfig, setSortConfig] = useState<{
     key: string | null
@@ -1057,6 +1061,65 @@ const Lela = () => {
     return "Select cities and click 'Process Selected Cities' to fetch foreclosure data."
   }
 
+  // Generate email template from selected auction
+  const generateEmailTemplate = () => {
+    if (!selectedAuction) return ''
+
+    const {
+      address,
+      town,
+      saleDate,
+      saleTime,
+      dollarAmountString,
+      docketNumber,
+      committeeName,
+    } = selectedAuction
+
+    // Determine the date and time for a clean version
+    const formattedSaleDate = formatSaleDate({
+      saleDate: saleDate,
+      saleTime: saleTime,
+      showTime: true,
+    })
+
+    return `Subject: Inquiry about property at ${address}, ${town}
+
+Dear ${committeeName},
+
+I am writing to express my interest in the property located at ${address} in ${town}, CT, which I understand is scheduled for foreclosure auction on ${formattedSaleDate}.
+
+I noted that this property (Docket #${docketNumber}) requires a deposit of ${dollarAmountString} and I would like to request some additional information:
+
+1. Is it possible to view the property before the auction date?
+2. Are there any known issues with the property that I should be aware of?
+3. Could you please provide any additional details about the foreclosure process for this specific property?
+4. Are there any specific requirements for prospective buyers that I should prepare for?
+
+I appreciate your assistance and look forward to your response.
+
+Thank you for your time,
+[Your Name]
+[Your Contact Information]
+`
+  }
+
+  // Copy the email template to clipboard
+  const copyEmailToClipboard = () => {
+    if (!selectedAuction) return
+
+    const emailText = generateEmailTemplate()
+    navigator.clipboard
+      .writeText(emailText)
+      .then(() => {
+        setEmailCopied(true)
+        setTimeout(() => setEmailCopied(false), 3000) // Reset after 3 seconds
+      })
+      .catch((err) => {
+        console.error('Failed to copy: ', err)
+        setError('Failed to copy email text. Please try again.')
+      })
+  }
+
   return (
     <div
       className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto transition-colors duration-200`}
@@ -1246,15 +1309,6 @@ const Lela = () => {
                     </svg>
                     Download CSV
                   </button>
-                  {/* <div
-                    className={`absolute z-10 -ml-16 -mt-2 w-48 origin-bottom scale-0 transform transition-transform duration-150 ease-in-out group-hover:scale-100 ${
-                      isDarkMode
-                        ? 'bg-gray-700 text-gray-200'
-                        : 'bg-white text-gray-700'
-                    } top-0 rounded p-2 text-center text-xs shadow-lg`}
-                  >
-                    Download all loaded foreclosure data as a CSV file
-                  </div> */}
                 </div>
               </div>
 
@@ -1892,7 +1946,33 @@ const Lela = () => {
                                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {posting.auctionNotice?.committeeEmail || 'N/A'}
+                              <div className="flex items-center gap-2">
+                                <span>
+                                  {posting.auctionNotice?.committeeEmail ||
+                                    'N/A'}
+                                </span>
+                                {posting.auctionNotice?.committeeEmail && (
+                                  <button
+                                    onClick={() => {
+                                      if (posting.auctionNotice) {
+                                        // Open email compose modal with this auction's details
+                                        setSelectedAuction(
+                                          posting.auctionNotice,
+                                        )
+                                        setIsEmailModalOpen(true)
+                                      }
+                                    }}
+                                    className={`rounded px-2 py-1 text-xs font-medium transition ${
+                                      isDarkMode
+                                        ? 'bg-blue-700 text-white hover:bg-blue-600'
+                                        : 'bg-blue-500 text-white hover:bg-blue-600'
+                                    }`}
+                                    title="Compose email about this property"
+                                  >
+                                    Email
+                                  </button>
+                                )}
+                              </div>
                             </td>
 
                             {/* Case Caption */}
@@ -1966,6 +2046,177 @@ const Lela = () => {
               </div>
             </div>
           )}
+
+        {/* Email Compose Modal */}
+        {isEmailModalOpen && selectedAuction && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 p-4"
+            onClick={() => {
+              setIsEmailModalOpen(false)
+              setEmailCopied(false)
+            }}
+          >
+            <div
+              className={`relative mx-auto max-w-3xl rounded-lg shadow-lg ${
+                isDarkMode ? 'bg-gray-800' : 'bg-white'
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div
+                className={`rounded-t-lg border-b px-6 py-4 ${
+                  isDarkMode
+                    ? 'border-gray-700 bg-gray-900'
+                    : 'border-gray-200 bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <h3
+                    className={`text-lg font-medium ${
+                      isDarkMode ? 'text-white' : 'text-gray-900'
+                    }`}
+                  >
+                    Email Template for {selectedAuction.address}
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setIsEmailModalOpen(false)
+                      setEmailCopied(false)
+                    }}
+                    className={`rounded-full p-1 transition ${
+                      isDarkMode
+                        ? 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                        : 'bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600'
+                    }`}
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="px-6 py-4">
+                <div
+                  className={`mb-4 flex justify-between rounded border p-2 ${
+                    isDarkMode
+                      ? 'border-gray-700 bg-gray-700'
+                      : 'border-gray-200 bg-gray-50'
+                  }`}
+                >
+                  <div>
+                    <p
+                      className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
+                    >
+                      To: {selectedAuction.committeeEmail}
+                    </p>
+                  </div>
+                  <button
+                    onClick={copyEmailToClipboard}
+                    className={`flex items-center rounded px-3 py-1 text-xs font-medium ${
+                      emailCopied
+                        ? isDarkMode
+                          ? 'bg-green-700 text-white'
+                          : 'bg-green-500 text-white'
+                        : isDarkMode
+                          ? 'bg-blue-700 text-white hover:bg-blue-600'
+                          : 'bg-blue-500 text-white hover:bg-blue-600'
+                    }`}
+                  >
+                    {emailCopied ? (
+                      <>
+                        <svg
+                          className="mr-1 h-3 w-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          className="mr-1 h-3 w-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"
+                          />
+                        </svg>
+                        Copy Email
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <div
+                  className={`mt-4 max-h-96 overflow-y-auto rounded border p-4 font-mono text-sm ${
+                    isDarkMode
+                      ? 'border-gray-700 bg-gray-900 text-gray-300'
+                      : 'border-gray-200 bg-white text-gray-800'
+                  }`}
+                >
+                  <pre className="whitespace-pre-wrap">
+                    {generateEmailTemplate()}
+                  </pre>
+                </div>
+
+                <div className="mt-4 text-sm text-gray-500">
+                  <p>
+                    Click the "Copy Email" button to copy this template to your
+                    clipboard. Then paste it into your email client to send.
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div
+                className={`rounded-b-lg border-t px-6 py-4 ${
+                  isDarkMode ? 'border-gray-700' : 'border-gray-200'
+                }`}
+              >
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => {
+                      setIsEmailModalOpen(false)
+                      setEmailCopied(false)
+                    }}
+                    className={`rounded px-4 py-2 font-medium ${
+                      isDarkMode
+                        ? 'bg-gray-700 text-white hover:bg-gray-600'
+                        : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                    }`}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
