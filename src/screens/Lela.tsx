@@ -1082,7 +1082,13 @@ const Lela = () => {
       showTime: true,
     })
 
-    return `Subject: Inquiry about property at ${address}, ${town}
+    return `
+    
+    
+EMAIL ADDRESS: ${selectedAuction.committeeEmail}
+    
+Subject: Inquiry about property at ${address}, ${town}
+
 
 Dear ${committeeName},
 
