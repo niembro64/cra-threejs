@@ -173,7 +173,7 @@ type CityInfo = {
 type PostingInfo = {
   postingId: string
   city: string
-  status: 'pending' | 'loading' | 'loaded' | 'error'
+  status: 'pending' | 'loading' | 'loaded' | 'error' | 'missing'
   auctionNotice?: PublicAuctionNotice
   errorMessage?: string
 }
@@ -592,18 +592,36 @@ const Lela = () => {
           await Promise.all(
             batch.map(async (posting, index) => {
               try {
-                // Fetch auction notice details
                 const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`
                 const response = await axios.get(url)
 
-                // Parse auction notice
+                // Check if the page indicates "No data found"
+                if (response.data.includes('No data found')) {
+                  setPostings((prevPostings) => {
+                    const updatedPostings = [...prevPostings]
+                    const postingIndex = batchStart + index
+                    if (postingIndex < updatedPostings.length) {
+                      updatedPostings[postingIndex] = {
+                        ...updatedPostings[postingIndex],
+                        // auctionNotice: null, // or provide a default empty object if needed
+                        status: 'missing',
+                      }
+                    }
+                    return updatedPostings
+                  })
+                  setProgress((prev) => ({
+                    ...prev,
+                    completed: prev.completed + 1,
+                  }))
+                  return // Skip further processing for this posting
+                }
+
+                // Parse auction notice details if data is available
                 const auctionNotice = parsePublicAuctionNotice(response.data)
 
-                // Update posting with the auction notice
                 setPostings((prevPostings) => {
                   const updatedPostings = [...prevPostings]
                   const postingIndex = batchStart + index
-
                   if (postingIndex < updatedPostings.length) {
                     updatedPostings[postingIndex] = {
                       ...updatedPostings[postingIndex],
@@ -611,21 +629,18 @@ const Lela = () => {
                       status: 'loaded',
                     }
                   }
-
                   return updatedPostings
                 })
 
-                // Update progress
                 setProgress((prev) => ({
                   ...prev,
                   completed: prev.completed + 1,
                 }))
               } catch (err) {
-                // Update posting with error
+                // Update posting with error information
                 setPostings((prevPostings) => {
                   const updatedPostings = [...prevPostings]
                   const postingIndex = batchStart + index
-
                   if (postingIndex < updatedPostings.length) {
                     updatedPostings[postingIndex] = {
                       ...updatedPostings[postingIndex],
@@ -633,11 +648,9 @@ const Lela = () => {
                       errorMessage: 'Failed to load auction details',
                     }
                   }
-
                   return updatedPostings
                 })
 
-                // Still count as completed for progress tracking
                 setProgress((prev) => ({
                   ...prev,
                   completed: prev.completed + 1,
