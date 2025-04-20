@@ -328,11 +328,14 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
 
 // Function to properly capitalize names
 function capitalizeEachWord(str: string): string {
-  if (!str) return '';
-  return str.split(' ').map(word => {
-    // Apply capitalization rule to all words, including those in all caps
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  if (!str) return ''
+  return str
+    .split(' ')
+    .map((word) => {
+      // Apply capitalization rule to all words, including those in all caps
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    })
+    .join(' ')
 }
 
 // Extract posting IDs from city pages
@@ -1956,7 +1959,9 @@ Lela
                                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {capitalizeEachWord(posting.auctionNotice?.committeeName || 'N/A')}
+                              {capitalizeEachWord(
+                                posting.auctionNotice?.committeeName || 'N/A',
+                              )}
                             </td>
                             {/* Committee Organization */}
 
@@ -2115,7 +2120,8 @@ Lela
                       isDarkMode ? 'text-white' : 'text-gray-900'
                     }`}
                   >
-                    Email Template for {capitalizeEachWord(selectedAuction.address)}
+                    Email Template for{' '}
+                    {capitalizeEachWord(selectedAuction.address)}
                   </h3>
                   <button
                     onClick={() => {
