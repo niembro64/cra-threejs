@@ -326,6 +326,15 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
   }
 }
 
+// Function to properly capitalize names
+function capitalizeEachWord(str: string): string {
+  if (!str) return '';
+  return str.split(' ').map(word => {
+    // Apply capitalization rule to all words, including those in all caps
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+}
+
 // Extract posting IDs from city pages
 function extractPostingIds(htmlString: string, cityName: string): string[] {
   const parser = new DOMParser()
@@ -406,7 +415,7 @@ function extractCityInfo(htmlString: string): CityInfo[] {
   return cities
 }
 
-const Lela = () => {
+const Foreclosure = () => {
   // State variables
   const [cityList, setCityList] = useState<CityInfo[]>([])
   const [selectedCities, setSelectedCities] = useState<string[]>([])
@@ -1103,23 +1112,20 @@ const Lela = () => {
 Subject: Inquiry about property at ${address}, ${town}
 
 
-Dear ${committeeName},
+Hi ${capitalizeEachWord(committeeName)},
 
-I am writing to express my interest in the property located at ${address} in ${town}, CT, which I understand is scheduled for foreclosure auction on ${formattedSaleDate}.
+I hope your week is going well. I am reaching out regarding the property located at ${address}.
 
-I noted that this property (Docket #${docketNumber}) requires a deposit of ${dollarAmountString} and I would like to request some additional information:
+Is this auction still on? Would you please send me a note if it gets canceled?
+What is the opening bid and the appraised value?
+Is it vacant to your knowledge?
+Is there anything else important you can share with us at this time?
 
-1. Is it possible to view the property before the auction date?
-2. Are there any known issues with the property that I should be aware of?
-3. Could you please provide any additional details about the foreclosure process for this specific property?
-4. Are there any specific requirements for prospective buyers that I should prepare for?
+Thank you.
 
-I appreciate your assistance and look forward to your response.
+Kind Regards,
 
-Thank you for your time,
-Princess Lela
-walnuts@please.com
-555-555-5555
+Lela
 `
 
     return emailText
@@ -1950,7 +1956,7 @@ walnuts@please.com
                                 isDarkMode ? 'text-gray-300' : 'text-gray-700'
                               }`}
                             >
-                              {posting.auctionNotice?.committeeName || 'N/A'}
+                              {capitalizeEachWord(posting.auctionNotice?.committeeName || 'N/A')}
                             </td>
                             {/* Committee Organization */}
 
@@ -2109,7 +2115,7 @@ walnuts@please.com
                       isDarkMode ? 'text-white' : 'text-gray-900'
                     }`}
                   >
-                    Email Template for {selectedAuction.address}
+                    Email Template for {capitalizeEachWord(selectedAuction.address)}
                   </h3>
                   <button
                     onClick={() => {
@@ -2255,4 +2261,4 @@ walnuts@please.com
   )
 }
 
-export default Lela
+export default Foreclosure

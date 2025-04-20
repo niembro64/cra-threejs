@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Main from './components/Main'
 import Demo from './screens/Demo'
 import DrkClnBrand from './screens/DrkClnBrand'
-import Lela from './screens/Lela'
+import Foreclosure from './screens/Foreclosure'
 import './App.scss'
 import './drkcln-global.scss'
 // import usePageTracking from '../src/components/usePageTracking'
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/ana" element={<DrkClnBrand />} />
-          <Route path="/lela" element={<Lela />} />
+          <Route path="/foreclosure" element={<Foreclosure />} />
         </Routes>
       </div>
     </Router>
