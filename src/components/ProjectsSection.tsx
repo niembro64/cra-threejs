@@ -35,14 +35,15 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
         </p>
       </div>
-      <div className={`flex flex-col items-center ${isThin ? '' : ''}`}>
+      <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
         {projects.map((project, index) => (
           <div
             key={project.title + index}
-            className={`${isThin ? '' : 'max-w-[800px]'} `}
+            className="transition-all duration-300"
           >
             <ProjectDemo
               key={index}
+              index={index}
               project={project}
               isMuted={isMutedArray[index]}
               setIsMuted={() => {
@@ -51,7 +52,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               }}
               hasTouchedAMuteButton={hasTouchedAudioButton}
             />
-            <div className="h-16 w-full"></div>
           </div>
         ))}
       </div>

@@ -9,6 +9,8 @@ interface ProjectStoreProps {
   hasTouchedAudioButton: boolean
   connectionQuality: ConnectionQualityType | null
   setConnectionQuality: (quality: ConnectionQualityType) => void
+  activeProjectIndex: number | null
+  setActiveProjectIndex: (index: number | null) => void
 }
 
 export const ProjectStore = create<ProjectStoreProps>((set) => ({
@@ -16,6 +18,7 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
   mutedArray: [...projects.map(() => true)],
   play: true,
   connectionQuality: null,
+  activeProjectIndex: null,
   setPlay: (newPlayState: boolean) => {
     set({ hasTouchedAudioButton: true })
     set({ mutedArray: [...projects.map(() => true)] })
@@ -50,5 +53,16 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
       action: 'Connection Quality',
       label: quality,
     })
+  },
+  setActiveProjectIndex: (index: number | null) => {
+    set({ activeProjectIndex: index })
+
+    if (index !== null) {
+      ReactGA.event({
+        category: 'User',
+        action: 'Project Expanded',
+        label: projects[index].title,
+      })
+    }
   },
 }))

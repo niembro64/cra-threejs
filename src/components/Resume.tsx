@@ -7,7 +7,7 @@ import PixelArtText from './PixelArtText'
 
 import EducationSection from './EducationSection'
 import ProjectsSection from './ProjectsSection'
-import TriviaSection from './SectionTrivia'
+import TriviaSection from './Trivia'
 import SkillsSection from './SkillsSection'
 import SocialMediaSection from './SocialMediaSection'
 import WorkEnvironment from './WorkEnvironment'

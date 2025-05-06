@@ -9,7 +9,7 @@ import PixelArtText from './PixelArtText'
 const TriviaSection: React.FC = () => {
   return (
     <section className={`py-12 ${isThin ? 'bg-black/80 px-4' : ''}`}>
-      <div className="mb-8 text-center">
+      <div className="mb-8 w-full text-center">
         {showEmojis && <h1 className="mb-4 text-6xl font-bold">✨</h1>}
         {/* <h1 className="pixel-font text-6xl font-bold">TRIVIA</h1> */}
         <div className="mb-4 mt-10">
@@ -20,7 +20,7 @@ const TriviaSection: React.FC = () => {
           />
         </div>
       </div>
-      <div className={`${isThin ? '' : 'mx-60'}`}>
+      <div className={`${isThin ? '' : ''}`}>
         {/* /////////////////////////////////////////////// */}
         {/* Wikipedia */}
         {/* /////////////////////////////////////////////// */}
