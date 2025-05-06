@@ -28,10 +28,17 @@
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%2300ff00' d='M11.5,1 L11.5,4 M8,2.5 L15,2.5 M7,11.5 L17,11.5 M11.5,7 L11.5,16 M4.5,4.5 L19.5,19.5 M19.5,4.5 L4.5,19.5'/%3E%3C/svg%3E") 12 12, auto;
 }
 
-/* Selection styles */
-::selection {
+/* Selection styles - Only apply to drkcln-page or its children */
+.drkcln-page ::selection {
   background: rgba(0, 255, 0, 0.2);
   color: #00ff00;
+}
+
+/* Default selection styles for other pages - intense neon yellow */
+::selection {
+  background: #ffff00; /* Fully opaque, vibrant yellow */
+  color: #000000; /* Black text for maximum contrast */
+  text-shadow: 0 0 3px #ffff00; /* Glow effect */
 }
 
 /* Focus styles */
@@ -52,12 +59,6 @@
 
 .matrix-flicker {
   animation: matrix-flicker 6s infinite;
-}
-
-/* Custom colors for text highlight/selection */
-::selection {
-  background-color: rgba(0, 255, 0, 0.2);
-  color: #00ff00;
 }
 
 /* Specific style for brand pages */

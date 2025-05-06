@@ -137,7 +137,7 @@ const DrkClnBrand: React.FC = () => {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-black font-mono text-green-400">
+    <div className="drkcln-page relative min-h-screen overflow-x-hidden bg-black font-mono text-green-400">
       <div className="z-50 p-4">
         <a
           href="https://niemo.io"
