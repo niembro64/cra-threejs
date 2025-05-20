@@ -117,7 +117,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   const isActive = activeProjectIndex === index
   return (
     <div
-      className={`w-full overflow-hidden rounded-2xl transition-all duration-300 ${isActive ? '' : ''}`}
+      className={`w-full rounded-2xl transition-all duration-300 ${isActive ? '' : ''}`}
     >
       <div className="mb-4 flex flex-row items-center justify-center text-center">
         {project.icon && (
@@ -135,10 +135,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
       {/* LAZY LOADED MEDIA - Clickable to expand */}
       <div
         ref={mediaRef}
-        className={`relative transform cursor-pointer transition-transform duration-300 hover:scale-[1.01] ${isThin ? '' : ''}`}
+        className={`relative flex transform cursor-pointer flex-row justify-center p-4 transition-transform duration-300 ${isThin ? '' : ''}`}
         onClick={handleMediaClick}
       >
-        {inView && mediaSrc && (
+        {inView && mediaSrc && isThin && (
           <>
             {isVideo(mediaSrc) && (
               <video
@@ -159,6 +159,33 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             {isImage(mediaSrc) && (
               <img
                 className="w-full rounded-3xl object-cover"
+                src={mediaBasePath + mediaSrc}
+                alt="static fallback"
+              />
+            )}
+          </>
+        )}
+        {inView && mediaSrc && !isThin && (
+          <>
+            {isVideo(mediaSrc) && (
+              <video
+                className="h-auto w-[70%] rounded-3xl"
+                src={mediaBasePath + mediaSrc}
+                autoPlay
+                muted={isMuted}
+                loop
+              />
+            )}
+            {isGif(mediaSrc) && (
+              <img
+                className="w-[70%] rounded-3xl object-cover"
+                src={mediaBasePath + mediaSrc}
+                alt="gif"
+              />
+            )}
+            {isImage(mediaSrc) && (
+              <img
+                className="w-[70%] rounded-3xl object-cover"
                 src={mediaBasePath + mediaSrc}
                 alt="static fallback"
               />

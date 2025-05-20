@@ -303,10 +303,37 @@ export interface Project {
 
 export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
 
-const phaserIcon = 'phaser-icon.png'
-const threeJsIcon = 'threejs.png'
+const iconPhaser = 'phaser-icon.png'
+const iconThreeJs = 'threejs.png'
+const iconReact = 'react.png'
 
 export const projects: Project[] = [
+  {
+    dates: '2025 - Ongoing',
+    projectStatus: 'ok',
+    title: 'Attention Mechanism',
+    url: 'https://games.niemo.io/attention',
+    stack: ['React', 'Tailwind'],
+    type: 'Demonstration of Attention Mechanism in Transformer Models',
+    bullets: [
+      'Tokenizer',
+      'Add & Remove Tokens',
+      'Attention Mechanism',
+      'MLP Layer',
+      'Next Token Prediction',
+      '"Training" Mode',
+    ],
+    icon: iconReact,
+    image: 'attention.jpg',
+    gif: 'attention.gif',
+    video: 'attention.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Play',
+    description:
+      'This project is a demonstration of the attention mechanism in transformer models. Wiggle the values to see how they affect the output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
+  },
   {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
@@ -320,7 +347,7 @@ export const projects: Project[] = [
       'Scripted Bots',
       'Neural Network Bots',
     ],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'smashed.jpg',
     gif: 'smashed.gif',
     video: 'smashed.mp4',
@@ -345,7 +372,7 @@ export const projects: Project[] = [
       'Client-Side Prediction',
       'Server-Client Reconciliation',
     ],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
@@ -368,7 +395,7 @@ export const projects: Project[] = [
       'Desktop Mouse & Keyboard',
       // 'Original Sounds Effects',
     ],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'galaxydestroyer.jpg',
     gif: 'galaxydestroyer.gif',
     video: 'galaxydestroyer.mp4',
@@ -391,7 +418,7 @@ export const projects: Project[] = [
       'Desktop Mouse & Keyboard',
       'Best Experience = Desktop',
     ],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'tanks.jpg',
     gif: 'tanks.gif',
     video: 'tanks.mp4',
@@ -410,7 +437,7 @@ export const projects: Project[] = [
     stack: ['Phaser', 'React'],
     type: 'Navigation Game',
     bullets: ['Mouse & Keyboard Controls', 'Mobile Touch Controls'],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'projects.jpg',
     gif: 'projects.gif',
     video: 'projects.mp4',
@@ -434,7 +461,7 @@ export const projects: Project[] = [
       'Set the Rules',
       'Watch the Tournament',
     ],
-    icon: phaserIcon,
+    icon: iconPhaser,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
     video: 'axelrod.mp4',
@@ -453,7 +480,7 @@ export const projects: Project[] = [
     stack: ['ThreeJS', 'React'],
     type: '3D Driving Simulation',
     bullets: ['Keyboard Controls', 'Vibe Coding'],
-    icon: threeJsIcon,
+    icon: iconThreeJs,
     image: 'drive.jpg',
     gif: 'drive.gif',
     video: 'drive.mp4',
@@ -492,7 +519,7 @@ export const projects: Project[] = [
     description:
       'A simple, clean, pirate management system, with CRUD database operations.',
     bullets: ['Create, Read, Update, Delete', 'Front & Backend Validation'],
-    icon: 'react.png',
+    icon: iconReact,
     image: 'pirates.jpg',
     gif: 'pirates.gif',
     video: 'pirates.mp4',
