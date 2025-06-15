@@ -12,7 +12,13 @@
       }
     ],
     "no-inline-styles": "off",
-    "axe/name-role-value": "off"
+    "axe/name-role-value": "off",
+    "axe/forms": [
+      "default",
+      {
+        "select-name": "off"
+      }
+    ]
   },
   "browserslist": [
     "defaults",
