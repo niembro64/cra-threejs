@@ -338,11 +338,7 @@ const YouTubeDownloader: React.FC = () => {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 text-sm font-medium transition-colors ${
-                    activeTab === tab
-                      ? 'border-b-2 border-blue-400 text-blue-300'
-                      : 'text-blue-500 hover:text-blue-300'
-                  }`}
+                  className={`px-6 py-3 text-sm font-medium transition-colors ${activeTab === tab ? 'border-b-2 border-blue-400 text-blue-300' : 'text-blue-500 hover:text-blue-300'}`}
                 >
                   {tab === 'quick' ? 'Quick Download' : 'Advanced Options'}
                 </button>

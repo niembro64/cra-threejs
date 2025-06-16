@@ -5,6 +5,7 @@ import Demo from './screens/Demo'
 import DrkClnBrand from './screens/DrkClnBrand'
 import Foreclosure from './screens/Foreclosure'
 import YouTubeDownloaderPage from './screens/YouTubeDownloaderPage'
+import AudioEditor from './screens/AudioEditor'
 import StatusBar from './components/StatusBar'
 import './App.scss'
 import './drkcln-global.scss'
@@ -21,6 +22,7 @@ function App() {
           <Route path="/ana" element={<DrkClnBrand />} />
           <Route path="/foreclosure" element={<Foreclosure />} />
           <Route path="/youtube-download" element={<YouTubeDownloaderPage />} />
+          <Route path="/audio_edit" element={<AudioEditor />} />
         </Routes>
       </div>
     </Router>
