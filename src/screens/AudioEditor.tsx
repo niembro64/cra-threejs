@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 
 interface AudioRegion {
   start: number
@@ -8,543 +8,401 @@ interface AudioRegion {
 
 type DragMode = 'none' | 'selecting' | 'start-handle' | 'end-handle' | 'seeking'
 
+const PIXEL_SELECT_THRESHOLD = 4
+
 const AudioEditor: React.FC = () => {
+  /* ────────────────────────── state ────────────────────────── */
   const [audioFile, setAudioFile] = useState<File | null>(null)
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [playingSelection, setPlayingSelection] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [selectedRegion, setSelectedRegion] = useState<AudioRegion | null>(null)
   const [dragMode, setDragMode] = useState<DragMode>('none')
-  const [dragStart, setDragStart] = useState(0)
+  const [dragStartTime, setDragStartTime] = useState(0)
+  const [dragStartX, setDragStartX] = useState(0)
   const [hoverTime, setHoverTime] = useState<number | null>(null)
   const [showGrid, setShowGrid] = useState(true)
-  const [playingSelection, setPlayingSelection] = useState(false)
 
-  // Input fields for precise selection
+  /* precise‑edit inputs */
   const [startInput, setStartInput] = useState('')
   const [endInput, setEndInput] = useState('')
+  const [isTypingStart, setIsTypingStart] = useState(false)
+  const [isTypingEnd, setIsTypingEnd] = useState(false)
 
+  /* ─────────────────────────── refs ────────────────────────── */
   const audioContext = useRef<AudioContext | null>(null)
   const audioSource = useRef<AudioBufferSourceNode | null>(null)
+  const startTimeRef = useRef(0) // offset for sync
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const startTime = useRef<number>(0)
-  const animationFrame = useRef<number>()
+  const raf = useRef<number>()
 
+  /* ─────────────────────── helpers ─────────────────────── */
+  const formatTime = (s: number) =>
+    `${Math.floor(s / 60)}:${(s % 60).toFixed(2).padStart(5, '0')}`
+
+  const rect = () => canvasRef.current!.getBoundingClientRect()
+  const timeFromX = (x: number) =>
+    Math.max(0, Math.min((x / rect().width) * duration, duration))
+  const xFromTime = (t: number) => (t / duration) * rect().width
+  const near = (x: number, t: number, px = 8) =>
+    Math.abs(x - xFromTime(t)) <= px
+
+  /* ─────────────────────────── init ─────────────────────────── */
   useEffect(() => {
     audioContext.current = new (window.AudioContext ||
       (window as any).webkitAudioContext)()
+
     return () => {
+      // Cleanup must be synchronous; don't use async/await here
       if (audioContext.current) {
         audioContext.current.close()
       }
     }
   }, [])
 
-  const handleFileDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    const files = e.dataTransfer.files
-    if (files.length > 0 && files[0].type.startsWith('audio/')) {
-      setAudioFile(files[0])
-      loadAudioFile(files[0])
-    }
-  }
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files && files.length > 0) {
-      setAudioFile(files[0])
-      loadAudioFile(files[0])
-    }
-  }
-
+  /* ─────────────────── load / decode audio ─────────────────── */
   const loadAudioFile = async (file: File) => {
-    try {
-      const arrayBuffer = await file.arrayBuffer()
-      const decodedData =
-        await audioContext.current!.decodeAudioData(arrayBuffer)
-      setAudioBuffer(decodedData)
-      setDuration(decodedData.duration)
-      setCurrentTime(0)
-      setSelectedRegion(null)
-    } catch (error) {
-      console.error('Error loading audio file:', error)
-    }
+    if (!audioContext.current) return
+    const buf = await audioContext.current.decodeAudioData(
+      await file.arrayBuffer(),
+    )
+    setAudioFile(file)
+    setAudioBuffer(buf)
+    setDuration(buf.duration)
+    setCurrentTime(0)
+    setSelectedRegion(null)
   }
 
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60)
-    const secs = (seconds % 60).toFixed(2)
-    return `${mins}:${secs.padStart(5, '0')}`
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    const f = e.dataTransfer.files?.[0]
+    if (f?.type.startsWith('audio/')) loadAudioFile(f)
+  }
+  const onChoose = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0]
+    if (f) loadAudioFile(f)
   }
 
-  // Unified Animation System
-  const stopAnimationLoop = () => {
-    if (animationFrame.current) {
-      cancelAnimationFrame(animationFrame.current)
-      animationFrame.current = undefined
-    }
-  }
-
-  const startAnimationLoop = (startOffset: number, endTime?: number) => {
-    stopAnimationLoop()
-
-    const updateTime = () => {
-      if (audioContext.current && audioSource.current) {
-        const elapsed = audioContext.current.currentTime - startTime.current
-        const newTime = startOffset + elapsed
-        const maxTime = endTime || audioBuffer!.duration
-
-        setCurrentTime(Math.max(startOffset, Math.min(newTime, maxTime)))
-        animationFrame.current = requestAnimationFrame(updateTime)
+  /* ───────────── pre‑compute down‑sampled peaks ───────────── */
+  const peaks = useMemo(() => {
+    if (!audioBuffer) return null
+    const W = 800
+    const ch = audioBuffer.getChannelData(0)
+    const spp = Math.ceil(ch.length / W)
+    const out: { min: number; max: number }[] = []
+    for (let i = 0; i < W; i++) {
+      let mn = 1,
+        mx = -1
+      for (let j = i * spp; j < Math.min((i + 1) * spp, ch.length); j++) {
+        const v = ch[j]
+        if (v < mn) mn = v
+        if (v > mx) mx = v
       }
+      if (mn === 1 && mx === -1) mn = mx = 0
+      out.push({ min: mn, max: mx })
     }
+    return out
+  }, [audioBuffer])
 
-    animationFrame.current = requestAnimationFrame(updateTime)
-  }
-
-  // Unified Playback System
-  const startPlayback = (
-    startOffset: number,
-    endTime?: number,
-    isSelectionPlayback = false,
-  ) => {
-    if (!audioBuffer || !audioContext.current) return
-
-    // Stop any existing playback
-    stopPlayback()
-
-    // Create and configure audio source
-    const source = audioContext.current.createBufferSource()
-    source.buffer = audioBuffer
-    source.connect(audioContext.current.destination)
-
-    const playDuration = (endTime || audioBuffer.duration) - startOffset
-    source.start(0, startOffset, playDuration)
-
-    // Update state
-    audioSource.current = source
-    setIsPlaying(true)
-    setPlayingSelection(isSelectionPlayback)
-    setCurrentTime(startOffset)
-    startTime.current = audioContext.current.currentTime
-
-    // Start animation
-    startAnimationLoop(startOffset, endTime)
-
-    // Handle playback end
-    source.onended = () => {
-      setIsPlaying(false)
-      setPlayingSelection(false)
-      stopAnimationLoop()
-
-      if (isSelectionPlayback && selectedRegion) {
-        setCurrentTime(selectedRegion.start)
-      }
-    }
-  }
-
-  const stopPlayback = () => {
-    if (audioSource.current) {
-      audioSource.current.stop()
-      audioSource.current = null
-    }
-    stopAnimationLoop()
-  }
-
-  const drawWaveform = (buffer: AudioBuffer) => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')!
-    const width = canvas.width
-    const height = canvas.height
-
-    // Clear canvas
+  /* ───────────── draw static waveform + grid ───────────── */
+  useEffect(() => {
+    if (!peaks) return
+    const ctx = canvasRef.current!.getContext('2d')!
+    const { width, height } = canvasRef.current!
     ctx.fillStyle = '#1a1a1a'
     ctx.fillRect(0, 0, width, height)
 
-    // Draw grid if enabled
     if (showGrid) {
-      ctx.strokeStyle = '#333333'
+      const step = duration > 60 ? 10 : duration > 10 ? 1 : 0.1
+      ctx.strokeStyle = '#333'
       ctx.lineWidth = 1
-      const gridInterval = duration > 60 ? 10 : duration > 10 ? 1 : 0.1
-
-      for (let t = 0; t < duration; t += gridInterval) {
+      for (let t = 0; t <= duration; t += step) {
         const x = (t / duration) * width
         ctx.beginPath()
         ctx.moveTo(x, 0)
         ctx.lineTo(x, height)
         ctx.stroke()
-
-        // Draw time labels
-        ctx.fillStyle = '#666666'
+        ctx.fillStyle = '#666'
         ctx.font = '10px monospace'
         ctx.fillText(formatTime(t), x + 2, 12)
       }
     }
 
-    // Draw waveform
-    const data = buffer.getChannelData(0)
-    const samplesPerPixel = Math.ceil(data.length / width)
-    const amp = height / 2
-
-    ctx.strokeStyle = '#00ff00'
-    ctx.lineWidth = 1
+    ctx.strokeStyle = '#0f0'
     ctx.beginPath()
-
-    for (let i = 0; i < width; i++) {
-      let min = 1
-      let max = -1
-
-      const sampleStart = i * samplesPerPixel
-      const sampleEnd = Math.min(sampleStart + samplesPerPixel, data.length)
-
-      for (let j = sampleStart; j < sampleEnd; j++) {
-        const datum = data[j] || 0
-        if (datum < min) min = datum
-        if (datum > max) max = datum
-      }
-
-      if (min === 1 && max === -1) {
-        min = max = 0
-      }
-
-      ctx.moveTo(i, (1 + min) * amp)
-      ctx.lineTo(i, (1 + max) * amp)
-    }
-
+    const amp = height / 2
+    peaks.forEach((p, i) => {
+      ctx.moveTo(i, (1 + p.min) * amp)
+      ctx.lineTo(i, (1 + p.max) * amp)
+    })
     ctx.stroke()
+  }, [peaks, showGrid, duration])
 
-    // Draw selected region
+  /* ───────────── overlay (selection / play‑head / hover) ───────────── */
+  const drawOverlay = () => {
+    if (!audioBuffer) return
+    const ctx = canvasRef.current!.getContext('2d')!
+    const { width, height } = canvasRef.current!
+    ctx.clearRect(0, 0, width, height)
+
     if (selectedRegion) {
-      const startX = (selectedRegion.start / duration) * width
-      const endX = (selectedRegion.end / duration) * width
-
-      // Selection background
-      ctx.fillStyle = 'rgba(255, 255, 0, 0.2)'
-      ctx.fillRect(startX, 0, endX - startX, height)
-
-      // Selection borders
-      ctx.strokeStyle = '#ffff00'
+      const sx = (selectedRegion.start / duration) * width
+      const ex = (selectedRegion.end / duration) * width
+      ctx.fillStyle = 'rgba(255,255,0,0.2)'
+      ctx.fillRect(sx, 0, ex - sx, height)
+      ctx.strokeStyle = '#ff0'
       ctx.lineWidth = 2
       ctx.beginPath()
-      ctx.moveTo(startX, 0)
-      ctx.lineTo(startX, height)
-      ctx.moveTo(endX, 0)
-      ctx.lineTo(endX, height)
+      ctx.moveTo(sx, 0)
+      ctx.lineTo(sx, height)
+      ctx.moveTo(ex, 0)
+      ctx.lineTo(ex, height)
       ctx.stroke()
-
-      // Selection handles
-      const handleSize = 8
-      ctx.fillStyle = '#ffff00'
-      // Start handle
-      ctx.fillRect(
-        startX - handleSize / 2,
-        height / 2 - handleSize / 2,
-        handleSize,
-        handleSize,
-      )
-      // End handle
-      ctx.fillRect(
-        endX - handleSize / 2,
-        height / 2 - handleSize / 2,
-        handleSize,
-        handleSize,
-      )
+      const h = 8
+      ctx.fillStyle = '#ff0'
+      ctx.fillRect(sx - h / 2, height / 2 - h / 2, h, h)
+      ctx.fillRect(ex - h / 2, height / 2 - h / 2, h, h)
     }
 
-    // Draw hover line
     if (hoverTime !== null) {
-      const hoverX = (hoverTime / duration) * width
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'
-      ctx.lineWidth = 1
-      ctx.setLineDash([5, 5])
+      const hx = (hoverTime / duration) * width
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)'
+      ctx.setLineDash([4, 4])
       ctx.beginPath()
-      ctx.moveTo(hoverX, 0)
-      ctx.lineTo(hoverX, height)
+      ctx.moveTo(hx, 0)
+      ctx.lineTo(hx, height)
       ctx.stroke()
       ctx.setLineDash([])
     }
 
-    // Draw playback position
-    const playbackX = (currentTime / duration) * width
-
-    // Draw playback line
-    ctx.strokeStyle = '#ff0000'
+    const px = (currentTime / duration) * width
+    ctx.strokeStyle = '#f00'
     ctx.lineWidth = 3
     ctx.beginPath()
-    ctx.moveTo(playbackX, 0)
-    ctx.lineTo(playbackX, height)
+    ctx.moveTo(px, 0)
+    ctx.lineTo(px, height)
     ctx.stroke()
-
-    // Draw playback head (draggable handle)
-    const headSize = 12
-    ctx.fillStyle = '#ff0000'
-    ctx.strokeStyle = '#ffffff'
+    ctx.fillStyle = '#f00'
+    ctx.strokeStyle = '#fff'
     ctx.lineWidth = 2
-
-    // Draw circle at top
     ctx.beginPath()
-    ctx.arc(playbackX, headSize / 2, headSize / 2, 0, 2 * Math.PI)
+    ctx.arc(px, 6, 6, 0, Math.PI * 2)
     ctx.fill()
     ctx.stroke()
-
-    // Draw triangle pointer
-    ctx.fillStyle = '#ff0000'
     ctx.beginPath()
-    ctx.moveTo(playbackX - 6, headSize)
-    ctx.lineTo(playbackX + 6, headSize)
-    ctx.lineTo(playbackX, headSize + 8)
+    ctx.moveTo(px - 6, 12)
+    ctx.lineTo(px + 6, 12)
+    ctx.lineTo(px, 20)
     ctx.closePath()
     ctx.fill()
     ctx.stroke()
   }
+  useEffect(drawOverlay, [currentTime, hoverTime, selectedRegion, duration])
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      pause()
-    } else {
-      play()
+  /* ──────────────── audio (play / pause / seek) ─────────────── */
+  const stopSource = () => {
+    try {
+      audioSource.current?.stop()
+    } catch {
+      // handle potential errors when stopping the source
+      console.warn('Error stopping audio source')
+    }
+    audioSource.current?.disconnect()
+    audioSource.current = null
+  }
+
+  const startPlayback = async (offset: number, end?: number, slice = false) => {
+    if (!audioBuffer || !audioContext.current) return
+    if (audioContext.current.state === 'suspended')
+      await audioContext.current.resume()
+    stopSource()
+    const src = audioContext.current.createBufferSource()
+    src.buffer = audioBuffer
+    src.connect(audioContext.current.destination)
+    const len = (end ?? audioBuffer.duration) - offset
+    if (len <= 0) return
+    src.start(0, offset, len)
+    audioSource.current = src
+    setIsPlaying(true)
+    setPlayingSelection(slice)
+    startTimeRef.current = audioContext.current.currentTime - offset
+
+    const step = () => {
+      if (!audioContext.current) return
+      const now = audioContext.current.currentTime - startTimeRef.current
+      setCurrentTime(Math.min(now, end ?? audioBuffer.duration))
+      raf.current = requestAnimationFrame(step)
+    }
+    raf.current = requestAnimationFrame(step)
+
+    src.onended = () => {
+      cancelAnimationFrame(raf.current!)
+      setIsPlaying(false)
+      setPlayingSelection(false)
+      if (slice && selectedRegion) setCurrentTime(selectedRegion.start)
     }
   }
 
-  const play = () => {
-    startPlayback(currentTime)
-  }
-
-  const playSelection = () => {
-    if (!selectedRegion) return
-    startPlayback(selectedRegion.start, selectedRegion.end, true)
-  }
-
   const pause = () => {
-    stopPlayback()
+    stopSource()
+    cancelAnimationFrame(raf.current!)
     setIsPlaying(false)
     setPlayingSelection(false)
   }
 
   const seekTo = (time: number) => {
-    const wasPlaying = isPlaying
-    const wasPlayingSelection = playingSelection
-
-    // Stop current playback
-    stopPlayback()
-    setIsPlaying(false)
-    setPlayingSelection(false)
-
-    // Update position immediately
+    const resume = isPlaying
+    const slice = playingSelection
+    pause()
     setCurrentTime(time)
-
-    // If was playing, restart from new position
-    if (wasPlaying) {
+    if (resume) {
       if (
-        wasPlayingSelection &&
+        slice &&
         selectedRegion &&
         time >= selectedRegion.start &&
         time <= selectedRegion.end
-      ) {
-        // Continue playing selection from new position
+      )
         startPlayback(time, selectedRegion.end, true)
-      } else {
-        // Normal playback from new position
-        startPlayback(time)
-      }
+      else startPlayback(time)
     }
   }
 
-  // Mouse Coordinate Utilities
-  const getCanvasRect = () => canvasRef.current!.getBoundingClientRect()
-
-  const getTimeFromX = (x: number): number => {
-    const rect = getCanvasRect()
-    return Math.max(0, Math.min((x / rect.width) * duration, duration))
-  }
-
-  const getXFromTime = (time: number): number => {
-    const rect = getCanvasRect()
-    return (time / duration) * rect.width
-  }
-
-  // Interaction Detection Utilities
-  const isNearHandle = (
-    x: number,
-    handleTime: number,
-    threshold: number = 8,
-  ): boolean => {
-    const handleX = getXFromTime(handleTime)
-    return Math.abs(x - handleX) <= threshold
-  }
-
-  const isNearPlaybackPosition = (
-    x: number,
-    threshold: number = 15,
-  ): boolean => {
-    const playbackX = getXFromTime(currentTime)
-    return Math.abs(x - playbackX) <= threshold
-  }
-
-  const detectInteractionMode = (x: number): DragMode => {
-    // Priority order: handles, then playback position, then selection
+  /* ─────────────── interaction mode helpers ─────────────── */
+  const detectMode = (x: number): DragMode => {
     if (selectedRegion) {
-      if (isNearHandle(x, selectedRegion.start)) return 'start-handle'
-      if (isNearHandle(x, selectedRegion.end)) return 'end-handle'
+      if (near(x, selectedRegion.start)) return 'start-handle'
+      if (near(x, selectedRegion.end)) return 'end-handle'
     }
-
-    if (isNearPlaybackPosition(x)) return 'seeking'
-
+    if (near(x, currentTime, 15)) return 'seeking'
     return 'selecting'
   }
-
-  const getCursorForPosition = (x: number): string => {
+  const cursorFor = (x: number) => {
     if (
       selectedRegion &&
-      (isNearHandle(x, selectedRegion.start) ||
-        isNearHandle(x, selectedRegion.end))
-    ) {
+      (near(x, selectedRegion.start) || near(x, selectedRegion.end))
+    )
       return 'ew-resize'
-    }
-    if (isNearPlaybackPosition(x)) {
-      return 'grab'
-    }
+    if (near(x, currentTime, 15)) return 'grab'
     return 'crosshair'
   }
 
-  const handleCanvasMouseDown = (e: React.MouseEvent) => {
+  /* ─────────────── canvas mouse events ─────────────── */
+  const onMouseDown = (e: React.MouseEvent) => {
     if (!audioBuffer) return
-
-    const rect = getCanvasRect()
-    const x = e.clientX - rect.left
-    const time = getTimeFromX(x)
-    const mode = detectInteractionMode(x)
-
-    setDragStart(time)
+    if (isPlaying) pause()
+    const x = e.clientX - rect().left
+    const t = timeFromX(x)
+    const mode = detectMode(x)
     setDragMode(mode)
+    setDragStartTime(t)
+    setDragStartX(x)
 
-    // For any non-handle click, immediately seek
-    if (mode === 'selecting' || mode === 'seeking') {
-      seekTo(time)
+    if (mode === 'seeking') {
+      // click on play‑head behaves like simple seek
+      seekTo(t)
     }
   }
 
-  const handleCanvasMouseMove = (e: React.MouseEvent) => {
+  const onMouseMove = (e: React.MouseEvent) => {
     if (!audioBuffer) return
+    const x = e.clientX - rect().left
+    const t = timeFromX(x)
+    setHoverTime(t)
+    canvasRef.current!.style.cursor = cursorFor(x)
 
-    const rect = getCanvasRect()
-    const x = e.clientX - rect.left
-    const time = getTimeFromX(x)
-    const canvas = canvasRef.current!
-
-    setHoverTime(time)
-    canvas.style.cursor = getCursorForPosition(x)
-
-    // Handle different drag modes
     switch (dragMode) {
-      case 'seeking':
-        // Check if becoming a selection (significant drag)
-        if (Math.abs(time - dragStart) > 0.5) {
+      case 'seeking': {
+        const delta = Math.abs(x - dragStartX)
+        if (delta > PIXEL_SELECT_THRESHOLD) {
           setDragMode('selecting')
-          const start = Math.min(dragStart, time)
-          const end = Math.max(dragStart, time)
-          setSelectedRegion({ start, end })
+          setSelectedRegion({
+            start: Math.min(dragStartTime, t),
+            end: Math.max(dragStartTime, t),
+          })
         } else {
-          setCurrentTime(time)
+          setCurrentTime(t)
         }
         break
-
+      }
       case 'selecting':
-        const start = Math.min(dragStart, time)
-        const end = Math.max(dragStart, time)
-        setSelectedRegion({ start, end })
+        setSelectedRegion({
+          start: Math.min(dragStartTime, t),
+          end: Math.max(dragStartTime, t),
+        })
         break
-
       case 'start-handle':
-        if (selectedRegion) {
+        if (selectedRegion)
           setSelectedRegion({
-            start: Math.max(0, Math.min(time, selectedRegion.end - 0.1)),
+            start: Math.max(0, Math.min(t, selectedRegion.end - 0.1)),
             end: selectedRegion.end,
           })
-        }
         break
-
       case 'end-handle':
-        if (selectedRegion) {
+        if (selectedRegion)
           setSelectedRegion({
             start: selectedRegion.start,
-            end: Math.min(duration, Math.max(time, selectedRegion.start + 0.1)),
+            end: Math.min(duration, Math.max(t, selectedRegion.start + 0.1)),
           })
-        }
         break
     }
   }
 
-  const handleCanvasMouseUp = (e: React.MouseEvent) => {
-    const rect = getCanvasRect()
-    const x = e.clientX - rect.left
-    const time = getTimeFromX(x)
-
-    // Finalize seeking operations
-    if (dragMode === 'seeking') {
-      seekTo(time)
-    }
-
+  const onMouseUp = (e: React.MouseEvent) => {
+    const x = e.clientX - rect().left
+    const t = timeFromX(x)
+    if (dragMode === 'seeking') seekTo(t)
     setDragMode('none')
   }
 
-  const handleCanvasMouseLeave = () => {
-    setHoverTime(null)
-  }
+  const onMouseLeave = () => setHoverTime(null)
 
-  const handleStartInputChange = (value: string) => {
-    setStartInput(value)
-    const time = parseFloat(value)
-    if (!isNaN(time) && selectedRegion) {
+  /* ─────────────── precise‑edit inputs ─────────────── */
+  const onStartChange = (v: string) => {
+    setStartInput(v)
+    const num = parseFloat(v)
+    if (!isNaN(num) && selectedRegion) {
       setSelectedRegion({
-        start: Math.max(0, Math.min(time, selectedRegion.end - 0.1)),
+        start: Math.max(0, Math.min(num, selectedRegion.end - 0.1)),
         end: selectedRegion.end,
       })
     }
   }
-
-  const handleEndInputChange = (value: string) => {
-    setEndInput(value)
-    const time = parseFloat(value)
-    if (!isNaN(time) && selectedRegion) {
+  const onEndChange = (v: string) => {
+    setEndInput(v)
+    const num = parseFloat(v)
+    if (!isNaN(num) && selectedRegion) {
       setSelectedRegion({
         start: selectedRegion.start,
-        end: Math.min(duration, Math.max(time, selectedRegion.start + 0.1)),
+        end: Math.min(duration, Math.max(num, selectedRegion.start + 0.1)),
       })
     }
   }
 
   useEffect(() => {
-    if (selectedRegion) {
-      setStartInput(selectedRegion.start.toFixed(2))
-      setEndInput(selectedRegion.end.toFixed(2))
-    } else {
+    if (!selectedRegion) {
       setStartInput('')
       setEndInput('')
+      return
     }
-  }, [selectedRegion])
+    if (!isTypingStart) setStartInput(selectedRegion.start.toFixed(2))
+    if (!isTypingEnd) setEndInput(selectedRegion.end.toFixed(2))
+  }, [selectedRegion, isTypingStart, isTypingEnd])
 
+  /* ───────────── keyboard space toggle ───────────── */
   useEffect(() => {
-    if (audioBuffer && duration > 0) {
-      drawWaveform(audioBuffer)
-    }
-  }, [audioBuffer, currentTime, selectedRegion, hoverTime, showGrid, duration])
-
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
+    const h = (e: KeyboardEvent) => {
       if (e.code === 'Space' && audioBuffer) {
         e.preventDefault()
-        togglePlayPause()
+        isPlaying ? pause() : startPlayback(currentTime)
       }
     }
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
+  }, [audioBuffer, isPlaying, currentTime])
 
-    window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [audioBuffer, isPlaying])
-
+  /* ────────────────────────── UI ────────────────────────── */
   return (
     <div className="min-h-screen bg-gray-900 p-8 text-white">
       <div className="mx-auto max-w-6xl">
@@ -553,216 +411,132 @@ const AudioEditor: React.FC = () => {
         {!audioFile ? (
           <div
             className="rounded-lg border-2 border-dashed border-gray-500 p-16 text-center transition-colors hover:border-gray-400"
-            onDrop={handleFileDrop}
+            onDrop={onDrop}
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={(e) => e.preventDefault()}
           >
-            <div className="mb-4">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
             <p className="mb-4 text-xl">Drag and drop an audio file here</p>
             <p className="mb-4 text-gray-400">or</p>
             <label className="inline-flex cursor-pointer items-center rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700">
               <span>Choose File</span>
               <input
                 type="file"
-                className="hidden"
                 accept="audio/*"
-                onChange={handleFileSelect}
+                className="hidden"
+                onChange={onChoose}
               />
             </label>
-            <p className="mt-4 text-sm text-gray-400">
-              Supports MP3, WAV, OGG, and other audio formats
-            </p>
           </div>
         ) : (
           <div className="rounded-lg bg-gray-800 p-6">
-            <div className="mb-4">
-              <h2 className="mb-2 text-xl font-semibold">{audioFile.name}</h2>
-              <div className="mb-4 flex items-center space-x-4">
-                <button
-                  onClick={togglePlayPause}
-                  className="flex items-center space-x-2 rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
-                >
-                  {isPlaying ? (
-                    <>
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>Pause</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>Play{playingSelection ? ' (Selection)' : ''}</span>
-                    </>
-                  )}
-                </button>
-
-                {selectedRegion && (
+            {/* controls */}
+            <div className="mb-4 flex flex-wrap gap-3">
+              <button
+                onClick={isPlaying ? pause : () => startPlayback(currentTime)}
+                className="flex items-center space-x-2 rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
+              >
+                {isPlaying
+                  ? 'Pause'
+                  : `Play${playingSelection ? ' (Slice)' : ''}`}
+              </button>
+              {selectedRegion && (
+                <>
                   <button
-                    onClick={playSelection}
-                    className="flex items-center space-x-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+                    onClick={() =>
+                      startPlayback(
+                        selectedRegion.start,
+                        selectedRegion.end,
+                        true,
+                      )
+                    }
+                    className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
                   >
-                    <svg
-                      className="h-5 w-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <span>Play Selection</span>
+                    Play Selection
                   </button>
-                )}
-
-                {selectedRegion && (
                   <button
                     onClick={() => setSelectedRegion(null)}
-                    className="flex items-center space-x-2 rounded-lg bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
+                    className="rounded-lg bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
                   >
-                    <span>Clear Selection</span>
+                    Clear Selection
                   </button>
-                )}
-              </div>
-
-              {/* View Controls and Instructions */}
-              <div className="mb-4 flex items-center justify-between">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={showGrid}
-                    onChange={(e) => setShowGrid(e.target.checked)}
-                    className="rounded"
-                  />
-                  <span className="text-sm">Show Grid</span>
-                </label>
-                <div className="text-xs text-gray-400">
-                  💡 Click to seek • Drag red line to scrub • Spacebar to
-                  play/pause
-                </div>
-              </div>
+                </>
+              )}
             </div>
 
-            {/* Time Display */}
-            <div className="mb-4 rounded-lg bg-gray-700 p-3">
-              <div className="flex items-center justify-between text-sm">
+            {/* info */}
+            <div className="mb-4 flex flex-wrap justify-between gap-3 rounded-lg bg-gray-700 p-3 text-sm">
+              <div>
+                <span className="text-gray-300">Current: </span>
+                <span className="font-mono text-white">
+                  {formatTime(currentTime)}
+                </span>
+              </div>
+              <div>
+                <span className="text-gray-300">Duration: </span>
+                <span className="font-mono text-white">
+                  {formatTime(duration)}
+                </span>
+              </div>
+              {hoverTime !== null && (
                 <div>
-                  <span className="text-gray-300">Current: </span>
-                  <span className="font-mono text-white">
-                    {formatTime(currentTime)}
+                  <span className="text-gray-300">Hover: </span>
+                  <span className="font-mono text-yellow-300">
+                    {formatTime(hoverTime)}
                   </span>
                 </div>
-                <div>
-                  <span className="text-gray-300">Duration: </span>
-                  <span className="font-mono text-white">
-                    {formatTime(duration)}
-                  </span>
-                </div>
-                {hoverTime !== null && (
-                  <div>
-                    <span className="text-gray-300">Hover: </span>
-                    <span className="font-mono text-yellow-300">
-                      {formatTime(hoverTime)}
-                    </span>
-                  </div>
-                )}
-              </div>
+              )}
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={showGrid}
+                  onChange={(e) => setShowGrid(e.target.checked)}
+                />
+                <span className="text-xs">Grid</span>
+              </label>
             </div>
 
-            <div className="mb-4">
-              <canvas
-                ref={canvasRef}
-                width={800}
-                height={200}
-                className="w-full rounded border border-gray-600"
-                onMouseDown={handleCanvasMouseDown}
-                onMouseMove={handleCanvasMouseMove}
-                onMouseUp={handleCanvasMouseUp}
-                onMouseLeave={handleCanvasMouseLeave}
-              />
-            </div>
+            <canvas
+              ref={canvasRef}
+              width={800}
+              height={200}
+              className="w-full rounded border border-gray-600"
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseLeave}
+            />
 
             {selectedRegion && (
-              <div className="mt-4 rounded-lg bg-gray-700 p-4">
-                <h3 className="mb-3 text-lg font-semibold">Selected Region</h3>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  <div>
-                    <label className="mb-1 block text-sm text-gray-300">
-                      Start Time (seconds)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      max={selectedRegion.end - 0.1}
-                      value={startInput}
-                      onChange={(e) => handleStartInputChange(e.target.value)}
-                      className="w-full rounded border border-gray-500 bg-gray-600 px-3 py-2 text-white focus:border-blue-500 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-sm text-gray-300">
-                      End Time (seconds)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min={selectedRegion.start + 0.1}
-                      max={duration}
-                      value={endInput}
-                      onChange={(e) => handleEndInputChange(e.target.value)}
-                      className="w-full rounded border border-gray-500 bg-gray-600 px-3 py-2 text-white focus:border-blue-500 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-sm text-gray-300">
-                      Duration
-                    </label>
-                    <div className="rounded border border-gray-500 bg-gray-600 px-3 py-2 text-gray-300">
-                      {formatTime(selectedRegion.end - selectedRegion.start)}
-                    </div>
-                  </div>
+              <div className="mt-4 grid gap-4 rounded-lg bg-gray-700 p-4 md:grid-cols-3">
+                <div>
+                  <label className="text-sm text-gray-300">Start (s)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={startInput}
+                    onFocus={() => setIsTypingStart(true)}
+                    onBlur={() => setIsTypingStart(false)}
+                    onChange={(e) => onStartChange(e.target.value)}
+                    className="w-full rounded bg-gray-600 px-3 py-2 text-white focus:outline-none"
+                  />
                 </div>
-                <div className="mt-3 text-sm text-gray-300">
-                  <p>
-                    💡 Tip: Drag the yellow handles on the waveform to adjust
-                    selection boundaries, or use the input fields above for
-                    precise timing.
-                  </p>
+                <div>
+                  <label className="text-sm text-gray-300">End (s)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={endInput}
+                    onFocus={() => setIsTypingEnd(true)}
+                    onBlur={() => setIsTypingEnd(false)}
+                    onChange={(e) => onEndChange(e.target.value)}
+                    className="w-full rounded bg-gray-600 px-3 py-2 text-white focus:outline-none"
+                  />
+                </div>
+                <div className="flex flex-col justify-end">
+                  <label className="text-sm text-gray-300">Slice Length</label>
+                  <div className="rounded bg-gray-600 px-3 py-2 text-gray-200">
+                    {formatTime(selectedRegion.end - selectedRegion.start)}
+                  </div>
                 </div>
               </div>
             )}

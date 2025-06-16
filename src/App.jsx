@@ -22,7 +22,7 @@ function App() {
           <Route path="/ana" element={<DrkClnBrand />} />
           <Route path="/foreclosure" element={<Foreclosure />} />
           <Route path="/youtube-download" element={<YouTubeDownloaderPage />} />
-          <Route path="/audio_edit" element={<AudioEditor />} />
+          <Route path="/audio-edit" element={<AudioEditor />} />
         </Routes>
       </div>
     </Router>
