@@ -41,13 +41,8 @@ interface DownloadOptions {
   type: 'video' | 'audio'
   video_quality: string
   video_format: string
-  video_codec: string
   audio_quality: string
   audio_format: string
-  file_size_limit: number | null
-  include_subtitles: boolean
-  include_thumbnail: boolean
-  include_metadata: boolean
 }
 
 type ActiveTab = 'quick' | 'advanced' | 'batch'
@@ -58,17 +53,14 @@ const YouTubeDownloader: React.FC = () => {
   const [error, setError] = useState('')
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null)
   const [activeTab, setActiveTab] = useState<ActiveTab>('quick')
+  const [downloadProgress, setDownloadProgress] = useState(0)
+  const progressAnimationRef = React.useRef<NodeJS.Timeout | null>(null)
   const [downloadOptions, setDownloadOptions] = useState<DownloadOptions>({
     type: 'video',
     video_quality: 'best',
     video_format: 'mp4',
-    video_codec: 'auto',
     audio_quality: '320',
     audio_format: 'mp3',
-    file_size_limit: null,
-    include_subtitles: false,
-    include_thumbnail: false,
-    include_metadata: true,
   })
 
   const API_BASE_URL =
@@ -88,11 +80,30 @@ const YouTubeDownloader: React.FC = () => {
         url,
       })
       setVideoInfo(response.data)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to fetch video information')
     } finally {
       setLoading(false)
     }
+  }
+
+  const simulateDownloadProgress = () => {
+    let progress = 0
+
+    const updateProgress = () => {
+      // Remove 1% of the remaining space every 10ms
+      const remaining = 100 - progress
+      const increment = remaining * 0.01
+      progress += increment
+
+      setDownloadProgress(progress)
+
+      // Continue indefinitely (never reaches 100%)
+      progressAnimationRef.current = setTimeout(updateProgress, 10)
+    }
+
+    updateProgress()
   }
 
   const handleDownload = async () => {
@@ -101,19 +112,44 @@ const YouTubeDownloader: React.FC = () => {
       return
     }
 
+    // Cancel any existing progress animation
+    if (progressAnimationRef.current) {
+      clearTimeout(progressAnimationRef.current)
+      progressAnimationRef.current = null
+    }
+
     setLoading(true)
     setError('')
+    setDownloadProgress(0)
+
+    // Start the fake progress simulation
+    simulateDownloadProgress()
 
     try {
       console.log('Video Info Title:', videoInfo?.title)
       console.log('Download Options:', downloadOptions)
 
-      const payload = {
-        url,
+      // Auto-configure advanced options based on format support
+      const autoConfiguredOptions = {
         ...downloadOptions,
+        // Auto settings
+        video_codec: 'auto',
+        file_size_limit: null,
+        // Auto-include features based on type and format
+        include_subtitles: downloadOptions.type === 'video',
+        include_thumbnail: downloadOptions.type === 'audio',
+        include_metadata: true,
       }
 
-      console.log('Sending to backend:', payload)
+      const payload = {
+        url,
+        ...autoConfiguredOptions,
+      }
+
+      console.log(
+        'Full payload being sent to backend:',
+        JSON.stringify(payload, null, 2),
+      )
 
       const response = await axios.post(
         `${API_BASE_URL}/youtube-download/`,
@@ -141,7 +177,13 @@ const YouTubeDownloader: React.FC = () => {
     } catch (err: any) {
       setError(err.response?.data?.error || 'Download failed')
     } finally {
+      // Cancel progress animation when download completes
+      if (progressAnimationRef.current) {
+        clearTimeout(progressAnimationRef.current)
+        progressAnimationRef.current = null
+      }
       setLoading(false)
+      setDownloadProgress(0)
     }
   }
 
@@ -170,33 +212,24 @@ const YouTubeDownloader: React.FC = () => {
     const qualityParts = []
 
     if (downloadOptions.type === 'video') {
-      if (downloadOptions.video_quality !== 'best') {
+      if (downloadOptions.video_quality === 'best') {
+        qualityParts.push('BEST')
+      } else if (downloadOptions.video_quality === 'worst') {
+        qualityParts.push('LOWEST')
+      } else if (downloadOptions.video_quality.match(/^\d+$/)) {
         qualityParts.push(`${downloadOptions.video_quality}p`)
       } else {
-        qualityParts.push('best')
+        qualityParts.push(downloadOptions.video_quality.toUpperCase())
       }
       qualityParts.push(downloadOptions.video_format.toUpperCase())
-      if (downloadOptions.video_codec !== 'auto') {
-        const codecMap: Record<string, string> = {
-          h264: 'H264',
-          h265: 'H265',
-          vp9: 'VP9',
-          av1: 'AV1',
-        }
-        qualityParts.push(
-          codecMap[downloadOptions.video_codec] ||
-            downloadOptions.video_codec.toUpperCase(),
-        )
-      }
     } else {
       qualityParts.push(`${downloadOptions.audio_quality}kbps`)
       qualityParts.push(downloadOptions.audio_format.toUpperCase())
     }
 
-    if (downloadOptions.include_subtitles) qualityParts.push('SUBS')
-    if (downloadOptions.include_thumbnail) qualityParts.push('THUMB')
-    if (downloadOptions.file_size_limit)
-      qualityParts.push(`MAX${downloadOptions.file_size_limit}MB`)
+    // Auto-include features are now implicit in the format choice
+    if (downloadOptions.type === 'video') qualityParts.push('SUBS')
+    if (downloadOptions.type === 'audio') qualityParts.push('THUMB')
 
     const qualityString = qualityParts.join('_')
     const ext =
@@ -319,36 +352,43 @@ const YouTubeDownloader: React.FC = () => {
 
           {/* Quick Download Tab */}
           {activeTab === 'quick' && (
-            <div className="quick-download space-y-4">
-              <div className="flex flex-wrap gap-4">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="video"
-                    checked={downloadOptions.type === 'video'}
-                    onChange={(e) =>
-                      updateDownloadOption('type', e.target.value as 'video')
-                    }
-                    className="text-blue-500"
-                  />
-                  <span className="text-blue-200">
-                    Video (Best Quality MP4)
-                  </span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="audio"
-                    checked={downloadOptions.type === 'audio'}
-                    onChange={(e) =>
-                      updateDownloadOption('type', e.target.value as 'audio')
-                    }
-                    className="text-blue-500"
-                  />
-                  <span className="text-blue-200">
-                    Audio Only (320kbps MP3)
-                  </span>
-                </label>
+            <div className="quick-download space-y-6">
+              {/* Media Type Button Group */}
+              <div className="media-type-selection">
+                <h4 className="mb-4 text-lg font-semibold text-blue-300">
+                  Choose Download Type
+                </h4>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => updateDownloadOption('type', 'video')}
+                    className={`flex-1 rounded-xl border-2 px-6 py-4 transition-all duration-200 ${
+                      downloadOptions.type === 'video'
+                        ? 'border-blue-400 bg-blue-600/30 text-blue-200'
+                        : 'border-blue-700 bg-blue-900/20 text-blue-400 hover:border-blue-500 hover:bg-blue-800/30'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="mb-2 text-2xl">🎬</div>
+                      <div className="font-semibold">Video</div>
+                      <div className="text-sm opacity-80">Best Quality MP4</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => updateDownloadOption('type', 'audio')}
+                    className={`flex-1 rounded-xl border-2 px-6 py-4 transition-all duration-200 ${
+                      downloadOptions.type === 'audio'
+                        ? 'border-blue-400 bg-blue-600/30 text-blue-200'
+                        : 'border-blue-700 bg-blue-900/20 text-blue-400 hover:border-blue-500 hover:bg-blue-800/30'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="mb-2 text-2xl">🎵</div>
+                      <div className="font-semibold">Audio Only</div>
+                      <div className="text-sm opacity-80">320kbps MP3</div>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -358,34 +398,37 @@ const YouTubeDownloader: React.FC = () => {
             <div className="advanced-options space-y-6">
               {/* Media Type Selection */}
               <div className="media-type">
-                <h4 className="mb-3 text-lg font-semibold text-blue-300">
+                <h4 className="mb-4 text-lg font-semibold text-blue-300">
                   Media Type
                 </h4>
-                <div className="flex flex-wrap gap-4">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      value="video"
-                      checked={downloadOptions.type === 'video'}
-                      onChange={(e) =>
-                        updateDownloadOption('type', e.target.value as 'video')
-                      }
-                      className="text-blue-500"
-                    />
-                    <span className="text-blue-200">Video</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      value="audio"
-                      checked={downloadOptions.type === 'audio'}
-                      onChange={(e) =>
-                        updateDownloadOption('type', e.target.value as 'audio')
-                      }
-                      className="text-blue-500"
-                    />
-                    <span className="text-blue-200">Audio Only</span>
-                  </label>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => updateDownloadOption('type', 'video')}
+                    className={`flex-1 rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
+                      downloadOptions.type === 'video'
+                        ? 'border-blue-400 bg-blue-600/30 text-blue-200'
+                        : 'border-blue-700 bg-blue-900/20 text-blue-400 hover:border-blue-500 hover:bg-blue-800/30'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="mb-1 text-lg">🎬</div>
+                      <div className="font-medium">Video</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => updateDownloadOption('type', 'audio')}
+                    className={`flex-1 rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
+                      downloadOptions.type === 'audio'
+                        ? 'border-blue-400 bg-blue-600/30 text-blue-200'
+                        : 'border-blue-700 bg-blue-900/20 text-blue-400 hover:border-blue-500 hover:bg-blue-800/30'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="mb-1 text-lg">🎵</div>
+                      <div className="font-medium">Audio Only</div>
+                    </div>
+                  </button>
                 </div>
               </div>
 
@@ -396,7 +439,7 @@ const YouTubeDownloader: React.FC = () => {
                     Video Options
                   </h4>
 
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {/* Video Quality */}
                     <div>
                       <label className="mb-2 block text-sm font-medium text-blue-300">
@@ -409,15 +452,18 @@ const YouTubeDownloader: React.FC = () => {
                         }
                         className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
                       >
-                        <option value="best">Best Available</option>
-                        <option value="2160">4K (2160p)</option>
-                        <option value="1440">1440p</option>
-                        <option value="1080">1080p</option>
-                        <option value="720">720p</option>
-                        <option value="480">480p</option>
-                        <option value="360">360p</option>
-                        <option value="240">240p</option>
-                        <option value="144">144p</option>
+                        <option value="best">Best Available (Auto)</option>
+                        <option value="2160">4K Ultra HD (2160p)</option>
+                        <option value="1440">Quad HD (1440p)</option>
+                        <option value="1080">Full HD (1080p)</option>
+                        <option value="720">HD Ready (720p)</option>
+                        <option value="480">Standard Definition (480p)</option>
+                        <option value="360">Mobile Quality (360p)</option>
+                        <option value="240">Low Quality (240p)</option>
+                        <option value="144">Very Low Quality (144p)</option>
+                        <option value="worst">
+                          Extreme Data Saver (Lowest Available)
+                        </option>
                       </select>
                     </div>
 
@@ -441,161 +487,82 @@ const YouTubeDownloader: React.FC = () => {
                         <option value="flv">FLV (Flash)</option>
                       </select>
                     </div>
+                  </div>
 
-                    {/* Video Codec */}
-                    <div>
-                      <label className="mb-2 block text-sm font-medium text-blue-300">
-                        Codec
-                      </label>
-                      <select
-                        value={downloadOptions.video_codec}
-                        onChange={(e) =>
-                          updateDownloadOption('video_codec', e.target.value)
-                        }
-                        className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
-                      >
-                        <option value="auto">Auto</option>
-                        <option value="h264">H.264/AVC</option>
-                        <option value="h265">H.265/HEVC</option>
-                        <option value="vp9">VP9</option>
-                        <option value="av1">AV1</option>
-                      </select>
-                    </div>
+                  <div className="mt-3 text-sm text-blue-400">
+                    <p>
+                      ✓ Subtitles and metadata will be included automatically
+                      when available
+                    </p>
                   </div>
                 </div>
               )}
 
               {/* Audio Options */}
-              <div className="audio-options space-y-4">
-                <h4 className="text-lg font-semibold text-blue-300">
-                  Audio Options
-                </h4>
+              {downloadOptions.type === 'audio' && (
+                <div className="audio-options space-y-4">
+                  <h4 className="text-lg font-semibold text-blue-300">
+                    Audio Options
+                  </h4>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {/* Audio Quality/Bitrate */}
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-blue-300">
-                      Quality (Bitrate)
-                    </label>
-                    <select
-                      value={downloadOptions.audio_quality}
-                      onChange={(e) =>
-                        updateDownloadOption('audio_quality', e.target.value)
-                      }
-                      className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
-                    >
-                      <option value="320">320 kbps (Premium)</option>
-                      <option value="256">256 kbps (High)</option>
-                      <option value="192">192 kbps (Standard)</option>
-                      <option value="128">128 kbps (Good)</option>
-                      <option value="96">96 kbps (Acceptable)</option>
-                      <option value="64">64 kbps (Basic)</option>
-                    </select>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* Audio Quality/Bitrate */}
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-blue-300">
+                        Quality (Bitrate)
+                      </label>
+                      <select
+                        value={downloadOptions.audio_quality}
+                        onChange={(e) =>
+                          updateDownloadOption('audio_quality', e.target.value)
+                        }
+                        className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
+                      >
+                        <option value="320">320 kbps (Premium Quality)</option>
+                        <option value="256">256 kbps (High Quality)</option>
+                        <option value="192">192 kbps (Standard Quality)</option>
+                        <option value="128">128 kbps (Good Quality)</option>
+                        <option value="96">96 kbps (Acceptable Quality)</option>
+                        <option value="64">64 kbps (Basic Quality)</option>
+                        <option value="32">32 kbps (Very Low Quality)</option>
+                        <option value="16">16 kbps (Extreme Data Saver)</option>
+                        <option value="8">
+                          8 kbps (Unrecognizable Quality)
+                        </option>
+                      </select>
+                    </div>
+
+                    {/* Audio Format */}
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-blue-300">
+                        Format
+                      </label>
+                      <select
+                        value={downloadOptions.audio_format}
+                        onChange={(e) =>
+                          updateDownloadOption('audio_format', e.target.value)
+                        }
+                        className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
+                      >
+                        <option value="mp3">MP3 (Universal)</option>
+                        <option value="m4a">M4A (Apple)</option>
+                        <option value="flac">FLAC (Lossless)</option>
+                        <option value="ogg">OGG (Open Source)</option>
+                        <option value="wav">WAV (Uncompressed)</option>
+                        <option value="opus">OPUS (Modern)</option>
+                        <option value="aac">AAC (Advanced)</option>
+                      </select>
+                    </div>
                   </div>
 
-                  {/* Audio Format */}
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-blue-300">
-                      Format
-                    </label>
-                    <select
-                      value={downloadOptions.audio_format}
-                      onChange={(e) =>
-                        updateDownloadOption('audio_format', e.target.value)
-                      }
-                      className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white focus:border-blue-400 focus:outline-none"
-                    >
-                      <option value="mp3">MP3 (Universal)</option>
-                      <option value="m4a">M4A (Apple)</option>
-                      <option value="flac">FLAC (Lossless)</option>
-                      <option value="ogg">OGG (Open Source)</option>
-                      <option value="wav">WAV (Uncompressed)</option>
-                      <option value="opus">OPUS (Modern)</option>
-                      <option value="aac">AAC (Advanced)</option>
-                    </select>
+                  <div className="mt-3 text-sm text-blue-400">
+                    <p>
+                      ✓ Thumbnail and metadata will be included automatically
+                      for album art
+                    </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Advanced Settings */}
-              <div className="advanced-settings space-y-4">
-                <h4 className="text-lg font-semibold text-blue-300">
-                  Advanced Settings
-                </h4>
-
-                {/* File Size Limit */}
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-blue-300">
-                    Max File Size (MB) - Optional
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Leave empty for no limit"
-                    value={downloadOptions.file_size_limit || ''}
-                    onChange={(e) =>
-                      updateDownloadOption(
-                        'file_size_limit',
-                        e.target.value ? parseInt(e.target.value) : null,
-                      )
-                    }
-                    className="w-full rounded-lg border border-blue-700 bg-blue-900/50 p-2 text-white placeholder-blue-400 focus:border-blue-400 focus:outline-none"
-                  />
-                </div>
-
-                {/* Additional Options */}
-                <div className="flex flex-wrap gap-6">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={downloadOptions.include_subtitles}
-                      onChange={(e) =>
-                        updateDownloadOption(
-                          'include_subtitles',
-                          e.target.checked,
-                        )
-                      }
-                      className="text-blue-500"
-                      disabled={!videoInfo.has_subtitles}
-                    />
-                    <span
-                      className={`${!videoInfo.has_subtitles ? 'text-gray-500' : 'text-blue-200'}`}
-                    >
-                      Include Subtitles{' '}
-                      {!videoInfo.has_subtitles && '(Not Available)'}
-                    </span>
-                  </label>
-
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={downloadOptions.include_thumbnail}
-                      onChange={(e) =>
-                        updateDownloadOption(
-                          'include_thumbnail',
-                          e.target.checked,
-                        )
-                      }
-                      className="text-blue-500"
-                    />
-                    <span className="text-blue-200">Include Thumbnail</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={downloadOptions.include_metadata}
-                      onChange={(e) =>
-                        updateDownloadOption(
-                          'include_metadata',
-                          e.target.checked,
-                        )
-                      }
-                      className="text-blue-500"
-                    />
-                    <span className="text-blue-200">Include Metadata</span>
-                  </label>
-                </div>
-              </div>
+              )}
             </div>
           )}
 
@@ -612,6 +579,18 @@ const YouTubeDownloader: React.FC = () => {
               (YYYY_MM_DD_HH_MM_SS format)
             </p>
           </div>
+
+          {/* Download Progress Bar */}
+          {loading && (
+            <div className="download-progress mt-6 rounded-lg border border-blue-700 bg-blue-900/30 p-4">
+              <div className="h-2 w-full rounded-full bg-blue-800/50">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-300 ease-out"
+                  style={{ width: `${downloadProgress}%` }}
+                ></div>
+              </div>
+            </div>
+          )}
 
           {/* Download Button */}
           <div className="download-section mt-8 border-t border-blue-700 pt-6">
@@ -630,22 +609,16 @@ const YouTubeDownloader: React.FC = () => {
                     ` (${downloadOptions.audio_quality}kbps)`}
                   {downloadOptions.type === 'video' &&
                     downloadOptions.video_quality !== 'best' &&
+                    downloadOptions.video_quality !== 'worst' &&
                     ` (${downloadOptions.video_quality}p)`}
+                  {downloadOptions.video_quality === 'worst' &&
+                    ' (Lowest Quality)'}
                 </p>
-                {(downloadOptions.include_subtitles ||
-                  downloadOptions.include_thumbnail ||
-                  downloadOptions.include_metadata) && (
-                  <p>
-                    Extras:{' '}
-                    {[
-                      downloadOptions.include_subtitles && 'Subtitles',
-                      downloadOptions.include_thumbnail && 'Thumbnail',
-                      downloadOptions.include_metadata && 'Metadata',
-                    ]
-                      .filter(Boolean)
-                      .join(', ')}
-                  </p>
-                )}
+                <p className="text-xs text-blue-500">
+                  {downloadOptions.type === 'video'
+                    ? '✓ Includes subtitles & metadata automatically'
+                    : '✓ Includes thumbnail & metadata automatically'}
+                </p>
               </div>
 
               <button
@@ -655,20 +628,7 @@ const YouTubeDownloader: React.FC = () => {
               >
                 {loading ? (
                   <span className="flex items-center justify-center space-x-2">
-                    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="none"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      />
-                    </svg>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                     <span>Downloading...</span>
                   </span>
                 ) : (
