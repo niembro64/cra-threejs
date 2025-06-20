@@ -4,35 +4,37 @@ import FancyButton from './FancyButton'
 import { Service, ServicesProps } from '../types/types'
 
 const Services: React.FC<ServicesProps> = ({ isThin }) => {
-  const services: Service[] = [
-    {
-      title: 'Media Converter',
-      description:
-        'Convert between common video, audio, and image formats. No account needed, files processed locally.',
-      status: 'available',
-      url: 'https://niemo.io/media-convert',
-    },
-    {
-      title: 'CT Foreclosures',
-      description: 'Simple interface for property status monitoring.',
-      status: 'available',
-      url: 'https://niemo.io/foreclosure',
-    },
-    {
-      title: 'Audio Editor',
-      description:
-        'Basic audio editing for podcasts and recordings. Trim, split, and adjust volume without installing software.',
-      status: 'in progress',
-      url: 'https://niemo.io/audio-edit',
-    },
-    {
-      title: 'YouTube Downloader',
-      description:
-        'Download YouTube videos as MP4 or extract audio as MP3. Simple paste-and-download interface.',
-      status: 'in progress',
-      url: 'https://niemo.io/youtube-download',
-    },
-  ]
+  const services: Service[] = []
+
+  // const services: Service[] = [
+  //   {
+  //     title: 'Media Converter',
+  //     description:
+  //       'Convert between common video, audio, and image formats. No account needed, files processed locally.',
+  //     status: 'available',
+  //     url: 'https://niemo.io/media-convert',
+  //   },
+  //   {
+  //     title: 'CT Foreclosures',
+  //     description: 'Simple interface for property status monitoring.',
+  //     status: 'available',
+  //     url: 'https://niemo.io/foreclosure',
+  //   },
+  //   {
+  //     title: 'Audio Editor',
+  //     description:
+  //       'Basic audio editing for podcasts and recordings. Trim, split, and adjust volume without installing software.',
+  //     status: 'in progress',
+  //     url: 'https://niemo.io/audio-edit',
+  //   },
+  //   {
+  //     title: 'YouTube Downloader',
+  //     description:
+  //       'Download YouTube videos as MP4 or extract audio as MP3. Simple paste-and-download interface.',
+  //     status: 'in progress',
+  //     url: 'https://niemo.io/youtube-download',
+  //   },
+  // ]
 
   const getStatusColor = (status: string): string => {
     switch (status.toLowerCase()) {

@@ -107,9 +107,43 @@ export interface ConversionTask {
 // Media Type Definitions
 export type MediaType = 'video' | 'audio' | 'image' | 'unknown'
 
-export type VideoFormat = 'mp4' | 'avi' | 'mov' | 'mkv' | 'webm' | 'flv' | 'wmv' | 'm4v' | 'mpg' | 'mpeg' | '3gp' | 'ogv'
-export type AudioFormat = 'mp3' | 'wav' | 'flac' | 'aac' | 'ogg' | 'wma' | 'm4a' | 'opus' | 'aiff' | 'ac3' | 'dts'
-export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'gif' | 'bmp' | 'webp' | 'tiff' | 'ico' | 'svg' | 'heic' | 'heif'
+export type VideoFormat =
+  | 'mp4'
+  | 'avi'
+  | 'mov'
+  | 'mkv'
+  | 'webm'
+  | 'flv'
+  | 'wmv'
+  | 'm4v'
+  | 'mpg'
+  | 'mpeg'
+  | '3gp'
+  | 'ogv'
+export type AudioFormat =
+  | 'mp3'
+  | 'wav'
+  | 'flac'
+  | 'aac'
+  | 'ogg'
+  | 'wma'
+  | 'm4a'
+  | 'opus'
+  | 'aiff'
+  | 'ac3'
+  | 'dts'
+export type ImageFormat =
+  | 'jpg'
+  | 'jpeg'
+  | 'png'
+  | 'gif'
+  | 'bmp'
+  | 'webp'
+  | 'tiff'
+  | 'ico'
+  | 'svg'
+  | 'heic'
+  | 'heif'
 
 export type SupportedFormat = VideoFormat | AudioFormat | ImageFormat
 
@@ -135,7 +169,9 @@ export interface ImageConversionOptions {
   timestamp?: number
 }
 
-export type AllConversionOptions = VideoConversionOptions & AudioConversionOptions & ImageConversionOptions & {
-  start_time?: number
-  end_time?: number
-}
+export type AllConversionOptions = VideoConversionOptions &
+  AudioConversionOptions &
+  ImageConversionOptions & {
+    start_time?: number
+    end_time?: number
+  }
