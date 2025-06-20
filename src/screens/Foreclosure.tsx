@@ -428,7 +428,6 @@ const Foreclosure = () => {
   const [fetchingDetails, setFetchingDetails] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [timestamp, setTimestamp] = useState<string>('')
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
   const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false)
   const [selectedAuction, setSelectedAuction] =
@@ -445,28 +444,6 @@ const Foreclosure = () => {
     citiesProcessed: 0,
     totalCities: 0,
   })
-
-  // Check user's preferred color scheme on component mount
-  useEffect(() => {
-    return
-
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches
-    setIsDarkMode(prefersDark)
-
-    // Listen for changes in color scheme preference
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches)
-    mediaQuery.addEventListener('change', handleChange)
-
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-  }
 
   // Fetch initial city list data
   const fetchCityList = async () => {
@@ -910,7 +887,7 @@ const Foreclosure = () => {
 
     return sortConfig.direction === 'ascending' ? (
       <svg
-        className="ml-2 inline-block h-3.5 w-3.5 text-blue-500 dark:text-blue-400"
+        className="ml-2 inline-block h-3.5 w-3.5 text-blue-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -924,7 +901,7 @@ const Foreclosure = () => {
       </svg>
     ) : (
       <svg
-        className="ml-2 inline-block h-3.5 w-3.5 text-blue-500 dark:text-blue-400"
+        className="ml-2 inline-block h-3.5 w-3.5 text-blue-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -1152,36 +1129,24 @@ Lela
   }
 
   return (
-    <div
-      className={`{ isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-800'} h-auto p-4 transition-colors duration-200`}
-    >
+    <div className="h-auto bg-gray-900 p-4 text-gray-100">
       <div className="mb-4 p-4">
         <a
           href="https://niemo.io"
-          className={`rounded px-4 py-2 ${
-            isDarkMode
-              ? 'bg-blue-700 text-white hover:bg-blue-600'
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-          }`}
+          className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-600"
         >
           niemo.io
         </a>
       </div>
       <div className="w-full py-8">
         <header className="mb-6 text-center">
-          <h1
-            className={`mb-2 mb-8 text-3xl font-bold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
-          >
+          <h1 className="mb-2 mb-8 text-3xl font-bold text-blue-300">
             Connecticut Foreclosure Data
           </h1>
 
           <a
             href="https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx"
-            className={`rounded px-4 py-2 ${
-              isDarkMode
-                ? 'bg-blue-700 text-white hover:bg-blue-600'
-                : 'bg-blue-500 text-white hover:bg-blue-600'
-            }`}
+            className="rounded bg-blue-700 px-4 py-2 text-white hover:bg-blue-600"
           >
             sso.eservices.jud.ct.gov
           </a>
@@ -1190,31 +1155,15 @@ Lela
         <div className="mb-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p
-                className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
-              >
+              <p className="text-sm text-gray-300">
                 Data fetched at:{' '}
                 <span className="font-semibold">{timestamp}</span>
               </p>
             </div>
             <div className="flex gap-3">
-              {/* <button
-                onClick={toggleDarkMode}
-                className={`rounded px-4 py-2 text-sm font-medium transition ${
-                  isDarkMode
-                    ? 'bg-gray-700 text-white hover:bg-gray-600'
-                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                }`}
-              >
-                {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-              </button> */}
               <button
                 onClick={fetchCityList}
-                className={`rounded px-4 py-2 text-white transition ${
-                  isDarkMode
-                    ? 'bg-blue-600 hover:bg-blue-500'
-                    : 'bg-blue-500 hover:bg-blue-600'
-                }`}
+                className="rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
                 disabled={fetchingCities}
               >
                 Refresh City List
@@ -1224,27 +1173,17 @@ Lela
         </div>
 
         {error && (
-          <div
-            className={`mb-6 rounded-lg p-4 ${
-              isDarkMode ? 'bg-red-900 text-red-200' : 'bg-red-100 text-red-700'
-            }`}
-          >
+          <div className="mb-6 rounded-lg bg-red-900 p-4 text-red-200">
             <h3 className="mb-1 font-semibold">Error</h3>
             <p>{error}</p>
           </div>
         )}
 
         {/* Distance Filter */}
-        <div
-          className={`mb-6 rounded-lg p-4 ${
-            isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
-          }`}
-        >
+        <div className="mb-6 rounded-lg bg-gray-800 p-4">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
-              <label
-                className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
-              >
+              <label className="font-medium text-gray-300">
                 Distance from Greenwich (mi):
               </label>
               <input
@@ -1256,17 +1195,11 @@ Lela
                 onChange={(e) =>
                   setDistanceFromGreenwich(Number(e.target.value))
                 }
-                className={`w-20 rounded border p-2 ${
-                  isDarkMode
-                    ? 'border-gray-600 bg-gray-700 text-white'
-                    : 'border-gray-300 bg-white text-gray-900'
-                }`}
+                className="w-20 rounded border border-gray-600 bg-gray-700 p-2 text-white"
               />
             </div>
             <div>
-              <span
-                className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
-              >
+              <span className="text-sm text-gray-400">
                 ({selectedCities.length} cities selected)
               </span>
             </div>
@@ -1274,15 +1207,9 @@ Lela
         </div>
 
         {/* Status Bar */}
-        <div
-          className={`mb-6 rounded-lg p-4 ${
-            isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
-          }`}
-        >
+        <div className="mb-6 rounded-lg bg-gray-800 p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className={isDarkMode ? 'text-gray-300' : 'text-gray-700'}>
-              {getStatusMessage()}
-            </p>
+            <p className="text-gray-300">{getStatusMessage()}</p>
 
             {(fetchingPostings || fetchingDetails) && (
               <div className="mt-2 w-full">
@@ -1309,26 +1236,16 @@ Lela
           !fetchingPostings &&
           !fetchingDetails &&
           postings.length > 0 && (
-            <div
-              className={`mb-6 rounded-lg p-4 ${
-                isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
-              }`}
-            >
+            <div className="mb-6 rounded-lg bg-gray-800 p-4">
               <div className="mb-3 flex flex-wrap items-center justify-between">
-                <h2
-                  className={`text-lg font-semibold ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}
-                >
+                <h2 className="text-lg font-semibold text-blue-300">
                   Foreclosure Data Summary
                 </h2>
 
                 <div className="group relative">
                   <button
                     onClick={downloadTableAsCSV}
-                    className={`flex items-center rounded px-4 py-2 text-white transition ${
-                      isDarkMode
-                        ? 'bg-blue-600 hover:bg-blue-500'
-                        : 'bg-blue-500 hover:bg-blue-600'
-                    }`}
+                    className="flex items-center rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
                     disabled={
                       fetchingDetails ||
                       postings.filter((p) => p.status === 'loaded').length === 0
@@ -1359,53 +1276,33 @@ Lela
                   const stats = getStats()
                   return (
                     <>
-                      <div
-                        className={`rounded p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                      >
+                      <div className="rounded bg-gray-700 p-4">
                         <p className="text-xs text-gray-500">Total</p>
-                        <p
-                          className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
-                        >
+                        <p className="text-xl font-bold text-white">
                           {stats.total}
                         </p>
                       </div>
-                      <div
-                        className={`rounded p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                      >
+                      <div className="rounded bg-gray-700 p-4">
                         <p className="text-xs text-gray-500">Loaded</p>
-                        <p
-                          className={`text-xl font-bold ${isDarkMode ? 'text-green-400' : 'text-green-600'}`}
-                        >
+                        <p className="text-xl font-bold text-green-400">
                           {stats.loaded}
                         </p>
                       </div>
-                      <div
-                        className={`rounded p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                      >
+                      <div className="rounded bg-gray-700 p-4">
                         <p className="text-xs text-gray-500">Pending</p>
-                        <p
-                          className={`text-xl font-bold ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
-                        >
+                        <p className="text-xl font-bold text-gray-400">
                           {stats.pending}
                         </p>
                       </div>
-                      <div
-                        className={`rounded p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                      >
+                      <div className="rounded bg-gray-700 p-4">
                         <p className="text-xs text-gray-500">Errors</p>
-                        <p
-                          className={`text-xl font-bold ${isDarkMode ? 'text-red-400' : 'text-red-600'}`}
-                        >
+                        <p className="text-xl font-bold text-red-400">
                           {stats.error}
                         </p>
                       </div>
-                      <div
-                        className={`rounded p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                      >
+                      <div className="rounded bg-gray-700 p-4">
                         <p className="text-xs text-gray-500">Cancelled Sales</p>
-                        <p
-                          className={`text-xl font-bold ${isDarkMode ? 'text-yellow-400' : 'text-yellow-600'}`}
-                        >
+                        <p className="text-xl font-bold text-yellow-400">
                           {stats.cancelled}
                         </p>
                       </div>
@@ -1419,16 +1316,10 @@ Lela
         {/* City Selection Section */}
         <div className="mb-8">
           <div className="mb-4">
-            <h2
-              className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
-            >
+            <h2 className="text-xl font-semibold text-blue-300">
               Connecticut Cities with Foreclosure Data
             </h2>
-            <p
-              className={
-                isDarkMode ? 'text-sm text-gray-400' : 'text-sm text-gray-600'
-              }
-            >
+            <p className="text-sm text-gray-400">
               {cityList.length} cities found - select cities and click "Process"
               to fetch foreclosure data
             </p>
@@ -1437,11 +1328,7 @@ Lela
           <div className="mb-4 flex flex-wrap gap-2">
             <button
               onClick={processSelectedCities}
-              className={`rounded px-4 py-2 text-white transition ${
-                isDarkMode
-                  ? 'bg-green-600 hover:bg-green-500'
-                  : 'bg-green-500 hover:bg-green-600'
-              }`}
+              className="rounded bg-green-600 px-4 py-2 text-white transition hover:bg-green-500"
               disabled={
                 fetchingCities ||
                 fetchingPostings ||
@@ -1453,11 +1340,7 @@ Lela
             </button>
             <button
               onClick={selectAllCities}
-              className={`rounded px-4 py-2 transition ${
-                isDarkMode
-                  ? 'bg-gray-700 text-white hover:bg-gray-600'
-                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-              }`}
+              className="rounded bg-gray-700 px-4 py-2 text-white transition hover:bg-gray-600"
               disabled={
                 fetchingCities ||
                 fetchingPostings ||
@@ -1469,11 +1352,7 @@ Lela
             </button>
             <button
               onClick={clearCitySelection}
-              className={`rounded px-4 py-2 transition ${
-                isDarkMode
-                  ? 'bg-gray-700 text-white hover:bg-gray-600'
-                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-              }`}
+              className="rounded bg-gray-700 px-4 py-2 text-white transition hover:bg-gray-600"
               disabled={
                 fetchingCities ||
                 fetchingPostings ||
@@ -1485,27 +1364,15 @@ Lela
             </button>
           </div>
 
-          <div
-            className={`overflow-hidden rounded-lg border ${
-              isDarkMode ? 'border-gray-700' : 'border-gray-200'
-            }`}
-          >
-            <div className={isDarkMode ? 'bg-gray-800 p-3' : 'bg-gray-100 p-3'}>
-              <h3
-                className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
-              >
-                Select Cities
-              </h3>
+          <div className="overflow-hidden rounded-lg border border-gray-700">
+            <div className="bg-gray-800 p-3">
+              <h3 className="font-medium text-white">Select Cities</h3>
             </div>
 
-            <div className={`p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className="bg-gray-800 p-4">
               {fetchingCities ? (
                 <div className="flex justify-center py-8">
-                  <div
-                    className={`h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 ${
-                      isDarkMode ? 'border-blue-400' : 'border-blue-500'
-                    }`}
-                  ></div>
+                  <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-blue-400"></div>
                 </div>
               ) : cityList.length > 0 ? (
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-8">
@@ -1515,39 +1382,27 @@ Lela
                       onClick={() => handleCitySelection(city.name)}
                       className={`cursor-pointer rounded-lg p-3 transition ${
                         selectedCities.includes(city.name)
-                          ? isDarkMode
-                            ? 'bg-blue-700 hover:bg-blue-600'
-                            : 'bg-blue-100 hover:bg-blue-200'
+                          ? 'bg-blue-700 hover:bg-blue-600'
                           : citiesByDistance.some(
                                 (c) =>
                                   c.city === city.name &&
                                   c.distanceMiles <= distanceFromGreenwich,
                               )
-                            ? isDarkMode
-                              ? 'bg-emerald-900/40 hover:bg-emerald-800/40'
-                              : 'bg-emerald-50 hover:bg-emerald-100'
-                            : isDarkMode
-                              ? 'bg-gray-700 hover:bg-gray-600'
-                              : 'bg-gray-50 hover:bg-gray-100'
+                            ? 'bg-emerald-900/40 hover:bg-emerald-800/40'
+                            : 'bg-gray-700 hover:bg-gray-600'
                       }`}
                     >
                       <span
                         className={
                           selectedCities.includes(city.name)
-                            ? isDarkMode
-                              ? 'text-blue-100'
-                              : 'text-blue-800'
+                            ? 'text-blue-100'
                             : citiesByDistance.some(
                                   (c) =>
                                     c.city === city.name &&
                                     c.distanceMiles <= distanceFromGreenwich,
                                 )
-                              ? isDarkMode
-                                ? 'text-emerald-300'
-                                : 'text-emerald-800'
-                              : isDarkMode
-                                ? 'text-gray-100'
-                                : 'text-gray-800'
+                              ? 'text-emerald-300'
+                              : 'text-gray-100'
                         }
                       >
                         {city.name} ({city.count})
@@ -1556,9 +1411,7 @@ Lela
                   ))}
                 </div>
               ) : (
-                <p
-                  className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
-                >
+                <p className="text-center text-gray-400">
                   No cities found. The website structure may have changed or no
                   data is available.
                 </p>
@@ -1570,14 +1423,8 @@ Lela
         {/* Loading Indicator - Full Screen for major operations */}
         {(fetchingPostings || fetchingDetails) && (
           <div className="my-8 flex flex-col items-center justify-center">
-            <div
-              className={`mb-4 h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 ${
-                isDarkMode ? 'border-blue-400' : 'border-blue-500'
-              }`}
-            ></div>
-            <p
-              className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
-            >
+            <div className="mb-4 h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 border-blue-400"></div>
+            <p className="text-lg text-gray-300">
               {fetchingPostings
                 ? 'Fetching posting IDs...'
                 : 'Fetching auction details...'}
@@ -1592,46 +1439,26 @@ Lela
           postings.length > 0 && (
             <div className="mb-8">
               <div className="mb-4">
-                <h2
-                  className={`text-xl font-semibold ${isDarkMode ? 'text-blue-300' : ''}`}
-                >
+                <h2 className="text-xl font-semibold text-blue-300">
                   Foreclosure Auction Notices
                 </h2>
-                <p
-                  className={
-                    isDarkMode
-                      ? 'text-sm text-gray-400'
-                      : 'text-sm text-gray-600'
-                  }
-                >
+                <p className="text-sm text-gray-400">
                   {postings.filter((p) => p.status === 'loaded').length} of{' '}
                   {postings.length} details loaded
                 </p>
               </div>
 
-              <div
-                className={`overflow-x-auto rounded-lg border ${
-                  isDarkMode ? 'border-gray-700' : 'border-gray-200'
-                }`}
-              >
-                <table
-                  className={`w-full divide-y ${
-                    isDarkMode ? 'divide-gray-700' : 'divide-gray-200'
-                  }`}
-                >
-                  <thead className={isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}>
+              <div className="overflow-x-auto rounded-lg border border-gray-700">
+                <table className="w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-800">
                     <tr>
                       <th
                         scope="col"
                         onClick={() => requestSort('status')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'status'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1644,12 +1471,8 @@ Lela
                         onClick={() => requestSort('city')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1662,12 +1485,8 @@ Lela
                         onClick={() => requestSort('dollarAmountFound')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1681,12 +1500,8 @@ Lela
                         onClick={() => requestSort('address')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1700,12 +1515,8 @@ Lela
                         onClick={() => requestSort('committeeName')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1719,12 +1530,8 @@ Lela
                         onClick={() => requestSort('committeePhone')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1738,12 +1545,8 @@ Lela
                         onClick={() => requestSort('committeeEmail')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'city'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1757,12 +1560,8 @@ Lela
                         onClick={() => requestSort('saleDate')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'saleDate'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1775,12 +1574,8 @@ Lela
                         onClick={() => requestSort('docketNumber')}
                         className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                           sortConfig.key === 'docketNumber'
-                            ? isDarkMode
-                              ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
-                            : isDarkMode
-                              ? 'text-gray-300 hover:bg-gray-800'
-                              : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                            : 'text-gray-300 hover:bg-gray-800'
                         }`}
                       >
                         <div className="group flex items-center">
@@ -1790,42 +1585,26 @@ Lela
                       </th>
                       <th
                         scope="col"
-                        className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-                          isDarkMode ? 'text-gray-300' : 'text-gray-600'
-                        }`}
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
                       >
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    className={`divide-y ${
-                      isDarkMode
-                        ? 'divide-gray-700 bg-gray-800'
-                        : 'divide-gray-200 bg-white'
-                    }`}
-                  >
+                  <tbody className="divide-y divide-gray-700 bg-gray-800">
                     {postings.length > 0 ? (
                       getSortedPostings().map(
                         (posting: PostingInfo, index: number) => (
                           <tr
                             key={`${posting.postingId}-${index}`}
-                            className={
-                              isDarkMode
-                                ? 'hover:bg-gray-700'
-                                : 'hover:bg-gray-50'
-                            }
+                            className="hover:bg-gray-700"
                           >
                             {/* Status */}
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
                               {posting.status === 'loading' ? (
-                                <span className="inline-flex items-center rounded-full border border-yellow-400 bg-yellow-100/90 px-2.5 py-0.5 text-xs font-medium text-yellow-800 shadow-sm dark:border-yellow-500 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                <span className="inline-flex items-center rounded-full border border-yellow-500 bg-yellow-900/30 px-2.5 py-0.5 text-xs font-medium text-yellow-300 shadow-sm">
                                   <svg
-                                    className="mr-1 h-3 w-3 animate-spin text-yellow-600 dark:text-yellow-400"
+                                    className="mr-1 h-3 w-3 animate-spin text-yellow-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                   >
@@ -1849,9 +1628,9 @@ Lela
                                 posting.auctionNotice?.status
                                   ?.toLowerCase()
                                   .includes('cancel') ? (
-                                  <span className="inline-flex items-center rounded-full border border-orange-400 bg-orange-100/90 px-2.5 py-0.5 text-xs font-medium text-orange-800 shadow-sm dark:border-orange-500 dark:bg-orange-900/30 dark:text-orange-300">
+                                  <span className="inline-flex items-center rounded-full border border-orange-500 bg-orange-900/30 px-2.5 py-0.5 text-xs font-medium text-orange-300 shadow-sm">
                                     <svg
-                                      className="mr-1 h-3 w-3 text-orange-600 dark:text-orange-400"
+                                      className="mr-1 h-3 w-3 text-orange-400"
                                       fill="none"
                                       viewBox="0 0 24 24"
                                       stroke="currentColor"
@@ -1866,9 +1645,9 @@ Lela
                                     Cancelled
                                   </span>
                                 ) : (
-                                  <span className="inline-flex items-center rounded-full border border-green-400 bg-green-100/90 px-2.5 py-0.5 text-xs font-medium text-green-800 shadow-sm dark:border-green-500 dark:bg-green-900/30 dark:text-green-300">
+                                  <span className="inline-flex items-center rounded-full border border-green-500 bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-300 shadow-sm">
                                     <svg
-                                      className="mr-1 h-3 w-3 text-green-600 dark:text-green-400"
+                                      className="mr-1 h-3 w-3 text-green-400"
                                       fill="none"
                                       viewBox="0 0 24 24"
                                       stroke="currentColor"
@@ -1884,9 +1663,9 @@ Lela
                                   </span>
                                 )
                               ) : posting.status === 'error' ? (
-                                <span className="inline-flex items-center rounded-full border border-red-400 bg-red-100/90 px-2.5 py-0.5 text-xs font-medium text-red-800 shadow-sm dark:border-red-500 dark:bg-red-900/30 dark:text-red-300">
+                                <span className="inline-flex items-center rounded-full border border-red-500 bg-red-900/30 px-2.5 py-0.5 text-xs font-medium text-red-300 shadow-sm">
                                   <svg
-                                    className="mr-1 h-3 w-3 text-red-600 dark:text-red-400"
+                                    className="mr-1 h-3 w-3 text-red-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -1901,9 +1680,9 @@ Lela
                                   Error
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center rounded-full border border-blue-400 bg-blue-100/90 px-2.5 py-0.5 text-xs font-medium text-blue-800 shadow-sm dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300">
+                                <span className="inline-flex items-center rounded-full border border-blue-500 bg-blue-900/30 px-2.5 py-0.5 text-xs font-medium text-blue-300 shadow-sm">
                                   <svg
-                                    className="mr-1 h-3 w-3 text-blue-600 dark:text-blue-400"
+                                    className="mr-1 h-3 w-3 text-blue-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -1921,11 +1700,7 @@ Lela
                             </td>
 
                             {/* City */}
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm font-medium ${
-                                isDarkMode ? 'text-white' : 'text-gray-900'
-                              }`}
-                            >
+                            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-white">
                               {posting.auctionNotice?.town ||
                                 posting.city ||
                                 'N/A'}
@@ -1933,11 +1708,7 @@ Lela
 
                             {/* Dollar Amount */}
 
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="px-6 py-4 text-sm text-gray-300">
                               {numberToDollarAmountString(
                                 posting.auctionNotice?.dollarAmountNumber || 0,
                               )}
@@ -1945,20 +1716,12 @@ Lela
 
                             {/* Address */}
 
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="px-6 py-4 text-sm text-gray-300">
                               {posting.auctionNotice?.address || 'N/A'}
                             </td>
 
                             {/* Committee Name */}
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="px-6 py-4 text-sm text-gray-300">
                               {capitalizeEachWord(
                                 posting.auctionNotice?.committeeName || 'N/A',
                               )}
@@ -1966,30 +1729,20 @@ Lela
                             {/* Committee Organization */}
 
                             {/* <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
+                              className="px-6 py-4 text-sm text-gray-300"
                             >
                               {posting.auctionNotice?.committeeOrganization ||
                                 'N/A'}
                             </td> */}
                             {/* Committee Phone */}
 
-                            <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="px-6 py-4 text-sm text-gray-300">
                               {findNumbersAndMakePhoneNumber(
                                 posting.auctionNotice?.committeePhone || '',
                               ) || 'N/A'}
                             </td>
                             {/* Committee Email */}
-                            <td
-                              className={`px-6 py-4 text-sm lowercase ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="px-6 py-4 text-sm lowercase text-gray-300">
                               <div className="flex items-center gap-2">
                                 <span>
                                   {posting.auctionNotice?.committeeEmail ||
@@ -2006,11 +1759,7 @@ Lela
                                         setIsEmailModalOpen(true)
                                       }
                                     }}
-                                    className={`rounded px-2 py-1 text-xs font-medium transition ${
-                                      isDarkMode
-                                        ? 'bg-blue-700 text-white hover:bg-blue-600'
-                                        : 'bg-blue-500 text-white hover:bg-blue-600'
-                                    }`}
+                                    className="rounded bg-blue-700 px-2 py-1 text-xs font-medium text-white transition hover:bg-blue-600"
                                     title="Compose email about this property"
                                   >
                                     Email
@@ -2021,19 +1770,13 @@ Lela
 
                             {/* Case Caption */}
                             {/* <td
-                              className={`px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
+                              className="px-6 py-4 text-sm text-gray-300"
                             >
                               {posting.auctionNotice?.caseCaption || 'N/A'}
                             </td> */}
 
                             {/* Sale Date */}
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
                               {posting.auctionNotice?.saleDate
                                 ? formatSaleDate({
                                     saleDate: posting.auctionNotice.saleDate,
@@ -2044,29 +1787,17 @@ Lela
                             </td>
 
                             {/* Docket Number */}
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                              }`}
-                            >
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
                               {posting.auctionNotice?.docketNumber || 'N/A'}
                             </td>
 
                             {/* Actions */}
-                            <td
-                              className={`whitespace-nowrap px-6 py-4 text-sm ${
-                                isDarkMode ? 'text-gray-300' : 'text-gray-500'
-                              }`}
-                            >
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
                               <a
                                 href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`text-sm font-medium ${
-                                  isDarkMode
-                                    ? 'text-blue-400 hover:text-blue-300'
-                                    : 'text-blue-600 hover:text-blue-800'
-                                }`}
+                                className="text-sm font-medium text-blue-400 hover:text-blue-300"
                               >
                                 Link
                               </a>
@@ -2078,7 +1809,7 @@ Lela
                       <tr>
                         <td
                           colSpan={6}
-                          className={`px-6 py-4 text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}
+                          className="px-6 py-4 text-center text-gray-400"
                         >
                           No data available yet. Select cities and click
                           "Process Selected Cities".
@@ -2101,25 +1832,13 @@ Lela
             }}
           >
             <div
-              className={`relative mx-auto max-w-3xl rounded-lg shadow-lg ${
-                isDarkMode ? 'bg-gray-800' : 'bg-white'
-              }`}
+              className="relative mx-auto max-w-3xl rounded-lg bg-gray-800 shadow-lg"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div
-                className={`rounded-t-lg border-b px-6 py-4 ${
-                  isDarkMode
-                    ? 'border-gray-700 bg-gray-900'
-                    : 'border-gray-200 bg-gray-50'
-                }`}
-              >
+              <div className="rounded-t-lg border-b border-gray-700 bg-gray-900 px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <h3
-                    className={`text-lg font-medium ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}
-                  >
+                  <h3 className="text-lg font-medium text-white">
                     Email Template for{' '}
                     {capitalizeEachWord(selectedAuction.address)}
                   </h3>
@@ -2128,11 +1847,7 @@ Lela
                       setIsEmailModalOpen(false)
                       setEmailCopied(false)
                     }}
-                    className={`rounded-full p-1 transition ${
-                      isDarkMode
-                        ? 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
-                        : 'bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600'
-                    }`}
+                    className="rounded-full bg-gray-800 p-1 text-gray-400 transition hover:bg-gray-700 hover:text-white"
                   >
                     <svg
                       className="h-5 w-5"
@@ -2153,17 +1868,9 @@ Lela
 
               {/* Modal Body */}
               <div className="px-6 py-4">
-                <div
-                  className={`mb-4 flex justify-between rounded border p-2 ${
-                    isDarkMode
-                      ? 'border-gray-700 bg-gray-700'
-                      : 'border-gray-200 bg-gray-50'
-                  }`}
-                >
+                <div className="mb-4 flex justify-between rounded border border-gray-700 bg-gray-700 p-2">
                   <div>
-                    <p
-                      className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
-                    >
+                    <p className="text-xs text-gray-400">
                       To: {selectedAuction.committeeEmail}
                     </p>
                   </div>
@@ -2171,12 +1878,8 @@ Lela
                     onClick={copyEmailToClipboard}
                     className={`flex items-center rounded px-3 py-1 text-xs font-medium ${
                       emailCopied
-                        ? isDarkMode
-                          ? 'bg-green-700 text-white'
-                          : 'bg-green-500 text-white'
-                        : isDarkMode
-                          ? 'bg-blue-700 text-white hover:bg-blue-600'
-                          : 'bg-blue-500 text-white hover:bg-blue-600'
+                        ? 'bg-green-700 text-white'
+                        : 'bg-blue-700 text-white hover:bg-blue-600'
                     }`}
                   >
                     {emailCopied ? (
@@ -2217,13 +1920,7 @@ Lela
                   </button>
                 </div>
 
-                <div
-                  className={`mt-4 max-h-96 overflow-y-auto rounded border p-4 font-mono text-sm ${
-                    isDarkMode
-                      ? 'border-gray-700 bg-gray-900 text-gray-300'
-                      : 'border-gray-200 bg-white text-gray-800'
-                  }`}
-                >
+                <div className="mt-4 max-h-96 overflow-y-auto rounded border border-gray-700 bg-gray-900 p-4 font-mono text-sm text-gray-300">
                   <pre className="whitespace-pre-wrap">
                     {generateEmailTemplate()}
                   </pre>
@@ -2238,22 +1935,14 @@ Lela
               </div>
 
               {/* Modal Footer */}
-              <div
-                className={`rounded-b-lg border-t px-6 py-4 ${
-                  isDarkMode ? 'border-gray-700' : 'border-gray-200'
-                }`}
-              >
+              <div className="rounded-b-lg border-t border-gray-700 px-6 py-4">
                 <div className="flex justify-end">
                   <button
                     onClick={() => {
                       setIsEmailModalOpen(false)
                       setEmailCopied(false)
                     }}
-                    className={`rounded px-4 py-2 font-medium ${
-                      isDarkMode
-                        ? 'bg-gray-700 text-white hover:bg-gray-600'
-                        : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                    }`}
+                    className="rounded bg-gray-700 px-4 py-2 font-medium text-white hover:bg-gray-600"
                   >
                     Close
                   </button>

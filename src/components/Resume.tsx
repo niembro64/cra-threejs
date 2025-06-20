@@ -7,6 +7,7 @@ import PixelArtText from './PixelArtText'
 
 import EducationSection from './EducationSection'
 import ProjectsSection from './ProjectsSection'
+import Services from './Services'
 import TriviaSection from './Trivia'
 import SkillsSection from './SkillsSection'
 import SocialMediaSection from './SocialMediaSection'
@@ -74,6 +75,9 @@ export const Resume: React.FC<ResumeProps> = () => {
       )}
 
       <ProjectsSection />
+
+      <div className="h-40" />
+      <Services isThin={isThin} />
 
       {isThin && (
         <>

@@ -6,12 +6,13 @@ import DrkClnBrand from './screens/DrkClnBrand'
 import Foreclosure from './screens/Foreclosure'
 import YouTubeDownloaderPage from './screens/YouTubeDownloaderPage'
 import AudioEditor from './screens/AudioEditor'
+import MediaConverter from './screens/MediaConverter'
 import StatusBar from './components/StatusBar'
 import './App.scss'
 import './drkcln-global.scss'
 // import usePageTracking from '../src/components/usePageTracking'
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <div className="App flex min-h-screen flex-col">
@@ -23,6 +24,7 @@ function App() {
           <Route path="/foreclosure" element={<Foreclosure />} />
           <Route path="/youtube-download" element={<YouTubeDownloaderPage />} />
           <Route path="/audio-edit" element={<AudioEditor />} />
+          <Route path="/media-convert" element={<MediaConverter />} />
         </Routes>
       </div>
     </Router>
