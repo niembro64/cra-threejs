@@ -10,7 +10,7 @@ import {
   MediaType,
 } from '../types/types'
 
-const API_BASE_URL = 'http://localhost:8000/api/media'
+const API_BASE_URL = `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/media`
 
 const MediaConverter: React.FC = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false)
@@ -236,8 +236,11 @@ const MediaConverter: React.FC = () => {
 
   const handleDownload = (): void => {
     if (conversionResult && conversionResult.download_url) {
+      const baseUrl =
+        process.env.REACT_APP_API_URL?.replace('/api', '') ||
+        'http://localhost:8000'
       const link = document.createElement('a')
-      link.href = `http://localhost:8000${conversionResult.download_url}`
+      link.href = `${baseUrl}${conversionResult.download_url}`
       link.download = '' // This forces download instead of opening in browser
       document.body.appendChild(link)
       link.click()
