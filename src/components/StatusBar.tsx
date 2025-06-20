@@ -14,8 +14,7 @@ const StatusBar: React.FC = () => {
   const [lastCheck, setLastCheck] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const API_BASE_URL =
-    process.env.REACT_APP_API_URL || 'http://localhost:8000/api'
+  const API_BASE_URL = 'http://localhost:8000/api'
 
   const checkHeartbeat = async () => {
     try {
@@ -50,8 +49,8 @@ const StatusBar: React.FC = () => {
     // Initial check
     checkHeartbeat()
 
-    // Set up polling every 1 second
-    const interval = setInterval(checkHeartbeat, 1000)
+    // Set up polling every 10 seconds
+    const interval = setInterval(checkHeartbeat, 10000)
 
     return () => clearInterval(interval)
   }, [])
