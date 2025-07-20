@@ -4,6 +4,7 @@ import Main from './components/Main'
 import Demo from './screens/Demo'
 import DrkClnBrand from './screens/DrkClnBrand'
 import Foreclosure from './screens/Foreclosure'
+import ForeclosureNew from './screens/ForeclosureNew'
 import YouTubeDownloaderPage from './screens/YouTubeDownloaderPage'
 import AudioEditor from './screens/AudioEditor'
 import MediaConverter from './screens/MediaConverter'
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/demo" element={<Demo />} />
           <Route path="/ana" element={<DrkClnBrand />} />
           <Route path="/foreclosure" element={<Foreclosure />} />
+          <Route path="/foreclosures_new" element={<ForeclosureNew />} />
           <Route path="/youtube-download" element={<YouTubeDownloaderPage />} />
           <Route path="/audio-edit" element={<AudioEditor />} />
           <Route path="/media-convert" element={<MediaConverter />} />
