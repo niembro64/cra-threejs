@@ -1,9 +1,9 @@
 // EducationSection.tsx
 
-import React from 'react'
-import { educations, showEmojis } from '../data/myData'
-import { isThin } from './Main'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { educations, showEmojis } from '../data/myData';
+import { isThin } from './Main';
+import PixelArtText from './PixelArtText';
 
 const EducationSection: React.FC = () => {
   return (
@@ -22,16 +22,9 @@ const EducationSection: React.FC = () => {
       </div>
 
       {educations.map((edu, idx) => (
-        <div
-          key={idx}
-          className="mx-4 mb-8 mt-16 flex flex-col items-center justify-center"
-        >
-          <h4 className="mb-2 text-center text-3xl font-bold text-blue-300">
-            {edu.degree}
-          </h4>
-          <p className="mb-2 text-center text-xl italic text-fuchsia-300">
-            {edu.school}
-          </p>
+        <div key={idx} className="mx-4 mb-8 mt-16 flex flex-col items-center justify-center">
+          <h4 className="mb-2 text-center text-3xl font-bold text-blue-300">{edu.degree}</h4>
+          <p className="mb-2 text-center text-xl italic text-fuchsia-300">{edu.school}</p>
           <p className="mb-4 text-xl text-white/50">{edu.dates}</p>
 
           {isThin ? (
@@ -102,7 +95,7 @@ const EducationSection: React.FC = () => {
         </div>
       ))}
     </section>
-  )
-}
+  );
+};
 
-export default EducationSection
+export default EducationSection;

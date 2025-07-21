@@ -1,7 +1,7 @@
-import React from 'react'
-import PixelArtText from './PixelArtText'
-import FancyButton from './FancyButton'
-import { Service, ServicesProps } from '../types/types'
+import React from 'react';
+import PixelArtText from './PixelArtText';
+import FancyButton from './FancyButton';
+import { Service, ServicesProps } from '../types/types';
 
 const Services: React.FC<ServicesProps> = ({ isThin }) => {
   const services: Service[] = [
@@ -18,6 +18,12 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
       status: 'available',
       url: 'https://niemo.io/foreclosure',
     },
+    {
+      title: 'CT Foreclosures Backend',
+      description: 'Simple interface for property status monitoring. Using Backend (Slower)',
+      status: 'available',
+      url: 'https://niemo.io/foreclosures_new',
+    },
     //   {
     //     title: 'Audio Editor',
     //     description:
@@ -32,37 +38,37 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
     //     status: 'in progress',
     //     url: 'https://niemo.io/youtube-download',
     //   },
-  ]
+  ];
 
   const getStatusColor = (status: string): string => {
     switch (status.toLowerCase()) {
       case 'available':
-        return 'text-green-300'
+        return 'text-green-300';
       case 'in progress':
-        return 'text-yellow-300'
+        return 'text-yellow-300';
       case 'maintenance':
-        return 'text-red-300'
+        return 'text-red-300';
       default:
-        return 'text-blue-300'
+        return 'text-blue-300';
     }
-  }
+  };
 
   const getStatusIcon = (status: string): string => {
     switch (status.toLowerCase()) {
       case 'available':
-        return '●'
+        return '●';
       case 'in progress':
-        return '⚡'
+        return '⚡';
       case 'maintenance':
-        return '⚠'
+        return '⚠';
       default:
-        return '○'
+        return '○';
     }
-  }
+  };
 
   const handleServiceClick = (url: string): void => {
-    window.open(url, '_blank')
-  }
+    window.open(url, '_blank');
+  };
 
   return (
     <section className={`px-4 py-12 ${isThin ? 'bg-black/80' : ''}`}>
@@ -81,10 +87,7 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
 
       <div className="grid grid-cols-1 gap-16">
         {services.map((service, index) => (
-          <div
-            key={index}
-            className="w-full rounded-2xl transition-all duration-300"
-          >
+          <div key={index} className="w-full rounded-2xl transition-all duration-300">
             <div className="mb-4 flex flex-row items-center justify-center text-center">
               <div className="pixel-font text-4xl uppercase text-white">
                 <strong>{service.title}</strong>
@@ -98,15 +101,10 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
             </div>
 
             <div className="px-4 py-6">
-              <div className="mb-6 text-center text-xl text-blue-100">
-                {service.description}
-              </div>
+              <div className="mb-6 text-center text-xl text-blue-100">{service.description}</div>
 
               <div className="text-center">
-                <FancyButton
-                  text="TRY IT"
-                  onClick={() => handleServiceClick(service.url)}
-                />
+                <FancyButton text="TRY IT" onClick={() => handleServiceClick(service.url)} />
               </div>
             </div>
           </div>
@@ -115,7 +113,7 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
 
       <div className="h-20" />
     </section>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;

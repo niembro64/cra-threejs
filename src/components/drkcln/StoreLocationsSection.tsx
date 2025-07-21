@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react';
 
 // Store locations data
 const locations = [
@@ -38,12 +38,12 @@ const locations = [
     phone: '+49 30 1234 5678',
     image: '/crate.png', // Placeholder image
   },
-]
+];
 
 export const StoreLocationsSection: React.FC = () => {
-  const [activeLocation, setActiveLocation] = useState(0)
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<HTMLDivElement>(null)
+  const [activeLocation, setActiveLocation] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
 
   // Animation for section when it comes into view
   useEffect(() => {
@@ -51,46 +51,46 @@ export const StoreLocationsSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100')
-            entry.target.classList.remove('opacity-0', 'translate-y-10')
+            entry.target.classList.add('opacity-100');
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   // Simulate map marker position change when active location changes
   useEffect(() => {
-    if (!mapRef.current) return
+    if (!mapRef.current) return;
 
-    const marker = mapRef.current.querySelector('.map-marker') as HTMLElement
-    if (!marker) return
+    const marker = mapRef.current.querySelector('.map-marker') as HTMLElement;
+    if (!marker) return;
 
     // Update marker position based on active location
-    const coords = locations[activeLocation].coordinates
-    const x = ((coords[1] + 180) / 360) * 100
-    const y = ((90 - coords[0]) / 180) * 100
+    const coords = locations[activeLocation].coordinates;
+    const x = ((coords[1] + 180) / 360) * 100;
+    const y = ((90 - coords[0]) / 180) * 100;
 
-    marker.style.left = `${x}%`
-    marker.style.top = `${y}%`
+    marker.style.left = `${x}%`;
+    marker.style.top = `${y}%`;
 
     // Animate the marker
-    marker.classList.add('animate-ping-once')
+    marker.classList.add('animate-ping-once');
     setTimeout(() => {
-      marker.classList.remove('animate-ping-once')
-    }, 500)
-  }, [activeLocation])
+      marker.classList.remove('animate-ping-once');
+    }, 500);
+  }, [activeLocation]);
 
   return (
     <section className="bg-black px-6 py-24 text-green-400">
@@ -101,10 +101,7 @@ export const StoreLocationsSection: React.FC = () => {
           <span className="text-white">/&gt;</span>
         </h2>
 
-        <div
-          ref={sectionRef}
-          className="translate-y-10 opacity-0 transition-all duration-1000"
-        >
+        <div ref={sectionRef} className="translate-y-10 opacity-0 transition-all duration-1000">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* Store locations list */}
             <div className="border border-green-500/30 bg-gray-900 p-6">
@@ -121,9 +118,7 @@ export const StoreLocationsSection: React.FC = () => {
                     }`}
                     onClick={() => setActiveLocation(index)}
                   >
-                    <h4 className="mb-1 text-xl font-bold text-white">
-                      {location.city}
-                    </h4>
+                    <h4 className="mb-1 text-xl font-bold text-white">{location.city}</h4>
                     <p className="text-sm text-green-300">{location.address}</p>
                   </div>
                 ))}
@@ -131,8 +126,7 @@ export const StoreLocationsSection: React.FC = () => {
 
               <div className="mt-8 border-t border-green-500/30 p-6">
                 <p className="mb-4 text-sm text-green-300">
-                  Can't visit us in person? Explore our stores in virtual
-                  reality through our app.
+                  Can't visit us in person? Explore our stores in virtual reality through our app.
                 </p>
                 <button className="bg-green-400 px-6 py-3 font-mono text-black transition-colors duration-300 hover:bg-green-300">
                   VIRTUAL TOUR
@@ -143,10 +137,7 @@ export const StoreLocationsSection: React.FC = () => {
             {/* Map and store details */}
             <div className="flex flex-col border border-green-500/30 bg-gray-900">
               {/* Digital map */}
-              <div
-                ref={mapRef}
-                className="relative h-64 overflow-hidden bg-gray-800"
-              >
+              <div ref={mapRef} className="relative h-64 overflow-hidden bg-gray-800">
                 {/* Map background with matrix/grid effect */}
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTAgMCBMIDEwMCAwIEwgMTAwIDEwMCBMIDAgMTAwIHoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjEwIiB4Mj0iMTAwIiB5Mj0iMTAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjIwIiB4Mj0iMTAwIiB5Mj0iMjAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjMwIiB4Mj0iMTAwIiB5Mj0iMzAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjQwIiB4Mj0iMTAwIiB5Mj0iNDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjUwIiB4Mj0iMTAwIiB5Mj0iNTAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjYwIiB4Mj0iMTAwIiB5Mj0iNjAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjcwIiB4Mj0iMTAwIiB5Mj0iNzAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjgwIiB4Mj0iMTAwIiB5Mj0iODAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMCIgeTE9IjkwIiB4Mj0iMTAwIiB5Mj0iOTAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMTAiIHkxPSIwIiB4Mj0iMTAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMjAiIHkxPSIwIiB4Mj0iMjAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iMzAiIHkxPSIwIiB4Mj0iMzAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iNDAiIHkxPSIwIiB4Mj0iNDAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iNTAiIHkxPSIwIiB4Mj0iNTAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iNzAiIHkxPSIwIiB4Mj0iNzAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iODAiIHkxPSIwIiB4Mj0iODAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KICA8bGluZSB4MT0iOTAiIHkxPSIwIiB4Mj0iOTAiIHkyPSIxMDAiIHN0cm9rZT0iIzAwZmYwMCIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] opacity-50"></div>
 
@@ -166,7 +157,7 @@ export const StoreLocationsSection: React.FC = () => {
 
                 {/* Other location markers */}
                 {locations.map((location, index) => {
-                  if (index === activeLocation) return null
+                  if (index === activeLocation) return null;
 
                   return (
                     <div
@@ -178,7 +169,7 @@ export const StoreLocationsSection: React.FC = () => {
                       }}
                       onClick={() => setActiveLocation(index)}
                     ></div>
-                  )
+                  );
                 })}
 
                 {/* Info overlay */}
@@ -187,10 +178,7 @@ export const StoreLocationsSection: React.FC = () => {
                     <span className="mr-2">
                       LAT: {locations[activeLocation].coordinates[0].toFixed(4)}
                     </span>
-                    <span>
-                      LONG:{' '}
-                      {locations[activeLocation].coordinates[1].toFixed(4)}
-                    </span>
+                    <span>LONG: {locations[activeLocation].coordinates[1].toFixed(4)}</span>
                   </div>
                 </div>
               </div>
@@ -199,31 +187,23 @@ export const StoreLocationsSection: React.FC = () => {
               <div className="flex-1 p-6">
                 <div className="mb-6 flex items-center">
                   <div className="mr-3 h-3 w-3 rounded-full bg-green-400"></div>
-                  <h4 className="text-xl font-bold text-white">
-                    {locations[activeLocation].city}
-                  </h4>
+                  <h4 className="text-xl font-bold text-white">{locations[activeLocation].city}</h4>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex">
                     <div className="w-24 font-mono text-gray-400">ADDRESS</div>
-                    <div className="flex-1 text-green-300">
-                      {locations[activeLocation].address}
-                    </div>
+                    <div className="flex-1 text-green-300">{locations[activeLocation].address}</div>
                   </div>
 
                   <div className="flex">
                     <div className="w-24 font-mono text-gray-400">HOURS</div>
-                    <div className="flex-1 text-green-300">
-                      {locations[activeLocation].hours}
-                    </div>
+                    <div className="flex-1 text-green-300">{locations[activeLocation].hours}</div>
                   </div>
 
                   <div className="flex">
                     <div className="w-24 font-mono text-gray-400">PHONE</div>
-                    <div className="flex-1 text-green-300">
-                      {locations[activeLocation].phone}
-                    </div>
+                    <div className="flex-1 text-green-300">{locations[activeLocation].phone}</div>
                   </div>
                 </div>
 
@@ -242,5 +222,5 @@ export const StoreLocationsSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

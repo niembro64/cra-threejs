@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export const Footer: React.FC = () => {
   return (
@@ -7,12 +7,10 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="mb-4 text-3xl font-bold text-green-400">
-              &lt;drkcln/&gt;
-            </div>
+            <div className="mb-4 text-3xl font-bold text-green-400">&lt;drkcln/&gt;</div>
             <p className="mb-6 text-sm">
-              Digital streetwear for the cybernetic generation. Bridging the gap
-              between fashion and technology.
+              Digital streetwear for the cybernetic generation. Bridging the gap between fashion and
+              technology.
             </p>
             <div className="flex space-x-4">
               <a
@@ -80,42 +78,27 @@ export const Footer: React.FC = () => {
             <h4 className="mb-4 text-lg text-white">Shop</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   New Arrivals
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Bestsellers
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Collections
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Accessories
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Sale
                 </a>
               </li>
@@ -127,42 +110,27 @@ export const Footer: React.FC = () => {
             <h4 className="mb-4 text-lg text-white">Company</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   About Us
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Sustainability
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Press
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Careers
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Contact
                 </a>
               </li>
@@ -174,42 +142,27 @@ export const Footer: React.FC = () => {
             <h4 className="mb-4 text-lg text-white">Help</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Customer Service
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Shipping Info
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Returns & Exchanges
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   Size Guide
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="transition-colors duration-300 hover:text-green-400"
-                >
+                <a href="#" className="transition-colors duration-300 hover:text-green-400">
                   FAQ
                 </a>
               </li>
@@ -220,27 +173,17 @@ export const Footer: React.FC = () => {
         {/* Lower footer */}
         <div className="mt-12 flex flex-col items-center justify-between border-t border-gray-800 pt-8 text-sm md:flex-row">
           <p className="mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} &lt;drkcln/&gt; | All rights
-            reserved
+            &copy; {new Date().getFullYear()} &lt;drkcln/&gt; | All rights reserved
           </p>
 
           <div className="flex space-x-6">
-            <a
-              href="#"
-              className="transition-colors duration-300 hover:text-green-400"
-            >
+            <a href="#" className="transition-colors duration-300 hover:text-green-400">
               Privacy Policy
             </a>
-            <a
-              href="#"
-              className="transition-colors duration-300 hover:text-green-400"
-            >
+            <a href="#" className="transition-colors duration-300 hover:text-green-400">
               Terms of Service
             </a>
-            <a
-              href="#"
-              className="transition-colors duration-300 hover:text-green-400"
-            >
+            <a href="#" className="transition-colors duration-300 hover:text-green-400">
               Cookie Policy
             </a>
           </div>
@@ -252,5 +195,5 @@ export const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

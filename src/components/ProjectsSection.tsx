@@ -1,21 +1,17 @@
 // ProjectsSection.tsx
 
-import React from 'react'
-import { ProjectStore } from '../store/ProjectStore'
-import { isThin } from './Main'
-import ProjectDemo from './ProjectDemo'
-import { projects, showEmojis } from '../data/myData'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { ProjectStore } from '../store/ProjectStore';
+import { isThin } from './Main';
+import ProjectDemo from './ProjectDemo';
+import { projects, showEmojis } from '../data/myData';
+import PixelArtText from './PixelArtText';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ProjectsSectionProps {}
 
 const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
-  const {
-    mutedArray: isMutedArray,
-    setMuted: setIsMuted,
-    hasTouchedAudioButton,
-  } = ProjectStore()
+  const { mutedArray: isMutedArray, setMuted: setIsMuted, hasTouchedAudioButton } = ProjectStore();
 
   return (
     <section
@@ -37,18 +33,15 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
       </div>
       <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
         {projects.map((project, index) => (
-          <div
-            key={project.title + index}
-            className="transition-all duration-300"
-          >
+          <div key={project.title + index} className="transition-all duration-300">
             <ProjectDemo
               key={index}
               index={index}
               project={project}
               isMuted={isMutedArray[index]}
               setIsMuted={() => {
-                const nextState: boolean = !isMutedArray[index]
-                setIsMuted(index, nextState)
+                const nextState: boolean = !isMutedArray[index];
+                setIsMuted(index, nextState);
               }}
               hasTouchedAMuteButton={hasTouchedAudioButton}
             />
@@ -56,7 +49,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ProjectsSection
+export default ProjectsSection;

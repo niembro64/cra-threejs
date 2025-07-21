@@ -1,58 +1,58 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
 
 export const HeroSection: React.FC = () => {
-  const textRef = useRef<HTMLHeadingElement>(null)
-  const brandNameRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const brandNameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Glitch effect for brand name
     const glitchEffect = () => {
-      if (!brandNameRef.current) return
+      if (!brandNameRef.current) return;
 
-      const element = brandNameRef.current
+      const element = brandNameRef.current;
 
       // Add glitch class
-      element.classList.add('glitch-effect')
+      element.classList.add('glitch-effect');
 
       // Remove glitch class after a short time
       setTimeout(() => {
-        element.classList.remove('glitch-effect')
-      }, 200)
-    }
+        element.classList.remove('glitch-effect');
+      }, 200);
+    };
 
     // Apply glitch effect at random intervals
     const glitchInterval = setInterval(() => {
       if (Math.random() > 0.7) {
-        glitchEffect()
+        glitchEffect();
       }
-    }, 2000)
+    }, 2000);
 
     // Typewriter effect
     const typewriterEffect = () => {
-      if (!textRef.current) return
+      if (!textRef.current) return;
 
-      const targetText = 'Redefining digital fashion for the virtual realm.'
-      const element = textRef.current
-      element.textContent = ''
+      const targetText = 'Redefining digital fashion for the virtual realm.';
+      const element = textRef.current;
+      element.textContent = '';
 
-      let i = 0
+      let i = 0;
       const typeChar = () => {
         if (i < targetText.length) {
-          element.textContent += targetText.charAt(i)
-          i++
-          setTimeout(typeChar, 60 + Math.random() * 40)
+          element.textContent += targetText.charAt(i);
+          i++;
+          setTimeout(typeChar, 60 + Math.random() * 40);
         }
-      }
+      };
 
-      typeChar()
-    }
+      typeChar();
+    };
 
-    typewriterEffect()
+    typewriterEffect();
 
     return () => {
-      clearInterval(glitchInterval)
-    }
-  }, [])
+      clearInterval(glitchInterval);
+    };
+  }, []);
 
   return (
     <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden px-6">
@@ -65,15 +65,10 @@ export const HeroSection: React.FC = () => {
           ref={brandNameRef}
           className="glitch-text relative mb-6 text-7xl font-bold tracking-tight md:text-9xl"
         >
-          <span className="font-mono tracking-tighter text-green-400">
-            &lt;drkcln/&gt;
-          </span>
+          <span className="font-mono tracking-tighter text-green-400">&lt;drkcln/&gt;</span>
         </div>
 
-        <h2
-          ref={textRef}
-          className="mb-8 h-8 text-xl font-light text-green-300 md:text-2xl"
-        ></h2>
+        <h2 ref={textRef} className="mb-8 h-8 text-xl font-light text-green-300 md:text-2xl"></h2>
 
         <div className="mt-12 flex flex-col items-center justify-center gap-6 md:flex-row">
           <button className="group relative overflow-hidden border border-green-500 bg-transparent px-8 py-3 text-green-400 transition-colors duration-300 hover:text-black">
@@ -95,5 +90,5 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

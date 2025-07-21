@@ -1,9 +1,9 @@
 // SkillsSection.tsx
 
-import React from 'react'
-import { skills, showEmojis } from '../data/myData'
-import { isThin } from './Main'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { skills, showEmojis } from '../data/myData';
+import { isThin } from './Main';
+import PixelArtText from './PixelArtText';
 
 const SkillsSection: React.FC = () => {
   if (isThin) {
@@ -26,15 +26,11 @@ const SkillsSection: React.FC = () => {
             <h2 className="mb-2 text-center text-3xl font-bold text-blue-300">
               {category.title + ' ' + category.emoji}
             </h2>
-            <p className="mb-2 text-center text-xl text-white/50">
-              {category.dates}
-            </p>
+            <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
             <div className="mt-2 grid list-disc grid-flow-row grid-cols-2 text-sm">
               {category.skills.map((skill, i) => (
                 <div key={i} className="mb-4">
-                  <h3 className="mb-2 text-2xl font-semibold text-fuchsia-300">
-                    {skill.title}
-                  </h3>
+                  <h3 className="mb-2 text-2xl font-semibold text-fuchsia-300">{skill.title}</h3>
                   <ul className="ml-6 list-disc text-lg">
                     {skill.details.map((detail, j) => (
                       <li key={j}>{detail}</li>
@@ -46,7 +42,7 @@ const SkillsSection: React.FC = () => {
           </div>
         ))}
       </section>
-    )
+    );
   } else {
     return (
       <section className="px-4 py-12">
@@ -67,17 +63,11 @@ const SkillsSection: React.FC = () => {
             <h2 className="mb-2 text-center text-3xl font-bold text-blue-300">
               {category.title + ' ' + category.emoji}
             </h2>
-            <p className="mb-2 text-center text-xl text-white/50">
-              {category.dates}
-            </p>
-            <div
-              className={`mt-2 flex list-disc flex-row justify-center gap-12 text-sm`}
-            >
+            <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
+            <div className={`mt-2 flex list-disc flex-row justify-center gap-12 text-sm`}>
               {category.skills.map((skill, i) => (
                 <div key={i} className="mb-4">
-                  <h3 className="mb-2 text-2xl font-semibold text-fuchsia-300">
-                    {skill.title}
-                  </h3>
+                  <h3 className="mb-2 text-2xl font-semibold text-fuchsia-300">{skill.title}</h3>
                   <ul className="ml-6 list-disc text-lg">
                     {skill.details.map((detail, j) => (
                       <li key={j}>{detail}</li>
@@ -89,8 +79,8 @@ const SkillsSection: React.FC = () => {
           </div>
         ))}
       </section>
-    )
+    );
   }
-}
+};
 
-export default SkillsSection
+export default SkillsSection;

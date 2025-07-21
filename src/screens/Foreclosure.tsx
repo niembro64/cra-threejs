@@ -1,50 +1,47 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const findNumbersAndMakePhoneNumber = (str: string): string => {
-  let numbersString = ''
+  let numbersString = '';
 
   // go through each character in the string, only add if it is a number
   for (let i = 0; i < str.length; i++) {
-    const char = str.charAt(i)
+    const char = str.charAt(i);
     if (char >= '0' && char <= '9') {
-      numbersString += char
+      numbersString += char;
     }
   }
 
   // check if the string is 10 digits long
   if (numbersString.length === 10) {
     // format the string as a phone number
-    return `(${numbersString.slice(0, 3)}) ${numbersString.slice(
-      3,
-      6,
-    )}-${numbersString.slice(6)}`
+    return `(${numbersString.slice(0, 3)}) ${numbersString.slice(3, 6)}-${numbersString.slice(6)}`;
   } else {
     // if not, return the original string
-    return str
+    return str;
   }
-}
+};
 
 const replaceAmpWithAnd = (str: string): string => {
-  return str.replace(/&amp;/g, '&')
-}
+  return str.replace(/&amp;/g, '&');
+};
 
 const numberToDollarAmountString = (number: number): string => {
-  if (isNaN(number)) return ''
+  if (isNaN(number)) return '';
 
   // don't show cents if it's a whole number
   const formattedNumber = number.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0,
-  })
-  return formattedNumber
-}
+  });
+  return formattedNumber;
+};
 
 type CityDistanceObject = {
-  city: string
-  distanceMiles: number
-}
+  city: string;
+  distanceMiles: number;
+};
 
 const citiesByDistance: CityDistanceObject[] = [
   { city: 'Greenwich', distanceMiles: 0.0 },
@@ -126,126 +123,123 @@ const citiesByDistance: CityDistanceObject[] = [
   { city: 'Windsor', distanceMiles: 66.0 },
   { city: 'Windsor Locks', distanceMiles: 67.3 },
   { city: 'Enfield', distanceMiles: 68.5 },
-]
+];
 
 // Define types for the data we'll work with
 type PublicAuctionNotice = {
   // Case/filing details
-  caseCaption: string
-  fileDate: string
-  docketNumber: string
-  returnDate: string
+  caseCaption: string;
+  fileDate: string;
+  docketNumber: string;
+  returnDate: string;
 
   // Sale information
-  town: string
-  saleDate: string
-  saleTime: string
-  inspectionCommencingAt: string
-  noticeFrom: string
-  noticeThru: string
+  town: string;
+  saleDate: string;
+  saleTime: string;
+  inspectionCommencingAt: string;
+  noticeFrom: string;
+  noticeThru: string;
 
   // Notice details
-  heading: string
-  body: string
+  heading: string;
+  body: string;
 
   // Committee contact
-  committee: string
+  committee: string;
 
   // Sale status (e.g., whether it is cancelled)
-  status: string
-  address: string
+  status: string;
+  address: string;
 
   // New field: dollar amount found in the
-  dollarAmountString: string
-  dollarAmountNumber: number
+  dollarAmountString: string;
+  dollarAmountNumber: number;
 
   // Detailed committee information
-  committeeName: string
-  committeePhone: string
-  committeeEmail: string
-}
+  committeeName: string;
+  committeePhone: string;
+  committeeEmail: string;
+};
 
 type CityInfo = {
-  name: string
-  count: number
-}
+  name: string;
+  count: number;
+};
 
 type PostingInfo = {
-  postingId: string
-  city: string
-  status: 'pending' | 'loading' | 'loaded' | 'error' | 'missing'
-  auctionNotice?: PublicAuctionNotice
-  errorMessage?: string
-}
+  postingId: string;
+  city: string;
+  status: 'pending' | 'loading' | 'loaded' | 'error' | 'missing';
+  auctionNotice?: PublicAuctionNotice;
+  errorMessage?: string;
+};
 
 function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(htmlString, 'text/html')
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
 
   // Helper function to get the trimmed text content by element ID.
   const getText = (id: string): string => {
-    const element = doc.getElementById(id)
-    return element ? (element.textContent?.trim() ?? '') : ''
-  }
+    const element = doc.getElementById(id);
+    return element ? (element.textContent?.trim() ?? '') : '';
+  };
 
   // --- Retain original logic for extracting the address ---
-  let address = ''
-  const headingElement = doc.getElementById('ctl00_cphBody_lblHeading')
+  let address = '';
+  const headingElement = doc.getElementById('ctl00_cphBody_lblHeading');
   if (headingElement) {
-    const headingHtml = headingElement.innerHTML
+    const headingHtml = headingElement.innerHTML;
     // Look for "ADDRESS:" followed by optional <br> tags and capture the text
-    const addressRegex = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
-    const match = headingHtml.match(addressRegex)
+    const addressRegex = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i;
+    const match = headingHtml.match(addressRegex);
     if (match) {
-      address = match[1].trim()
+      address = match[1].trim();
       // Optionally check if a second line exists to append
-      const afterMatch = headingHtml.split(match[0])[1]
+      const afterMatch = headingHtml.split(match[0])[1];
       if (afterMatch) {
-        const secondLineMatch = afterMatch.match(/<br\s*\/?>\s*([^<]+)/i)
+        const secondLineMatch = afterMatch.match(/<br\s*\/?>\s*([^<]+)/i);
         if (secondLineMatch && secondLineMatch[1].trim() !== '') {
-          address += ', ' + secondLineMatch[1].trim()
+          address += ', ' + secondLineMatch[1].trim();
         }
       }
     }
   }
   if (!address) {
-    const addressRegex2 = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i
-    const fullMatch = htmlString.match(addressRegex2)
+    const addressRegex2 = /ADDRESS:\s*(?:<br\s*\/?>\s*)*([^<]+)/i;
+    const fullMatch = htmlString.match(addressRegex2);
     if (fullMatch) {
-      address = fullMatch[1].trim()
+      address = fullMatch[1].trim();
     }
   }
 
   // --- Original extraction for the dollar amount ---
-  const dollarAmountFound =
-    htmlString.match(/\$[0-9,]+(\.[0-9]{2})?/)?.[0] || ''
+  const dollarAmountFound = htmlString.match(/\$[0-9,]+(\.[0-9]{2})?/)?.[0] || '';
 
   // --- New: Parse granular committee information ---
   // Initialize new committee fields to empty strings.
-  let committeeName = ''
-  let committeeOrganization = ''
+  let committeeName = '';
+  let committeeOrganization = '';
   // let committeeStreetAddress = ''
-  let committeeCity = ''
-  let committeeState = ''
-  let committeeZip = ''
-  let committeePhone = ''
-  let committeeFax = ''
-  let committeeEmail = ''
+  let committeeCity = '';
+  let committeeState = '';
+  let committeeZip = '';
+  let committeePhone = '';
+  let committeeFax = '';
+  let committeeEmail = '';
 
-  const committeeElement = doc.getElementById('ctl00_cphBody_lblCommittee')
+  const committeeElement = doc.getElementById('ctl00_cphBody_lblCommittee');
   // Retain original text value for the existing committee field.
-  const committeeOriginal = committeeElement
-    ? committeeElement.textContent?.trim() || ''
-    : ''
+  const committeeOriginal = committeeElement ? committeeElement.textContent?.trim() || '' : '';
 
   if (committeeElement) {
     // Replace <br> tags with newline characters then split into lines.
-    const committeeRaw = committeeElement.innerHTML
+    const committeeRaw = committeeElement.innerHTML;
     const committeeLines = committeeRaw
       .replace(/<br\s*\/?>/gi, '\n')
       .split('\n')
       .map((line) => line.trim())
-      .filter((line) => line.length > 0)
+      .filter((line) => line.length > 0);
 
     // Use a simple heuristic based on your examples:
     // - Line 0: committee contact name.
@@ -254,43 +248,43 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     // - Next: street address.
     // - Next: city, state and zip (split using a regex).
     if (committeeLines.length > 0) {
-      committeeName = committeeLines[0]
+      committeeName = committeeLines[0];
     }
-    let orgIndex = 1
+    let orgIndex = 1;
     if (committeeLines[1] && committeeLines[1].toLowerCase() === 'committee') {
-      orgIndex = 2
+      orgIndex = 2;
     }
     if (committeeLines.length > orgIndex) {
-      committeeOrganization = committeeLines[orgIndex] || ''
+      committeeOrganization = committeeLines[orgIndex] || '';
     }
     if (committeeLines.length > orgIndex + 1) {
       // committeeStreetAddress = committeeLines[orgIndex + 1] || ''
     }
     if (committeeLines.length > orgIndex + 2) {
-      const cityStateZipLine = committeeLines[orgIndex + 2] || ''
+      const cityStateZipLine = committeeLines[orgIndex + 2] || '';
       // Use regex to capture "City STATE ZIP", e.g., "BRIDGEPORT CT 06606"
-      const cityStateZipRegex = /([\w\s.]+)\s+([A-Z]{2})\s+(\d{5})/
+      const cityStateZipRegex = /([\w\s.]+)\s+([A-Z]{2})\s+(\d{5})/;
 
-      const match = cityStateZipLine.match(cityStateZipRegex)
+      const match = cityStateZipLine.match(cityStateZipRegex);
       if (match) {
-        committeeCity = match[1].trim()
-        committeeState = match[2].trim()
-        committeeZip = match[3].trim()
+        committeeCity = match[1].trim();
+        committeeState = match[2].trim();
+        committeeZip = match[3].trim();
       } else {
         // If no match, use the whole string as the city.
-        committeeCity = cityStateZipLine
+        committeeCity = cityStateZipLine;
       }
     }
     // Loop through all lines to pick out PHONE, FAX, and EMAIL.
     committeeLines.forEach((line) => {
       if (line.toUpperCase().startsWith('PHONE:')) {
-        committeePhone = line.split(':')[1]?.trim() || ''
+        committeePhone = line.split(':')[1]?.trim() || '';
       } else if (line.toUpperCase().startsWith('FAX:')) {
-        committeeFax = line.split(':')[1]?.trim() || ''
+        committeeFax = line.split(':')[1]?.trim() || '';
       } else if (line.toUpperCase().startsWith('EMAIL:')) {
-        committeeEmail = line.split(':')[1]?.trim() || ''
+        committeeEmail = line.split(':')[1]?.trim() || '';
       }
-    })
+    });
   }
 
   // --- Return the combined auction notice object ---
@@ -323,207 +317,202 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
     committeePhone: committeePhone,
 
     committeeEmail: committeeEmail,
-  }
+  };
 }
 
 // Function to properly capitalize names
 function capitalizeEachWord(str: string): string {
-  if (!str) return ''
+  if (!str) return '';
   return str
     .split(' ')
     .map((word) => {
       // Apply capitalization rule to all words, including those in all caps
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     })
-    .join(' ')
+    .join(' ');
 }
 
 // Extract posting IDs from city pages
 function extractPostingIds(htmlString: string, cityName: string): string[] {
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(htmlString, 'text/html')
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
 
   // Get the table that holds the foreclosure sales records
-  const salesTable = doc.getElementById('ctl00_cphBody_GridView1')
+  const salesTable = doc.getElementById('ctl00_cphBody_GridView1');
   if (!salesTable) {
-    return []
+    return [];
   }
 
   // Get all the rows in the table
-  const rows = salesTable.querySelectorAll('tr')
-  const postingIds: string[] = []
+  const rows = salesTable.querySelectorAll('tr');
+  const postingIds: string[] = [];
 
   // Iterate over each row. Skip the header row (which contains <th> elements).
   rows.forEach((row) => {
     if (row.querySelector('th')) {
-      return // Skip header row
+      return; // Skip header row
     }
 
-    const cells = row.querySelectorAll('td')
+    const cells = row.querySelectorAll('td');
     if (cells.length < 5) {
-      return
+      return;
     }
 
     // Extract the "View Full Notice" URL from the fifth cell
-    const viewNoticeLink = cells[4].querySelector('a')
-    const viewFullNoticeUrl = viewNoticeLink?.getAttribute('href') || ''
+    const viewNoticeLink = cells[4].querySelector('a');
+    const viewFullNoticeUrl = viewNoticeLink?.getAttribute('href') || '';
 
     // Extract the posting_id from the URL query parameter
-    let postingId = ''
+    let postingId = '';
     if (viewFullNoticeUrl) {
-      const queryPart = viewFullNoticeUrl.split('?')[1]
+      const queryPart = viewFullNoticeUrl.split('?')[1];
       if (queryPart) {
-        postingId = new URLSearchParams(queryPart).get('PostingId') || ''
+        postingId = new URLSearchParams(queryPart).get('PostingId') || '';
       }
     }
 
     if (postingId) {
-      postingIds.push(postingId)
+      postingIds.push(postingId);
     }
-  })
+  });
 
-  return postingIds
+  return postingIds;
 }
 
 // Extract city names and counts from the main page
 function extractCityInfo(htmlString: string): CityInfo[] {
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(htmlString, 'text/html')
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
 
   // Select all anchor elements with an href containing "PendPostbyTownDetails.aspx?town="
-  const cityLinks = doc.querySelectorAll(
-    "a[href*='PendPostbyTownDetails.aspx?town=']",
-  )
+  const cityLinks = doc.querySelectorAll("a[href*='PendPostbyTownDetails.aspx?town=']");
 
-  const cities: CityInfo[] = []
+  const cities: CityInfo[] = [];
 
   // Iterate over the city links to extract the name and the count
   cityLinks.forEach((link) => {
-    const name = link.textContent?.trim() || ''
+    const name = link.textContent?.trim() || '';
 
     // The expected structure is:
     // <a>City Name</a> <span> (</span> <span>Number</span> <span>)</span> <br>...
-    const firstSpan = link.nextElementSibling
-    let count = 0
+    const firstSpan = link.nextElementSibling;
+    let count = 0;
     if (firstSpan) {
-      const countSpan = firstSpan.nextElementSibling
+      const countSpan = firstSpan.nextElementSibling;
       if (countSpan) {
-        count = parseInt(countSpan.textContent || '0', 10)
+        count = parseInt(countSpan.textContent || '0', 10);
       }
     }
 
-    cities.push({ name, count })
-  })
+    cities.push({ name, count });
+  });
 
-  return cities
+  return cities;
 }
 
 const Foreclosure = () => {
   // State variables
-  const [cityList, setCityList] = useState<CityInfo[]>([])
-  const [selectedCities, setSelectedCities] = useState<string[]>([])
-  const [postings, setPostings] = useState<PostingInfo[]>([])
-  const [fetchingCities, setFetchingCities] = useState(true)
-  const [fetchingPostings, setFetchingPostings] = useState(false)
-  const [fetchingDetails, setFetchingDetails] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [timestamp, setTimestamp] = useState<string>('')
-  const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20)
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false)
-  const [selectedAuction, setSelectedAuction] =
-    useState<PublicAuctionNotice | null>(null)
-  const [emailCopied, setEmailCopied] = useState<boolean>(false)
+  const [cityList, setCityList] = useState<CityInfo[]>([]);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [postings, setPostings] = useState<PostingInfo[]>([]);
+  const [fetchingCities, setFetchingCities] = useState(true);
+  const [fetchingPostings, setFetchingPostings] = useState(false);
+  const [fetchingDetails, setFetchingDetails] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [timestamp, setTimestamp] = useState<string>('');
+  const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
+  const [selectedAuction, setSelectedAuction] = useState<PublicAuctionNotice | null>(null);
+  const [emailCopied, setEmailCopied] = useState<boolean>(false);
 
   const [sortConfig, setSortConfig] = useState<{
-    key: string | null
-    direction: 'ascending' | 'descending' | null
-  }>({ key: null, direction: null })
+    key: string | null;
+    direction: 'ascending' | 'descending' | null;
+  }>({ key: null, direction: null });
   const [progress, setProgress] = useState({
     completed: 0,
     total: 0,
     citiesProcessed: 0,
     totalCities: 0,
-  })
+  });
 
   // Fetch initial city list data
   const fetchCityList = async () => {
     try {
-      setFetchingCities(true)
-      setError(null)
-      setTimestamp(new Date().toLocaleString())
+      setFetchingCities(true);
+      setError(null);
+      setTimestamp(new Date().toLocaleString());
 
       // Fetch the main page that lists all cities
       const response = await axios.get(
-        'https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx',
-      )
+        'https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx'
+      );
 
       // Extract city information
-      const cities = extractCityInfo(response.data)
-      setCityList(cities)
-      console.log(`Fetched ${cities.length} cities`)
+      const cities = extractCityInfo(response.data);
+      setCityList(cities);
+      console.log(`Fetched ${cities.length} cities`);
     } catch (err) {
-      setError('Failed to fetch city list. Do you have the CORS extension on?')
-      console.error('Error fetching city list:', err)
+      setError('Failed to fetch city list. Do you have the CORS extension on?');
+      console.error('Error fetching city list:', err);
     } finally {
-      setFetchingCities(false)
+      setFetchingCities(false);
     }
-  }
+  };
 
   // Process selected cities to fetch posting IDs and then details
   const processSelectedCities = async () => {
     if (selectedCities.length === 0) {
-      setError('Please select at least one city first.')
-      return
+      setError('Please select at least one city first.');
+      return;
     }
 
     try {
-      setError(null)
-      setFetchingPostings(true)
-      setPostings([]) // Clear previous postings
+      setError(null);
+      setFetchingPostings(true);
+      setPostings([]); // Clear previous postings
 
       // Step 1: Get the cities to fetch
-      const citiesToFetch = cityList.filter((city) =>
-        selectedCities.includes(city.name),
-      )
+      const citiesToFetch = cityList.filter((city) => selectedCities.includes(city.name));
 
       setProgress({
         completed: 0,
         total: 0,
         citiesProcessed: 0,
         totalCities: citiesToFetch.length,
-      })
+      });
 
-      console.log(`Processing ${citiesToFetch.length} cities...`)
+      console.log(`Processing ${citiesToFetch.length} cities...`);
 
       // Step 2: Fetch posting IDs for all selected cities
-      const allPostingIds: { city: string; postingIds: string[] }[] = []
+      const allPostingIds: { city: string; postingIds: string[] }[] = [];
 
       for (const city of citiesToFetch) {
         try {
           setProgress((prev) => ({
             ...prev,
             citiesProcessed: prev.citiesProcessed + 1,
-          }))
+          }));
 
           // Construct the URL for the city's foreclosure data
-          const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownDetails.aspx?town=${encodeURIComponent(city.name)}`
+          const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownDetails.aspx?town=${encodeURIComponent(city.name)}`;
 
           // Fetch the city page
-          const response = await axios.get(url)
+          const response = await axios.get(url);
 
           // Extract posting IDs
-          const postingIds = extractPostingIds(response.data, city.name)
-          allPostingIds.push({ city: city.name, postingIds })
+          const postingIds = extractPostingIds(response.data, city.name);
+          allPostingIds.push({ city: city.name, postingIds });
 
-          console.log(`Found ${postingIds.length} postings for ${city.name}`)
+          console.log(`Found ${postingIds.length} postings for ${city.name}`);
         } catch (err) {
-          console.error(`Error fetching data for ${city.name}:`, err)
+          console.error(`Error fetching data for ${city.name}:`, err);
         }
       }
 
       // Step 3: Flatten all posting IDs and prepare for fetching details
-      const allPostings: PostingInfo[] = []
-      let totalPostings = 0
+      const allPostings: PostingInfo[] = [];
+      let totalPostings = 0;
 
       allPostingIds.forEach(({ city, postingIds }) => {
         postingIds.forEach((postingId) => {
@@ -531,339 +520,323 @@ const Foreclosure = () => {
             postingId,
             city,
             status: 'pending',
-          })
-          totalPostings++
-        })
-      })
+          });
+          totalPostings++;
+        });
+      });
 
       // Update state with all posting IDs
-      setPostings(allPostings)
-      setFetchingPostings(false)
+      setPostings(allPostings);
+      setFetchingPostings(false);
 
       // Step 4: Start fetching details for all postings
       if (allPostings.length > 0) {
-        setFetchingDetails(true)
+        setFetchingDetails(true);
         setProgress({
           completed: 0,
           total: allPostings.length,
           citiesProcessed: citiesToFetch.length,
           totalCities: citiesToFetch.length,
-        })
+        });
 
         // Process postings in batches to avoid overwhelming the server
-        const batchSize = 5
-        const totalBatches = Math.ceil(allPostings.length / batchSize)
+        const batchSize = 5;
+        const totalBatches = Math.ceil(allPostings.length / batchSize);
 
         for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
-          const batchStart = batchIndex * batchSize
-          const batchEnd = Math.min(batchStart + batchSize, allPostings.length)
-          const batch = allPostings.slice(batchStart, batchEnd)
+          const batchStart = batchIndex * batchSize;
+          const batchEnd = Math.min(batchStart + batchSize, allPostings.length);
+          const batch = allPostings.slice(batchStart, batchEnd);
 
           console.log(
-            `Processing batch ${batchIndex + 1}/${totalBatches}, items ${batchStart + 1}-${batchEnd}`,
-          )
+            `Processing batch ${batchIndex + 1}/${totalBatches}, items ${batchStart + 1}-${batchEnd}`
+          );
 
           // Mark items in this batch as loading
           setPostings((prevPostings) => {
-            const updatedPostings = [...prevPostings]
+            const updatedPostings = [...prevPostings];
             for (let i = batchStart; i < batchEnd; i++) {
               if (i < updatedPostings.length) {
                 updatedPostings[i] = {
                   ...updatedPostings[i],
                   status: 'loading',
-                }
+                };
               }
             }
-            return updatedPostings
-          })
+            return updatedPostings;
+          });
 
           // Fetch details for each posting in the batch concurrently
           await Promise.all(
             batch.map(async (posting, index) => {
               try {
-                const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`
-                const response = await axios.get(url)
+                const url = `https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`;
+                const response = await axios.get(url);
 
                 // Check if the page indicates "No data found"
                 if (response.data.includes('No data found')) {
                   setPostings((prevPostings) => {
-                    const updatedPostings = [...prevPostings]
-                    const postingIndex = batchStart + index
+                    const updatedPostings = [...prevPostings];
+                    const postingIndex = batchStart + index;
                     if (postingIndex < updatedPostings.length) {
                       updatedPostings[postingIndex] = {
                         ...updatedPostings[postingIndex],
                         // auctionNotice: null, // or provide a default empty object if needed
                         status: 'missing',
-                      }
+                      };
                     }
-                    return updatedPostings
-                  })
+                    return updatedPostings;
+                  });
                   setProgress((prev) => ({
                     ...prev,
                     completed: prev.completed + 1,
-                  }))
-                  return // Skip further processing for this posting
+                  }));
+                  return; // Skip further processing for this posting
                 }
 
                 // Parse auction notice details if data is available
-                const auctionNotice = parsePublicAuctionNotice(response.data)
+                const auctionNotice = parsePublicAuctionNotice(response.data);
 
                 setPostings((prevPostings) => {
-                  const updatedPostings = [...prevPostings]
-                  const postingIndex = batchStart + index
+                  const updatedPostings = [...prevPostings];
+                  const postingIndex = batchStart + index;
                   if (postingIndex < updatedPostings.length) {
                     updatedPostings[postingIndex] = {
                       ...updatedPostings[postingIndex],
                       auctionNotice,
                       status: 'loaded',
-                    }
+                    };
                   }
-                  return updatedPostings
-                })
+                  return updatedPostings;
+                });
 
                 setProgress((prev) => ({
                   ...prev,
                   completed: prev.completed + 1,
-                }))
+                }));
               } catch (err) {
                 // Update posting with error information
                 setPostings((prevPostings) => {
-                  const updatedPostings = [...prevPostings]
-                  const postingIndex = batchStart + index
+                  const updatedPostings = [...prevPostings];
+                  const postingIndex = batchStart + index;
                   if (postingIndex < updatedPostings.length) {
                     updatedPostings[postingIndex] = {
                       ...updatedPostings[postingIndex],
                       status: 'error',
                       errorMessage: 'Failed to load auction details',
-                    }
+                    };
                   }
-                  return updatedPostings
-                })
+                  return updatedPostings;
+                });
 
                 setProgress((prev) => ({
                   ...prev,
                   completed: prev.completed + 1,
-                }))
+                }));
 
-                console.error(
-                  `Error fetching details for posting ID ${posting.postingId}:`,
-                  err,
-                )
+                console.error(`Error fetching details for posting ID ${posting.postingId}:`, err);
               }
-            }),
-          )
+            })
+          );
 
           // Small delay between batches to be nice to the server
           if (batchIndex < totalBatches - 1) {
-            await new Promise((resolve) => setTimeout(resolve, 1000))
+            await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         }
 
-        setFetchingDetails(false)
+        setFetchingDetails(false);
       }
     } catch (err) {
-      setError('An error occurred while processing the selected cities.')
-      console.error('Error processing cities:', err)
-      setFetchingPostings(false)
-      setFetchingDetails(false)
+      setError('An error occurred while processing the selected cities.');
+      console.error('Error processing cities:', err);
+      setFetchingPostings(false);
+      setFetchingDetails(false);
     }
-  }
+  };
 
   // Toggle selection of a city
   const handleCitySelection = (cityName: string) => {
     setSelectedCities((prev) => {
       if (prev.includes(cityName)) {
-        return prev.filter((name) => name !== cityName)
+        return prev.filter((name) => name !== cityName);
       }
-      return [...prev, cityName]
-    })
-  }
+      return [...prev, cityName];
+    });
+  };
 
   // Select all cities
   const selectAllCities = () => {
-    setSelectedCities(cityList.map((city) => city.name))
-  }
+    setSelectedCities(cityList.map((city) => city.name));
+  };
 
   // Select cities within distance from Greenwich
   const selectCitiesByDistance = (distance: number) => {
     // Find cities that are within the specified distance
     const citiesWithinDistance = citiesByDistance
       .filter((city) => city.distanceMiles <= distance)
-      .map((city) => city.city)
+      .map((city) => city.city);
 
     // Filter cityList to only include these cities (because some cities in distance list might not appear in the actual data)
     const availableCitiesWithinDistance = cityList
       .filter((city) => citiesWithinDistance.includes(city.name))
-      .map((city) => city.name)
+      .map((city) => city.name);
 
-    setSelectedCities(availableCitiesWithinDistance)
-  }
+    setSelectedCities(availableCitiesWithinDistance);
+  };
 
   // Update city selection when distance changes
   useEffect(() => {
     if (cityList.length > 0) {
-      selectCitiesByDistance(distanceFromGreenwich)
+      selectCitiesByDistance(distanceFromGreenwich);
     }
-  }, [distanceFromGreenwich, cityList])
+  }, [distanceFromGreenwich, cityList]);
 
   // Clear city selection
   const clearCitySelection = () => {
-    setSelectedCities([])
-  }
+    setSelectedCities([]);
+  };
 
   // Load initial city list on component mount
   useEffect(() => {
-    fetchCityList()
-  }, [])
+    fetchCityList();
+  }, []);
 
   // Format sale date to YYYY-MM-DD HH:MM format
   const formatSaleDate = (params: {
-    saleDate?: string
-    saleTime?: string
-    showTime: boolean
+    saleDate?: string;
+    saleTime?: string;
+    showTime: boolean;
   }): string => {
     // Check if saleDate is provided
-    const { saleDate, showTime, saleTime } = params
+    const { saleDate, showTime, saleTime } = params;
 
-    if (!saleDate) return ''
+    if (!saleDate) return '';
 
     // Parse the date parts
     // Expected formats: "January 1, 2023" or "Jan. 1, 2023" or similar
     try {
-      const dateObj = new Date(saleDate)
-      if (isNaN(dateObj.getTime())) return saleDate // Return original if parsing fails
+      const dateObj = new Date(saleDate);
+      if (isNaN(dateObj.getTime())) return saleDate; // Return original if parsing fails
 
       // Format the date part as YYYY-MM-DD
-      const year = dateObj.getFullYear()
-      const month = String(dateObj.getMonth() + 1).padStart(2, '0')
-      const day = String(dateObj.getDate()).padStart(2, '0')
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
 
       // Format the time part if available
-      let formattedTime = ''
+      let formattedTime = '';
       if (showTime && saleTime) {
         // Extract hours and minutes from time string (expected format like "10:00 AM")
-        const timeMatch = saleTime.match(/(\d+):(\d+)\s*(AM|PM)?/i)
+        const timeMatch = saleTime.match(/(\d+):(\d+)\s*(AM|PM)?/i);
         if (timeMatch) {
-          let hours = parseInt(timeMatch[1], 10)
-          const minutes = timeMatch[2]
-          const ampm = timeMatch[3]?.toUpperCase()
+          let hours = parseInt(timeMatch[1], 10);
+          const minutes = timeMatch[2];
+          const ampm = timeMatch[3]?.toUpperCase();
 
           // Convert to 24-hour format if AM/PM is specified
-          if (ampm === 'PM' && hours < 12) hours += 12
-          if (ampm === 'AM' && hours === 12) hours = 0
+          if (ampm === 'PM' && hours < 12) hours += 12;
+          if (ampm === 'AM' && hours === 12) hours = 0;
 
-          formattedTime = ` ${String(hours).padStart(2, '0')}:${minutes}`
+          formattedTime = ` ${String(hours).padStart(2, '0')}:${minutes}`;
         } else {
-          formattedTime = ` ${saleTime}`
+          formattedTime = ` ${saleTime}`;
         }
       }
 
-      return `${year}-${month}-${day}${formattedTime}`
+      return `${year}-${month}-${day}${formattedTime}`;
     } catch (e) {
-      console.error('Error formatting date:', e)
-      return saleDate
+      console.error('Error formatting date:', e);
+      return saleDate;
     }
-  }
+  };
 
   // Sort function for table columns
   const requestSort = (key: string) => {
-    let direction: 'ascending' | 'descending' = 'ascending'
+    let direction: 'ascending' | 'descending' = 'ascending';
 
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending'
-    } else if (
-      sortConfig.key === key &&
-      sortConfig.direction === 'descending'
-    ) {
+      direction = 'descending';
+    } else if (sortConfig.key === key && sortConfig.direction === 'descending') {
       // If already descending, clear the sort
-      return setSortConfig({ key: null, direction: null })
+      return setSortConfig({ key: null, direction: null });
     }
 
-    setSortConfig({ key, direction })
-  }
+    setSortConfig({ key, direction });
+  };
 
   // Get sorted postings
   const getSortedPostings = () => {
     if (!sortConfig.key || !sortConfig.direction) {
-      return postings
+      return postings;
     }
 
     return [...postings].sort((a, b) => {
-      let aValue: any = ''
-      let bValue: any = ''
+      let aValue: any = '';
+      let bValue: any = '';
 
       // Extract values based on sort key
       if (sortConfig.key === 'status') {
         // Special handling for status with cancelled items
-        if (
-          a.status === 'loaded' &&
-          a.auctionNotice?.status?.toLowerCase().includes('cancel')
-        ) {
-          aValue = 'cancelled'
+        if (a.status === 'loaded' && a.auctionNotice?.status?.toLowerCase().includes('cancel')) {
+          aValue = 'cancelled';
         } else {
-          aValue = a.status
+          aValue = a.status;
         }
 
-        if (
-          b.status === 'loaded' &&
-          b.auctionNotice?.status?.toLowerCase().includes('cancel')
-        ) {
-          bValue = 'cancelled'
+        if (b.status === 'loaded' && b.auctionNotice?.status?.toLowerCase().includes('cancel')) {
+          bValue = 'cancelled';
         } else {
-          bValue = b.status
+          bValue = b.status;
         }
       } else if (sortConfig.key === 'city') {
-        aValue = a.auctionNotice?.town || a.city || ''
-        bValue = b.auctionNotice?.town || b.city || ''
+        aValue = a.auctionNotice?.town || a.city || '';
+        bValue = b.auctionNotice?.town || b.city || '';
       } else if (sortConfig.key === 'caseCaption') {
-        aValue = a.auctionNotice?.caseCaption || ''
-        bValue = b.auctionNotice?.caseCaption || ''
+        aValue = a.auctionNotice?.caseCaption || '';
+        bValue = b.auctionNotice?.caseCaption || '';
       } else if (sortConfig.key === 'saleDate') {
         // For sale date, we want to compare dates in our formatted style
         aValue = formatSaleDate({
           saleDate: a.auctionNotice?.saleDate,
           saleTime: a.auctionNotice?.saleTime,
           showTime: false,
-        })
+        });
         bValue = formatSaleDate({
           saleDate: b.auctionNotice?.saleDate,
           saleTime: b.auctionNotice?.saleTime,
           showTime: false,
-        })
+        });
       } else if (sortConfig.key === 'docketNumber') {
-        aValue = a.auctionNotice?.docketNumber || ''
-        bValue = b.auctionNotice?.docketNumber || ''
+        aValue = a.auctionNotice?.docketNumber || '';
+        bValue = b.auctionNotice?.docketNumber || '';
       } else if (sortConfig.key === 'address') {
-        aValue = a.auctionNotice?.address || ''
-        bValue = b.auctionNotice?.address || ''
+        aValue = a.auctionNotice?.address || '';
+        bValue = b.auctionNotice?.address || '';
       } else if (sortConfig.key === 'dollarAmountFound') {
-        aValue = a.auctionNotice?.dollarAmountNumber || 0
-        bValue = b.auctionNotice?.dollarAmountNumber || 0
+        aValue = a.auctionNotice?.dollarAmountNumber || 0;
+        bValue = b.auctionNotice?.dollarAmountNumber || 0;
       } else if (sortConfig.key === 'committeeName') {
-        aValue = a.auctionNotice?.committeeName || ''
-        bValue = b.auctionNotice?.committeeName || ''
+        aValue = a.auctionNotice?.committeeName || '';
+        bValue = b.auctionNotice?.committeeName || '';
       } else if (sortConfig.key === 'committeePhone') {
-        aValue = findNumbersAndMakePhoneNumber(
-          a.auctionNotice?.committeePhone || '',
-        )
-        bValue = findNumbersAndMakePhoneNumber(
-          b.auctionNotice?.committeePhone || '',
-        )
+        aValue = findNumbersAndMakePhoneNumber(a.auctionNotice?.committeePhone || '');
+        bValue = findNumbersAndMakePhoneNumber(b.auctionNotice?.committeePhone || '');
       } else if (sortConfig.key === 'committeeEmail') {
-        aValue = (a.auctionNotice?.committeeEmail || '').toLowerCase()
-        bValue = (b.auctionNotice?.committeeEmail || '').toLowerCase()
+        aValue = (a.auctionNotice?.committeeEmail || '').toLowerCase();
+        bValue = (b.auctionNotice?.committeeEmail || '').toLowerCase();
       }
 
       // Compare the values
       if (aValue < bValue) {
-        return sortConfig.direction === 'ascending' ? -1 : 1
+        return sortConfig.direction === 'ascending' ? -1 : 1;
       }
       if (aValue > bValue) {
-        return sortConfig.direction === 'ascending' ? 1 : -1
+        return sortConfig.direction === 'ascending' ? 1 : -1;
       }
-      return 0
-    })
-  }
+      return 0;
+    });
+  };
 
   // Get sort indicator for column headers
   const getSortIndicator = (key: string) => {
@@ -875,14 +848,9 @@ const Foreclosure = () => {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 15l7-7 7 7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
         </svg>
-      )
+      );
     }
 
     return sortConfig.direction === 'ascending' ? (
@@ -892,12 +860,7 @@ const Foreclosure = () => {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M5 15l7-7 7 7"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
       </svg>
     ) : (
       <svg
@@ -906,27 +869,20 @@ const Foreclosure = () => {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M19 9l-7 7-7-7"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
       </svg>
-    )
-  }
+    );
+  };
 
   // Calculate statistics
   const getStats = () => {
-    const loaded = postings.filter((p) => p.status === 'loaded').length
-    const pending = postings.filter((p) => p.status === 'pending').length
-    const loading = postings.filter((p) => p.status === 'loading').length
-    const error = postings.filter((p) => p.status === 'error').length
+    const loaded = postings.filter((p) => p.status === 'loaded').length;
+    const pending = postings.filter((p) => p.status === 'pending').length;
+    const loading = postings.filter((p) => p.status === 'loading').length;
+    const error = postings.filter((p) => p.status === 'error').length;
     const cancelled = postings.filter(
-      (p) =>
-        p.status === 'loaded' &&
-        p.auctionNotice?.status?.toLowerCase().includes('cancel'),
-    ).length
+      (p) => p.status === 'loaded' && p.auctionNotice?.status?.toLowerCase().includes('cancel')
+    ).length;
 
     return {
       loaded,
@@ -935,17 +891,17 @@ const Foreclosure = () => {
       error,
       cancelled,
       total: postings.length,
-    }
-  }
+    };
+  };
 
   // Function to download table data as CSV
   const downloadTableAsCSV = () => {
     // Filter for loaded postings only
-    const loadedPostings = postings.filter((p) => p.status === 'loaded')
+    const loadedPostings = postings.filter((p) => p.status === 'loaded');
 
     if (loadedPostings.length === 0) {
-      setError('No data available to download.')
-      return
+      setError('No data available to download.');
+      return;
     }
 
     // Define CSV headers
@@ -959,31 +915,27 @@ const Foreclosure = () => {
       'Committee Email',
       'Sale Date',
       'Docket Number',
-    ]
+    ];
 
     // Convert postings to CSV rows
     const rows = loadedPostings.map((posting) => {
-      const status = posting.auctionNotice?.status
-        ?.toLowerCase()
-        .includes('cancel')
+      const status = posting.auctionNotice?.status?.toLowerCase().includes('cancel')
         ? 'Cancelled'
-        : 'Active'
+        : 'Active';
 
-      const town = posting.auctionNotice?.town || posting.city || ''
+      const town = posting.auctionNotice?.town || posting.city || '';
 
-      const deposit = numberToDollarAmountString(
-        posting.auctionNotice?.dollarAmountNumber || 0,
-      )
+      const deposit = numberToDollarAmountString(posting.auctionNotice?.dollarAmountNumber || 0);
 
-      const address = posting.auctionNotice?.address || ''
+      const address = posting.auctionNotice?.address || '';
 
-      const committeeName = posting.auctionNotice?.committeeName || ''
+      const committeeName = posting.auctionNotice?.committeeName || '';
 
       const committeePhone = findNumbersAndMakePhoneNumber(
-        posting.auctionNotice?.committeePhone || '',
-      )
+        posting.auctionNotice?.committeePhone || ''
+      );
 
-      const committeeEmail = posting.auctionNotice?.committeeEmail || ''
+      const committeeEmail = posting.auctionNotice?.committeeEmail || '';
 
       const saleDate = posting.auctionNotice?.saleDate
         ? formatSaleDate({
@@ -991,21 +943,17 @@ const Foreclosure = () => {
             saleTime: posting.auctionNotice.saleTime,
             showTime: true,
           })
-        : ''
+        : '';
 
-      const docketNumber = posting.auctionNotice?.docketNumber || ''
+      const docketNumber = posting.auctionNotice?.docketNumber || '';
 
       // Escape fields that might contain commas
       const escapeCsvField = (field: string) => {
-        if (
-          field.includes(',') ||
-          field.includes('"') ||
-          field.includes('\n')
-        ) {
-          return `"${field.replace(/"/g, '""')}"`
+        if (field.includes(',') || field.includes('"') || field.includes('\n')) {
+          return `"${field.replace(/"/g, '""')}"`;
         }
-        return field
-      }
+        return field;
+      };
 
       return [
         escapeCsvField(status),
@@ -1017,75 +965,68 @@ const Foreclosure = () => {
         escapeCsvField(committeeEmail),
         escapeCsvField(saleDate),
         escapeCsvField(docketNumber),
-      ].join(',')
-    })
+      ].join(',');
+    });
 
     // Combine headers and rows
-    const csvContent = [headers.join(','), ...rows].join('\n')
+    const csvContent = [headers.join(','), ...rows].join('\n');
 
     // Create file and trigger download
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
 
     // Format current date for filename
-    const date = new Date()
-    const formattedDate = date.toISOString().split('T')[0]
+    const date = new Date();
+    const formattedDate = date.toISOString().split('T')[0];
 
-    const formattedTime = date.toTimeString().split(' ')[0].replace(/:/g, '-')
-    const formattedDateTime = `${formattedDate}_${formattedTime}`
+    const formattedTime = date.toTimeString().split(' ')[0].replace(/:/g, '-');
+    const formattedDateTime = `${formattedDate}_${formattedTime}`;
 
-    link.setAttribute('href', url)
-    link.setAttribute('download', `foreclosure-data-${formattedDateTime}.csv`)
-    link.style.visibility = 'hidden'
+    link.setAttribute('href', url);
+    link.setAttribute('download', `foreclosure-data-${formattedDateTime}.csv`);
+    link.style.visibility = 'hidden';
 
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Display status message
   const getStatusMessage = () => {
     if (fetchingCities) {
-      return 'Fetching city list...'
+      return 'Fetching city list...';
     }
 
     if (fetchingPostings) {
-      return `Fetching posting IDs for cities... (${progress.citiesProcessed}/${progress.totalCities})`
+      return `Fetching posting IDs for cities... (${progress.citiesProcessed}/${progress.totalCities})`;
     }
 
     if (fetchingDetails) {
-      return `Fetching auction details... (${progress.completed}/${progress.total})`
+      return `Fetching auction details... (${progress.completed}/${progress.total})`;
     }
 
     if (postings.length > 0) {
-      const stats = getStats()
-      return `Loaded ${stats.loaded} of ${stats.total} auction details (${stats.cancelled} cancelled)`
+      const stats = getStats();
+      return `Loaded ${stats.loaded} of ${stats.total} auction details (${stats.cancelled} cancelled)`;
     }
 
-    return "Select cities and click 'Process Selected Cities' to fetch foreclosure data."
-  }
+    return "Select cities and click 'Process Selected Cities' to fetch foreclosure data.";
+  };
 
   // Generate email template from selected auction
   const generateEmailTemplate = () => {
-    if (!selectedAuction) return ''
+    if (!selectedAuction) return '';
 
-    const {
-      address,
-      town,
-      saleDate,
-      saleTime,
-      dollarAmountString,
-      docketNumber,
-      committeeName,
-    } = selectedAuction
+    const { address, town, saleDate, saleTime, dollarAmountString, docketNumber, committeeName } =
+      selectedAuction;
 
     // Determine the date and time for a clean version
     const formattedSaleDate = formatSaleDate({
       saleDate: saleDate,
       saleTime: saleTime,
       showTime: true,
-    })
+    });
 
     const emailText: string = `EMAIL ADDRESS: ${selectedAuction.committeeEmail}
     
@@ -1106,27 +1047,27 @@ Thank you.
 Kind Regards,
 
 Lela
-`
+`;
 
-    return emailText
-  }
+    return emailText;
+  };
 
   // Copy the email template to clipboard
   const copyEmailToClipboard = () => {
-    if (!selectedAuction) return
+    if (!selectedAuction) return;
 
-    const emailText = generateEmailTemplate()
+    const emailText = generateEmailTemplate();
     navigator.clipboard
       .writeText(emailText)
       .then(() => {
-        setEmailCopied(true)
-        setTimeout(() => setEmailCopied(false), 3000) // Reset after 3 seconds
+        setEmailCopied(true);
+        setTimeout(() => setEmailCopied(false), 3000); // Reset after 3 seconds
       })
       .catch((err) => {
-        console.error('Failed to copy: ', err)
-        setError('Failed to copy email text. Please try again.')
-      })
-  }
+        console.error('Failed to copy: ', err);
+        setError('Failed to copy email text. Please try again.');
+      });
+  };
 
   return (
     <div className="h-auto bg-gray-900 p-4 text-gray-100">
@@ -1156,8 +1097,7 @@ Lela
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-sm text-gray-300">
-                Data fetched at:{' '}
-                <span className="font-semibold">{timestamp}</span>
+                Data fetched at: <span className="font-semibold">{timestamp}</span>
               </p>
             </div>
             <div className="flex gap-3">
@@ -1183,18 +1123,14 @@ Lela
         <div className="mb-6 rounded-lg bg-gray-800 p-4">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
-              <label className="font-medium text-gray-300">
-                Distance from Greenwich (mi):
-              </label>
+              <label className="font-medium text-gray-300">Distance from Greenwich (mi):</label>
               <input
                 aria-label="Distance from Greenwich"
                 type="number"
                 min="0"
                 max="100"
                 value={distanceFromGreenwich}
-                onChange={(e) =>
-                  setDistanceFromGreenwich(Number(e.target.value))
-                }
+                onChange={(e) => setDistanceFromGreenwich(Number(e.target.value))}
                 className="w-20 rounded border border-gray-600 bg-gray-700 p-2 text-white"
               />
             </div>
@@ -1219,8 +1155,7 @@ Lela
                     style={{
                       width: `${
                         fetchingPostings
-                          ? (progress.citiesProcessed / progress.totalCities) *
-                            100
+                          ? (progress.citiesProcessed / progress.totalCities) * 100
                           : (progress.completed / progress.total) * 100
                       }%`,
                     }}
@@ -1232,86 +1167,70 @@ Lela
         </div>
 
         {/* Stats Dashboard (when data is loaded) */}
-        {!fetchingCities &&
-          !fetchingPostings &&
-          !fetchingDetails &&
-          postings.length > 0 && (
-            <div className="mb-6 rounded-lg bg-gray-800 p-4">
-              <div className="mb-3 flex flex-wrap items-center justify-between">
-                <h2 className="text-lg font-semibold text-blue-300">
-                  Foreclosure Data Summary
-                </h2>
+        {!fetchingCities && !fetchingPostings && !fetchingDetails && postings.length > 0 && (
+          <div className="mb-6 rounded-lg bg-gray-800 p-4">
+            <div className="mb-3 flex flex-wrap items-center justify-between">
+              <h2 className="text-lg font-semibold text-blue-300">Foreclosure Data Summary</h2>
 
-                <div className="group relative">
-                  <button
-                    onClick={downloadTableAsCSV}
-                    className="flex items-center rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
-                    disabled={
-                      fetchingDetails ||
-                      postings.filter((p) => p.status === 'loaded').length === 0
-                    }
-                    title="Download table data as CSV file"
+              <div className="group relative">
+                <button
+                  onClick={downloadTableAsCSV}
+                  className="flex items-center rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
+                  disabled={
+                    fetchingDetails || postings.filter((p) => p.status === 'loaded').length === 0
+                  }
+                  title="Download table data as CSV file"
+                >
+                  <svg
+                    className="mr-2 h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      className="mr-2 h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      ></path>
-                    </svg>
-                    Download CSV
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-                {(() => {
-                  const stats = getStats()
-                  return (
-                    <>
-                      <div className="rounded bg-gray-700 p-4">
-                        <p className="text-xs text-gray-500">Total</p>
-                        <p className="text-xl font-bold text-white">
-                          {stats.total}
-                        </p>
-                      </div>
-                      <div className="rounded bg-gray-700 p-4">
-                        <p className="text-xs text-gray-500">Loaded</p>
-                        <p className="text-xl font-bold text-green-400">
-                          {stats.loaded}
-                        </p>
-                      </div>
-                      <div className="rounded bg-gray-700 p-4">
-                        <p className="text-xs text-gray-500">Pending</p>
-                        <p className="text-xl font-bold text-gray-400">
-                          {stats.pending}
-                        </p>
-                      </div>
-                      <div className="rounded bg-gray-700 p-4">
-                        <p className="text-xs text-gray-500">Errors</p>
-                        <p className="text-xl font-bold text-red-400">
-                          {stats.error}
-                        </p>
-                      </div>
-                      <div className="rounded bg-gray-700 p-4">
-                        <p className="text-xs text-gray-500">Cancelled Sales</p>
-                        <p className="text-xl font-bold text-yellow-400">
-                          {stats.cancelled}
-                        </p>
-                      </div>
-                    </>
-                  )
-                })()}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    ></path>
+                  </svg>
+                  Download CSV
+                </button>
               </div>
             </div>
-          )}
+
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+              {(() => {
+                const stats = getStats();
+                return (
+                  <>
+                    <div className="rounded bg-gray-700 p-4">
+                      <p className="text-xs text-gray-500">Total</p>
+                      <p className="text-xl font-bold text-white">{stats.total}</p>
+                    </div>
+                    <div className="rounded bg-gray-700 p-4">
+                      <p className="text-xs text-gray-500">Loaded</p>
+                      <p className="text-xl font-bold text-green-400">{stats.loaded}</p>
+                    </div>
+                    <div className="rounded bg-gray-700 p-4">
+                      <p className="text-xs text-gray-500">Pending</p>
+                      <p className="text-xl font-bold text-gray-400">{stats.pending}</p>
+                    </div>
+                    <div className="rounded bg-gray-700 p-4">
+                      <p className="text-xs text-gray-500">Errors</p>
+                      <p className="text-xl font-bold text-red-400">{stats.error}</p>
+                    </div>
+                    <div className="rounded bg-gray-700 p-4">
+                      <p className="text-xs text-gray-500">Cancelled Sales</p>
+                      <p className="text-xl font-bold text-yellow-400">{stats.cancelled}</p>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+        )}
 
         {/* City Selection Section */}
         <div className="mb-8">
@@ -1320,8 +1239,8 @@ Lela
               Connecticut Cities with Foreclosure Data
             </h2>
             <p className="text-sm text-gray-400">
-              {cityList.length} cities found - select cities and click "Process"
-              to fetch foreclosure data
+              {cityList.length} cities found - select cities and click "Process" to fetch
+              foreclosure data
             </p>
           </div>
 
@@ -1330,10 +1249,7 @@ Lela
               onClick={processSelectedCities}
               className="rounded bg-green-600 px-4 py-2 text-white transition hover:bg-green-500"
               disabled={
-                fetchingCities ||
-                fetchingPostings ||
-                fetchingDetails ||
-                selectedCities.length === 0
+                fetchingCities || fetchingPostings || fetchingDetails || selectedCities.length === 0
               }
             >
               Process Selected Cities ({selectedCities.length})
@@ -1342,10 +1258,7 @@ Lela
               onClick={selectAllCities}
               className="rounded bg-gray-700 px-4 py-2 text-white transition hover:bg-gray-600"
               disabled={
-                fetchingCities ||
-                fetchingPostings ||
-                fetchingDetails ||
-                cityList.length === 0
+                fetchingCities || fetchingPostings || fetchingDetails || cityList.length === 0
               }
             >
               Select All Cities
@@ -1354,10 +1267,7 @@ Lela
               onClick={clearCitySelection}
               className="rounded bg-gray-700 px-4 py-2 text-white transition hover:bg-gray-600"
               disabled={
-                fetchingCities ||
-                fetchingPostings ||
-                fetchingDetails ||
-                selectedCities.length === 0
+                fetchingCities || fetchingPostings || fetchingDetails || selectedCities.length === 0
               }
             >
               Clear Selection
@@ -1385,8 +1295,7 @@ Lela
                           ? 'bg-blue-700 hover:bg-blue-600'
                           : citiesByDistance.some(
                                 (c) =>
-                                  c.city === city.name &&
-                                  c.distanceMiles <= distanceFromGreenwich,
+                                  c.city === city.name && c.distanceMiles <= distanceFromGreenwich
                               )
                             ? 'bg-emerald-900/40 hover:bg-emerald-800/40'
                             : 'bg-gray-700 hover:bg-gray-600'
@@ -1398,8 +1307,7 @@ Lela
                             ? 'text-blue-100'
                             : citiesByDistance.some(
                                   (c) =>
-                                    c.city === city.name &&
-                                    c.distanceMiles <= distanceFromGreenwich,
+                                    c.city === city.name && c.distanceMiles <= distanceFromGreenwich
                                 )
                               ? 'text-emerald-300'
                               : 'text-gray-100'
@@ -1412,8 +1320,7 @@ Lela
                 </div>
               ) : (
                 <p className="text-center text-gray-400">
-                  No cities found. The website structure may have changed or no
-                  data is available.
+                  No cities found. The website structure may have changed or no data is available.
                 </p>
               )}
             </div>
@@ -1425,410 +1332,383 @@ Lela
           <div className="my-8 flex flex-col items-center justify-center">
             <div className="mb-4 h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 border-blue-400"></div>
             <p className="text-lg text-gray-300">
-              {fetchingPostings
-                ? 'Fetching posting IDs...'
-                : 'Fetching auction details...'}
+              {fetchingPostings ? 'Fetching posting IDs...' : 'Fetching auction details...'}
             </p>
           </div>
         )}
 
         {/* Results Table */}
-        {!fetchingCities &&
-          !fetchingPostings &&
-          !fetchingDetails &&
-          postings.length > 0 && (
-            <div className="mb-8">
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold text-blue-300">
-                  Foreclosure Auction Notices
-                </h2>
-                <p className="text-sm text-gray-400">
-                  {postings.filter((p) => p.status === 'loaded').length} of{' '}
-                  {postings.length} details loaded
-                </p>
-              </div>
+        {!fetchingCities && !fetchingPostings && !fetchingDetails && postings.length > 0 && (
+          <div className="mb-8">
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold text-blue-300">Foreclosure Auction Notices</h2>
+              <p className="text-sm text-gray-400">
+                {postings.filter((p) => p.status === 'loaded').length} of {postings.length} details
+                loaded
+              </p>
+            </div>
 
-              <div className="overflow-x-auto rounded-lg border border-gray-700">
-                <table className="w-full divide-y divide-gray-700">
-                  <thead className="bg-gray-800">
-                    <tr>
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('status')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'status'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>Status</span>
-                          {getSortIndicator('status')}
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('city')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>City</span>
-                          {getSortIndicator('city')}
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('dollarAmountFound')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>Deposit</span>
-                          {getSortIndicator('dollarAmountFound')}
-                        </div>
-                      </th>
+            <div className="overflow-x-auto rounded-lg border border-gray-700">
+              <table className="w-full divide-y divide-gray-700">
+                <thead className="bg-gray-800">
+                  <tr>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('status')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'status'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Status</span>
+                        {getSortIndicator('status')}
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('city')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>City</span>
+                        {getSortIndicator('city')}
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('dollarAmountFound')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Deposit</span>
+                        {getSortIndicator('dollarAmountFound')}
+                      </div>
+                    </th>
 
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('address')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>Address</span>
-                          {getSortIndicator('address')}
-                        </div>
-                      </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('address')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Address</span>
+                        {getSortIndicator('address')}
+                      </div>
+                    </th>
 
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('committeeName')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>C. Name</span>
-                          {getSortIndicator('companyName')}
-                        </div>
-                      </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('committeeName')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>C. Name</span>
+                        {getSortIndicator('companyName')}
+                      </div>
+                    </th>
 
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('committeePhone')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>C. Phone</span>
-                          {getSortIndicator('companyPhone')}
-                        </div>
-                      </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('committeePhone')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>C. Phone</span>
+                        {getSortIndicator('companyPhone')}
+                      </div>
+                    </th>
 
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('committeeEmail')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'city'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>C. Email</span>
-                          {getSortIndicator('companyEmail')}
-                        </div>
-                      </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('committeeEmail')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'city'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>C. Email</span>
+                        {getSortIndicator('companyEmail')}
+                      </div>
+                    </th>
 
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('saleDate')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'saleDate'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>Sale</span>
-                          {getSortIndicator('saleDate')}
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        onClick={() => requestSort('docketNumber')}
-                        className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
-                          sortConfig.key === 'docketNumber'
-                            ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        <div className="group flex items-center">
-                          <span>Docket Number</span>
-                          {getSortIndicator('docketNumber')}
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-                      >
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-700 bg-gray-800">
-                    {postings.length > 0 ? (
-                      getSortedPostings().map(
-                        (posting: PostingInfo, index: number) => (
-                          <tr
-                            key={`${posting.postingId}-${index}`}
-                            className="hover:bg-gray-700"
-                          >
-                            {/* Status */}
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
-                              {posting.status === 'loading' ? (
-                                <span className="inline-flex items-center rounded-full border border-yellow-500 bg-yellow-900/30 px-2.5 py-0.5 text-xs font-medium text-yellow-300 shadow-sm">
-                                  <svg
-                                    className="mr-1 h-3 w-3 animate-spin text-yellow-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <circle
-                                      className="opacity-25"
-                                      cx="12"
-                                      cy="12"
-                                      r="10"
-                                      stroke="currentColor"
-                                      strokeWidth="4"
-                                    ></circle>
-                                    <path
-                                      className="opacity-75"
-                                      fill="currentColor"
-                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                    ></path>
-                                  </svg>
-                                  Loading...
-                                </span>
-                              ) : posting.status === 'loaded' ? (
-                                posting.auctionNotice?.status
-                                  ?.toLowerCase()
-                                  .includes('cancel') ? (
-                                  <span className="inline-flex items-center rounded-full border border-orange-500 bg-orange-900/30 px-2.5 py-0.5 text-xs font-medium text-orange-300 shadow-sm">
-                                    <svg
-                                      className="mr-1 h-3 w-3 text-orange-400"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke="currentColor"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                      />
-                                    </svg>
-                                    Cancelled
-                                  </span>
-                                ) : (
-                                  <span className="inline-flex items-center rounded-full border border-green-500 bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-300 shadow-sm">
-                                    <svg
-                                      className="mr-1 h-3 w-3 text-green-400"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke="currentColor"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M5 13l4 4L19 7"
-                                      />
-                                    </svg>
-                                    Active
-                                  </span>
-                                )
-                              ) : posting.status === 'error' ? (
-                                <span className="inline-flex items-center rounded-full border border-red-500 bg-red-900/30 px-2.5 py-0.5 text-xs font-medium text-red-300 shadow-sm">
-                                  <svg
-                                    className="mr-1 h-3 w-3 text-red-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M6 18L18 6M6 6l12 12"
-                                    />
-                                  </svg>
-                                  Error
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center rounded-full border border-blue-500 bg-blue-900/30 px-2.5 py-0.5 text-xs font-medium text-blue-300 shadow-sm">
-                                  <svg
-                                    className="mr-1 h-3 w-3 text-blue-400"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                  </svg>
-                                  Pending
-                                </span>
-                              )}
-                            </td>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('saleDate')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'saleDate'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Sale</span>
+                        {getSortIndicator('saleDate')}
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      onClick={() => requestSort('docketNumber')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'docketNumber'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Docket Number</span>
+                        {getSortIndicator('docketNumber')}
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700 bg-gray-800">
+                  {postings.length > 0 ? (
+                    getSortedPostings().map((posting: PostingInfo, index: number) => (
+                      <tr key={`${posting.postingId}-${index}`} className="hover:bg-gray-700">
+                        {/* Status */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                          {posting.status === 'loading' ? (
+                            <span className="inline-flex items-center rounded-full border border-yellow-500 bg-yellow-900/30 px-2.5 py-0.5 text-xs font-medium text-yellow-300 shadow-sm">
+                              <svg
+                                className="mr-1 h-3 w-3 animate-spin text-yellow-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                              </svg>
+                              Loading...
+                            </span>
+                          ) : posting.status === 'loaded' ? (
+                            posting.auctionNotice?.status?.toLowerCase().includes('cancel') ? (
+                              <span className="inline-flex items-center rounded-full border border-orange-500 bg-orange-900/30 px-2.5 py-0.5 text-xs font-medium text-orange-300 shadow-sm">
+                                <svg
+                                  className="mr-1 h-3 w-3 text-orange-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                                Cancelled
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center rounded-full border border-green-500 bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-300 shadow-sm">
+                                <svg
+                                  className="mr-1 h-3 w-3 text-green-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                                Active
+                              </span>
+                            )
+                          ) : posting.status === 'error' ? (
+                            <span className="inline-flex items-center rounded-full border border-red-500 bg-red-900/30 px-2.5 py-0.5 text-xs font-medium text-red-300 shadow-sm">
+                              <svg
+                                className="mr-1 h-3 w-3 text-red-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                              Error
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded-full border border-blue-500 bg-blue-900/30 px-2.5 py-0.5 text-xs font-medium text-blue-300 shadow-sm">
+                              <svg
+                                className="mr-1 h-3 w-3 text-blue-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              Pending
+                            </span>
+                          )}
+                        </td>
 
-                            {/* City */}
-                            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-white">
-                              {posting.auctionNotice?.town ||
-                                posting.city ||
-                                'N/A'}
-                            </td>
+                        {/* City */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-white">
+                          {posting.auctionNotice?.town || posting.city || 'N/A'}
+                        </td>
 
-                            {/* Dollar Amount */}
+                        {/* Dollar Amount */}
 
-                            <td className="px-6 py-4 text-sm text-gray-300">
-                              {numberToDollarAmountString(
-                                posting.auctionNotice?.dollarAmountNumber || 0,
-                              )}
-                            </td>
+                        <td className="px-6 py-4 text-sm text-gray-300">
+                          {numberToDollarAmountString(
+                            posting.auctionNotice?.dollarAmountNumber || 0
+                          )}
+                        </td>
 
-                            {/* Address */}
+                        {/* Address */}
 
-                            <td className="px-6 py-4 text-sm text-gray-300">
-                              {posting.auctionNotice?.address || 'N/A'}
-                            </td>
+                        <td className="px-6 py-4 text-sm text-gray-300">
+                          {posting.auctionNotice?.address || 'N/A'}
+                        </td>
 
-                            {/* Committee Name */}
-                            <td className="px-6 py-4 text-sm text-gray-300">
-                              {capitalizeEachWord(
-                                posting.auctionNotice?.committeeName || 'N/A',
-                              )}
-                            </td>
-                            {/* Committee Organization */}
+                        {/* Committee Name */}
+                        <td className="px-6 py-4 text-sm text-gray-300">
+                          {capitalizeEachWord(posting.auctionNotice?.committeeName || 'N/A')}
+                        </td>
+                        {/* Committee Organization */}
 
-                            {/* <td
+                        {/* <td
                               className="px-6 py-4 text-sm text-gray-300"
                             >
                               {posting.auctionNotice?.committeeOrganization ||
                                 'N/A'}
                             </td> */}
-                            {/* Committee Phone */}
+                        {/* Committee Phone */}
 
-                            <td className="px-6 py-4 text-sm text-gray-300">
-                              {findNumbersAndMakePhoneNumber(
-                                posting.auctionNotice?.committeePhone || '',
-                              ) || 'N/A'}
-                            </td>
-                            {/* Committee Email */}
-                            <td className="px-6 py-4 text-sm lowercase text-gray-300">
-                              <div className="flex items-center gap-2">
-                                <span>
-                                  {posting.auctionNotice?.committeeEmail ||
-                                    'N/A'}
-                                </span>
-                                {posting.auctionNotice?.committeeEmail && (
-                                  <button
-                                    onClick={() => {
-                                      if (posting.auctionNotice) {
-                                        // Open email compose modal with this auction's details
-                                        setSelectedAuction(
-                                          posting.auctionNotice,
-                                        )
-                                        setIsEmailModalOpen(true)
-                                      }
-                                    }}
-                                    className="rounded bg-blue-700 px-2 py-1 text-xs font-medium text-white transition hover:bg-blue-600"
-                                    title="Compose email about this property"
-                                  >
-                                    Email
-                                  </button>
-                                )}
-                              </div>
-                            </td>
+                        <td className="px-6 py-4 text-sm text-gray-300">
+                          {findNumbersAndMakePhoneNumber(
+                            posting.auctionNotice?.committeePhone || ''
+                          ) || 'N/A'}
+                        </td>
+                        {/* Committee Email */}
+                        <td className="px-6 py-4 text-sm lowercase text-gray-300">
+                          <div className="flex items-center gap-2">
+                            <span>{posting.auctionNotice?.committeeEmail || 'N/A'}</span>
+                            {posting.auctionNotice?.committeeEmail && (
+                              <button
+                                onClick={() => {
+                                  if (posting.auctionNotice) {
+                                    // Open email compose modal with this auction's details
+                                    setSelectedAuction(posting.auctionNotice);
+                                    setIsEmailModalOpen(true);
+                                  }
+                                }}
+                                className="rounded bg-blue-700 px-2 py-1 text-xs font-medium text-white transition hover:bg-blue-600"
+                                title="Compose email about this property"
+                              >
+                                Email
+                              </button>
+                            )}
+                          </div>
+                        </td>
 
-                            {/* Case Caption */}
-                            {/* <td
+                        {/* Case Caption */}
+                        {/* <td
                               className="px-6 py-4 text-sm text-gray-300"
                             >
                               {posting.auctionNotice?.caseCaption || 'N/A'}
                             </td> */}
 
-                            {/* Sale Date */}
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
-                              {posting.auctionNotice?.saleDate
-                                ? formatSaleDate({
-                                    saleDate: posting.auctionNotice.saleDate,
-                                    saleTime: posting.auctionNotice.saleTime,
-                                    showTime: false,
-                                  })
-                                : 'N/A'}
-                            </td>
+                        {/* Sale Date */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                          {posting.auctionNotice?.saleDate
+                            ? formatSaleDate({
+                                saleDate: posting.auctionNotice.saleDate,
+                                saleTime: posting.auctionNotice.saleTime,
+                                showTime: false,
+                              })
+                            : 'N/A'}
+                        </td>
 
-                            {/* Docket Number */}
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
-                              {posting.auctionNotice?.docketNumber || 'N/A'}
-                            </td>
+                        {/* Docket Number */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                          {posting.auctionNotice?.docketNumber || 'N/A'}
+                        </td>
 
-                            {/* Actions */}
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
-                              <a
-                                href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm font-medium text-blue-400 hover:text-blue-300"
-                              >
-                                Link
-                              </a>
-                            </td>
-                          </tr>
-                        ),
-                      )
-                    ) : (
-                      <tr>
-                        <td
-                          colSpan={6}
-                          className="px-6 py-4 text-center text-gray-400"
-                        >
-                          No data available yet. Select cities and click
-                          "Process Selected Cities".
+                        {/* Actions */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                          <a
+                            href={`https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostDetailPublic.aspx?PostingId=${posting.postingId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-blue-400 hover:text-blue-300"
+                          >
+                            Link
+                          </a>
                         </td>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-4 text-center text-gray-400">
+                        No data available yet. Select cities and click "Process Selected Cities".
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
+          </div>
+        )}
 
         {/* Email Compose Modal */}
         {isEmailModalOpen && selectedAuction && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 p-4"
             onClick={() => {
-              setIsEmailModalOpen(false)
-              setEmailCopied(false)
+              setIsEmailModalOpen(false);
+              setEmailCopied(false);
             }}
           >
             <div
@@ -1839,22 +1719,16 @@ Lela
               <div className="rounded-t-lg border-b border-gray-700 bg-gray-900 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-medium text-white">
-                    Email Template for{' '}
-                    {capitalizeEachWord(selectedAuction.address)}
+                    Email Template for {capitalizeEachWord(selectedAuction.address)}
                   </h3>
                   <button
                     onClick={() => {
-                      setIsEmailModalOpen(false)
-                      setEmailCopied(false)
+                      setIsEmailModalOpen(false);
+                      setEmailCopied(false);
                     }}
                     className="rounded-full bg-gray-800 p-1 text-gray-400 transition hover:bg-gray-700 hover:text-white"
                   >
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -1870,9 +1744,7 @@ Lela
               <div className="px-6 py-4">
                 <div className="mb-4 flex justify-between rounded border border-gray-700 bg-gray-700 p-2">
                   <div>
-                    <p className="text-xs text-gray-400">
-                      To: {selectedAuction.committeeEmail}
-                    </p>
+                    <p className="text-xs text-gray-400">To: {selectedAuction.committeeEmail}</p>
                   </div>
                   <button
                     onClick={copyEmailToClipboard}
@@ -1921,15 +1793,13 @@ Lela
                 </div>
 
                 <div className="mt-4 max-h-96 overflow-y-auto rounded border border-gray-700 bg-gray-900 p-4 font-mono text-sm text-gray-300">
-                  <pre className="whitespace-pre-wrap">
-                    {generateEmailTemplate()}
-                  </pre>
+                  <pre className="whitespace-pre-wrap">{generateEmailTemplate()}</pre>
                 </div>
 
                 <div className="mt-4 text-sm text-gray-500">
                   <p>
-                    Click the "Copy Email" button to copy this template to your
-                    clipboard. Then paste it into your email client to send.
+                    Click the "Copy Email" button to copy this template to your clipboard. Then
+                    paste it into your email client to send.
                   </p>
                 </div>
               </div>
@@ -1939,8 +1809,8 @@ Lela
                 <div className="flex justify-end">
                   <button
                     onClick={() => {
-                      setIsEmailModalOpen(false)
-                      setEmailCopied(false)
+                      setIsEmailModalOpen(false);
+                      setEmailCopied(false);
                     }}
                     className="rounded bg-gray-700 px-4 py-2 font-medium text-white hover:bg-gray-600"
                   >
@@ -1953,7 +1823,7 @@ Lela
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Foreclosure
+export default Foreclosure;

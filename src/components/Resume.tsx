@@ -1,18 +1,18 @@
 // Resume.tsx
 
-import React from 'react'
-import { EricResumeDescription, showSmashedGif } from '../data/myData'
-import { isThin } from './Main'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { EricResumeDescription, showSmashedGif } from '../data/myData';
+import { isThin } from './Main';
+import PixelArtText from './PixelArtText';
 
-import EducationSection from './EducationSection'
-import ProjectsSection from './ProjectsSection'
-import Services from './Services'
-import TriviaSection from './Trivia'
-import SkillsSection from './SkillsSection'
-import SocialMediaSection from './SocialMediaSection'
-import WorkEnvironment from './WorkEnvironment'
-import WorkExperienceSection from './WorkExperienceSection'
+import EducationSection from './EducationSection';
+import ProjectsSection from './ProjectsSection';
+import Services from './Services';
+import TriviaSection from './Trivia';
+import SkillsSection from './SkillsSection';
+import SocialMediaSection from './SocialMediaSection';
+import WorkEnvironment from './WorkEnvironment';
+import WorkExperienceSection from './WorkExperienceSection';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ResumeProps {}
@@ -34,9 +34,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <section
-            className={`px-4 py-12 ${isThin ? 'bg-black/80' : ''} text-center`}
-          >
+          <section className={`px-4 py-12 ${isThin ? 'bg-black/80' : ''} text-center`}>
             <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
               <img
                 className="transition-transform duration-500 hover:scale-105"
@@ -56,18 +54,12 @@ export const Resume: React.FC<ResumeProps> = () => {
 
             <div className="mb-4 flex flex-row items-center justify-center">
               {showSmashedGif ? (
-                <img
-                  className="pixel-art w-4/5"
-                  src="/smashed_small.gif"
-                  alt="gif"
-                />
+                <img className="pixel-art w-4/5" src="/smashed_small.gif" alt="gif" />
               ) : (
                 <div className="mb-20" />
               )}
             </div>
-            <p className="mb-4 p-8 text-2xl text-blue-100">
-              {EricResumeDescription}
-            </p>
+            <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>
           </section>
           <div className="h-40" />
           <div className="h-40" />
@@ -87,11 +79,7 @@ export const Resume: React.FC<ResumeProps> = () => {
       )}
 
       {!isThin && (
-        <section
-          className={`px-4 py-12 ${
-            isThin ? 'bg-slate-900/50' : ''
-          } text-center`}
-        >
+        <section className={`px-4 py-12 ${isThin ? 'bg-slate-900/50' : ''} text-center`}>
           <div className="h-40" />
           <div className="my-8 flex flex-row items-center justify-center overflow-hidden">
             <div className={`w-1/2 overflow-hidden rounded-2xl`}>
@@ -131,5 +119,5 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <SocialMediaSection />
     </div>
-  )
-}
+  );
+};

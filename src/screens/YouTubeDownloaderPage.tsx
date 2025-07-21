@@ -1,5 +1,5 @@
-import React from 'react'
-import YouTubeDownloader from '../components/YouTubeDownloader'
+import React from 'react';
+import YouTubeDownloader from '../components/YouTubeDownloader';
 
 const YouTubeDownloaderPage: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const YouTubeDownloaderPage: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default YouTubeDownloaderPage
+export default YouTubeDownloaderPage;

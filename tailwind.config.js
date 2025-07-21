@@ -42,8 +42,8 @@ module.exports = {
       animation: {
         'glitch-1': 'glitch1 2s infinite',
         'glitch-2': 'glitch2 2s infinite',
-        'scanline': 'scanline 6s linear infinite',
-        'fadeIn': 'fadeIn 0.6s ease-out forwards',
+        scanline: 'scanline 6s linear infinite',
+        fadeIn: 'fadeIn 0.6s ease-out forwards',
         'ping-once': 'ping-once 1s cubic-bezier(0, 0, 0.2, 1) forwards',
       },
       backgroundImage: {

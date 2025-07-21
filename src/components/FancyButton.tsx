@@ -1,33 +1,33 @@
-import React from 'react'
+import React from 'react';
 
 interface FancyButtonProps {
   /**
    * The text to display on the button
    * @default "Button"
    */
-  text: string
+  text: string;
 
   /**
    * Optional click handler for the button
    */
-  onClick?: () => void
+  onClick?: () => void;
 
   /**
    * Additional CSS class names to apply to the button
    */
-  className?: string
+  className?: string;
 
   /**
    * Optional disabled state for the button
    * @default false
    */
-  disabled?: boolean
+  disabled?: boolean;
 
   /**
    * Optional type attribute for the button element
    * @default "button"
    */
-  type?: 'button' | 'submit' | 'reset'
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const FancyButton: React.FC<FancyButtonProps> = ({
@@ -38,15 +38,10 @@ const FancyButton: React.FC<FancyButtonProps> = ({
   type = 'button',
 }) => {
   // Create an array of individual letters from the text
-  const letters = text.split('').map((char) => (char === ' ' ? '\u00A0' : char))
+  const letters = text.split('').map((char) => (char === ' ' ? '\u00A0' : char));
 
   return (
-    <button
-      className={`btn-fancy ${className}`}
-      onClick={onClick}
-      disabled={disabled}
-      type={type}
-    >
+    <button className={`btn-fancy ${className}`} onClick={onClick} disabled={disabled} type={type}>
       <div className="original">{text}</div>
       <div className="letters">
         {letters.map((letter, index) => (
@@ -54,7 +49,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({
         ))}
       </div>
     </button>
-  )
-}
+  );
+};
 
-export default FancyButton
+export default FancyButton;

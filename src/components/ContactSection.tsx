@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import { FaClipboardCheck, FaRegClipboard } from 'react-icons/fa'
-import KirbySection from './KirbySection'
-import ReactGA from 'react-ga4'
+import React, { useState } from 'react';
+import { FaClipboardCheck, FaRegClipboard } from 'react-icons/fa';
+import KirbySection from './KirbySection';
+import ReactGA from 'react-ga4';
 
-import { email, phoneNumber } from './Main'
-import { showEmojis } from '../data/myData'
-import PixelArtText from './PixelArtText'
+import { email, phoneNumber } from './Main';
+import { showEmojis } from '../data/myData';
+import PixelArtText from './PixelArtText';
 
-const duration = 1500
+const duration = 1500;
 
 interface ContactSectionProps {
-  onPhoneClick: () => void
-  handleKirbyClick: () => void
-  animateKirby: boolean
+  onPhoneClick: () => void;
+  handleKirbyClick: () => void;
+  animateKirby: boolean;
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({
@@ -21,50 +21,50 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   animateKirby,
 }) => {
   // States for visual feedback on buttons
-  const [copiedPhone, setCopiedPhone] = useState(false)
-  const [copiedEmail, setCopiedEmail] = useState(false)
+  const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const copyToClipboard = async (
     text: string,
     setCopied: React.Dispatch<React.SetStateAction<boolean>>,
-    toastText?: string,
+    toastText?: string
   ) => {
     // Use the modern Clipboard API if available and in a secure context.
     if (navigator.clipboard && window.isSecureContext) {
       try {
-        await navigator.clipboard.writeText(text)
-        setCopied(true)
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
 
-        setTimeout(() => setCopied(false), duration)
+        setTimeout(() => setCopied(false), duration);
       } catch (err) {
-        console.error('Failed to copy using Clipboard API: ', err)
+        console.error('Failed to copy using Clipboard API: ', err);
       }
     } else {
       // Fallback for insecure contexts or browsers without clipboard API support
-      const textArea = document.createElement('textarea')
-      textArea.value = text
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
       // Place the textarea off-screen
-      textArea.style.position = 'fixed'
-      textArea.style.left = '-999999px'
-      textArea.style.top = '0'
-      document.body.appendChild(textArea)
-      textArea.focus()
-      textArea.select()
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
       try {
-        const successful = document.execCommand('copy')
+        const successful = document.execCommand('copy');
         if (successful) {
-          setCopied(true)
+          setCopied(true);
 
-          setTimeout(() => setCopied(false), duration)
+          setTimeout(() => setCopied(false), duration);
         } else {
-          console.error('Fallback: Copy command was unsuccessful')
+          console.error('Fallback: Copy command was unsuccessful');
         }
       } catch (err) {
-        console.error('Fallback: Unable to copy', err)
+        console.error('Fallback: Unable to copy', err);
       }
-      document.body.removeChild(textArea)
+      document.body.removeChild(textArea);
     }
-  }
+  };
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center pt-12">
@@ -77,12 +77,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <div className="mb-2 flex items-center space-x-2">
         <h2
           onClick={() => {
-            onPhoneClick()
+            onPhoneClick();
             ReactGA.event({
               category: 'Contact',
               action: 'Click',
               label: 'Phone Number',
-            })
+            });
           }}
           className="cursor-pointer text-2xl"
         >
@@ -90,12 +90,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         </h2>
         <button
           onClick={() => {
-            copyToClipboard(phoneNumber, setCopiedPhone, 'Phone number copied!')
+            copyToClipboard(phoneNumber, setCopiedPhone, 'Phone number copied!');
             ReactGA.event({
               category: 'Contact',
               action: 'Click',
               label: 'Copy Phone Number',
-            })
+            });
           }}
           className="text-2xl focus:outline-none"
           aria-label="Copy phone number to clipboard"
@@ -114,20 +114,20 @@ const ContactSection: React.FC<ContactSectionProps> = ({
               category: 'Contact',
               action: 'Click',
               label: 'Email Address',
-            })
+            });
           }}
         >
           {email}
         </a>
         <button
           onClick={() => {
-            copyToClipboard(email, setCopiedEmail, 'Email address copied!')
+            copyToClipboard(email, setCopiedEmail, 'Email address copied!');
 
             ReactGA.event({
               category: 'Contact',
               action: 'Click',
               label: 'Copy Email Address',
-            })
+            });
           }}
           className="text-2xl focus:outline-none"
           aria-label="Copy email address to clipboard"
@@ -136,12 +136,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
         </button>
       </div>
 
-      <KirbySection
-        animateKirby={animateKirby}
-        onKirbyClick={handleKirbyClick}
-      />
+      <KirbySection animateKirby={animateKirby} onKirbyClick={handleKirbyClick} />
     </div>
-  )
-}
+  );
+};
 
-export default ContactSection
+export default ContactSection;

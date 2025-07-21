@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react'
-import axios, { AxiosProgressEvent } from 'axios'
+import React, { useState, useRef, useCallback } from 'react';
+import axios, { AxiosProgressEvent } from 'axios';
 import {
   FileInfo,
   SupportedConversion,
@@ -8,77 +8,71 @@ import {
   MediaAnalyzeResponse,
   AllConversionOptions,
   MediaType,
-} from '../types/types'
+} from '../types/types';
 
-const API_BASE_URL = `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/media`
+const API_BASE_URL = `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api'}/media`;
 
 const MediaConverter: React.FC = () => {
-  const [isDragging, setIsDragging] = useState<boolean>(false)
-  const [file, setFile] = useState<File | null>(null)
-  const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
-  const [tempId, setTempId] = useState<string | null>(null)
-  const [supportedConversions, setSupportedConversions] = useState<
-    SupportedConversion[]
-  >([])
-  const [selectedFormat, setSelectedFormat] = useState<string>('')
-  const [conversionOptions, setConversionOptions] =
-    useState<ConversionOptions | null>(null)
-  const [selectedOptions, setSelectedOptions] = useState<AllConversionOptions>(
-    {},
-  )
-  const [isConverting, setIsConverting] = useState<boolean>(false)
-  const [conversionResult, setConversionResult] =
-    useState<ConversionResult | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [uploadProgress, setUploadProgress] = useState<number>(0)
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
+  const [tempId, setTempId] = useState<string | null>(null);
+  const [supportedConversions, setSupportedConversions] = useState<SupportedConversion[]>([]);
+  const [selectedFormat, setSelectedFormat] = useState<string>('');
+  const [conversionOptions, setConversionOptions] = useState<ConversionOptions | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<AllConversionOptions>({});
+  const [isConverting, setIsConverting] = useState<boolean>(false);
+  const [conversionResult, setConversionResult] = useState<ConversionResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(true)
-  }, [])
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
 
   const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
-  }, [])
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }, [])
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
 
   const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
 
-    const files = e.dataTransfer.files
+    const files = e.dataTransfer.files;
     if (files && files.length > 0) {
-      handleFileSelect(files[0])
+      handleFileSelect(files[0]);
     }
-  }, [])
+  }, []);
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
+    const files = e.target.files;
     if (files && files.length > 0) {
-      handleFileSelect(files[0])
+      handleFileSelect(files[0]);
     }
-  }
+  };
 
   const handleFileSelect = async (selectedFile: File): Promise<void> => {
-    setFile(selectedFile)
-    setError(null)
-    setConversionResult(null)
-    setSelectedFormat('')
-    setConversionOptions(null)
-    setSelectedOptions({})
+    setFile(selectedFile);
+    setError(null);
+    setConversionResult(null);
+    setSelectedFormat('');
+    setConversionOptions(null);
+    setSelectedOptions({});
 
-    const formData = new FormData()
-    formData.append('file', selectedFile)
+    const formData = new FormData();
+    formData.append('file', selectedFile);
 
     try {
       const response = await axios.post(`${API_BASE_URL}/analyze/`, formData, {
@@ -87,48 +81,46 @@ const MediaConverter: React.FC = () => {
         },
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           if (progressEvent.total) {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total,
-            )
-            setUploadProgress(percentCompleted)
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
           }
         },
-      })
+      });
 
-      const data = response.data as MediaAnalyzeResponse
-      setFileInfo(data.file_info)
-      setTempId(data.temp_id)
-      setSupportedConversions(data.supported_conversions)
-      setUploadProgress(0)
+      const data = response.data as MediaAnalyzeResponse;
+      setFileInfo(data.file_info);
+      setTempId(data.temp_id);
+      setSupportedConversions(data.supported_conversions);
+      setUploadProgress(0);
     } catch (err) {
-      setError('Failed to analyze file. Please try again.')
-      console.error(err)
-      setUploadProgress(0)
+      setError('Failed to analyze file. Please try again.');
+      console.error(err);
+      setUploadProgress(0);
     }
-  }
+  };
 
   const handleFormatSelect = async (format: string): Promise<void> => {
-    setSelectedFormat(format)
-    setSelectedOptions({})
+    setSelectedFormat(format);
+    setSelectedOptions({});
 
-    if (!fileInfo || !file) return
+    if (!fileInfo || !file) return;
 
     try {
       const response = await axios.post(`${API_BASE_URL}/options/`, {
         input_type: fileInfo.file_type || getMediaType(file.name),
         input_format: file.name.split('.').pop()?.toLowerCase(),
         output_format: format,
-      })
+      });
 
-      const data = response.data as ConversionOptions
-      setConversionOptions(data)
+      const data = response.data as ConversionOptions;
+      setConversionOptions(data);
     } catch (err) {
-      console.error('Failed to get conversion options:', err)
+      console.error('Failed to get conversion options:', err);
     }
-  }
+  };
 
   const getMediaType = (filename: string): MediaType => {
-    const ext = filename.split('.').pop()?.toLowerCase() || ''
+    const ext = filename.split('.').pop()?.toLowerCase() || '';
     const videoExts: string[] = [
       'mp4',
       'avi',
@@ -142,7 +134,7 @@ const MediaConverter: React.FC = () => {
       'mpeg',
       '3gp',
       'ogv',
-    ]
+    ];
     const audioExts: string[] = [
       'mp3',
       'wav',
@@ -155,7 +147,7 @@ const MediaConverter: React.FC = () => {
       'aiff',
       'ac3',
       'dts',
-    ]
+    ];
     const imageExts: string[] = [
       'jpg',
       'jpeg',
@@ -168,116 +160,112 @@ const MediaConverter: React.FC = () => {
       'svg',
       'heic',
       'heif',
-    ]
+    ];
 
-    if (videoExts.includes(ext)) return 'video'
-    if (audioExts.includes(ext)) return 'audio'
-    if (imageExts.includes(ext)) return 'image'
-    return 'unknown'
-  }
+    if (videoExts.includes(ext)) return 'video';
+    if (audioExts.includes(ext)) return 'audio';
+    if (imageExts.includes(ext)) return 'image';
+    return 'unknown';
+  };
 
   const handleOptionChange = (optionName: string, value: string): void => {
     setSelectedOptions((prev) => ({
       ...prev,
       [optionName]: value,
-    }))
-  }
+    }));
+  };
 
   const handleConvert = async (): Promise<void> => {
-    if (!selectedFormat) return
+    if (!selectedFormat) return;
 
-    setIsConverting(true)
-    setError(null)
+    setIsConverting(true);
+    setError(null);
 
     try {
       const payload = {
         temp_id: tempId,
         output_format: selectedFormat,
         options: selectedOptions,
-      }
+      };
 
-      const response = await axios.post(`${API_BASE_URL}/convert/`, payload)
+      const response = await axios.post(`${API_BASE_URL}/convert/`, payload);
 
-      const data = response.data as ConversionResult
+      const data = response.data as ConversionResult;
       if (data.status === 'completed') {
-        setConversionResult(data)
+        setConversionResult(data);
       } else {
-        pollConversionStatus(data.task_id)
+        pollConversionStatus(data.task_id);
       }
     } catch (err) {
-      setError('Conversion failed. Please try again.')
-      console.error(err)
-      setIsConverting(false)
+      setError('Conversion failed. Please try again.');
+      console.error(err);
+      setIsConverting(false);
     }
-  }
+  };
 
   const pollConversionStatus = async (taskId: string): Promise<void> => {
     const pollInterval = setInterval(async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/status/${taskId}/`)
+        const response = await axios.get(`${API_BASE_URL}/status/${taskId}/`);
 
-        const data = response.data as ConversionResult
+        const data = response.data as ConversionResult;
         if (data.status === 'completed') {
-          setConversionResult(data)
-          setIsConverting(false)
-          clearInterval(pollInterval)
+          setConversionResult(data);
+          setIsConverting(false);
+          clearInterval(pollInterval);
         } else if (data.status === 'failed') {
-          setError(data.error || 'Conversion failed')
-          setIsConverting(false)
-          clearInterval(pollInterval)
+          setError(data.error || 'Conversion failed');
+          setIsConverting(false);
+          clearInterval(pollInterval);
         }
       } catch (err) {
-        setError('Failed to check conversion status')
-        setIsConverting(false)
-        clearInterval(pollInterval)
+        setError('Failed to check conversion status');
+        setIsConverting(false);
+        clearInterval(pollInterval);
       }
-    }, 1000)
-  }
+    }, 1000);
+  };
 
   const handleDownload = (): void => {
     if (conversionResult && conversionResult.download_url) {
-      const baseUrl =
-        process.env.REACT_APP_API_URL?.replace('/api', '') ||
-        'http://localhost:8000'
-      const link = document.createElement('a')
-      link.href = `${baseUrl}${conversionResult.download_url}`
-      link.download = '' // This forces download instead of opening in browser
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+      const baseUrl = process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:8000';
+      const link = document.createElement('a');
+      link.href = `${baseUrl}${conversionResult.download_url}`;
+      link.download = ''; // This forces download instead of opening in browser
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
-  }
+  };
 
   const handleReset = (): void => {
-    setFile(null)
-    setFileInfo(null)
-    setTempId(null)
-    setSupportedConversions([])
-    setSelectedFormat('')
-    setConversionOptions(null)
-    setSelectedOptions({})
-    setConversionResult(null)
-    setError(null)
-    setIsConverting(false)
-    setUploadProgress(0)
+    setFile(null);
+    setFileInfo(null);
+    setTempId(null);
+    setSupportedConversions([]);
+    setSelectedFormat('');
+    setConversionOptions(null);
+    setSelectedOptions({});
+    setConversionResult(null);
+    setError(null);
+    setIsConverting(false);
+    setUploadProgress(0);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''
+      fileInputRef.current.value = '';
     }
-  }
+  };
 
   const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return bytes + ' B'
-    else if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB'
-    else return Math.round(bytes / 1048576) + ' MB'
-  }
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB';
+    else return Math.round(bytes / 1048576) + ' MB';
+  };
 
   return (
     <div className="min-h-screen bg-blue-950 px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
         <div className="rounded-lg border border-blue-800 bg-blue-900/50 p-8 shadow-xl backdrop-blur-sm">
-          <h1 className="mb-4 text-4xl font-bold text-white">
-            Media Converter
-          </h1>
+          <h1 className="mb-4 text-4xl font-bold text-white">Media Converter</h1>
           <p className="mb-8 text-lg text-blue-100">
             Convert videos, audio files, and images to different formats
           </p>
@@ -326,9 +314,7 @@ const MediaConverter: React.FC = () => {
               <p className="mb-2 text-xl text-white">
                 Drop your media file here or click to browse
               </p>
-              <p className="text-blue-300">
-                Supports video, audio, and image files up to 500MB
-              </p>
+              <p className="text-blue-300">Supports video, audio, and image files up to 500MB</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -347,9 +333,7 @@ const MediaConverter: React.FC = () => {
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
-              <p className="text-center text-blue-200">
-                Uploading... {uploadProgress}%
-              </p>
+              <p className="text-center text-blue-200">Uploading... {uploadProgress}%</p>
             </div>
           )}
 
@@ -357,15 +341,11 @@ const MediaConverter: React.FC = () => {
             <div className="mb-6 rounded-lg bg-blue-800/30 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-white">
-                    {file.name}
-                  </h3>
+                  <h3 className="text-lg font-semibold text-white">{file.name}</h3>
                   <div className="mt-2 flex flex-wrap gap-4 text-sm text-blue-200">
                     <span>Type: {getMediaType(file.name)}</span>
                     <span>Size: {formatFileSize(file.size)}</span>
-                    {fileInfo.duration && (
-                      <span>Duration: {Math.round(fileInfo.duration)}s</span>
-                    )}
+                    {fileInfo.duration && <span>Duration: {Math.round(fileInfo.duration)}s</span>}
                     {fileInfo.width && fileInfo.height && (
                       <span>
                         Resolution: {fileInfo.width}x{fileInfo.height}
@@ -385,9 +365,7 @@ const MediaConverter: React.FC = () => {
 
           {supportedConversions.length > 0 && !conversionResult && (
             <div className="mb-6">
-              <h3 className="mb-4 text-xl font-semibold text-white">
-                Convert to:
-              </h3>
+              <h3 className="mb-4 text-xl font-semibold text-white">Convert to:</h3>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                 {supportedConversions.map((conversion) => (
                   <button
@@ -399,13 +377,9 @@ const MediaConverter: React.FC = () => {
                         : 'border-blue-700 bg-blue-800/20 text-blue-200 hover:border-blue-500 hover:bg-blue-700/30'
                     }`}
                   >
-                    <span className="block font-bold">
-                      {conversion.format.toUpperCase()}
-                    </span>
+                    <span className="block font-bold">{conversion.format.toUpperCase()}</span>
                     {conversion.description && (
-                      <span className="block text-xs opacity-75">
-                        {conversion.description}
-                      </span>
+                      <span className="block text-xs opacity-75">{conversion.description}</span>
                     )}
                   </button>
                 ))}
@@ -417,9 +391,7 @@ const MediaConverter: React.FC = () => {
             conversionOptions.available_options &&
             Object.keys(conversionOptions.available_options).length > 0 && (
               <div className="mb-6">
-                <h3 className="mb-4 text-xl font-semibold text-white">
-                  Conversion Options
-                </h3>
+                <h3 className="mb-4 text-xl font-semibold text-white">Conversion Options</h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {Object.entries(conversionOptions.available_options).map(
                     ([optionName, optionValues]) => (
@@ -430,14 +402,8 @@ const MediaConverter: React.FC = () => {
                         </label>
                         {Array.isArray(optionValues) ? (
                           <select
-                            value={
-                              selectedOptions[
-                                optionName as keyof AllConversionOptions
-                              ] || ''
-                            }
-                            onChange={(e) =>
-                              handleOptionChange(optionName, e.target.value)
-                            }
+                            value={selectedOptions[optionName as keyof AllConversionOptions] || ''}
+                            onChange={(e) => handleOptionChange(optionName, e.target.value)}
                             className="w-full rounded-lg border border-blue-700 bg-blue-800/30 p-2 text-white focus:border-blue-400 focus:outline-none"
                           >
                             <option value="">Default</option>
@@ -451,19 +417,13 @@ const MediaConverter: React.FC = () => {
                           <input
                             type="text"
                             placeholder={optionValues}
-                            value={
-                              selectedOptions[
-                                optionName as keyof AllConversionOptions
-                              ] || ''
-                            }
-                            onChange={(e) =>
-                              handleOptionChange(optionName, e.target.value)
-                            }
+                            value={selectedOptions[optionName as keyof AllConversionOptions] || ''}
+                            onChange={(e) => handleOptionChange(optionName, e.target.value)}
                             className="w-full rounded-lg border border-blue-700 bg-blue-800/30 p-2 text-white placeholder-blue-400 focus:border-blue-400 focus:outline-none"
                           />
                         )}
                       </div>
-                    ),
+                    )
                   )}
                 </div>
               </div>
@@ -478,11 +438,7 @@ const MediaConverter: React.FC = () => {
               >
                 {isConverting ? (
                   <div className="flex items-center">
-                    <svg
-                      className="mr-2 h-4 w-4 animate-spin"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                       <circle
                         className="opacity-25"
                         cx="12"
@@ -511,12 +467,9 @@ const MediaConverter: React.FC = () => {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-600">
                 <span className="text-2xl text-white">✓</span>
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-white">
-                Conversion Complete!
-              </h3>
+              <h3 className="mb-2 text-xl font-semibold text-white">Conversion Complete!</h3>
               <p className="mb-6 text-green-200">
-                Your file has been successfully converted to{' '}
-                {selectedFormat.toUpperCase()}
+                Your file has been successfully converted to {selectedFormat.toUpperCase()}
               </p>
               <div className="flex justify-center gap-4">
                 <button
@@ -546,7 +499,7 @@ const MediaConverter: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MediaConverter
+export default MediaConverter;

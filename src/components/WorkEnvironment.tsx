@@ -1,7 +1,7 @@
-import React from 'react'
-import { isThin } from './Main'
-import { showEmojis, workEnvironments } from '../data/myData'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { isThin } from './Main';
+import { showEmojis, workEnvironments } from '../data/myData';
+import PixelArtText from './PixelArtText';
 
 const WorkEnvironment: React.FC = () => {
   return (
@@ -17,17 +17,11 @@ const WorkEnvironment: React.FC = () => {
           />
         </div>
 
-        <p className="pixel-font pt-4 text-2xl uppercase text-blue-300">
-          MacOS, Linux, & Windows
-        </p>
-        <p className="pixel-font text-2xl uppercase text-fuchsia-300">
-          Remote & Office
-        </p>
+        <p className="pixel-font pt-4 text-2xl uppercase text-blue-300">MacOS, Linux, & Windows</p>
+        <p className="pixel-font text-2xl uppercase text-fuchsia-300">Remote & Office</p>
       </div>
 
-      <div
-        className={`grid ${isThin ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-10'}`}
-      >
+      <div className={`grid ${isThin ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-10'}`}>
         {workEnvironments.map((desk, index) => (
           <div key={index}>
             <div className="h-100 overflow-hidden rounded-2xl">
@@ -36,8 +30,8 @@ const WorkEnvironment: React.FC = () => {
                 alt={desk.title}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 onError={(e) => {
-                  ;(e.target as HTMLImageElement).src =
-                    process.env.PUBLIC_URL + '/qwhite_hardpixels_transbg.png'
+                  (e.target as HTMLImageElement).src =
+                    process.env.PUBLIC_URL + '/qwhite_hardpixels_transbg.png';
                 }}
               />
             </div>
@@ -60,7 +54,7 @@ const WorkEnvironment: React.FC = () => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default WorkEnvironment
+export default WorkEnvironment;

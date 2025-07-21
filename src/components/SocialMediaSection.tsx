@@ -1,8 +1,8 @@
-import React from 'react'
-import { isThin } from './Main'
-import ReactGA from 'react-ga4'
-import { showEmojis, socialMedia } from '../data/myData'
-import PixelArtText from './PixelArtText'
+import React from 'react';
+import { isThin } from './Main';
+import ReactGA from 'react-ga4';
+import { showEmojis, socialMedia } from '../data/myData';
+import PixelArtText from './PixelArtText';
 
 const SocialMediaSection: React.FC = () => {
   return (
@@ -19,9 +19,7 @@ const SocialMediaSection: React.FC = () => {
           />
         </div>
       </div>
-      <div
-        className={`flex ${isThin ? 'justify-around' : 'justify-center space-x-10'}`}
-      >
+      <div className={`flex ${isThin ? 'justify-around' : 'justify-center space-x-10'}`}>
         {socialMedia.map((social) => (
           <a
             key={social.platform}
@@ -34,7 +32,7 @@ const SocialMediaSection: React.FC = () => {
                 category: 'Social Media',
                 action: 'Click',
                 label: social.platform,
-              })
+              });
             }}
           >
             <i className={`fab fa-${social.platform.toLowerCase()}`}></i>
@@ -42,7 +40,7 @@ const SocialMediaSection: React.FC = () => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default SocialMediaSection
+export default SocialMediaSection;

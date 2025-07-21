@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 
 // Products data
 const products = [
@@ -6,8 +6,7 @@ const products = [
     id: 1,
     name: 'SHELL.OS Jacket',
     price: '$295',
-    description:
-      'Adaptive weather-resistant shell with programmable LED matrix.',
+    description: 'Adaptive weather-resistant shell with programmable LED matrix.',
     tags: ['Outerwear', 'Tech-Integrated', 'Limited'],
     imgUrl: '/crate.png', // Placeholder image
   },
@@ -15,8 +14,7 @@ const products = [
     id: 2,
     name: 'SYNTAX Error Hoodie',
     price: '$180',
-    description:
-      'Oversized hoodie with glitch text patterns and hidden pocket system.',
+    description: 'Oversized hoodie with glitch text patterns and hidden pocket system.',
     tags: ['Hoodie', 'Streetwear', 'Unisex'],
     imgUrl: '/crate.png', // Placeholder image
   },
@@ -36,23 +34,23 @@ const products = [
     tags: ['Top', 'Layering', 'Translucent'],
     imgUrl: '/crate.png', // Placeholder image
   },
-]
+];
 
 export const ProductsSection: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isHovering, setIsHovering] = useState(false)
-  const productsRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const productsRef = useRef<HTMLDivElement>(null);
 
   // Change active product periodically unless hovering
   useEffect(() => {
-    if (isHovering) return
+    if (isHovering) return;
 
     const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % products.length)
-    }, 4000)
+      setActiveIndex((current) => (current + 1) % products.length);
+    }, 4000);
 
-    return () => clearInterval(interval)
-  }, [isHovering])
+    return () => clearInterval(interval);
+  }, [isHovering]);
 
   // Animation for products when they come into view
   useEffect(() => {
@@ -60,23 +58,23 @@ export const ProductsSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fadeIn')
+            entry.target.classList.add('animate-fadeIn');
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (productsRef.current) {
-      observer.observe(productsRef.current)
+      observer.observe(productsRef.current);
     }
 
     return () => {
       if (productsRef.current) {
-        observer.unobserve(productsRef.current)
+        observer.unobserve(productsRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <section className="bg-black px-6 py-24 text-green-400">
@@ -87,10 +85,7 @@ export const ProductsSection: React.FC = () => {
           <span className="text-white">/&gt;</span>
         </h2>
 
-        <div
-          ref={productsRef}
-          className="opacity-0 transition-opacity duration-1000"
-        >
+        <div ref={productsRef} className="opacity-0 transition-opacity duration-1000">
           {/* Product showcase */}
           <div
             className="relative"
@@ -110,13 +105,9 @@ export const ProductsSection: React.FC = () => {
                     } mr-4 min-w-[180px] transition-all duration-300 md:mb-4 md:mr-0 md:min-w-0`}
                     onClick={() => setActiveIndex(index)}
                   >
-                    <h3 className="font-mono text-lg tracking-wide">
-                      {product.name}
-                    </h3>
+                    <h3 className="font-mono text-lg tracking-wide">{product.name}</h3>
 
-                    <div className="mt-2 text-sm opacity-70">
-                      ${product.price}
-                    </div>
+                    <div className="mt-2 text-sm opacity-70">${product.price}</div>
 
                     {/* Active indicator */}
                     {activeIndex === index && (
@@ -158,9 +149,7 @@ export const ProductsSection: React.FC = () => {
 
                     {/* Product details */}
                     <div className="flex w-full flex-col border-t border-green-500/30 bg-black p-8 md:w-1/2 md:border-l md:border-t-0">
-                      <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-                        {product.name}
-                      </h2>
+                      <h2 className="mb-4 text-3xl font-bold md:text-4xl">{product.name}</h2>
 
                       <div className="mb-6 flex flex-wrap gap-2">
                         {product.tags.map((tag, tagIndex) => (
@@ -173,9 +162,7 @@ export const ProductsSection: React.FC = () => {
                         ))}
                       </div>
 
-                      <p className="mb-8 text-green-300">
-                        {product.description}
-                      </p>
+                      <p className="mb-8 text-green-300">{product.description}</p>
 
                       <div className="mt-auto flex items-center">
                         <button className="group relative overflow-hidden bg-green-500 px-6 py-3 font-mono text-black">
@@ -221,5 +208,5 @@ export const ProductsSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

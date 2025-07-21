@@ -38,7 +38,7 @@
 }
 
 body {
-  width: 100%; 
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +46,7 @@ body {
   /* background-color: var(--bg); */
 }
 
-input[type="button"],
+input[type='button'],
 select,
 option {
   padding: 5px 5px;
@@ -58,20 +58,20 @@ option {
   border: solid;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   /* width: 80px; */
   /* padding: 10px 10px; */
   /* margin: 5px; */
   border-radius: var(--borderradius);
 }
 
-input[type="submit"]:hover {
+input[type='submit']:hover {
   background-color: var(--chover);
   color: black;
   border-color: var(--bordercolor);
 }
 
-input[type="submit"]:active {
+input[type='submit']:active {
   background-color: var(--bg);
 }
 
@@ -116,19 +116,11 @@ h4 {
 }
 
 .r {
-  background-image: linear-gradient(
-    var(--cA2),
-    rgba(255, 255, 0, 0),
-    rgba(0, 0, 0, 0)
-  );
+  background-image: linear-gradient(var(--cA2), rgba(255, 255, 0, 0), rgba(0, 0, 0, 0));
   /* border-color: var(--bordercolor); */
 }
 .l {
-  background-image: linear-gradient(
-    var(--cB2),
-    rgba(255, 255, 0, 0),
-    rgba(255, 255, 0, 0)
-  );
+  background-image: linear-gradient(var(--cB2), rgba(255, 255, 0, 0), rgba(255, 255, 0, 0));
   /* border-color: var(--bordercolor); */
 }
 .rbutton {
@@ -414,7 +406,6 @@ td {
 
 #title {
   overflow-wrap: break-word;
-
 }
 
 .table-fit {

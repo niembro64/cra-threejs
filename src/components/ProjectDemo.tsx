@@ -1,37 +1,31 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import { ProjectStore } from '../store/ProjectStore'
-import { isMobile, isThin } from './Main'
-import ReactGA from 'react-ga4'
-import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/myData'
-import FancyButton from './FancyButton'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ProjectStore } from '../store/ProjectStore';
+import { isMobile, isThin } from './Main';
+import ReactGA from 'react-ga4';
+import { extraTimeLazyLoad, mediaBasePath, Project } from '../data/myData';
+import FancyButton from './FancyButton';
 
 const isVideo = (mediaSource: string | null) => {
-  if (mediaSource === null) return false
-  return mediaSource.endsWith('.mp4')
-}
+  if (mediaSource === null) return false;
+  return mediaSource.endsWith('.mp4');
+};
 
 const isGif = (mediaSource: string) => {
-  if (mediaSource === null) return false
-  return mediaSource.endsWith('.gif')
-}
+  if (mediaSource === null) return false;
+  return mediaSource.endsWith('.gif');
+};
 
 const isImage = (mediaSource: string) => {
-  if (mediaSource === null) return false
-  return mediaSource.endsWith('.png') || mediaSource.endsWith('.jpg')
-}
+  if (mediaSource === null) return false;
+  return mediaSource.endsWith('.png') || mediaSource.endsWith('.jpg');
+};
 
 interface ProjectDemoProps {
-  project: Project
-  index: number
-  setIsMuted: Dispatch<SetStateAction<boolean>>
-  isMuted: boolean
-  hasTouchedAMuteButton: boolean
+  project: Project;
+  index: number;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
+  isMuted: boolean;
+  hasTouchedAMuteButton: boolean;
 }
 
 const ProjectDemo: React.FC<ProjectDemoProps> = ({
@@ -41,84 +35,79 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
   isMuted,
   hasTouchedAMuteButton,
 }) => {
-  const { connectionQuality, activeProjectIndex, setActiveProjectIndex } =
-    ProjectStore()
+  const { connectionQuality, activeProjectIndex, setActiveProjectIndex } = ProjectStore();
 
-  const mediaRef = useRef<HTMLDivElement>(null)
-  const [inView, setInView] = useState(false)
-  const [mediaSrc, setMediaSrc] = useState<string | null>(null)
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  const [mediaSrc, setMediaSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!mediaRef.current) return
+    if (!mediaRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            setInView(true)
-          }, extraTimeLazyLoad)
-          observer.disconnect()
+            setInView(true);
+          }, extraTimeLazyLoad);
+          observer.disconnect();
         }
       },
       {
         root: null, // viewport
         rootMargin: '0px',
         threshold: 0.1, // trigger when 10% is visible
-      },
-    )
-    observer.observe(mediaRef.current)
+      }
+    );
+    observer.observe(mediaRef.current);
     return () => {
       if (mediaRef.current) {
-        observer.unobserve(mediaRef.current)
+        observer.unobserve(mediaRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   useEffect(() => {
-    console.log('connectionQuality:', connectionQuality)
+    console.log('connectionQuality:', connectionQuality);
     switch (connectionQuality) {
       case 'low':
-        setMediaSrc(project.image)
-        break
+        setMediaSrc(project.image);
+        break;
       case 'medium':
       case 'high':
         if (isMobile) {
-          setMediaSrc(project.gif)
+          setMediaSrc(project.gif);
         } else {
-          setMediaSrc(project.video)
+          setMediaSrc(project.video);
         }
-        break
+        break;
       default:
-        setMediaSrc(project.image)
-        break
+        setMediaSrc(project.image);
+        break;
     }
-  }, [connectionQuality, project])
+  }, [connectionQuality, project]);
 
   useEffect(() => {
-    const fullPath: string = mediaBasePath + mediaSrc || ''
+    const fullPath: string = mediaBasePath + mediaSrc || '';
 
-    console.log('fullPath:', fullPath)
-  }, [mediaSrc])
+    console.log('fullPath:', fullPath);
+  }, [mediaSrc]);
 
   const handleProjectClick = () => {
-    window.location.href = project.url
-  }
+    window.location.href = project.url;
+  };
 
   const handleMediaClick = () => {
-    setActiveProjectIndex(activeProjectIndex === index ? null : index)
-  }
+    setActiveProjectIndex(activeProjectIndex === index ? null : index);
+  };
 
-  const toggleMute = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    event.stopPropagation()
-    setIsMuted(!isMuted)
-  }
+  const toggleMute = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    setIsMuted(!isMuted);
+  };
 
-  const isActive = activeProjectIndex === index
+  const isActive = activeProjectIndex === index;
   return (
-    <div
-      className={`w-full rounded-2xl transition-all duration-300 ${isActive ? '' : ''}`}
-    >
+    <div className={`w-full rounded-2xl transition-all duration-300 ${isActive ? '' : ''}`}>
       <div className="mb-4 flex flex-row items-center justify-center text-center">
         {project.icon && (
           <img
@@ -194,33 +183,26 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
 
         {/* MUTE BUTTON for video with sound */}
-        {project.hasSound &&
-          !isMobile &&
-          connectionQuality !== 'low' &&
-          inView && (
-            <button
-              type="button"
-              data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
-              className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-black/70 p-2 text-white shadow-xl transition-all hover:bg-white/50"
-              onClick={(e) => {
-                e.stopPropagation()
-                toggleMute(e)
-              }}
-            >
-              <img
-                src={
-                  process.env.PUBLIC_URL +
-                  '/' +
-                  (isMuted ? 'no-sound.png' : 'sound.png')
-                }
-                alt={isMuted ? 'Unmute' : 'Mute'}
-                className="h-8 w-8"
-              />
-              {!hasTouchedAMuteButton && (
-                <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
-              )}
-            </button>
-          )}
+        {project.hasSound && !isMobile && connectionQuality !== 'low' && inView && (
+          <button
+            type="button"
+            data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
+            className="tooltip absolute bottom-2 right-2 z-10 rounded-full bg-black/70 p-2 text-white shadow-xl transition-all hover:bg-white/50"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMute(e);
+            }}
+          >
+            <img
+              src={process.env.PUBLIC_URL + '/' + (isMuted ? 'no-sound.png' : 'sound.png')}
+              alt={isMuted ? 'Unmute' : 'Mute'}
+              className="h-8 w-8"
+            />
+            {!hasTouchedAMuteButton && (
+              <div className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50"></div>
+            )}
+          </button>
+        )}
 
         {/* Click to expand indicator */}
         {!isActive && (
@@ -232,11 +214,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
       </div>
 
-      {isActive && (
-        <p className={`mt-4 text-center text-xl text-white/50`}>
-          {project.dates}
-        </p>
-      )}
+      {isActive && <p className={`mt-4 text-center text-xl text-white/50`}>{project.dates}</p>}
 
       {/* Project Details - Only shown when active */}
       <div
@@ -253,9 +231,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
             )}
 
             {project.description && (
-              <div className="mb-4 text-xl text-blue-100">
-                {project.description}
-              </div>
+              <div className="mb-4 text-xl text-blue-100">{project.description}</div>
             )}
 
             {project.stack && (
@@ -263,9 +239,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
                 <div className="pixel-font text-2xl text-fuchsia-300">
                   <strong>STACK</strong>
                 </div>
-                <div className="mb-4 text-lg text-fuchsia-100">
-                  {project.stack.join(', ')}
-                </div>
+                <div className="mb-4 text-lg text-fuchsia-100">{project.stack.join(', ')}</div>
               </>
             )}
 
@@ -293,9 +267,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               )}
 
               {project.description && (
-                <div className="mb-4 text-xl text-white">
-                  {project.description}
-                </div>
+                <div className="mb-4 text-xl text-white">{project.description}</div>
               )}
             </div>
             <div className="mt-4 md:mt-0 md:w-1/2 md:pl-4">
@@ -320,15 +292,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         )}
 
         {project.projectStatus === 'ok' &&
-        ((isThin && project.supportsMobile) ||
-          (!isThin && project.supportsDesktop)) ? (
+        ((isThin && project.supportsMobile) || (!isThin && project.supportsDesktop)) ? (
           <div className="px-4 pb-6">
             <FancyButton
-              text={
-                project.buttonStartText.toUpperCase() +
-                ' ' +
-                project.title.toUpperCase()
-              }
+              text={project.buttonStartText.toUpperCase() + ' ' + project.title.toUpperCase()}
               onClick={handleProjectClick}
             />
           </div>
@@ -339,16 +306,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               className={`w-full rounded-3xl bg-white/50 py-2 text-2xl uppercase text-white/50 transition-all hover:bg-gray-700 hover:text-white`}
               disabled
             >
-              {project.projectStatus !== 'ok'
-                ? 'Offline'
-                : isThin
-                  ? 'Desktop Only'
-                  : 'Mobile Only'}
+              {project.projectStatus !== 'ok' ? 'Offline' : isThin ? 'Desktop Only' : 'Mobile Only'}
             </button>
           </div>
         )}
       </div>
     </div>
-  )
-}
-export default ProjectDemo
+  );
+};
+export default ProjectDemo;

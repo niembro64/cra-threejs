@@ -1,26 +1,26 @@
 // myData.ts
-export const showSmashedGif: boolean = false
+export const showSmashedGif: boolean = false;
 
 export interface BulletObject {
-  title: string
-  lines: string[]
+  title: string;
+  lines: string[];
 }
 
 export interface Job {
-  company: string
-  title: string
-  location: string
-  dates: string
-  image: string | null
-  details: BulletObject[]
+  company: string;
+  title: string;
+  location: string;
+  dates: string;
+  image: string | null;
+  details: BulletObject[];
 }
 
 export interface Education {
-  image: string | null
-  dates: string
-  degree: string
-  school: string
-  details: BulletObject[]
+  image: string | null;
+  dates: string;
+  degree: string;
+  school: string;
+  details: BulletObject[];
 }
 
 export const jobs: Job[] = [
@@ -34,8 +34,7 @@ export const jobs: Job[] = [
     dates: '2025 - Present',
     details: [
       {
-        title:
-          'Architecting and implementing in-house AI systems to detect and prevent fraud.',
+        title: 'Architecting and implementing in-house AI systems to detect and prevent fraud.',
         lines: [],
       },
     ],
@@ -48,8 +47,7 @@ export const jobs: Job[] = [
     dates: '2022 - 2025',
     details: [
       {
-        title:
-          'Diagrammed, and implemented complex fullstack web + mobile apps.',
+        title: 'Diagrammed, and implemented complex fullstack web + mobile apps.',
         lines: [
           'Vue',
           'Angular',
@@ -77,8 +75,7 @@ export const jobs: Job[] = [
         ],
       },
       {
-        title:
-          'Designed, trained, and deployed various AI model architectures.',
+        title: 'Designed, trained, and deployed various AI model architectures.',
         lines: [
           'Pytorch',
           'BrainJS',
@@ -92,11 +89,7 @@ export const jobs: Job[] = [
       },
       {
         title: 'Built games for adults and kids, mobile & desktop.',
-        lines: [
-          'Phaser Game Engine',
-          'React Native Game Engine',
-          'Material Drag & Drop',
-        ],
+        lines: ['Phaser Game Engine', 'React Native Game Engine', 'Material Drag & Drop'],
       },
     ],
   },
@@ -108,8 +101,7 @@ export const jobs: Job[] = [
     dates: '2020 - 2022',
     details: [
       {
-        title:
-          'Configured industrial software systems for fortune 500 companies.',
+        title: 'Configured industrial software systems for fortune 500 companies.',
         lines: ['3M', 'Lucid Motors', 'Cooper Tires', 'Continental Tires'],
       },
     ],
@@ -122,8 +114,7 @@ export const jobs: Job[] = [
     dates: '2018 - 2020',
     details: [
       {
-        title:
-          'Configured industrial software systems (machine execution systems).',
+        title: 'Configured industrial software systems (machine execution systems).',
         lines: ['Maple Leaf Foods', 'Green Leaf Foods'],
       },
     ],
@@ -158,7 +149,7 @@ export const jobs: Job[] = [
       },
     ],
   },
-]
+];
 
 export const educations: Education[] = [
   {
@@ -216,8 +207,7 @@ export const educations: Education[] = [
         lines: ['Fundamentals', 'Python Stack', 'MERN Stack', 'C# Stack'],
       },
       {
-        title:
-          'Four-Month Course, 80 Hours per Week, with Four Specialized Instructors',
+        title: 'Four-Month Course, 80 Hours per Week, with Four Specialized Instructors',
         lines: [],
       },
     ],
@@ -250,19 +240,19 @@ export const educations: Education[] = [
       },
     ],
   },
-]
+];
 
-import { CSSProperties } from 'react'
+import { CSSProperties } from 'react';
 
-export const tooltipDelay = 500
+export const tooltipDelay = 500;
 
-export const extraTimeLazyLoad = 0
+export const extraTimeLazyLoad = 0;
 
-export const showEmojis: boolean = false
+export const showEmojis: boolean = false;
 
-export const showKirbyGame: boolean = false
+export const showKirbyGame: boolean = false;
 
-export type ConnectionQualityType = 'low' | 'medium' | 'high'
+export type ConnectionQualityType = 'low' | 'medium' | 'high';
 
 export const toolTipStyle: CSSProperties = {
   // color: 'white',
@@ -278,34 +268,34 @@ export const toolTipStyle: CSSProperties = {
   paddingLeft: '30px',
   borderRadius: '25px',
   zIndex: 1000,
-}
+};
 
-export type ProjectStatus = 'ok' | 'disabled' | 'hide'
+export type ProjectStatus = 'ok' | 'disabled' | 'hide';
 
 export interface Project {
-  projectStatus: ProjectStatus
-  dates: string
-  title: string
-  url: string
-  stack: string[] | null
-  type: string | null
-  bullets: string[] | null
-  icon: string | null
-  gif: string | null
-  video: string | null
-  image: string | null
-  supportsMobile: boolean
-  supportsDesktop: boolean
-  hasSound: boolean
-  buttonStartText: string
-  description?: string
+  projectStatus: ProjectStatus;
+  dates: string;
+  title: string;
+  url: string;
+  stack: string[] | null;
+  type: string | null;
+  bullets: string[] | null;
+  icon: string | null;
+  gif: string | null;
+  video: string | null;
+  image: string | null;
+  supportsMobile: boolean;
+  supportsDesktop: boolean;
+  hasSound: boolean;
+  buttonStartText: string;
+  description?: string;
 }
 
-export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/'
+export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/';
 
-const iconPhaser = 'phaser-icon.png'
-const iconThreeJs = 'threejs.png'
-const iconReact = 'react.png'
+const iconPhaser = 'phaser-icon.png';
+const iconThreeJs = 'threejs.png';
+const iconReact = 'react.png';
 
 export const projects: Project[] = [
   {
@@ -341,12 +331,7 @@ export const projects: Project[] = [
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
     type: 'Multiplayer Platform Fighter',
-    bullets: [
-      'Keyboard Support',
-      'USB Controller Support',
-      'Scripted Bots',
-      'Neural Network Bots',
-    ],
+    bullets: ['Keyboard Support', 'USB Controller Support', 'Scripted Bots', 'Neural Network Bots'],
     icon: iconPhaser,
     image: 'smashed.jpg',
     gif: 'smashed.gif',
@@ -413,11 +398,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser', 'React', 'FL Studio'],
     type: 'Free-Roam Shooter',
-    bullets: [
-      '2-Thumbs Mobile Controls',
-      'Desktop Mouse & Keyboard',
-      'Best Experience = Desktop',
-    ],
+    bullets: ['2-Thumbs Mobile Controls', 'Desktop Mouse & Keyboard', 'Best Experience = Desktop'],
     icon: iconPhaser,
     image: 'tanks.jpg',
     gif: 'tanks.gif',
@@ -455,12 +436,7 @@ export const projects: Project[] = [
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
-    bullets: [
-      'Vibe Coding',
-      'Choose Strategies',
-      'Set the Rules',
-      'Watch the Tournament',
-    ],
+    bullets: ['Vibe Coding', 'Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
     icon: iconPhaser,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
@@ -516,8 +492,7 @@ export const projects: Project[] = [
     title: 'Pirates',
     url: 'https://pirates.niemo.io',
     stack: ['React', 'Express', 'MongoDB'],
-    description:
-      'A simple, clean, pirate management system, with CRUD database operations.',
+    description: 'A simple, clean, pirate management system, with CRUD database operations.',
     bullets: ['Create, Read, Update, Delete', 'Front & Backend Validation'],
     icon: iconReact,
     image: 'pirates.jpg',
@@ -596,8 +571,7 @@ export const projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'Go to',
-    description:
-      "A collection of Niemo's original music created over the years.",
+    description: "A collection of Niemo's original music created over the years.",
   },
   {
     dates: '2013 - 2021',
@@ -621,10 +595,10 @@ export const projects: Project[] = [
     buttonStartText: 'Go to',
     description: 'Branded visualizations added to original music.',
   },
-]
+];
 
 export const EricResumeDescription =
-  'Engineer specializing in web & mobile apps, neural network training, and game design - emphasizing defensive programming, strict type safety, and elegant solutions.'
+  'Engineer specializing in web & mobile apps, neural network training, and game design - emphasizing defensive programming, strict type safety, and elegant solutions.';
 
 export const socialMedia: SocialMedia[] = [
   {
@@ -651,24 +625,24 @@ export const socialMedia: SocialMedia[] = [
     platform: 'GitHub',
     url: 'https://github.com/niembro64',
   },
-]
+];
 
 export type SocialMedia = {
-  platform: string
-  url: string
-}
+  platform: string;
+  url: string;
+};
 
 export type SkillCategory = {
-  emoji: string
-  title: string
-  dates: string
-  skills: Skill[]
-}
+  emoji: string;
+  title: string;
+  dates: string;
+  skills: Skill[];
+};
 
 export type Skill = {
-  title: string
-  details: string[]
-}
+  title: string;
+  details: string[];
+};
 
 export const skills: SkillCategory[] = [
   {
@@ -678,15 +652,7 @@ export const skills: SkillCategory[] = [
     skills: [
       {
         title: 'Frontend',
-        details: [
-          'React',
-          'React Native',
-          'Vue',
-          'Angular',
-          'TypeScript',
-          'SCSS',
-          'Tailwind',
-        ],
+        details: ['React', 'React Native', 'Vue', 'Angular', 'TypeScript', 'SCSS', 'Tailwind'],
       },
       {
         title: 'Backend',
@@ -718,14 +684,7 @@ export const skills: SkillCategory[] = [
       // },
       {
         title: 'Architectures',
-        details: [
-          'Pytorch',
-          'BrainJS',
-          'FeedForward',
-          'RNN',
-          'Convolutional',
-          'Transformer',
-        ],
+        details: ['Pytorch', 'BrainJS', 'FeedForward', 'RNN', 'Convolutional', 'Transformer'],
       },
       {
         title: 'Applications',
@@ -749,12 +708,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Device-Based',
-        details: [
-          'React Native Game Engine',
-          'N64 ROM Hacking',
-          'Raspberry Pi',
-          'Unity',
-        ],
+        details: ['React Native Game Engine', 'N64 ROM Hacking', 'Raspberry Pi', 'Unity'],
       },
     ],
   },
@@ -773,14 +727,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Visual',
-        details: [
-          'Aseprite',
-          'Blender',
-          'Photoshop',
-          'Illustrator',
-          'After Effects',
-          'OBS Studio',
-        ],
+        details: ['Aseprite', 'Blender', 'Photoshop', 'Illustrator', 'After Effects', 'OBS Studio'],
       },
       {
         title: 'Genres',
@@ -812,17 +759,16 @@ export const skills: SkillCategory[] = [
       },
     ],
   },
-]
+];
 
 export interface DeskEnvironment {
-  image: string
-  title: string
-  description: string[]
+  image: string;
+  title: string;
+  description: string[];
 }
 
-const conference_call_equipment = 'High-end conference call equipment'
-const laptop_docking_station =
-  'Docking Station for Macbook Pro & Windows Laptops'
+const conference_call_equipment = 'High-end conference call equipment';
+const laptop_docking_station = 'Docking Station for Macbook Pro & Windows Laptops';
 
 export const workEnvironments: DeskEnvironment[] = [
   {
@@ -862,8 +808,6 @@ export const workEnvironments: DeskEnvironment[] = [
   {
     image: '/gpus.JPG',
     title: 'AI Development',
-    description: [
-      'Ubuntu Linux w/ NVIDIA & AMD GPUs for Neural Network Training',
-    ],
+    description: ['Ubuntu Linux w/ NVIDIA & AMD GPUs for Neural Network Training'],
   },
-]
+];

@@ -1,17 +1,17 @@
 // PixelArtText.tsx
-import React, { useEffect, useRef, useState } from 'react'
-import { LETTERS_NICE } from '../data/textMappers'
-import { isThin } from './Main'
+import React, { useEffect, useRef, useState } from 'react';
+import { LETTERS_NICE } from '../data/textMappers';
+import { isThin } from './Main';
 
 interface PixelArtTextProps {
-  text: string
-  pixelColor?: string
-  scrollContainerSelector?: string // Optional selector for custom scroll container
-  totalHorzPixels?: number // Maximum horizontal pixels for the element
-  colorOptions?: string[] // Array of hex colors to use for random color selection
+  text: string;
+  pixelColor?: string;
+  scrollContainerSelector?: string; // Optional selector for custom scroll container
+  totalHorzPixels?: number; // Maximum horizontal pixels for the element
+  colorOptions?: string[]; // Array of hex colors to use for random color selection
 }
 
-const LETTERS_TO_USE = LETTERS_NICE
+const LETTERS_TO_USE = LETTERS_NICE;
 
 const PixelArtText: React.FC<PixelArtTextProps> = ({
   text,
@@ -20,124 +20,119 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   totalHorzPixels = 100,
   colorOptions = ['#3B82F6', '#D946EF', '#06B6D4'],
 }) => {
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  const [animationKey, setAnimationKey] = useState(0)
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
   const [instanceId] = useState(() => {
-    const randomNumber = Math.random()
+    const randomNumber = Math.random();
 
-    return `pixel-art-${randomNumber.toString(36).substring(2, 9)}`
-  })
+    return `pixel-art-${randomNumber.toString(36).substring(2, 9)}`;
+  });
 
   // Validate that every character in the text is a capital letter A-Z.
   for (let i = 0; i < text.length; i++) {
-    const char = text[i]
+    const char = text[i];
     if (!LETTERS_TO_USE[char]) {
-      throw new Error(
-        `Unsupported character: "${char}". Only capital letters A-Z are allowed.`,
-      )
+      throw new Error(`Unsupported character: "${char}". Only capital letters A-Z are allowed.`);
     }
   }
 
   // Set up Intersection Observer to detect when element is visible
   useEffect(() => {
-    if (!wrapperRef.current) return
+    if (!wrapperRef.current) return;
 
     // Get the scroll container element if a selector is provided
-    let rootElement: Element | null = null
+    let rootElement: Element | null = null;
     if (scrollContainerSelector) {
-      rootElement = document.querySelector(scrollContainerSelector)
+      rootElement = document.querySelector(scrollContainerSelector);
     }
 
     const observerOptions = {
       root: rootElement, // Use the specified container or null (viewport)
       threshold: 0.1, // Trigger when at least 10% of the element is visible
       rootMargin: '0px', // No margin
-    }
+    };
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0]
+      const entry = entries[0];
       if (entry.isIntersecting) {
         // Element is visible
-        setIsVisible(true)
+        setIsVisible(true);
         // Reset animation by changing the key
-        setAnimationKey((prevKey) => prevKey + 1)
+        setAnimationKey((prevKey) => prevKey + 1);
       } else {
         // Element is not visible
-        setIsVisible(false)
+        setIsVisible(false);
       }
-    }
+    };
 
     // Create and start the observer
-    const observer = new IntersectionObserver(
-      handleIntersection,
-      observerOptions,
-    )
-    observer.observe(wrapperRef.current)
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+    observer.observe(wrapperRef.current);
 
     // Clean up observer on component unmount
     return () => {
-      observer.disconnect()
-    }
-  }, [scrollContainerSelector, text]) // Re-run if the container selector changes
+      observer.disconnect();
+    };
+  }, [scrollContainerSelector, text]); // Re-run if the container selector changes
 
-  const letterHeight = LETTERS_TO_USE['A'].length
-  const spacing = 1 // one column of spacing between letters
+  const letterHeight = LETTERS_TO_USE['A'].length;
+  const spacing = 1; // one column of spacing between letters
 
   // Build the combined pixel grid rows.
-  const combinedRows: string[] = Array(letterHeight).fill('')
+  const combinedRows: string[] = Array(letterHeight).fill('');
   for (let i = 0; i < text.length; i++) {
-    const letter = text[i]
-    const letterPattern = LETTERS_TO_USE[letter]
+    const letter = text[i];
+    const letterPattern = LETTERS_TO_USE[letter];
     for (let row = 0; row < letterHeight; row++) {
-      combinedRows[row] += letterPattern[row]
+      combinedRows[row] += letterPattern[row];
       // Add spacing between letters (except after the last one)
       if (i !== text.length - 1) {
-        combinedRows[row] += ' '.repeat(spacing)
+        combinedRows[row] += ' '.repeat(spacing);
       }
     }
   }
 
   // Convert the combined rows into a 2D boolean grid.
   let grid: boolean[][] = combinedRows.map((row) =>
-    row.split('').map((pixel) => (pixel === '#' ? true : false)),
-  )
+    row.split('').map((pixel) => (pixel === '#' ? true : false))
+  );
 
-  const totalHorizPixelsToUse = isThin ? null : totalHorzPixels
+  const totalHorizPixelsToUse = isThin ? null : totalHorzPixels;
 
   // Apply horizontal padding if totalHorzPixels is provided
   if (totalHorizPixelsToUse) {
-    const currentWidth = grid[0].length
+    const currentWidth = grid[0].length;
 
     if (totalHorizPixelsToUse > currentWidth) {
       // Calculate how much padding to add on each side
-      const totalPadding = totalHorizPixelsToUse - currentWidth
-      const leftPadding = Math.floor(totalPadding / 2)
-      const rightPadding = totalPadding - leftPadding
+      const totalPadding = totalHorizPixelsToUse - currentWidth;
+      const leftPadding = Math.floor(totalPadding / 2);
+      const rightPadding = totalPadding - leftPadding;
 
       // Add padding to each row
       grid = grid.map((row) => {
         // Create left padding array (all false values)
-        const leftPad = Array(leftPadding).fill(false)
+        const leftPad = Array(leftPadding).fill(false);
         // Create right padding array (all false values)
-        const rightPad = Array(rightPadding).fill(false)
+        const rightPad = Array(rightPadding).fill(false);
         // Return padded row
-        return [...leftPad, ...row, ...rightPad]
-      })
+        return [...leftPad, ...row, ...rightPad];
+      });
     }
   }
 
-  const numRows = grid.length
-  const numCols = grid[0].length
+  const numRows = grid.length;
+  const numCols = grid[0].length;
   // Calculate aspect ratio (for "contain" scaling)
-  const aspectRatio = (numRows / numCols) * 100
+  const aspectRatio = (numRows / numCols) * 100;
 
   // Helper to generate a random hex color or select from provided colorOptions
   const getRandomColor = (): string => {
     // If colorOptions array is provided and not empty, use it to select a random color
     if (colorOptions && colorOptions.length > 0) {
-      const randomIndex = Math.floor(Math.random() * colorOptions.length)
-      return colorOptions[randomIndex]
+      const randomIndex = Math.floor(Math.random() * colorOptions.length);
+      return colorOptions[randomIndex];
     }
 
     // Otherwise, generate a random color
@@ -146,14 +141,14 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
       Math.floor(Math.random() * 0xffffff)
         .toString(16)
         .padStart(6, '0')
-    )
-  }
+    );
+  };
 
   // Create instance-specific class names
-  const wrapperClass = `pixel-art-wrapper-${instanceId}`
-  const gridClass = `pixel-art-grid-${instanceId}`
-  const pixelClass = `pixel-${instanceId}`
-  const animateClass = `animate-${instanceId}`
+  const wrapperClass = `pixel-art-wrapper-${instanceId}`;
+  const gridClass = `pixel-art-grid-${instanceId}`;
+  const pixelClass = `pixel-${instanceId}`;
+  const animateClass = `animate-${instanceId}`;
 
   return (
     <div
@@ -178,26 +173,22 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
               height: '100%',
               minWidth: '1px',
               minHeight: '1px',
-            }
+            };
 
             if (!isPixel) {
-              return <div key={`${rowIndex}-${colIndex}`} style={baseStyle} />
+              return <div key={`${rowIndex}-${colIndex}`} style={baseStyle} />;
             }
 
-            const offsetAmount = 200
+            const offsetAmount = 200;
 
             // Instead of sequential delays, use random delays.
-            const randomDelay = (Math.random() * 1).toFixed(2) + 's'
+            const randomDelay = (Math.random() * 1).toFixed(2) + 's';
             // Random starting offset (in pixels) for coming in from different directions.
-            const randomX =
-              (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) +
-              'px'
-            const randomY =
-              (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) +
-              'px'
-            const randomTransform = `translate(${randomX}, ${randomY})`
+            const randomX = (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) + 'px';
+            const randomY = (Math.random() * offsetAmount - offsetAmount / 2).toFixed(0) + 'px';
+            const randomTransform = `translate(${randomX}, ${randomY})`;
             // Generate a random color to transition through.
-            const randomColor = getRandomColor()
+            const randomColor = getRandomColor();
 
             return (
               <div
@@ -214,8 +205,8 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
                   } as React.CSSProperties
                 }
               />
-            )
-          }),
+            );
+          })
         )}
       </div>
       <style>{`
@@ -259,7 +250,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default PixelArtText
+export default PixelArtText;

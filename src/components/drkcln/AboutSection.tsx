@@ -1,83 +1,83 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
 
 export const AboutSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const textElements = useRef<(HTMLParagraphElement | null)[]>([])
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const textElements = useRef<(HTMLParagraphElement | null)[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fadeIn')
+            entry.target.classList.add('animate-fadeIn');
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     // Observe all text elements
     textElements.current.forEach((element) => {
-      if (element) observer.observe(element)
-    })
+      if (element) observer.observe(element);
+    });
 
     return () => {
       textElements.current.forEach((element) => {
-        if (element) observer.unobserve(element)
-      })
-    }
-  }, [])
+        if (element) observer.unobserve(element);
+      });
+    };
+  }, []);
 
   // Binary code animation effect
   useEffect(() => {
-    const binaryElements = document.querySelectorAll('.binary-text')
+    const binaryElements = document.querySelectorAll('.binary-text');
 
     binaryElements.forEach((element) => {
-      const originalText = element.textContent || ''
-      let intervalId: NodeJS.Timeout
+      const originalText = element.textContent || '';
+      let intervalId: NodeJS.Timeout;
 
       element.addEventListener('mouseenter', () => {
-        let iterations = 0
-        const maxIterations = 10
+        let iterations = 0;
+        const maxIterations = 10;
 
         intervalId = setInterval(() => {
           element.textContent = originalText
             .split('')
             .map((char, index) => {
               if (index < iterations) {
-                return char
+                return char;
               }
 
-              return Math.random() > 0.5 ? '0' : '1'
+              return Math.random() > 0.5 ? '0' : '1';
             })
-            .join('')
+            .join('');
 
           if (iterations >= originalText.length) {
-            clearInterval(intervalId)
-            element.textContent = originalText
+            clearInterval(intervalId);
+            element.textContent = originalText;
           }
 
-          iterations += 1 / 3
-        }, 30)
-      })
+          iterations += 1 / 3;
+        }, 30);
+      });
 
       element.addEventListener('mouseleave', () => {
-        clearInterval(intervalId)
-        element.textContent = originalText
-      })
-    })
+        clearInterval(intervalId);
+        element.textContent = originalText;
+      });
+    });
 
     return () => {
       binaryElements.forEach((element) => {
         element.removeEventListener('mouseenter', () => {
-          console.log('Mouse entered')
-        })
+          console.log('Mouse entered');
+        });
         element.removeEventListener('mouseleave', () => {
-          console.log('Mouse left')
-        })
-      })
-    }
-  }, [])
+          console.log('Mouse left');
+        });
+      });
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} className="bg-black px-6 py-24 text-green-400">
@@ -94,28 +94,25 @@ export const AboutSection: React.FC = () => {
               ref={(el) => (textElements.current[0] = el)}
               className="binary-text text-lg opacity-0 transition duration-1000 ease-out md:text-xl"
             >
-              Founded in 2023, &lt;drkcln/&gt; emerged from the digital
-              underground as a response to the growing convergence of technology
-              and fashion.
+              Founded in 2023, &lt;drkcln/&gt; emerged from the digital underground as a response to
+              the growing convergence of technology and fashion.
             </p>
 
             <p
               ref={(el) => (textElements.current[1] = el)}
               className="binary-text text-lg opacity-0 transition delay-300 duration-1000 ease-out md:text-xl"
             >
-              Our garments are designed for those who exist both in physical
-              reality and the digital matrix – the hackers, the creators, the
-              digital nomads navigating through the noise of the information
-              age.
+              Our garments are designed for those who exist both in physical reality and the digital
+              matrix – the hackers, the creators, the digital nomads navigating through the noise of
+              the information age.
             </p>
 
             <p
               ref={(el) => (textElements.current[2] = el)}
               className="delay-600 binary-text text-lg opacity-0 transition duration-1000 ease-out md:text-xl"
             >
-              Each piece in our collection represents a harmonious blend of
-              cyberpunk aesthetics, functional design, and sustainable
-              production methods.
+              Each piece in our collection represents a harmonious blend of cyberpunk aesthetics,
+              functional design, and sustainable production methods.
             </p>
 
             <div
@@ -152,5 +149,5 @@ export const AboutSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,11 +6,9 @@ export const ContactSection: React.FC = () => {
     email: '',
     subject: '',
     message: '',
-  })
-  const [status, setStatus] = useState<
-    'idle' | 'submitting' | 'success' | 'error'
-  >('idle')
-  const sectionRef = useRef<HTMLDivElement>(null)
+  });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   // Animation for section when it comes into view
   useEffect(() => {
@@ -18,38 +16,36 @@ export const ContactSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100')
-            entry.target.classList.remove('opacity-0', 'translate-y-10')
+            entry.target.classList.add('opacity-100');
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+        observer.unobserve(sectionRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setStatus('submitting')
+    setStatus('submitting');
 
     // Simulate API call
     setTimeout(() => {
@@ -59,52 +55,50 @@ export const ContactSection: React.FC = () => {
         email: '',
         subject: '',
         message: '',
-      })
-      setStatus('success')
+      });
+      setStatus('success');
 
       // Reset status after a delay
       setTimeout(() => {
-        setStatus('idle')
-      }, 3000)
-    }, 1500)
-  }
+        setStatus('idle');
+      }, 3000);
+    }, 1500);
+  };
 
   // Terminal-like typing effect for section title
   const TerminalText = ({ text }: { text: string }) => {
-    const [displayText, setDisplayText] = useState('')
-    const [cursorVisible, setCursorVisible] = useState(true)
+    const [displayText, setDisplayText] = useState('');
+    const [cursorVisible, setCursorVisible] = useState(true);
 
     useEffect(() => {
-      let i = 0
+      let i = 0;
       const interval = setInterval(() => {
         if (i < text.length) {
-          setDisplayText(text.substring(0, i + 1))
-          i++
+          setDisplayText(text.substring(0, i + 1));
+          i++;
         } else {
-          clearInterval(interval)
+          clearInterval(interval);
         }
-      }, 100)
+      }, 100);
 
       const cursorInterval = setInterval(() => {
-        setCursorVisible((prev) => !prev)
-      }, 500)
+        setCursorVisible((prev) => !prev);
+      }, 500);
 
       return () => {
-        clearInterval(interval)
-        clearInterval(cursorInterval)
-      }
-    }, [text])
+        clearInterval(interval);
+        clearInterval(cursorInterval);
+      };
+    }, [text]);
 
     return (
       <div className="font-mono">
         <span className="text-green-400">&gt; </span>
         <span>{displayText}</span>
-        {cursorVisible && (
-          <span className="animate-pulse text-green-400">|</span>
-        )}
+        {cursorVisible && <span className="animate-pulse text-green-400">|</span>}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <section
@@ -163,10 +157,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div className="mb-6">
-                <label
-                  htmlFor="subject"
-                  className="mb-2 block font-mono text-sm"
-                >
+                <label htmlFor="subject" className="mb-2 block font-mono text-sm">
                   SUBJECT<span className="text-green-400">*</span>
                 </label>
                 <select
@@ -188,10 +179,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div className="mb-6">
-                <label
-                  htmlFor="message"
-                  className="mb-2 block font-mono text-sm"
-                >
+                <label htmlFor="message" className="mb-2 block font-mono text-sm">
                   MESSAGE<span className="text-green-400">*</span>
                 </label>
                 <textarea
@@ -213,10 +201,7 @@ export const ContactSection: React.FC = () => {
               >
                 {status === 'submitting' ? (
                   <div className="flex items-center justify-center">
-                    <svg
-                      className="mr-2 h-5 w-5 animate-spin"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                       <circle
                         className="opacity-25"
                         cx="12"
@@ -226,11 +211,7 @@ export const ContactSection: React.FC = () => {
                         strokeWidth="4"
                         fill="none"
                       />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v8H4z"
-                      />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                     </svg>
                     SENDING...
                   </div>
@@ -247,9 +228,7 @@ export const ContactSection: React.FC = () => {
                   </p>
                 )}
                 {status === 'error' && (
-                  <p className="text-red-500">
-                    Error: Could not send message. Please try again.
-                  </p>
+                  <p className="text-red-500">Error: Could not send message. Please try again.</p>
                 )}
               </div>
             </form>
@@ -257,15 +236,11 @@ export const ContactSection: React.FC = () => {
 
           {/* Contact information */}
           <div className="border border-green-500/30 bg-gray-900 p-8">
-            <h3 className="mb-6 text-2xl font-bold text-white">
-              Connection Details
-            </h3>
+            <h3 className="mb-6 text-2xl font-bold text-white">Connection Details</h3>
 
             <div className="space-y-8">
               <div>
-                <div className="mb-2 font-mono text-sm text-gray-400">
-                  EMAIL
-                </div>
+                <div className="mb-2 font-mono text-sm text-gray-400">EMAIL</div>
                 <a
                   href="mailto:contact@drkcln.com"
                   className="text-green-400 transition-colors duration-300 hover:text-green-300"
@@ -275,9 +250,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div>
-                <div className="mb-2 font-mono text-sm text-gray-400">
-                  PRESS INQUIRIES
-                </div>
+                <div className="mb-2 font-mono text-sm text-gray-400">PRESS INQUIRIES</div>
                 <a
                   href="mailto:press@drkcln.com"
                   className="text-green-400 transition-colors duration-300 hover:text-green-300"
@@ -287,9 +260,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div>
-                <div className="mb-2 font-mono text-sm text-gray-400">
-                  HEADQUARTERS
-                </div>
+                <div className="mb-2 font-mono text-sm text-gray-400">HEADQUARTERS</div>
                 <address className="not-italic text-green-300">
                   <div>Unit 404, Digital Tower</div>
                   <div>Cyber District</div>
@@ -298,9 +269,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div>
-                <div className="mb-2 font-mono text-sm text-gray-400">
-                  SOCIAL
-                </div>
+                <div className="mb-2 font-mono text-sm text-gray-400">SOCIAL</div>
                 <div className="flex space-x-4">
                   <a
                     href="#"
@@ -351,12 +320,10 @@ export const ContactSection: React.FC = () => {
 
             {/* FAQ teaser */}
             <div className="mt-12 border border-green-500/30 bg-black p-6">
-              <h4 className="mb-4 text-xl font-bold text-white">
-                Frequently Asked Questions
-              </h4>
+              <h4 className="mb-4 text-xl font-bold text-white">Frequently Asked Questions</h4>
               <p className="mb-4 text-green-300">
-                Need information about sizing, shipping, or returns? Check our
-                comprehensive FAQ section.
+                Need information about sizing, shipping, or returns? Check our comprehensive FAQ
+                section.
               </p>
               <a
                 href="#"
@@ -369,5 +336,5 @@ export const ContactSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

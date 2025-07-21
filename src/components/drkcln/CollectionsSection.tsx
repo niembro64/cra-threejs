@@ -1,5 +1,5 @@
-import React from 'react'
-import { useRef, useEffect, useState } from 'react'
+import React from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 // Collections data
 const collections = [
@@ -27,12 +27,12 @@ const collections = [
     image: '/crate.png', // Placeholder image
     year: '2024',
   },
-]
+];
 
 export const CollectionsSection: React.FC = () => {
-  const [activeCollection, setActiveCollection] = useState(0)
-  const collectionsRef = useRef<HTMLDivElement>(null)
-  const imagesRef = useRef<(HTMLDivElement | null)[]>([])
+  const [activeCollection, setActiveCollection] = useState(0);
+  const collectionsRef = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
 
   // Animation for section when it comes into view
   useEffect(() => {
@@ -40,24 +40,24 @@ export const CollectionsSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100')
-            entry.target.classList.remove('opacity-0', 'translate-y-10')
+            entry.target.classList.add('opacity-100');
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
           }
-        })
+        });
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (collectionsRef.current) {
-      observer.observe(collectionsRef.current)
+      observer.observe(collectionsRef.current);
     }
 
     return () => {
       if (collectionsRef.current) {
-        observer.unobserve(collectionsRef.current)
+        observer.unobserve(collectionsRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <section className="bg-gray-900 px-6 py-24 text-green-400">
@@ -68,10 +68,7 @@ export const CollectionsSection: React.FC = () => {
           <span className="text-white">/&gt;</span>
         </h2>
 
-        <div
-          ref={collectionsRef}
-          className="translate-y-10 opacity-0 transition-all duration-1000"
-        >
+        <div ref={collectionsRef} className="translate-y-10 opacity-0 transition-all duration-1000">
           {/* Collections tabs */}
           <div className="mb-12 flex flex-wrap justify-center border-b border-green-500/30">
             {collections.map((collection, index) => (
@@ -136,9 +133,7 @@ export const CollectionsSection: React.FC = () => {
                       <div className="mb-2 text-3xl font-bold text-white md:text-5xl">
                         {collection.name}
                       </div>
-                      <div className="font-mono text-green-400">
-                        {collection.year}
-                      </div>
+                      <div className="font-mono text-green-400">{collection.year}</div>
                     </div>
 
                     {/* Hover call to action */}
@@ -151,13 +146,9 @@ export const CollectionsSection: React.FC = () => {
 
                   {/* Collection details */}
                   <div className="border border-green-500/30 bg-black p-6 md:p-10">
-                    <h3 className="mb-6 text-3xl font-bold text-white">
-                      {collection.name}
-                    </h3>
+                    <h3 className="mb-6 text-3xl font-bold text-white">{collection.name}</h3>
 
-                    <p className="mb-8 text-lg text-green-300">
-                      {collection.description}
-                    </p>
+                    <p className="mb-8 text-lg text-green-300">{collection.description}</p>
 
                     {/* Collection stats */}
                     <div className="mb-8 grid grid-cols-2 gap-6">
@@ -168,9 +159,7 @@ export const CollectionsSection: React.FC = () => {
 
                       <div className="border-l-2 border-green-400 pl-4">
                         <div className="text-sm text-gray-400">Released</div>
-                        <div className="text-2xl text-white">
-                          {collection.year}
-                        </div>
+                        <div className="text-2xl text-white">{collection.year}</div>
                       </div>
                     </div>
 
@@ -209,5 +198,5 @@ export const CollectionsSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
