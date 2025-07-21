@@ -155,7 +155,7 @@ const ForeclosureNew = () => {
     clearPostings,
   } = useForeclosureStore();
 
-  const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(20);
+  const [distanceFromGreenwich, setDistanceFromGreenwich] = useState<number>(5);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
   const [selectedAuction, setSelectedAuction] = useState<any>(null);
   const [emailCopied, setEmailCopied] = useState<boolean>(false);
