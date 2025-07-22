@@ -18,12 +18,12 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
       status: 'available',
       url: 'https://niemo.io/foreclosure',
     },
-    {
-      title: 'CT Foreclosures Backend',
-      description: 'Simple interface for property status monitoring. Using Backend (Slower)',
-      status: 'available',
-      url: 'https://niemo.io/foreclosures_new',
-    },
+    // {
+    //   title: 'CT Foreclosures Backend',
+    //   description: 'Simple interface for property status monitoring. Using Backend (Slower)',
+    //   status: 'available',
+    //   url: 'https://niemo.io/foreclosures_new',
+    // },
     //   {
     //     title: 'Audio Editor',
     //     description:
