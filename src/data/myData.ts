@@ -444,7 +444,7 @@ export const projects: Project[] = [
   },
   {
     dates: '2025 - Ongoing',
-    projectStatus: 'ok',
+    projectStatus: 'disabled',
     title: 'Attention Mechanism',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
