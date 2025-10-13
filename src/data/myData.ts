@@ -323,7 +323,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Try',
     description:
-      'This project is a demonstration of the attention mechanism in transformer models. Wiggle the values to see how they affect the output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
+      'Wiggle the "weights" to see how they affect the downstream output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
   {
     dates: '2022 - Ongoing',
