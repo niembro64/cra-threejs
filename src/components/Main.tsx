@@ -213,8 +213,9 @@ const Main: React.FC = () => {
       );
     }
 
-    camera.position.z = usePolyhedron ? 250 : 150;
+    camera.position.z = usePolyhedron ? 150 : 150;
     camera.position.x = usePolyhedron ? 30 : 0;
+    camera.position.y = usePolyhedron ? 20 : 0;
 
     const intensity = isThin ? 0.7 : 0.4;
 
