@@ -43,6 +43,31 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
 
     const [hoverAudioButton, setHoverAudioButton] = useState(false);
 
+    // Initialize canvas dimensions for proper rendering
+    useEffect(() => {
+      const initializeCanvas = (canvas: HTMLCanvasElement | null) => {
+        if (canvas) {
+          const rect = canvas.getBoundingClientRect();
+          canvas.width = rect.width;
+          canvas.height = rect.height;
+          // Ensure transparent background
+          const ctx = canvas.getContext('2d', { alpha: true });
+          if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          }
+        }
+      };
+
+      initializeCanvas(cUpper.current);
+      initializeCanvas(cLower.current);
+      initializeCanvas(cUpperLowpass.current);
+      initializeCanvas(cLowerLowpass.current);
+      initializeCanvas(cUpperLowpass2.current);
+      initializeCanvas(cLowerLowpass2.current);
+      initializeCanvas(cUpperLowpass3.current);
+      initializeCanvas(cLowerLowpass3.current);
+    }, [audioStarted]);
+
     const startAudio = () => {
       if (audioStarted) return;
       setAudioStarted(true);
@@ -105,14 +130,14 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                   const cUpperLowpass3C = cUpperLowpass3.current;
                   const cLowerLowpass3C = cLowerLowpass3.current;
 
-                  const ctxUpper = cUpperC.getContext('2d');
-                  const ctxLower = cLowerC.getContext('2d');
-                  const ctxUpperLowpass = cUpperLowpassC.getContext('2d');
-                  const ctxLowerLowpass = cLowerLowpassC.getContext('2d');
-                  const ctxUpperLowpass2 = cUpperLowpass2C.getContext('2d');
-                  const ctxLowerLowpass2 = cLowerLowpass2C.getContext('2d');
-                  const ctxUpperLowpass3 = cUpperLowpass3C.getContext('2d');
-                  const ctxLowerLowpass3 = cLowerLowpass3C.getContext('2d');
+                  const ctxUpper = cUpperC.getContext('2d', { alpha: true });
+                  const ctxLower = cLowerC.getContext('2d', { alpha: true });
+                  const ctxUpperLowpass = cUpperLowpassC.getContext('2d', { alpha: true });
+                  const ctxLowerLowpass = cLowerLowpassC.getContext('2d', { alpha: true });
+                  const ctxUpperLowpass2 = cUpperLowpass2C.getContext('2d', { alpha: true });
+                  const ctxLowerLowpass2 = cLowerLowpass2C.getContext('2d', { alpha: true });
+                  const ctxUpperLowpass3 = cUpperLowpass3C.getContext('2d', { alpha: true });
+                  const ctxLowerLowpass3 = cLowerLowpass3C.getContext('2d', { alpha: true });
 
                   if (
                     ctxUpper &&
@@ -330,18 +355,25 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
 
             <div className="relative flex w-full flex-col items-center justify-center">
               {/* Upper spectrogram - layered from back to front */}
-              <canvas className="z-50 h-[200px] w-full" ref={cUpper}></canvas>
+              <canvas
+                className="z-50 h-[200px] w-full"
+                ref={cUpper}
+                style={{ background: 'transparent' }}
+              ></canvas>
               <canvas
                 className="absolute left-0 top-0 z-40 h-[200px] w-full"
                 ref={cUpperLowpass}
+                style={{ background: 'transparent' }}
               ></canvas>
               <canvas
                 className="absolute left-0 top-0 z-30 h-[200px] w-full"
                 ref={cUpperLowpass2}
+                style={{ background: 'transparent' }}
               ></canvas>
               <canvas
                 className="absolute left-0 top-0 z-20 h-[200px] w-full"
                 ref={cUpperLowpass3}
+                style={{ background: 'transparent' }}
               ></canvas>
 
               <button
@@ -369,18 +401,25 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
               </button>
 
               {/* Lower spectrogram - layered from back to front */}
-              <canvas className="z-50 h-[200px] w-full" ref={cLower}></canvas>
+              <canvas
+                className="z-50 h-[200px] w-full"
+                ref={cLower}
+                style={{ background: 'transparent' }}
+              ></canvas>
               <canvas
                 className="absolute bottom-0 left-0 z-40 h-[200px] w-full"
                 ref={cLowerLowpass}
+                style={{ background: 'transparent' }}
               ></canvas>
               <canvas
                 className="absolute bottom-0 left-0 z-30 h-[200px] w-full"
                 ref={cLowerLowpass2}
+                style={{ background: 'transparent' }}
               ></canvas>
               <canvas
                 className="absolute bottom-0 left-0 z-20 h-[200px] w-full"
                 ref={cLowerLowpass3}
+                style={{ background: 'transparent' }}
               ></canvas>
             </div>
           </>
