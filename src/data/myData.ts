@@ -1,5 +1,6 @@
 // myData.ts
 export const showSmashedGif: boolean = false;
+export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 
 export interface BulletObject {
   title: string;
@@ -336,7 +337,7 @@ export const projects: Project[] = [
     image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
-    supportsDesktop: true,
+    supportsDesktop: false,
     supportsMobile: false,
     hasSound: true,
     buttonStartText: 'Play',

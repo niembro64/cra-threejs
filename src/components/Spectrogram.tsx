@@ -1,6 +1,6 @@
 import Meyda, { MeydaFeaturesObject } from 'meyda';
 import { MeydaAnalyzer } from 'meyda/dist/esm/meyda-wa';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { ProjectStore } from '../store/ProjectStore';
 import ReactGA from 'react-ga4';
 
@@ -17,260 +17,269 @@ interface AudioSpectrogramProps {
   audioRef: React.RefObject<HTMLAudioElement>;
 }
 
-const AudioSpectrogram: React.FC<AudioSpectrogramProps> = ({
-  highFreqPowerRef,
-  lowFreqPowerRef,
-  audioRef,
-}) => {
-  const { play, setPlay } = ProjectStore();
+export interface AudioSpectrogramRef {
+  startAudio: () => void;
+}
 
-  const [audioStarted, setAudioStarted] = useState(false);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
-  const cUpper = useRef<HTMLCanvasElement | null>(null);
-  const cLower = useRef<HTMLCanvasElement | null>(null);
-  const cUpperLowpass = useRef<HTMLCanvasElement | null>(null);
-  const cLowerLowpass = useRef<HTMLCanvasElement | null>(null);
+const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
+  ({ highFreqPowerRef, lowFreqPowerRef, audioRef }, ref) => {
+    const { play, setPlay } = ProjectStore();
 
-  const myMelBandsLowPass = useRef<number[]>([]);
+    const [audioStarted, setAudioStarted] = useState(false);
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const meydaAnalyzerRef = useRef<MeydaAnalyzer | null>(null);
+    const cUpper = useRef<HTMLCanvasElement | null>(null);
+    const cLower = useRef<HTMLCanvasElement | null>(null);
+    const cUpperLowpass = useRef<HTMLCanvasElement | null>(null);
+    const cLowerLowpass = useRef<HTMLCanvasElement | null>(null);
 
-  const [hoverAudioButton, setHoverAudioButton] = useState(false);
+    const myMelBandsLowPass = useRef<number[]>([]);
 
-  const startAudio = () => {
-    if (audioStarted) return;
-    setAudioStarted(true);
-  };
+    const [hoverAudioButton, setHoverAudioButton] = useState(false);
 
-  useEffect(() => {
-    if (!audioRef.current) return;
+    const startAudio = () => {
+      if (audioStarted) return;
+      setAudioStarted(true);
+      setPlay(true);
+    };
 
-    if (!audioStarted) return;
+    useImperativeHandle(ref, () => ({
+      startAudio,
+    }));
 
-    if (play) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
-    }
-  }, [play, audioRef, audioStarted]);
+    useEffect(() => {
+      if (!audioRef.current) return;
 
-  useEffect(() => {
-    if (!audioStarted) return;
+      if (!audioStarted) return;
 
-    const setupMeyda = async (): Promise<void> => {
-      if (audioRef.current && !audioContextRef.current) {
-        try {
-          const audioContext = new AudioContext();
-          audioContextRef.current = audioContext;
+      if (play) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }, [play, audioRef, audioStarted]);
 
-          const source = audioContext.createMediaElementSource(audioRef.current);
-          source.connect(audioContext.destination);
+    useEffect(() => {
+      if (!audioStarted) return;
 
-          meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
-            audioContext,
-            source,
-            bufferSize: 512,
-            featureExtractors: ['melBands'],
+      const setupMeyda = async (): Promise<void> => {
+        if (audioRef.current && !audioContextRef.current) {
+          try {
+            const audioContext = new AudioContext();
+            audioContextRef.current = audioContext;
 
-            callback: (features: MeydaFeaturesObject) => {
-              if (
-                features &&
-                (features as any).melBands &&
-                cUpper.current &&
-                cLower.current &&
-                cUpperLowpass.current &&
-                cLowerLowpass.current
-              ) {
-                const cUpperC = cUpper.current;
-                const cLowerC = cLower.current;
-                const cUpperLowpassC = cUpperLowpass.current;
-                const cLowerLowpassC = cLowerLowpass.current;
+            const source = audioContext.createMediaElementSource(audioRef.current);
+            source.connect(audioContext.destination);
 
-                const ctxUpper = cUpperC.getContext('2d');
-                const ctxLower = cLowerC.getContext('2d');
-                const ctxUpperLowpass = cUpperLowpassC.getContext('2d');
-                const ctxLowerLowpass = cLowerLowpassC.getContext('2d');
+            meydaAnalyzerRef.current = Meyda.createMeydaAnalyzer({
+              audioContext,
+              source,
+              bufferSize: 512,
+              featureExtractors: ['melBands'],
 
-                if (ctxUpper && ctxLower && ctxUpperLowpass && ctxLowerLowpass) {
-                  ctxUpper.clearRect(0, 0, cUpperC.width, cUpperC.height);
-                  ctxLower.clearRect(0, 0, cLowerC.width, cLowerC.height);
-                  ctxUpperLowpass.clearRect(0, 0, cUpperLowpassC.width, cUpperLowpassC.height);
-                  ctxLowerLowpass.clearRect(0, 0, cLowerLowpassC.width, cLowerLowpassC.height);
+              callback: (features: MeydaFeaturesObject) => {
+                if (
+                  features &&
+                  (features as any).melBands &&
+                  cUpper.current &&
+                  cLower.current &&
+                  cUpperLowpass.current &&
+                  cLowerLowpass.current
+                ) {
+                  const cUpperC = cUpper.current;
+                  const cLowerC = cLower.current;
+                  const cUpperLowpassC = cUpperLowpass.current;
+                  const cLowerLowpassC = cLowerLowpass.current;
 
-                  const decayFactor = 0.97;
-                  // @ts-ignore
-                  const myMelBands: number[] = features.melBands;
+                  const ctxUpper = cUpperC.getContext('2d');
+                  const ctxLower = cLowerC.getContext('2d');
+                  const ctxUpperLowpass = cUpperLowpassC.getContext('2d');
+                  const ctxLowerLowpass = cLowerLowpassC.getContext('2d');
 
-                  if (myMelBandsLowPass.current.length === 0) {
-                    myMelBandsLowPass.current = myMelBands;
-                  } else {
-                    myMelBandsLowPass.current = myMelBandsLowPass.current.map(
-                      (prevValue, index) => {
-                        const currentValue = myMelBands[index];
-                        return Math.max(currentValue, prevValue * decayFactor);
-                      }
-                    );
+                  if (ctxUpper && ctxLower && ctxUpperLowpass && ctxLowerLowpass) {
+                    ctxUpper.clearRect(0, 0, cUpperC.width, cUpperC.height);
+                    ctxLower.clearRect(0, 0, cLowerC.width, cLowerC.height);
+                    ctxUpperLowpass.clearRect(0, 0, cUpperLowpassC.width, cUpperLowpassC.height);
+                    ctxLowerLowpass.clearRect(0, 0, cLowerLowpassC.width, cLowerLowpassC.height);
+
+                    const decayFactor = 0.97;
+                    // @ts-ignore
+                    const myMelBands: number[] = features.melBands;
+
+                    if (myMelBandsLowPass.current.length === 0) {
+                      myMelBandsLowPass.current = myMelBands;
+                    } else {
+                      myMelBandsLowPass.current = myMelBandsLowPass.current.map(
+                        (prevValue, index) => {
+                          const currentValue = myMelBands[index];
+                          return Math.max(currentValue, prevValue * decayFactor);
+                        }
+                      );
+                    }
+
+                    const bandWidth = cUpperC.width / myMelBands.length;
+
+                    const colorR: number = 59;
+                    const colorG: number = 130;
+                    const colorB: number = 246;
+
+                    const colorDivisor: number = 2;
+
+                    const coloRHalf: number = Math.floor(colorR / colorDivisor);
+                    const coloGHalf: number = Math.floor(colorG / colorDivisor);
+                    const coloBHalf: number = Math.floor(colorB / colorDivisor);
+
+                    const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`;
+                    const fillStyleBlueDark = `rgb(${coloRHalf}, ${coloGHalf}, ${coloBHalf})`;
+                    const fillStyleRed = fillStyleBlue;
+                    const fillStyleRedDark = fillStyleBlueDark;
+                    // const fillStyleRed = 'rgb(255, 0, 0)'
+                    // const fillStyleRedDark = 'rgb(200, 100, 0)'
+
+                    const powerDivisor: number = 30;
+                    // Draw mel bands
+                    myMelBands.forEach((melValue, index) => {
+                      const normalizedValue = melValue / powerDivisor;
+                      const height = normalizedValue * cUpperC.height;
+
+                      ctxUpper.fillStyle = fillStyleBlue;
+                      ctxLower.fillStyle = fillStyleRed;
+
+                      ctxUpperLowpass.fillStyle = fillStyleBlueDark;
+                      ctxLowerLowpass.fillStyle = fillStyleRedDark;
+
+                      const isLastIndex = index === myMelBands.length - 1;
+                      const bwMultiplier: number = 2.08;
+                      const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
+                      const startX: number = index * bandWidth;
+
+                      ctxUpper.fillRect(startX, cUpperC.height - height, bwCurr, height);
+                      ctxLower.fillRect(startX, 0, bwCurr, height);
+                    });
+                    // Draw mel bands
+                    myMelBandsLowPass.current.forEach((melValue, index) => {
+                      const normalizedValue = melValue / powerDivisor;
+                      const height = normalizedValue * cUpperC.height;
+
+                      ctxUpper.fillStyle = fillStyleBlue;
+                      ctxLower.fillStyle = fillStyleRed;
+
+                      ctxUpperLowpass.fillStyle = fillStyleBlueDark;
+                      ctxLowerLowpass.fillStyle = fillStyleRedDark;
+
+                      const isLastIndex = index === myMelBands.length - 1;
+                      const bwMultiplier: number = 2.08;
+                      const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
+                      const startX: number = index * bandWidth;
+
+                      ctxUpperLowpass.fillRect(
+                        startX,
+                        cUpperLowpassC.height - height,
+                        bwCurr,
+                        height
+                      );
+                      ctxLowerLowpass.fillRect(startX, 0, bwCurr, height);
+                    });
+
+                    const bandsToUseForPower = myMelBandsLowPass.current;
+
+                    highFreqPowerRef.current =
+                      bandsToUseForPower
+                        .slice(melBandsLowIndexes[0], melBandsLowIndexes[1])
+                        .reduce((sum, value) => sum + value, 0) /
+                      (melBandsLowIndexes[1] - melBandsLowIndexes[0]);
+                    lowFreqPowerRef.current =
+                      bandsToUseForPower
+                        .slice(melBandsHigIndexes[0], melBandsHigIndexes[1])
+                        .reduce((sum, value) => sum + value, 0) /
+                      (melBandsHigIndexes[1] - melBandsHigIndexes[0]);
                   }
-
-                  const bandWidth = cUpperC.width / myMelBands.length;
-
-                  const colorR: number = 59;
-                  const colorG: number = 130;
-                  const colorB: number = 246;
-
-                  const colorDivisor: number = 2;
-
-                  const coloRHalf: number = Math.floor(colorR / colorDivisor);
-                  const coloGHalf: number = Math.floor(colorG / colorDivisor);
-                  const coloBHalf: number = Math.floor(colorB / colorDivisor);
-
-                  const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`;
-                  const fillStyleBlueDark = `rgb(${coloRHalf}, ${coloGHalf}, ${coloBHalf})`;
-                  const fillStyleRed = fillStyleBlue;
-                  const fillStyleRedDark = fillStyleBlueDark;
-                  // const fillStyleRed = 'rgb(255, 0, 0)'
-                  // const fillStyleRedDark = 'rgb(200, 100, 0)'
-
-                  const powerDivisor: number = 30;
-                  // Draw mel bands
-                  myMelBands.forEach((melValue, index) => {
-                    const normalizedValue = melValue / powerDivisor;
-                    const height = normalizedValue * cUpperC.height;
-
-                    ctxUpper.fillStyle = fillStyleBlue;
-                    ctxLower.fillStyle = fillStyleRed;
-
-                    ctxUpperLowpass.fillStyle = fillStyleBlueDark;
-                    ctxLowerLowpass.fillStyle = fillStyleRedDark;
-
-                    const isLastIndex = index === myMelBands.length - 1;
-                    const bwMultiplier: number = 2.08;
-                    const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
-                    const startX: number = index * bandWidth;
-
-                    ctxUpper.fillRect(startX, cUpperC.height - height, bwCurr, height);
-                    ctxLower.fillRect(startX, 0, bwCurr, height);
-                  });
-                  // Draw mel bands
-                  myMelBandsLowPass.current.forEach((melValue, index) => {
-                    const normalizedValue = melValue / powerDivisor;
-                    const height = normalizedValue * cUpperC.height;
-
-                    ctxUpper.fillStyle = fillStyleBlue;
-                    ctxLower.fillStyle = fillStyleRed;
-
-                    ctxUpperLowpass.fillStyle = fillStyleBlueDark;
-                    ctxLowerLowpass.fillStyle = fillStyleRedDark;
-
-                    const isLastIndex = index === myMelBands.length - 1;
-                    const bwMultiplier: number = 2.08;
-                    const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
-                    const startX: number = index * bandWidth;
-
-                    ctxUpperLowpass.fillRect(
-                      startX,
-                      cUpperLowpassC.height - height,
-                      bwCurr,
-                      height
-                    );
-                    ctxLowerLowpass.fillRect(startX, 0, bwCurr, height);
-                  });
-
-                  const bandsToUseForPower = myMelBandsLowPass.current;
-
-                  highFreqPowerRef.current =
-                    bandsToUseForPower
-                      .slice(melBandsLowIndexes[0], melBandsLowIndexes[1])
-                      .reduce((sum, value) => sum + value, 0) /
-                    (melBandsLowIndexes[1] - melBandsLowIndexes[0]);
-                  lowFreqPowerRef.current =
-                    bandsToUseForPower
-                      .slice(melBandsHigIndexes[0], melBandsHigIndexes[1])
-                      .reduce((sum, value) => sum + value, 0) /
-                    (melBandsHigIndexes[1] - melBandsHigIndexes[0]);
                 }
-              }
-            },
-          });
+              },
+            });
 
-          meydaAnalyzerRef.current.start();
-        } catch (error) {
-          console.error('Error setting up audio:', error);
+            meydaAnalyzerRef.current.start();
+          } catch (error) {
+            console.error('Error setting up audio:', error);
+          }
         }
-      }
-    };
+      };
 
-    const audioElement = audioRef.current;
+      const audioElement = audioRef.current;
 
-    if (audioElement) {
-      audioElement.addEventListener('canplay', setupMeyda);
-    }
-
-    return () => {
-      meydaAnalyzerRef.current?.stop();
-      audioContextRef.current?.close();
       if (audioElement) {
-        audioElement.removeEventListener('canplay', setupMeyda);
+        audioElement.addEventListener('canplay', setupMeyda);
       }
-    };
-  }, [audioRef, audioStarted, highFreqPowerRef, lowFreqPowerRef]);
 
-  return (
-    <div className="flex w-[100%] flex-col items-center justify-center">
-      {!audioStarted ? (
-        <img
-          data-tooltip-content={'A Remix of a Bohemian Rhapsody by Niemo'}
-          className="pixel-art tooltip h-[130px] w-[130px] cursor-pointer transition-all"
-          src="/qwhite_hardpixels_transbg.png"
-          alt="Niemo Audio Logo"
-          onClick={startAudio}
-        />
-      ) : (
-        <>
-          <audio ref={audioRef} loop>
-            <source src="song.mp3" type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
+      return () => {
+        meydaAnalyzerRef.current?.stop();
+        audioContextRef.current?.close();
+        if (audioElement) {
+          audioElement.removeEventListener('canplay', setupMeyda);
+        }
+      };
+    }, [audioRef, audioStarted, highFreqPowerRef, lowFreqPowerRef]);
 
-          <div className="relative flex w-full flex-col items-center justify-center">
-            <canvas className="z-10 h-[200px] w-full" ref={cUpper}></canvas>
-            <canvas
-              className="absolute left-0 top-0 z-0 h-[200px] w-full"
-              ref={cUpperLowpass}
-            ></canvas>
+    return (
+      <div className="flex w-[100%] flex-col items-center justify-center">
+        {!audioStarted ? (
+          <img
+            data-tooltip-content={'A Remix of a Bohemian Rhapsody by Niemo'}
+            className="pixel-art tooltip h-[130px] w-[130px] cursor-pointer transition-all"
+            src="/qwhite_hardpixels_transbg.png"
+            alt="Niemo Audio Logo"
+            onClick={startAudio}
+          />
+        ) : (
+          <>
+            <audio ref={audioRef} loop>
+              <source src="song.mp3" type="audio/mp3" />
+              Your browser does not support the audio element.
+            </audio>
 
-            <button
-              type="button"
-              onMouseEnter={() => {
-                ReactGA.event({
-                  category: 'User',
-                  action: 'Hover Audio Button',
-                });
-                setHoverAudioButton(true);
-              }}
-              onMouseLeave={() => {
-                setHoverAudioButton(false);
-              }}
-              data-tooltip-content={'Audio spins the wd-40! 🎵'}
-              className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
-                play ? '' : ''
-              }`}
-              onClick={() => {
-                startAudio();
-                setPlay(!play);
-              }}
-            >
-              {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
-            </button>
-            <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
-            <canvas
-              className="absolute bottom-0 left-0 z-0 h-[200px] w-full"
-              ref={cLowerLowpass}
-            ></canvas>
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
+            <div className="relative flex w-full flex-col items-center justify-center">
+              <canvas className="z-10 h-[200px] w-full" ref={cUpper}></canvas>
+              <canvas
+                className="absolute left-0 top-0 z-0 h-[200px] w-full"
+                ref={cUpperLowpass}
+              ></canvas>
+
+              <button
+                type="button"
+                onMouseEnter={() => {
+                  ReactGA.event({
+                    category: 'User',
+                    action: 'Hover Audio Button',
+                  });
+                  setHoverAudioButton(true);
+                }}
+                onMouseLeave={() => {
+                  setHoverAudioButton(false);
+                }}
+                data-tooltip-content={'Audio spins the wd-40! 🎵'}
+                className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
+                  play ? '' : ''
+                }`}
+                onClick={() => {
+                  startAudio();
+                  setPlay(!play);
+                }}
+              >
+                {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
+              </button>
+              <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
+              <canvas
+                className="absolute bottom-0 left-0 z-0 h-[200px] w-full"
+                ref={cLowerLowpass}
+              ></canvas>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
+);
+
+AudioSpectrogram.displayName = 'AudioSpectrogram';
 
 export default AudioSpectrogram;

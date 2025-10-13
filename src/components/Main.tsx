@@ -6,7 +6,7 @@ import ContactSection from './ContactSection';
 import ReactGA from 'react-ga4';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Resume } from './Resume';
-import AudioSpectrogram from './Spectrogram';
+import AudioSpectrogram, { AudioSpectrogramRef } from './Spectrogram';
 import { Tooltip } from 'react-tooltip';
 // @ts-ignore
 import appleModelUrl from '../assets/w.glb';
@@ -15,8 +15,15 @@ import appleModelUrl from '../assets/w.glb';
 // // @ts-ignore
 // import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore';
-import { showKirbyGame, showSmashedGif, tooltipDelay, toolTipStyle } from '../data/myData';
+import {
+  showKirbyGame,
+  showSmashedGif,
+  tooltipDelay,
+  toolTipStyle,
+  usePolyhedron,
+} from '../data/myData';
 import PixelArtText from './PixelArtText';
+import FancyButton from './FancyButton';
 
 export const phoneNumber = '618-616-3380';
 export const email = 'niemeyer.eric@gmail.com';
@@ -48,6 +55,7 @@ const Main: React.FC = () => {
   const upperPowerAccumulatedRef = useRef<number>(0);
 
   const audioRef = useRef<HTMLAudioElement>(null);
+  const spectrogramRef = useRef<AudioSpectrogramRef>(null);
 
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
@@ -73,6 +81,14 @@ const Main: React.FC = () => {
   };
 
   const [showEmail, setShowEmail] = useState(false);
+  const [hasStarted, setHasStarted] = useState(isMobile || isThin);
+
+  const handleStartClick = () => {
+    setHasStarted(true);
+    if (spectrogramRef.current) {
+      spectrogramRef.current.startAudio();
+    }
+  };
 
   const copyToClipboard = useCallback(async () => {
     try {
@@ -156,37 +172,54 @@ const Main: React.FC = () => {
 
     const globalX: number = isThin ? 0 : -screenWidth / 30;
 
-    const loader = new GLTFLoader();
-    loader.load(
-      appleModelUrl,
-      (gltf) => {
-        const apple = gltf.scene;
+    if (usePolyhedron) {
+      // Create polyhedron (icosahedron)
+      const geometry = new THREE.IcosahedronGeometry(50, 0);
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        flatShading: true,
+        metalness: 0.5,
+        roughness: 0.5,
+      });
+      const polyhedron = new THREE.Mesh(geometry, material);
+      polyhedron.position.x = globalX;
+      scene.add(polyhedron);
+      backgroundShapeRef.current = polyhedron;
+    } else {
+      // Load GLB model (WD-40)
+      const loader = new GLTFLoader();
+      loader.load(
+        appleModelUrl,
+        (gltf) => {
+          const apple = gltf.scene;
 
-        // Apply scaling to match the size of the previous icosahedron
+          // Apply scaling to match the size of the previous icosahedron
 
-        const scale = 60;
+          const scale = 60;
 
-        apple.scale.set(scale, scale, scale);
-        // apple.scale.set(90, 90, 90)
+          apple.scale.set(scale, scale, scale);
+          // apple.scale.set(90, 90, 90)
 
-        // Set position
-        apple.position.x = globalX;
+          // Set position
+          apple.position.x = globalX;
 
-        // Add the model to the scene
-        scene.add(apple);
+          // Add the model to the scene
+          scene.add(apple);
 
-        // Store reference to the model for animations
-        backgroundShapeRef.current = apple;
-      }
-      // Progress and error handlers...
-    );
+          // Store reference to the model for animations
+          backgroundShapeRef.current = apple;
+        }
+        // Progress and error handlers...
+      );
+    }
 
-    camera.position.z = 150;
+    camera.position.z = usePolyhedron ? 250 : 150;
+    camera.position.x = usePolyhedron ? 30 : 0;
 
     const intensity = isThin ? 0.7 : 0.4;
 
-    const intensityLights = intensity;
-    const intensityAmbient = intensity;
+    const intensityLights = usePolyhedron ? intensity : intensity;
+    const intensityAmbient = usePolyhedron ? 0 : intensity;
 
     const pointLightRed = new THREE.PointLight(0xff0000);
     pointLightRed.position.set(500 + globalX, 1000, -5);
@@ -383,6 +416,15 @@ const Main: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden" ref={topElementRef}>
+      {/* Start Screen Overlay for Desktop */}
+      {!hasStarted && !isMobile && !isThin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900">
+          <div className="flex flex-col items-center">
+            <FancyButton text="START" onClick={handleStartClick} />
+          </div>
+        </div>
+      )}
+
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full"></div>
 
       {!isThin && (
@@ -426,6 +468,7 @@ const Main: React.FC = () => {
           <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
           <h1 className="mb-4 text-2xl">618-616-338O</h1>
           <AudioSpectrogram
+            ref={spectrogramRef}
             highFreqPowerRef={highFreqPowerRef}
             lowFreqPowerRef={lowFreqPowerRef}
             audioRef={audioRef}
