@@ -300,6 +300,32 @@ const iconReact = 'react.png';
 
 export const projects: Project[] = [
   {
+    dates: '2025 - Ongoing',
+    projectStatus: 'ok',
+    title: 'Attention Mechanism',
+    url: 'https://games.niemo.io/attention',
+    stack: ['React', 'Tailwind'],
+    type: 'Demonstration of Attention Mechanism in Transformer Models',
+    bullets: [
+      'Tokenizer',
+      'Add & Remove Tokens',
+      'Attention Mechanism',
+      'MLP Layer',
+      'Next Token Prediction',
+      '"Training" Mode',
+    ],
+    icon: iconReact,
+    image: 'attention.jpg',
+    gif: 'attention.gif',
+    video: 'attention.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Try',
+    description:
+      'This project is a demonstration of the attention mechanism in transformer models. Wiggle the values to see how they affect the output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
+  },
+  {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
     title: 'Smashed Bros',
@@ -442,32 +468,6 @@ export const projects: Project[] = [
     buttonStartText: 'Play',
     description:
       'A simple 3D driving simulation - in progress - heavy vibe coding with human cleanup tweaks.',
-  },
-  {
-    dates: '2025 - Ongoing',
-    projectStatus: 'ok',
-    title: 'Attention Mechanism',
-    url: 'https://games.niemo.io/attention',
-    stack: ['React', 'Tailwind'],
-    type: 'Demonstration of Attention Mechanism in Transformer Models',
-    bullets: [
-      'Tokenizer',
-      'Add & Remove Tokens',
-      'Attention Mechanism',
-      'MLP Layer',
-      'Next Token Prediction',
-      '"Training" Mode',
-    ],
-    icon: iconReact,
-    image: 'attention.jpg',
-    gif: 'attention.gif',
-    video: 'attention.mp4',
-    supportsDesktop: true,
-    supportsMobile: true,
-    hasSound: false,
-    buttonStartText: 'Play',
-    description:
-      'This project is a demonstration of the attention mechanism in transformer models. Wiggle the values to see how they affect the output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
   {
     dates: '2022',
