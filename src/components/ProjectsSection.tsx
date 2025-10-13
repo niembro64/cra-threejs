@@ -28,6 +28,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           />
         </div>
         <p className="pixel-font pt-4 text-2xl text-blue-300">{myDataShort}</p>
+        <div className="mt-8 flex flex-col items-center">
+          <p className="pixel-font animate-bounce text-xl text-blue-300">↓ scroll down here ↓</p>
+        </div>
       </div>
       <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
         {projects.map((project, index) => (
