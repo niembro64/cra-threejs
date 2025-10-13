@@ -32,8 +32,14 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
     const cLower = useRef<HTMLCanvasElement | null>(null);
     const cUpperLowpass = useRef<HTMLCanvasElement | null>(null);
     const cLowerLowpass = useRef<HTMLCanvasElement | null>(null);
+    const cUpperLowpass2 = useRef<HTMLCanvasElement | null>(null);
+    const cLowerLowpass2 = useRef<HTMLCanvasElement | null>(null);
+    const cUpperLowpass3 = useRef<HTMLCanvasElement | null>(null);
+    const cLowerLowpass3 = useRef<HTMLCanvasElement | null>(null);
 
     const myMelBandsLowPass = useRef<number[]>([]);
+    const myMelBandsLowPass2 = useRef<number[]>([]);
+    const myMelBandsLowPass3 = useRef<number[]>([]);
 
     const [hoverAudioButton, setHoverAudioButton] = useState(false);
 
@@ -84,35 +90,89 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                   cUpper.current &&
                   cLower.current &&
                   cUpperLowpass.current &&
-                  cLowerLowpass.current
+                  cLowerLowpass.current &&
+                  cUpperLowpass2.current &&
+                  cLowerLowpass2.current &&
+                  cUpperLowpass3.current &&
+                  cLowerLowpass3.current
                 ) {
                   const cUpperC = cUpper.current;
                   const cLowerC = cLower.current;
                   const cUpperLowpassC = cUpperLowpass.current;
                   const cLowerLowpassC = cLowerLowpass.current;
+                  const cUpperLowpass2C = cUpperLowpass2.current;
+                  const cLowerLowpass2C = cLowerLowpass2.current;
+                  const cUpperLowpass3C = cUpperLowpass3.current;
+                  const cLowerLowpass3C = cLowerLowpass3.current;
 
                   const ctxUpper = cUpperC.getContext('2d');
                   const ctxLower = cLowerC.getContext('2d');
                   const ctxUpperLowpass = cUpperLowpassC.getContext('2d');
                   const ctxLowerLowpass = cLowerLowpassC.getContext('2d');
+                  const ctxUpperLowpass2 = cUpperLowpass2C.getContext('2d');
+                  const ctxLowerLowpass2 = cLowerLowpass2C.getContext('2d');
+                  const ctxUpperLowpass3 = cUpperLowpass3C.getContext('2d');
+                  const ctxLowerLowpass3 = cLowerLowpass3C.getContext('2d');
 
-                  if (ctxUpper && ctxLower && ctxUpperLowpass && ctxLowerLowpass) {
+                  if (
+                    ctxUpper &&
+                    ctxLower &&
+                    ctxUpperLowpass &&
+                    ctxLowerLowpass &&
+                    ctxUpperLowpass2 &&
+                    ctxLowerLowpass2 &&
+                    ctxUpperLowpass3 &&
+                    ctxLowerLowpass3
+                  ) {
                     ctxUpper.clearRect(0, 0, cUpperC.width, cUpperC.height);
                     ctxLower.clearRect(0, 0, cLowerC.width, cLowerC.height);
                     ctxUpperLowpass.clearRect(0, 0, cUpperLowpassC.width, cUpperLowpassC.height);
                     ctxLowerLowpass.clearRect(0, 0, cLowerLowpassC.width, cLowerLowpassC.height);
+                    ctxUpperLowpass2.clearRect(0, 0, cUpperLowpass2C.width, cUpperLowpass2C.height);
+                    ctxLowerLowpass2.clearRect(0, 0, cLowerLowpass2C.width, cLowerLowpass2C.height);
+                    ctxUpperLowpass3.clearRect(0, 0, cUpperLowpass3C.width, cUpperLowpass3C.height);
+                    ctxLowerLowpass3.clearRect(0, 0, cLowerLowpass3C.width, cLowerLowpass3C.height);
 
-                    const decayFactor = 0.97;
+                    // Three decay levels with progressively slower decay
+                    const decayFactor1 = 0.97; // Fastest decay
+                    const decayFactor2 = 0.985; // Slower decay
+                    const decayFactor3 = 0.995; // Slowest decay
+
                     // @ts-ignore
                     const myMelBands: number[] = features.melBands;
 
+                    // First decay layer
                     if (myMelBandsLowPass.current.length === 0) {
                       myMelBandsLowPass.current = myMelBands;
                     } else {
                       myMelBandsLowPass.current = myMelBandsLowPass.current.map(
                         (prevValue, index) => {
                           const currentValue = myMelBands[index];
-                          return Math.max(currentValue, prevValue * decayFactor);
+                          return Math.max(currentValue, prevValue * decayFactor1);
+                        }
+                      );
+                    }
+
+                    // Second decay layer
+                    if (myMelBandsLowPass2.current.length === 0) {
+                      myMelBandsLowPass2.current = myMelBands;
+                    } else {
+                      myMelBandsLowPass2.current = myMelBandsLowPass2.current.map(
+                        (prevValue, index) => {
+                          const currentValue = myMelBands[index];
+                          return Math.max(currentValue, prevValue * decayFactor2);
+                        }
+                      );
+                    }
+
+                    // Third decay layer
+                    if (myMelBandsLowPass3.current.length === 0) {
+                      myMelBandsLowPass3.current = myMelBands;
+                    } else {
+                      myMelBandsLowPass3.current = myMelBandsLowPass3.current.map(
+                        (prevValue, index) => {
+                          const currentValue = myMelBands[index];
+                          return Math.max(currentValue, prevValue * decayFactor3);
                         }
                       );
                     }
@@ -123,30 +183,24 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                     const colorG: number = 130;
                     const colorB: number = 246;
 
-                    const colorDivisor: number = 2;
-
-                    const coloRHalf: number = Math.floor(colorR / colorDivisor);
-                    const coloGHalf: number = Math.floor(colorG / colorDivisor);
-                    const coloBHalf: number = Math.floor(colorB / colorDivisor);
-
+                    // All layers use the same blue, but with different transparencies
                     const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`;
-                    const fillStyleBlueDark = `rgba(${coloRHalf}, ${coloGHalf}, ${coloBHalf}, 0.5)`;
+                    const fillStyleBlueDecay1 = `rgba(${colorR}, ${colorG}, ${colorB}, 0.5)`; // 50% transparent
+                    const fillStyleBlueDecay2 = `rgba(${colorR}, ${colorG}, ${colorB}, 0.5)`; // 50% transparent
+                    const fillStyleBlueDecay3 = `rgba(${colorR}, ${colorG}, ${colorB}, 0.5)`; // 50% transparent
                     const fillStyleRed = fillStyleBlue;
-                    const fillStyleRedDark = `rgba(${coloRHalf}, ${coloGHalf}, ${coloBHalf}, 0.5)`;
-                    // const fillStyleRed = 'rgb(255, 0, 0)'
-                    // const fillStyleRedDark = 'rgb(200, 100, 0)'
+                    const fillStyleRedDecay1 = fillStyleBlueDecay1;
+                    const fillStyleRedDecay2 = fillStyleBlueDecay2;
+                    const fillStyleRedDecay3 = fillStyleBlueDecay3;
 
                     const powerDivisor: number = 30;
-                    // Draw mel bands
+                    // Draw instant mel bands (brightest, no decay)
                     myMelBands.forEach((melValue, index) => {
                       const normalizedValue = melValue / powerDivisor;
                       const height = normalizedValue * cUpperC.height;
 
                       ctxUpper.fillStyle = fillStyleBlue;
                       ctxLower.fillStyle = fillStyleRed;
-
-                      ctxUpperLowpass.fillStyle = fillStyleBlueDark;
-                      ctxLowerLowpass.fillStyle = fillStyleRedDark;
 
                       // Calculate bar width and position to prevent overlap
                       const startX: number = index * bandWidth;
@@ -155,16 +209,13 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                       ctxUpper.fillRect(startX, cUpperC.height - height, bwCurr, height);
                       ctxLower.fillRect(startX, 0, bwCurr, height);
                     });
-                    // Draw mel bands lowpass
+                    // Draw mel bands lowpass (first decay layer - fastest)
                     myMelBandsLowPass.current.forEach((melValue, index) => {
                       const normalizedValue = melValue / powerDivisor;
                       const height = normalizedValue * cUpperC.height;
 
-                      ctxUpper.fillStyle = fillStyleBlue;
-                      ctxLower.fillStyle = fillStyleRed;
-
-                      ctxUpperLowpass.fillStyle = fillStyleBlueDark;
-                      ctxLowerLowpass.fillStyle = fillStyleRedDark;
+                      ctxUpperLowpass.fillStyle = fillStyleBlueDecay1;
+                      ctxLowerLowpass.fillStyle = fillStyleRedDecay1;
 
                       // Calculate bar width and position to prevent overlap
                       const startX: number = index * bandWidth;
@@ -177,6 +228,48 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                         height
                       );
                       ctxLowerLowpass.fillRect(startX, 0, bwCurr, height);
+                    });
+
+                    // Draw mel bands lowpass2 (second decay layer - slower)
+                    myMelBandsLowPass2.current.forEach((melValue, index) => {
+                      const normalizedValue = melValue / powerDivisor;
+                      const height = normalizedValue * cUpperC.height;
+
+                      ctxUpperLowpass2.fillStyle = fillStyleBlueDecay2;
+                      ctxLowerLowpass2.fillStyle = fillStyleRedDecay2;
+
+                      // Calculate bar width and position to prevent overlap
+                      const startX: number = index * bandWidth;
+                      const bwCurr: number = bandWidth;
+
+                      ctxUpperLowpass2.fillRect(
+                        startX,
+                        cUpperLowpass2C.height - height,
+                        bwCurr,
+                        height
+                      );
+                      ctxLowerLowpass2.fillRect(startX, 0, bwCurr, height);
+                    });
+
+                    // Draw mel bands lowpass3 (third decay layer - slowest)
+                    myMelBandsLowPass3.current.forEach((melValue, index) => {
+                      const normalizedValue = melValue / powerDivisor;
+                      const height = normalizedValue * cUpperC.height;
+
+                      ctxUpperLowpass3.fillStyle = fillStyleBlueDecay3;
+                      ctxLowerLowpass3.fillStyle = fillStyleRedDecay3;
+
+                      // Calculate bar width and position to prevent overlap
+                      const startX: number = index * bandWidth;
+                      const bwCurr: number = bandWidth;
+
+                      ctxUpperLowpass3.fillRect(
+                        startX,
+                        cUpperLowpass3C.height - height,
+                        bwCurr,
+                        height
+                      );
+                      ctxLowerLowpass3.fillRect(startX, 0, bwCurr, height);
                     });
 
                     const bandsToUseForPower = myMelBandsLowPass.current;
@@ -236,10 +329,19 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
             </audio>
 
             <div className="relative flex w-full flex-col items-center justify-center">
-              <canvas className="z-10 h-[200px] w-full" ref={cUpper}></canvas>
+              {/* Upper spectrogram - layered from back to front */}
+              <canvas className="z-50 h-[200px] w-full" ref={cUpper}></canvas>
               <canvas
-                className="absolute left-0 top-0 z-0 h-[200px] w-full"
+                className="absolute left-0 top-0 z-40 h-[200px] w-full"
                 ref={cUpperLowpass}
+              ></canvas>
+              <canvas
+                className="absolute left-0 top-0 z-30 h-[200px] w-full"
+                ref={cUpperLowpass2}
+              ></canvas>
+              <canvas
+                className="absolute left-0 top-0 z-20 h-[200px] w-full"
+                ref={cUpperLowpass3}
               ></canvas>
 
               <button
@@ -265,10 +367,20 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
               >
                 {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
               </button>
-              <canvas className="z-10 h-[200px] w-full" ref={cLower}></canvas>
+
+              {/* Lower spectrogram - layered from back to front */}
+              <canvas className="z-50 h-[200px] w-full" ref={cLower}></canvas>
               <canvas
-                className="absolute bottom-0 left-0 z-0 h-[200px] w-full"
+                className="absolute bottom-0 left-0 z-40 h-[200px] w-full"
                 ref={cLowerLowpass}
+              ></canvas>
+              <canvas
+                className="absolute bottom-0 left-0 z-30 h-[200px] w-full"
+                ref={cLowerLowpass2}
+              ></canvas>
+              <canvas
+                className="absolute bottom-0 left-0 z-20 h-[200px] w-full"
+                ref={cLowerLowpass3}
               ></canvas>
             </div>
           </>
