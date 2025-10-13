@@ -256,7 +256,7 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                 onMouseLeave={() => {
                   setHoverAudioButton(false);
                 }}
-                data-tooltip-content={'Audio spins the wd-40! 🎵'}
+                data-tooltip-content={'Audio spins the 3D object! 🎵'}
                 className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
                   play ? '' : ''
                 }`}
