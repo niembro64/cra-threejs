@@ -321,7 +321,7 @@ export const projects: Project[] = [
 
   {
     dates: '2024 - Ongoing',
-    projectStatus: 'ok',
+    projectStatus: 'disabled',
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
@@ -337,7 +337,7 @@ export const projects: Project[] = [
     image: 'seouldat.jpg',
     gif: 'seouldat.gif',
     video: 'seouldat.mp4',
-    supportsDesktop: false,
+    supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
     buttonStartText: 'Play',
@@ -445,7 +445,7 @@ export const projects: Project[] = [
   },
   {
     dates: '2025 - Ongoing',
-    projectStatus: 'disabled',
+    projectStatus: 'ok',
     title: 'Attention Mechanism',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
