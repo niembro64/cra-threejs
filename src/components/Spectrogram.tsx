@@ -148,15 +148,14 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                       ctxUpperLowpass.fillStyle = fillStyleBlueDark;
                       ctxLowerLowpass.fillStyle = fillStyleRedDark;
 
-                      const isLastIndex = index === myMelBands.length - 1;
-                      const bwMultiplier: number = 2.08;
-                      const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
+                      // Calculate bar width and position to prevent overlap
                       const startX: number = index * bandWidth;
+                      const bwCurr: number = bandWidth;
 
                       ctxUpper.fillRect(startX, cUpperC.height - height, bwCurr, height);
                       ctxLower.fillRect(startX, 0, bwCurr, height);
                     });
-                    // Draw mel bands
+                    // Draw mel bands lowpass
                     myMelBandsLowPass.current.forEach((melValue, index) => {
                       const normalizedValue = melValue / powerDivisor;
                       const height = normalizedValue * cUpperC.height;
@@ -167,10 +166,9 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                       ctxUpperLowpass.fillStyle = fillStyleBlueDark;
                       ctxLowerLowpass.fillStyle = fillStyleRedDark;
 
-                      const isLastIndex = index === myMelBands.length - 1;
-                      const bwMultiplier: number = 2.08;
-                      const bwCurr: number = bandWidth * (isLastIndex ? 1 : bwMultiplier);
+                      // Calculate bar width and position to prevent overlap
                       const startX: number = index * bandWidth;
+                      const bwCurr: number = bandWidth;
 
                       ctxUpperLowpass.fillRect(
                         startX,
