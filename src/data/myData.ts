@@ -599,8 +599,10 @@ export const projects: Project[] = [
   },
 ];
 
+export const myDataShort = 'Original Fullstack Apps, Games, and AI for Mobile & Desktop';
+
 export const EricResumeDescription =
-  'Engineer specializing in web & mobile apps, neural network training, and game design - emphasizing defensive programming, strict type safety, and elegant solutions.';
+  'Engineer specializing in full-stack web & mobile apps, neural network training & deployment, and game building - emphasizing defensive programming, strict type safety, and elegant implementation.';
 
 export const socialMedia: SocialMedia[] = [
   {

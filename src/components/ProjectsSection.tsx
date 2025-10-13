@@ -4,7 +4,7 @@ import React from 'react';
 import { ProjectStore } from '../store/ProjectStore';
 import { isThin } from './Main';
 import ProjectDemo from './ProjectDemo';
-import { projects, showEmojis } from '../data/myData';
+import { myDataShort, projects, showEmojis } from '../data/myData';
 import PixelArtText from './PixelArtText';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,9 +27,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
             text=" PROJECTS "
           />
         </div>
-        <p className="pixel-font pt-4 text-2xl text-blue-300">
-          Original Fullstack Apps &amp; Games for Mobile &amp; Desktop
-        </p>
+        <p className="pixel-font pt-4 text-2xl text-blue-300">{myDataShort}</p>
       </div>
       <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
         {projects.map((project, index) => (
