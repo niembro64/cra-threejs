@@ -130,9 +130,9 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                     const coloBHalf: number = Math.floor(colorB / colorDivisor);
 
                     const fillStyleBlue = `rgb(${colorR}, ${colorG}, ${colorB})`;
-                    const fillStyleBlueDark = `rgb(${coloRHalf}, ${coloGHalf}, ${coloBHalf})`;
+                    const fillStyleBlueDark = `rgba(${coloRHalf}, ${coloGHalf}, ${coloBHalf}, 0.5)`;
                     const fillStyleRed = fillStyleBlue;
-                    const fillStyleRedDark = fillStyleBlueDark;
+                    const fillStyleRedDark = `rgba(${coloRHalf}, ${coloGHalf}, ${coloBHalf}, 0.5)`;
                     // const fillStyleRed = 'rgb(255, 0, 0)'
                     // const fillStyleRedDark = 'rgb(200, 100, 0)'
 
