@@ -330,7 +330,7 @@ export const projects: Project[] = [
     projectStatus: 'ok',
     title: 'Pathfinding Visualizer',
     url: 'https://niemo.io/pathfinding',
-    stack: ['React', 'TypeScript'],
+    stack: ['Vue', 'TypeScript'],
     type: 'Algorithm Visualization',
     bullets: [
       'BFS Algorithm',
