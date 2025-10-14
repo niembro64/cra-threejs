@@ -328,7 +328,7 @@ export const projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Pathfinding Visualizer',
+    title: 'Pathfinding',
     url: 'https://games.niemo.io/pathfinding',
     stack: ['Vue', 'TypeScript'],
     type: 'Algorithm Visualization',
