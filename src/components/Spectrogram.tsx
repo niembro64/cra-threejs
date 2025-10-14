@@ -341,7 +341,7 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
         {!audioStarted ? (
           <img
             data-tooltip-content={'A Remix of a Bohemian Rhapsody by Niemo'}
-            className="pixel-art tooltip h-[130px] w-[130px] cursor-pointer transition-all"
+            className="pixel-art tooltip h-[130px] w-[130px] cursor-pointer opacity-20 transition-all hover:opacity-100"
             src="/qwhite_hardpixels_transbg.png"
             alt="Niemo Audio Logo"
             onClick={startAudio}

@@ -81,10 +81,8 @@ const Main: React.FC = () => {
   };
 
   const [showEmail, setShowEmail] = useState(false);
-  const [hasStarted, setHasStarted] = useState(isMobile || isThin);
 
-  const handleStartClick = () => {
-    setHasStarted(true);
+  const handleAudioStart = () => {
     if (spectrogramRef.current) {
       spectrogramRef.current.startAudio();
     }
@@ -417,15 +415,6 @@ const Main: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden" ref={topElementRef}>
-      {/* Start Screen Overlay for Desktop */}
-      {!hasStarted && !isMobile && !isThin && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900">
-          <div className="flex flex-col items-center">
-            <FancyButton text="START" onClick={handleStartClick} />
-          </div>
-        </div>
-      )}
-
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full"></div>
 
       {!isThin && (
@@ -448,7 +437,7 @@ const Main: React.FC = () => {
               />
             )}
           </div>
-          <div className="absolute bottom-2 left-0 w-full">
+          <div className="absolute bottom-2 left-0 flex w-full justify-center">
             <AudioSpectrogram
               ref={spectrogramRef}
               highFreqPowerRef={highFreqPowerRef}
