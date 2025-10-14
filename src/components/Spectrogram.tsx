@@ -389,9 +389,10 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                   setHoverAudioButton(false);
                 }}
                 data-tooltip-content={'Audio spins the 3D object! 🎵'}
+                // bottom right border radius only
                 className={`tooltip flex w-full cursor-pointer flex-row items-center justify-center bg-blue-500 px-4 py-2 text-2xl font-bold text-white active:text-white/50 ${
                   play ? '' : ''
-                }`}
+                } rounded-br-3xl`}
                 onClick={() => {
                   startAudio();
                   setPlay(!play);
