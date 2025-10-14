@@ -329,7 +329,7 @@ export const projects: Project[] = [
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
     title: 'Pathfinding Visualizer',
-    url: 'https://niemo.io/pathfinding',
+    url: 'https://games.niemo.io/pathfinding',
     stack: ['Vue', 'TypeScript'],
     type: 'Algorithm Visualization',
     bullets: [
@@ -473,7 +473,7 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - should the creatures cooperate or defect? Best experience is on desktop for now.",
+      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
   },
   {
     dates: '2025 - Ongoing',
