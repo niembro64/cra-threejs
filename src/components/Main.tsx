@@ -436,44 +436,26 @@ const Main: React.FC = () => {
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isThin && (
-        <div className="fixed left-0 z-10 flex w-[30%] flex-col items-center px-4">
-          <div className="h-40" />
-          <h1 className="pixel-font mb-4 text-6xl font-bold uppercase">Eric Niemeyer</h1>
-
-          <button
-            type="button"
-            className={`active:bg-blue-500/ w-full rounded-full px-4 py-2 text-2xl uppercase transition-all transition-none hover:bg-blue-500 active:bg-blue-500/50 ${showEmail ? 'font-bold' : ''}`}
-            onMouseEnter={() => {
-              ReactGA.event({
-                category: 'User',
-                action: 'Hover Email',
-                label: email,
-              });
-              setShowEmail(true);
-            }}
-            onMouseLeave={() => setShowEmail(false)}
-            onClick={copyToClipboard}
-          >
-            {showEmail ? 'Copy Email' : email}
-          </button>
-          {showSmashedGif ? (
-            <img
-              data-tooltip-content={'His 2017 gif spawned a 2022 game'}
-              className="pixel-art tooltip mb-4 w-[70%] object-cover"
-              src="/smashed_small.gif"
-              alt="gif"
+        <div className="fixed left-0 z-10 h-screen w-[30%] px-4">
+          <div className="mt-8 flex flex-col items-center">
+            <h1 className="pixel-font text-center text-6xl font-bold uppercase">Eric Niemeyer</h1>
+            {showSmashedGif && (
+              <img
+                data-tooltip-content={'His 2017 gif spawned a 2022 game'}
+                className="pixel-art tooltip mt-4 w-[70%] object-cover"
+                src="/smashed_small.gif"
+                alt="gif"
+              />
+            )}
+          </div>
+          <div className="absolute bottom-2 left-0 w-full">
+            <AudioSpectrogram
+              ref={spectrogramRef}
+              highFreqPowerRef={highFreqPowerRef}
+              lowFreqPowerRef={lowFreqPowerRef}
+              audioRef={audioRef}
             />
-          ) : (
-            <div className="mb-20" />
-          )}
-          <h1 className="text-2xl uppercase">Stamford, Connecticut</h1>
-          <h1 className="mb-4 text-2xl">618-616-338O</h1>
-          <AudioSpectrogram
-            ref={spectrogramRef}
-            highFreqPowerRef={highFreqPowerRef}
-            lowFreqPowerRef={lowFreqPowerRef}
-            audioRef={audioRef}
-          />
+          </div>
         </div>
       )}
 

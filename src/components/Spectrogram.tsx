@@ -400,24 +400,24 @@ const AudioSpectrogram = forwardRef<AudioSpectrogramRef, AudioSpectrogramProps>(
                 {hoverAudioButton ? (play ? 'PAUSE' : 'PLAY') : 'NIEMO REMIX'}
               </button>
 
-              {/* Lower spectrogram - layered from back to front */}
+              {/* Lower spectrogram - layered from back to front - HIDDEN */}
               <canvas
-                className="z-50 h-[200px] w-full"
+                className="z-50 hidden h-[50px] w-full"
                 ref={cLower}
                 style={{ background: 'transparent' }}
               ></canvas>
               <canvas
-                className="absolute bottom-0 left-0 z-40 h-[200px] w-full"
+                className="absolute bottom-0 left-0 z-40 hidden h-[50px] w-full"
                 ref={cLowerLowpass}
                 style={{ background: 'transparent' }}
               ></canvas>
               <canvas
-                className="absolute bottom-0 left-0 z-30 h-[200px] w-full"
+                className="absolute bottom-0 left-0 z-30 hidden h-[50px] w-full"
                 ref={cLowerLowpass2}
                 style={{ background: 'transparent' }}
               ></canvas>
               <canvas
-                className="absolute bottom-0 left-0 z-20 h-[200px] w-full"
+                className="absolute bottom-0 left-0 z-20 hidden h-[50px] w-full"
                 ref={cLowerLowpass3}
                 style={{ background: 'transparent' }}
               ></canvas>
