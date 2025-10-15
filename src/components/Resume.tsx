@@ -68,8 +68,13 @@ export const Resume: React.FC<ResumeProps> = () => {
 
       <ProjectsSection />
 
-      <div className="h-40" />
-      <Services isThin={isThin} />
+      {false && (
+        <>
+          <div className="h-40" />
+
+          <Services isThin={isThin} />
+        </>
+      )}
 
       {isThin && (
         <>
