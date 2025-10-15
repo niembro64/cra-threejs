@@ -4,7 +4,7 @@ import React from 'react';
 import { ProjectStore } from '../store/ProjectStore';
 import { isThin } from './Main';
 import ProjectDemo from './ProjectDemo';
-import { myDataShort, coding_projects, showEmojis } from '../data/myData';
+import { myDataShort, coding_projects, art_projects, showEmojis } from '../data/myData';
 import PixelArtText from './PixelArtText';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -32,22 +32,64 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           <p className="pixel-font animate-bounce text-xl text-blue-300">↓ scroll down here ↓</p>
         </div>
       </div>
-      <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
-        {coding_projects.map((project, index) => (
-          <div key={project.title + index} className="transition-all duration-300">
-            <ProjectDemo
-              key={index}
-              index={index}
-              project={project}
-              isMuted={isMutedArray[index]}
-              setIsMuted={() => {
-                const nextState: boolean = !isMutedArray[index];
-                setIsMuted(index, nextState);
-              }}
-              hasTouchedAMuteButton={hasTouchedAudioButton}
+      {/* Web Projects Section */}
+      <div className="mb-24">
+        <div className="mb-12 text-center">
+          <div className="mb-4">
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-web-projects"
+              pixelColor="#fff"
+              text=" PROJECTS "
             />
           </div>
-        ))}
+        </div>
+        <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
+          {coding_projects.map((project, index) => (
+            <div key={project.title + index} className="transition-all duration-300">
+              <ProjectDemo
+                key={index}
+                index={index}
+                project={project}
+                isMuted={isMutedArray[index]}
+                setIsMuted={() => {
+                  const nextState: boolean = !isMutedArray[index];
+                  setIsMuted(index, nextState);
+                }}
+                hasTouchedAMuteButton={hasTouchedAudioButton}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Art Projects Section */}
+      <div className="mb-24">
+        <div className="mb-12 text-center">
+          <div className="mb-4">
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-art-projects"
+              pixelColor="#fff"
+              text=" ART PROJECTS "
+            />
+          </div>
+        </div>
+        <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
+          {art_projects.map((project, index) => (
+            <div key={project.title + index} className="transition-all duration-300">
+              <ProjectDemo
+                key={index}
+                index={coding_projects.length + index}
+                project={project}
+                isMuted={isMutedArray[coding_projects.length + index]}
+                setIsMuted={() => {
+                  const nextState: boolean = !isMutedArray[coding_projects.length + index];
+                  setIsMuted(coding_projects.length + index, nextState);
+                }}
+                hasTouchedAMuteButton={hasTouchedAudioButton}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

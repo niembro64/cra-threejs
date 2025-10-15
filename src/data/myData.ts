@@ -463,7 +463,7 @@ export const coding_projects: Project[] = [
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
-    bullets: ['Vibe Coding', 'Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
+    bullets: ['Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
     icon: iconPhaser,
     image: 'axelrod.jpg',
     gif: 'axelrod.gif',
@@ -482,7 +482,7 @@ export const coding_projects: Project[] = [
     url: 'https://games.niemo.io/drive',
     stack: ['ThreeJS', 'React'],
     type: '3D Driving Simulation',
-    bullets: ['Keyboard Controls', 'Vibe Coding'],
+    bullets: ['Keyboard Controls'],
     icon: iconThreeJs,
     image: 'drive.jpg',
     gif: 'drive.gif',
@@ -491,8 +491,7 @@ export const coding_projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     buttonStartText: 'Play',
-    description:
-      'A simple 3D driving simulation - in progress - heavy vibe coding with human cleanup tweaks.',
+    description: 'A simple 3D driving simulation - in progress.',
   },
   {
     dates: '2022',
@@ -580,11 +579,11 @@ export const coding_projects: Project[] = [
   },
 ];
 
-const art_projects: Project[] = [
+export const art_projects: Project[] = [
   {
     dates: '2002 - Ongoing',
     projectStatus: 'ok',
-    title: 'Music',
+    title: 'Audio',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio'],
     type: 'Original Music',
@@ -606,7 +605,7 @@ const art_projects: Project[] = [
   {
     dates: '2013 - 2021',
     projectStatus: 'ok',
-    title: 'Videos',
+    title: 'Video',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['Adobe Premiere', 'After Effects', 'Photoshop'],
     type: 'Visual Effects',
