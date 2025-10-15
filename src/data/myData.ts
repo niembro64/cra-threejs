@@ -298,7 +298,7 @@ const iconPhaser = 'phaser-icon.png';
 const iconThreeJs = 'threejs.png';
 const iconReact = 'react.png';
 
-export const projects: Project[] = [
+export const coding_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
@@ -578,6 +578,9 @@ export const projects: Project[] = [
     hasSound: false,
     buttonStartText: 'View',
   },
+];
+
+const art_projects: Project[] = [
   {
     dates: '2002 - Ongoing',
     projectStatus: 'ok',

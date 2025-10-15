@@ -4,7 +4,7 @@ import React from 'react';
 import { ProjectStore } from '../store/ProjectStore';
 import { isThin } from './Main';
 import ProjectDemo from './ProjectDemo';
-import { myDataShort, projects, showEmojis } from '../data/myData';
+import { myDataShort, coding_projects, showEmojis } from '../data/myData';
 import PixelArtText from './PixelArtText';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -33,7 +33,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         </div>
       </div>
       <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
-        {projects.map((project, index) => (
+        {coding_projects.map((project, index) => (
           <div key={project.title + index} className="transition-all duration-300">
             <ProjectDemo
               key={index}

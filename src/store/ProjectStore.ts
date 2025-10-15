@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga4';
 import { create } from 'zustand';
-import { ConnectionQualityType, projects } from '../data/myData';
+import { ConnectionQualityType, coding_projects } from '../data/myData';
 interface ProjectStoreProps {
   play: boolean;
   setPlay: (m: boolean) => void;
@@ -15,13 +15,13 @@ interface ProjectStoreProps {
 
 export const ProjectStore = create<ProjectStoreProps>((set) => ({
   hasTouchedAudioButton: false,
-  mutedArray: [...projects.map(() => true)],
+  mutedArray: [...coding_projects.map(() => true)],
   play: true,
   connectionQuality: null,
   activeProjectIndex: null,
   setPlay: (newPlayState: boolean) => {
     set({ hasTouchedAudioButton: true });
-    set({ mutedArray: [...projects.map(() => true)] });
+    set({ mutedArray: [...coding_projects.map(() => true)] });
     set({ play: newPlayState });
     ReactGA.event({
       category: 'User',
@@ -33,7 +33,7 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
     set({ hasTouchedAudioButton: true });
     set({ play: false });
     set(() => {
-      const m: boolean[] = [...projects.map((p) => true)];
+      const m: boolean[] = [...coding_projects.map((p) => true)];
       m[index] = isMuted;
 
       ReactGA.event({
@@ -61,7 +61,7 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
       ReactGA.event({
         category: 'User',
         action: 'Project Expanded',
-        label: projects[index].title,
+        label: coding_projects[index].title,
       });
     }
   },
