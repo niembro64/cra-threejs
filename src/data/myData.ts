@@ -298,11 +298,11 @@ const iconPhaser = 'phaser-icon.png';
 const iconThreeJs = 'threejs.png';
 const iconReact = 'react.png';
 
-export const coding_projects: Project[] = [
+export const compsci_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Attention Mechanism',
+    title: 'ATTN MECH',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
     type: 'Demonstration of Attention Mechanism in Transformer Models',
@@ -350,6 +350,28 @@ export const coding_projects: Project[] = [
     description:
       'Visualize popular pathfinding algorithms in action. Watch as BFS, DFS, Greedy, Dijkstra, and A* navigate through obstacles to find the optimal path.',
   },
+  {
+    dates: '2025 - Ongoing',
+    projectStatus: 'ok',
+    title: 'Axelrod',
+    url: 'https://games.niemo.io/axelrod',
+    stack: ['Phaser', 'React'],
+    type: 'Game Theory Simulation',
+    bullets: ['Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
+    icon: iconPhaser,
+    image: 'axelrod.jpg',
+    gif: 'axelrod.gif',
+    video: 'axelrod.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Run',
+    description:
+      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
+  },
+];
+
+export const videogame_projects: Project[] = [
   {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
@@ -459,25 +481,6 @@ export const coding_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Axelrod',
-    url: 'https://games.niemo.io/axelrod',
-    stack: ['Phaser', 'React'],
-    type: 'Game Theory Simulation',
-    bullets: ['Choose Strategies', 'Set the Rules', 'Watch the Tournament'],
-    icon: iconPhaser,
-    image: 'axelrod.jpg',
-    gif: 'axelrod.gif',
-    video: 'axelrod.mp4',
-    supportsDesktop: true,
-    supportsMobile: true,
-    hasSound: false,
-    buttonStartText: 'Run',
-    description:
-      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
-  },
-  {
-    dates: '2025 - Ongoing',
-    projectStatus: 'ok',
     title: 'Drive',
     url: 'https://games.niemo.io/drive',
     stack: ['ThreeJS', 'React'],
@@ -493,43 +496,9 @@ export const coding_projects: Project[] = [
     buttonStartText: 'Play',
     description: 'A simple 3D driving simulation - in progress.',
   },
-  {
-    dates: '2022',
-    projectStatus: 'ok',
-    title: 'Design',
-    url: 'https://design.niemo.io',
-    stack: ['HTML', 'CSS', 'JavaScript'],
-    type: 'Web Styling Fun',
-    bullets: ['Vanilla Web Development', 'All Original Content'],
-    icon: 'html_css_js.png',
-    image: 'design.jpg',
-    gif: 'design.gif',
-    video: 'design.mp4',
-    supportsDesktop: true,
-    supportsMobile: true,
-    hasSound: true,
-    buttonStartText: 'View',
-    description:
-      'A collection of experimental nicknacks and playthings made practicing web basics.',
-  },
-  {
-    dates: '2022',
-    projectStatus: 'disabled',
-    title: 'Pirates',
-    url: 'https://pirates.niemo.io',
-    stack: ['React', 'Express', 'MongoDB'],
-    description: 'A simple, clean, pirate management system, with CRUD database operations.',
-    bullets: ['Create, Read, Update, Delete', 'Front & Backend Validation'],
-    icon: iconReact,
-    image: 'pirates.jpg',
-    gif: 'pirates.gif',
-    video: 'pirates.mp4',
-    supportsDesktop: true,
-    type: 'JavaScript Fullstack',
-    supportsMobile: true,
-    hasSound: false,
-    buttonStartText: 'View',
-  },
+];
+
+export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
@@ -577,6 +546,50 @@ export const coding_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'View',
   },
+  {
+    dates: '2022',
+    projectStatus: 'disabled',
+    title: 'Pirates',
+    url: 'https://pirates.niemo.io',
+    stack: ['React', 'Express', 'MongoDB'],
+    description: 'A simple, clean, pirate management system, with CRUD database operations.',
+    bullets: ['Create, Read, Update, Delete', 'Front & Backend Validation'],
+    icon: iconReact,
+    image: 'pirates.jpg',
+    gif: 'pirates.gif',
+    video: 'pirates.mp4',
+    supportsDesktop: true,
+    type: 'JavaScript Fullstack',
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'View',
+  },
+  {
+    dates: '2022',
+    projectStatus: 'ok',
+    title: 'Design',
+    url: 'https://design.niemo.io',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    type: 'Web Styling Fun',
+    bullets: ['Vanilla Web Development', 'All Original Content'],
+    icon: 'html_css_js.png',
+    image: 'design.jpg',
+    gif: 'design.gif',
+    video: 'design.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: true,
+    buttonStartText: 'View',
+    description:
+      'A collection of experimental nicknacks and playthings made practicing web basics.',
+  },
+];
+
+// Backward compatibility - combined array
+export const coding_projects: Project[] = [
+  ...compsci_projects,
+  ...videogame_projects,
+  ...fullstack_projects,
 ];
 
 export const art_projects: Project[] = [
