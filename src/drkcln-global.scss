@@ -37,16 +37,21 @@
   color: #00ff00;
 }
 
-/* Default selection styles for other pages - intense neon yellow */
+/* Default selection styles for other pages - blue to match theme */
 ::selection {
-  background: #ffff00; /* Fully opaque, vibrant yellow */
-  color: #000000; /* Black text for maximum contrast */
-  text-shadow: 0 0 3px #ffff00; /* Glow effect */
+  background: #90cdf4; /* Blue-300 to match site theme */
+  color: #1e293b; /* Dark slate for good contrast */
 }
 
 /* Focus styles */
-:focus {
+.drkcln-page :focus {
   outline: 2px solid #00ff00;
+  outline-offset: 2px;
+}
+
+/* Default focus styles for other pages - blue to match theme */
+:focus {
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
