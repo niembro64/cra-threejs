@@ -825,6 +825,17 @@ const Foreclosure = () => {
       } else if (sortConfig.key === 'committeeEmail') {
         aValue = (a.auctionNotice?.committeeEmail || '').toLowerCase();
         bValue = (b.auctionNotice?.committeeEmail || '').toLowerCase();
+      } else if (sortConfig.key === 'distance') {
+        const cityA = a.auctionNotice?.town || a.city || '';
+        const cityB = b.auctionNotice?.town || b.city || '';
+        const distanceA = Number(
+          citiesByDistance.find((c) => c.city === cityA)?.distanceMiles ?? 999
+        );
+        const distanceB = Number(
+          citiesByDistance.find((c) => c.city === cityB)?.distanceMiles ?? 999
+        );
+        aValue = distanceA;
+        bValue = distanceB;
       }
 
       // Compare the values
@@ -908,6 +919,7 @@ const Foreclosure = () => {
     const headers = [
       'Status',
       'City',
+      'Distance',
       'Deposit',
       'Address',
       'Committee Name',
@@ -924,6 +936,9 @@ const Foreclosure = () => {
         : 'Active';
 
       const town = posting.auctionNotice?.town || posting.city || '';
+
+      const distance =
+        citiesByDistance.find((c) => c.city === town)?.distanceMiles?.toString() || 'N/A';
 
       const deposit = numberToDollarAmountString(posting.auctionNotice?.dollarAmountNumber || 0);
 
@@ -958,6 +973,7 @@ const Foreclosure = () => {
       return [
         escapeCsvField(status),
         escapeCsvField(town),
+        escapeCsvField(distance),
         escapeCsvField(deposit),
         escapeCsvField(address),
         escapeCsvField(committeeName),
@@ -1382,6 +1398,20 @@ Lela
                     </th>
                     <th
                       scope="col"
+                      onClick={() => requestSort('distance')}
+                      className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
+                        sortConfig.key === 'distance'
+                          ? 'bg-blue-800/20 text-blue-200 hover:bg-blue-800/30'
+                          : 'text-gray-300 hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="group flex items-center">
+                        <span>Distance</span>
+                        {getSortIndicator('distance')}
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
                       onClick={() => requestSort('dollarAmountFound')}
                       className={`cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-150 ${
                         sortConfig.key === 'city'
@@ -1596,6 +1626,17 @@ Lela
                         {/* City */}
                         <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-white">
                           {posting.auctionNotice?.town || posting.city || 'N/A'}
+                        </td>
+
+                        {/* Distance */}
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                          {(() => {
+                            const cityName = posting.auctionNotice?.town || posting.city || '';
+                            const distance = citiesByDistance.find(
+                              (c) => c.city === cityName
+                            )?.distanceMiles;
+                            return distance !== undefined ? `${distance} mi` : 'N/A';
+                          })()}
                         </td>
 
                         {/* Dollar Amount */}
