@@ -915,6 +915,19 @@ const Foreclosure = () => {
       return;
     }
 
+    // Sort postings by distance in ascending order
+    const sortedPostings = [...loadedPostings].sort((a, b) => {
+      const cityA = a.auctionNotice?.town || a.city || '';
+      const cityB = b.auctionNotice?.town || b.city || '';
+      const distanceA = Number(
+        citiesByDistance.find((c) => c.city === cityA)?.distanceMiles ?? 999
+      );
+      const distanceB = Number(
+        citiesByDistance.find((c) => c.city === cityB)?.distanceMiles ?? 999
+      );
+      return distanceA - distanceB;
+    });
+
     // Define CSV headers
     const headers = [
       'Status',
@@ -930,7 +943,7 @@ const Foreclosure = () => {
     ];
 
     // Convert postings to CSV rows
-    const rows = loadedPostings.map((posting) => {
+    const rows = sortedPostings.map((posting) => {
       const status = posting.auctionNotice?.status?.toLowerCase().includes('cancel')
         ? 'Cancelled'
         : 'Active';
