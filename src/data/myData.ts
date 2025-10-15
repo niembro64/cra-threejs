@@ -642,7 +642,7 @@ export const art_projects: Project[] = [
 export const myDataShort = 'Original Fullstack Apps, Games, and AI for Mobile & Desktop';
 
 export const EricResumeDescription =
-  'Engineer specializing in full-stack web & mobile apps, neural network training & deployment, and game building - emphasizing defensive programming, strict type safety, and elegant implementation.';
+  'Engineer specializing in full-stack web & mobile apps, neural network training & deployment, and game building - emphasizing defensive programming, strict type safety, and elegant solutions.';
 
 export const socialMedia: SocialMedia[] = [
   {
