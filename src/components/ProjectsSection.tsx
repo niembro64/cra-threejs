@@ -56,6 +56,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               text=" SCIENCE "
             />
           </div>
+          <p className="pixel-font pt-4 text-2xl text-blue-300">
+            Interactive Algorithms & Simulations
+          </p>
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {compsci_projects.map((project, index) => (
@@ -92,6 +95,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               text=" GAMES "
             />
           </div>
+          <p className="pixel-font pt-4 text-2xl text-blue-300">
+            Browser & Mobile Games with Original Art & Sound
+          </p>
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {videogame_projects.map((project, index) => {
@@ -131,6 +137,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               text=" WEB "
             />
           </div>
+          <p className="pixel-font pt-4 text-2xl text-blue-300">
+            Complete Web Apps with Database Integration
+          </p>
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {fullstack_projects.map((project, index) => {
@@ -164,6 +173,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
               text=" ART "
             />
           </div>
+          <p className="pixel-font pt-4 text-2xl text-blue-300">Original Music & Visuals</p>
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {art_projects.map((project, index) => {
