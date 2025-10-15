@@ -1030,7 +1030,7 @@ const Foreclosure = () => {
 
     const emailText: string = `EMAIL ADDRESS: ${selectedAuction.committeeEmail}
     
-Subject: Inquiry about property at ${address}, ${town}
+Subject: Inquiry about property at ${address}
 
 
 Hi ${capitalizeEachWord(committeeName)},
