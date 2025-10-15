@@ -32,7 +32,7 @@ export const jobs: Job[] = [
     company: 'Sentien',
     title: 'Head of Engineering',
     location: 'Stamford, Connecticut',
-    dates: '2025 - Present',
+    dates: '2024 - Present',
     details: [
       {
         title: 'Architecting and implementing in-house AI systems to detect and prevent fraud.',
@@ -45,7 +45,7 @@ export const jobs: Job[] = [
     company: 'Venturetec',
     title: 'Lead Software Engineer',
     location: 'Stamford, Connecticut',
-    dates: '2022 - 2025',
+    dates: '2022 - 2024',
     details: [
       {
         title: 'Diagrammed, and implemented complex fullstack web + mobile apps.',
