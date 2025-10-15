@@ -302,7 +302,7 @@ export const compsci_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'ATTN MECH',
+    title: 'ATTENTION',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
     type: 'Demonstration of Attention Mechanism in Transformer Models',
