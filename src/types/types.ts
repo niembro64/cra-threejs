@@ -53,7 +53,7 @@ export interface MediaAnalyzeResponse {
 // Services Types
 export interface Service {
   title: string;
-  description: string;
+  description: string[];
   status: 'available' | 'in progress' | 'maintenance';
   url: string;
 }

@@ -13,10 +13,19 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
     //     url: 'https://niemo.io/media-convert',
     //   },
     {
-      title: 'CT Foreclosures',
-      description: 'Simple interface for property status monitoring.',
+      title: 'Connecticut Foreclosures',
+      description: [
+        'Multi-step scraper for Connecticut home foreclosure information',
+        'Requires a special CORS Chrome Extension',
+      ],
       status: 'available',
       url: 'https://niemo.io/foreclosure',
+    },
+    {
+      title: 'Westchester Flying Disc Incorporated FYI',
+      description: ['Demo proposal functionality for WUDI league website'],
+      status: 'available',
+      url: 'https://wudi.fyi/',
     },
     // {
     //   title: 'CT Foreclosures Backend',
@@ -80,9 +89,7 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
             text=" SERVICES "
           />
         </div>
-        <p className="pixel-font pt-4 text-2xl text-blue-300">
-          Simple tools for common tasks that are annoying to do
-        </p>
+        <p className="pixel-font pt-4 text-2xl text-blue-300">Tools for common or annoying tasks</p>
       </div>
 
       <div className="grid grid-cols-1 gap-16">
@@ -100,10 +107,14 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
               </span>
             </div>
 
-            <div className="px-4 py-6">
-              <div className="mb-6 text-center text-xl text-blue-100">{service.description}</div>
+            <div className="px-4 py-0">
+              {service.description.map((desc, descIndex) => (
+                <div key={descIndex} className="mb-0 text-center text-xl text-blue-100">
+                  {desc}
+                </div>
+              ))}
 
-              <div className="text-center">
+              <div className="text-center mt-4">
                 <FancyButton text="TRY IT" onClick={() => handleServiceClick(service.url)} />
               </div>
             </div>
