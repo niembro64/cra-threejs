@@ -396,7 +396,8 @@ export const videogame_projects: Project[] = [
     dates: '2024 - Ongoing',
     projectStatus: 'ok',
     title: 'Seouldat',
-    url: 'http://34.230.11.31:1444/',
+    url: 'https://seouldat.niemo.io',
+    // url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
     type: 'Online Multiplayer Arena Shooter',
     bullets: [
