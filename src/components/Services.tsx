@@ -13,9 +13,9 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
     //     url: 'https://niemo.io/media-convert',
     //   },
     {
-      title: 'Connecticut Foreclosures',
+      title: 'Connecticut Foreclosures Scraper',
       description: [
-        'Multi-step scraper for Connecticut home foreclosure information',
+        'Live Connecticut home foreclosure info',
         'Requires a special CORS Chrome Extension',
       ],
       status: 'available',
