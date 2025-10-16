@@ -549,7 +549,7 @@ export const fullstack_projects: Project[] = [
   },
   {
     dates: '2022',
-    projectStatus: 'disabled',
+    projectStatus: 'ok',
     title: 'Pirates',
     url: 'https://pirates.niemo.io',
     stack: ['React', 'Express', 'MongoDB'],
