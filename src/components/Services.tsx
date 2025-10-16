@@ -6,13 +6,6 @@ import { ProjectStatus } from '../data/myData';
 
 const Services: React.FC<ServicesProps> = ({ isThin }) => {
   const services: Service[] = [
-    //   {
-    //     title: 'Media Converter',
-    //     description:
-    //       'Convert between common video, audio, and image formats. No account needed, files processed locally.',
-    //     status: 'ok',
-    //     url: 'https://niemo.io/media-convert',
-    //   },
     {
       title: 'Connecticut Foreclosures Scraper',
       description: [
@@ -32,26 +25,45 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
       desktop: true,
       mobile: true,
     },
+    {
+      title: 'Media Converter',
+      description: [
+        'Convert between common video, audio, and image formats',
+        'No account needed, files processed locally.',
+      ],
+      projectStatus: 'disabled',
+      url: 'https://niemo.io/media-convert',
+      desktop: true,
+      mobile: true,
+    },
     // {
     //   title: 'CT Foreclosures Backend',
     //   description: 'Simple interface for property status monitoring. Using Backend (Slower)',
     //   status: 'ok',
     //   url: 'https://niemo.io/foreclosures_new',
     // },
-    //   {
-    //     title: 'Audio Editor',
-    //     description:
-    //       'Basic audio editing for podcasts and recordings. Trim, split, and adjust volume without installing software.',
-    //     status: 'disabled',
-    //     url: 'https://niemo.io/audio-edit',
-    //   },
-    //   {
-    //     title: 'YouTube Downloader',
-    //     description:
-    //       'Download YouTube videos as MP4 or extract audio as MP3. Simple paste-and-download interface.',
-    //     status: 'disabled',
-    //     url: 'https://niemo.io/youtube-download',
-    //   },
+    {
+      title: 'Audio Editor',
+      description: [
+        'Basic audio editing for podcasts and recordings.',
+        'Trim, split, and adjust volume without installing software.',
+      ],
+      projectStatus: 'disabled',
+      url: 'https://niemo.io/audio-edit',
+      desktop: true,
+      mobile: false,
+    },
+    {
+      title: 'YouTube Downloader',
+      description: [
+        'Download YouTube videos as MP4 or extract audio as MP3.',
+        'Simple paste-and-download interface.',
+      ],
+      projectStatus: 'disabled',
+      url: 'https://niemo.io/youtube-download',
+      desktop: true,
+      mobile: false,
+    },
   ];
 
   const getStatusColor = (status: ProjectStatus): string => {
@@ -129,7 +141,8 @@ const Services: React.FC<ServicesProps> = ({ isThin }) => {
                 ))}
 
                 <div className="text-center mt-4">
-                  {(isThin && service.mobile) || (!isThin && service.desktop) ? (
+                  {service.projectStatus === 'ok' &&
+                  ((isThin && service.mobile) || (!isThin && service.desktop)) ? (
                     <FancyButton
                       disabled={service.projectStatus !== 'ok'}
                       text="TRY IT"
