@@ -1,5 +1,7 @@
 // Global type definitions for the application
 
+import { ProjectStatus } from '../data/myData';
+
 // Media Converter Types - removed MediaFile as it's redundant with native File type
 
 export interface FileInfo {
@@ -54,8 +56,10 @@ export interface MediaAnalyzeResponse {
 export interface Service {
   title: string;
   description: string[];
-  status: 'available' | 'in progress' | 'maintenance';
+  projectStatus: ProjectStatus;
   url: string;
+  desktop: boolean;
+  mobile: boolean;
 }
 
 export interface ServicesProps {
