@@ -321,7 +321,7 @@ export const compsci_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Try',
+    buttonStartText: 'Run',
     description:
       'Wiggle the "weights" to see how they affect the downstream output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
@@ -346,7 +346,7 @@ export const compsci_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Try',
+    buttonStartText: 'Run',
     description:
       'Visualize popular pathfinding algorithms in action. Watch as BFS, DFS, Greedy, Dijkstra, and A* navigate through obstacles to find the optimal path.',
   },
@@ -394,7 +394,7 @@ export const videogame_projects: Project[] = [
 
   {
     dates: '2024 - Ongoing',
-    projectStatus: 'disabled',
+    projectStatus: 'ok',
     title: 'Seouldat',
     url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
