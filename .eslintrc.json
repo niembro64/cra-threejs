@@ -20,7 +20,8 @@
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off", // Allow @ts-ignore and similar comments
     "@typescript-eslint/no-inferrable-types": "off", // Disable trivial type warning
-    "react/no-unescaped-entities": "off" // Allow unescaped characters in JSX
+    "react/no-unescaped-entities": "off", // Allow unescaped characters in JSX
+    "prettier/prettier": "off" // Disable prettier formatting errors
   },
   "parserOptions": {
     "ecmaFeatures": {

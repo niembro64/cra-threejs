@@ -453,7 +453,9 @@ const Foreclosure = () => {
       setCityList(cities);
       console.log(`Fetched ${cities.length} cities`);
     } catch (err) {
-      setError('Failed to fetch city list. Do you have the CORS extension on?');
+      setError(
+        'Failed to fetch city list. Do you have the CORS extension on? You can find it here, or you can find it yourself: https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf'
+      );
       console.error('Error fetching city list:', err);
     } finally {
       setFetchingCities(false);
@@ -1143,8 +1145,82 @@ Lela
 
         {error && (
           <div className="mb-6 rounded-lg bg-red-900 p-4 text-red-200">
-            <h3 className="mb-1 font-semibold">Error</h3>
-            <p>{error}</p>
+            <h3 className="mb-2 text-lg font-semibold">Error</h3>
+            <p className="mb-3">{error}</p>
+
+            {/* Show CORS extension help if error mentions CORS */}
+            {error.toLowerCase().includes('cors') && (
+              <div className="mt-4 rounded-lg border border-red-700 bg-red-950 p-4">
+                <h4 className="mb-3 font-semibold text-red-100">
+                  How to Install the CORS Extension:
+                </h4>
+
+                <ol className="mb-4 space-y-2 text-sm">
+                  <li className="flex items-start">
+                    <span className="mr-2 font-bold">1.</span>
+                    <span>
+                      Click this link to open the Chrome Web Store:{' '}
+                      <a
+                        href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-blue-300 underline hover:text-blue-200"
+                      >
+                        Allow CORS Extension
+                      </a>
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 font-bold">2.</span>
+                    <span>Click "Add to Chrome" to install the extension</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 font-bold">3.</span>
+                    <span>
+                      After installation, click the extension icon in your browser toolbar and toggle
+                      it ON
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 font-bold">4.</span>
+                    <span>Refresh this page and try again</span>
+                  </li>
+                </ol>
+
+                <div className="space-y-3">
+                  <div>
+                    <p className="mb-2 text-xs font-semibold text-red-100">
+                      Step 1: Find the extension in the Chrome Web Store
+                    </p>
+                    <img
+                      src="/cors_extension_01.png"
+                      alt="CORS extension in Chrome Web Store"
+                      className="rounded border border-red-700"
+                    />
+                  </div>
+
+                  <div>
+                    <p className="mb-2 text-xs font-semibold text-red-100">
+                      Step 2: Toggle the extension ON (you'll see it in your toolbar)
+                    </p>
+                    <img
+                      src="/cors_extension_02.png"
+                      alt="CORS extension toggle in browser toolbar"
+                      className="rounded border border-red-700"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded bg-yellow-900/30 p-3 text-xs text-yellow-200">
+                  <p className="font-semibold">Note:</p>
+                  <p>
+                    This extension is needed because the foreclosure website doesn't allow direct
+                    access from other websites. The CORS extension temporarily removes this
+                    restriction for your browser only.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
