@@ -739,7 +739,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Device-Based',
-        details: ['React Native Game Engine', 'N64 ROM Hacking', 'Raspberry Pi', 'Unity'],
+        details: ['React Native Game Engine', 'N64 ROM Hacking', 'Raspberry Pi', 'Unity GE'],
       },
     ],
   },
