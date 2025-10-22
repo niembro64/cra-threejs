@@ -356,20 +356,21 @@ export const compsci_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Raytracing',
-    url: 'https://games.niemo.io/raytracing',
+    title: 'Raycast',
+    url: 'https://games.niemo.io/raycast',
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
-    bullets: ['Choose Parameters', 'Watch the Simulation'],
+    bullets: ['Choose Parameters', 'Watch the Simulation', 'Naive vs Raycast Comparison'],
     icon: iconPhaser,
-    image: 'raytracing.jpg',
-    gif: 'raytracing.gif',
-    video: 'raytracing.mp4',
+    image: 'raycast.jpg',
+    gif: 'raycast.gif',
+    video: 'raycast.mp4',
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'Run',
-    description: 'A simple raytracing movement simulation.',
+    description:
+      'A simple physics simulation using raycasting to detect and respond to collisions. How many walls should the ray collide with?',
   },
 ];
 
