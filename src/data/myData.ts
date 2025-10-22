@@ -26,8 +26,6 @@ export interface Education {
 
 export const jobs: Job[] = [
   {
-    // start_year: '2025',
-    // end_year: null,
     image: 'sentien.png',
     company: 'Sentien',
     title: 'Head of Engineering',
@@ -266,7 +264,7 @@ export type ProjectStatus = 'ok' | 'disabled' | 'hide';
 
 export interface Project {
   projectStatus: ProjectStatus;
-  dates: string;
+  dates: string | null;
   title: string;
   url: string;
   stack: string[] | null;
@@ -291,7 +289,7 @@ const iconReact = 'react.png';
 
 export const compsci_projects: Project[] = [
   {
-    dates: '2025 - Ongoing',
+    dates: null,
     projectStatus: 'ok',
     title: 'ATTENTION',
     url: 'https://games.niemo.io/attention',
@@ -317,7 +315,7 @@ export const compsci_projects: Project[] = [
       'Wiggle the "weights" to see how they affect the downstream output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
   {
-    dates: '2025 - Ongoing',
+    dates: null,
     projectStatus: 'ok',
     title: 'Pathfinding',
     url: 'https://games.niemo.io/pathfinding',
@@ -336,7 +334,7 @@ export const compsci_projects: Project[] = [
       'Visualize popular pathfinding algorithms in action. Watch as BFS, DFS, Greedy, Dijkstra, and A* navigate through obstacles to find the optimal path.',
   },
   {
-    dates: '2025 - Ongoing',
+    dates: null,
     projectStatus: 'ok',
     title: 'Axelrod',
     url: 'https://games.niemo.io/axelrod',
@@ -355,7 +353,7 @@ export const compsci_projects: Project[] = [
       "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
   },
   {
-    dates: '2025 - Ongoing',
+    dates: null,
     projectStatus: 'ok',
     title: 'Raycasting',
     url: 'https://games.niemo.io/raycast',
@@ -483,7 +481,7 @@ export const videogame_projects: Project[] = [
     description: 'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
-    dates: '2025 - Ongoing',
+    dates: null,
     projectStatus: 'ok',
     title: 'Drive',
     url: 'https://games.niemo.io/drive',
