@@ -735,7 +735,7 @@ export const skills: SkillCategory[] = [
     skills: [
       {
         title: 'Browser-Based',
-        details: ['Phaser JS', 'Three JS', 'Canvas'],
+        details: ['Phaser JS', 'Three JS', 'HTML Canvas'],
       },
       {
         title: 'Device-Based',
