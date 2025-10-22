@@ -33,7 +33,7 @@ export const jobs: Job[] = [
     dates: '2024 - Present',
     details: [
       {
-        title: 'Architecting and implementing in-house AI systems to detect and prevent fraud.',
+        title: 'Architecting, training, and implementing in-house AI systems to detect and prevent fraud',
         lines: [],
       },
     ],
@@ -46,7 +46,7 @@ export const jobs: Job[] = [
     dates: '2022 - 2024',
     details: [
       {
-        title: 'Diagrammed, and implemented complex fullstack web + mobile apps.',
+        title: 'Diagrammed, and implemented complex fullstack web + mobile apps',
         lines: [
           'Vue',
           'Angular',
@@ -61,8 +61,9 @@ export const jobs: Job[] = [
           'SQL',
           "API's",
           'Websockets',
-          'S3',
           'AWS',
+          'S3',
+          'EC2',
           'JavaScript',
           'TypeScript',
           'Python',
@@ -74,21 +75,23 @@ export const jobs: Job[] = [
         ],
       },
       {
-        title: 'Designed, trained, and deployed various AI model architectures.',
+        title: 'Designed, trained, and deployed various AI model architectures',
         lines: [
           'Pytorch',
           'BrainJS',
-          'Feedforward',
-          'RNNs',
-          'Transformers',
-          'Text Classifiers',
-          'Audio Classifiers',
+          'MLP',
+          'RNN',
+          'CNN',
+          'Transformer',
+          'Tokenizer',
+          'Text Classifier',
+          'Audio Classifier',
           'Game AI',
         ],
       },
       {
-        title: 'Built games for adults and kids, mobile & desktop.',
-        lines: ['Phaser Game Engine', 'React Native Game Engine', 'Material Drag & Drop'],
+        title: 'Built games for adults and kids, mobile & desktop',
+        lines: ['PhaserJS GE', 'RN Game Engine', 'Material D&D'],
       },
     ],
   },
@@ -100,7 +103,7 @@ export const jobs: Job[] = [
     dates: '2020 - 2022',
     details: [
       {
-        title: 'Configured industrial software systems for fortune 500 companies.',
+        title: 'Developed machine execution systems for fortune 500 companies',
         lines: ['3M', 'Lucid Motors', 'Cooper Tires', 'Continental Tires'],
       },
     ],
@@ -113,8 +116,8 @@ export const jobs: Job[] = [
     dates: '2018 - 2020',
     details: [
       {
-        title: 'Configured industrial software systems (machine execution systems).',
-        lines: ['Maple Leaf Foods', 'Green Leaf Foods'],
+        title: 'Developed machine execution systems',
+        lines: ['Maple-L Foods', 'Green-L Foods'],
       },
     ],
   },
@@ -126,7 +129,7 @@ export const jobs: Job[] = [
     dates: '2013 - 2017',
     details: [
       {
-        title: 'Taught STEM-based ESL courses to gifted high-school students.',
+        title: 'Taught STEM-based ESL courses to gifted high-school students',
         lines: [],
       },
       {
@@ -143,7 +146,7 @@ export const jobs: Job[] = [
     dates: '2008 - 2013',
     details: [
       {
-        title: 'Designed and delivered english courses in 25 cities.',
+        title: 'Designed and delivered english courses in 25 cities',
         lines: [],
       },
     ],
@@ -349,8 +352,7 @@ export const compsci_projects: Project[] = [
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'Run',
-    description:
-      "An ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
+    description: "An ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
   },
   {
     dates: null,

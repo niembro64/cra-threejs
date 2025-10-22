@@ -28,13 +28,7 @@ interface ProjectDemoProps {
   hasTouchedAMuteButton: boolean;
 }
 
-const ProjectDemo: React.FC<ProjectDemoProps> = ({
-  project,
-  index,
-  setIsMuted,
-  isMuted,
-  hasTouchedAMuteButton,
-}) => {
+const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index, setIsMuted, isMuted, hasTouchedAMuteButton }) => {
   const { connectionQuality, activeProjectIndex, setActiveProjectIndex } = ProjectStore();
 
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -139,18 +133,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               />
             )}
             {isGif(mediaSrc) && (
-              <img
-                className="w-full rounded-3xl object-cover"
-                src={mediaBasePath + mediaSrc}
-                alt="gif"
-              />
+              <img className="w-full rounded-3xl object-cover" src={mediaBasePath + mediaSrc} alt="gif" />
             )}
             {isImage(mediaSrc) && (
-              <img
-                className="w-full rounded-3xl object-cover"
-                src={mediaBasePath + mediaSrc}
-                alt="static fallback"
-              />
+              <img className="w-full rounded-3xl object-cover" src={mediaBasePath + mediaSrc} alt="static fallback" />
             )}
           </>
         )}
@@ -166,18 +152,10 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               />
             )}
             {isGif(mediaSrc) && (
-              <img
-                className="w-[70%] rounded-3xl object-cover"
-                src={mediaBasePath + mediaSrc}
-                alt="gif"
-              />
+              <img className="w-[70%] rounded-3xl object-cover" src={mediaBasePath + mediaSrc} alt="gif" />
             )}
             {isImage(mediaSrc) && (
-              <img
-                className="w-[70%] rounded-3xl object-cover"
-                src={mediaBasePath + mediaSrc}
-                alt="static fallback"
-              />
+              <img className="w-[70%] rounded-3xl object-cover" src={mediaBasePath + mediaSrc} alt="static fallback" />
             )}
           </>
         )}
@@ -207,14 +185,12 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
         {/* Click to expand indicator */}
         {!isActive && (
           <div className="absolute inset-0 flex items-center justify-center rounded-3xl bg-black/40 opacity-0 transition-opacity duration-300 hover:opacity-100">
-            <div className="rounded-full bg-white/10 px-4 py-2 text-white backdrop-blur-sm">
-              Click to view details
-            </div>
+            <div className="rounded-full bg-white/10 px-4 py-2 text-white backdrop-blur-sm">Click to view details</div>
           </div>
         )}
       </div>
 
-      {isActive && <p className={`mt-4 text-center text-xl text-white/50`}>{project.dates}</p>}
+      {isActive && project.dates && <p className={`mt-4 text-center text-xl text-white`}>{project.dates}</p>}
 
       {/* Project Details - Only shown when active */}
       <div
@@ -230,9 +206,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
               </div>
             )}
 
-            {project.description && (
-              <div className="mb-4 text-xl text-blue-100">{project.description}</div>
-            )}
+            {project.description && <div className="mb-4 text-xl text-blue-100">{project.description}</div>}
 
             {project.stack && (
               <>
@@ -266,9 +240,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({
                 </div>
               )}
 
-              {project.description && (
-                <div className="mb-4 text-xl text-white">{project.description}</div>
-              )}
+              {project.description && <div className="mb-4 text-xl text-white">{project.description}</div>}
             </div>
             <div className="mt-4 md:mt-0 md:w-1/2 md:pl-4">
               {project.stack && (
