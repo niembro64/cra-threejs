@@ -92,7 +92,7 @@ export const jobs: Job[] = [
         ],
       },
       {
-        title: 'Built games for adults and kids, mobile & desktop',
+        title: 'Built video games for mobile & desktop',
         lines: ['PhaserJS GE', 'RN Game Engine', 'Material D&D'],
       },
     ],
