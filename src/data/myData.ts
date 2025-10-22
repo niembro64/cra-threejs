@@ -86,6 +86,8 @@ export const jobs: Job[] = [
           'Tokenizer',
           'Text Classifier',
           'Audio Classifier',
+          'Image Classifier',
+          'Video Classifier',
           'Game AI',
         ],
       },
