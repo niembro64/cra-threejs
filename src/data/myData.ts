@@ -350,7 +350,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
+      "An ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
   },
   {
     dates: null,
