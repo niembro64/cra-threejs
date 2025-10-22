@@ -799,7 +799,7 @@ export interface DeskEnvironment {
 }
 
 const conference_call_equipment = 'High-end conference call equipment';
-const laptop_docking_station = 'Docking Station for Macbook Pro & Windows Laptops';
+const laptop_docking_station = 'Docking Station for Macbook Pro M1 & Windows 11 Laptops';
 
 export const workEnvironments: DeskEnvironment[] = [
   {
