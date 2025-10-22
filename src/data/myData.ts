@@ -179,21 +179,11 @@ export const educations: Education[] = [
       },
       {
         title: 'Minor in Computer Science',
-        lines: [
-          'Data Structures & Algorithms',
-          'Assembly, C, C++, Java',
-          'x86, RISC-V, LR35902',
-          'OS Design',
-        ],
+        lines: ['Data Structures & Algorithms', 'Assembly, C, C++, Java', 'x86, RISC-V, LR35902', 'OS Design'],
       },
       {
         title: 'Minor in Mathematics',
-        lines: [
-          'Calculus III',
-          'Differential Equations',
-          'Discrete Mathematics',
-          'Engineering Statistics',
-        ],
+        lines: ['Calculus III', 'Differential Equations', 'Discrete Mathematics', 'Engineering Statistics'],
       },
     ],
   },
@@ -332,13 +322,7 @@ export const compsci_projects: Project[] = [
     url: 'https://games.niemo.io/pathfinding',
     stack: ['Vue', 'TypeScript', 'Tailwind'],
     type: 'Algorithm Visualization',
-    bullets: [
-      'BFS Algorithm',
-      'DFS Algorithm',
-      'Greedy Algorithm',
-      'Dijkstra Algorithm',
-      'A* Algorithm',
-    ],
+    bullets: ['BFS Algorithm', 'DFS Algorithm', 'Greedy Algorithm', 'Dijkstra Algorithm', 'A* Algorithm'],
     icon: 'vue.svg',
     image: 'pathfinding.jpg',
     gif: 'pathfinding.gif',
@@ -368,6 +352,24 @@ export const compsci_projects: Project[] = [
     buttonStartText: 'Run',
     description:
       "A unique 2D ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
+  },
+  {
+    dates: '2025 - Ongoing',
+    projectStatus: 'ok',
+    title: 'Raytracing',
+    url: 'https://games.niemo.io/raytracing',
+    stack: ['HTML5 Canvas', 'JavaScript'],
+    type: 'Physics Simulation',
+    bullets: ['Choose Parameters', 'Watch the Simulation'],
+    icon: iconPhaser,
+    image: 'raytracing.jpg',
+    gif: 'raytracing.gif',
+    video: 'raytracing.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Run',
+    description: 'A simple raytracing movement simulation.',
   },
 ];
 
@@ -476,8 +478,7 @@ export const videogame_projects: Project[] = [
     supportsMobile: true,
     hasSound: false,
     buttonStartText: 'Play',
-    description:
-      'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
+    description: 'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
     dates: '2025 - Ongoing',
@@ -507,11 +508,7 @@ export const fullstack_projects: Project[] = [
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     type: 'C# Fullstack',
-    bullets: [
-      'Create, Read, Update, Delete',
-      'EF Core LINQ ORM (SQL)',
-      'Front & Backend Validation',
-    ],
+    bullets: ['Create, Read, Update, Delete', 'EF Core LINQ ORM (SQL)', 'Front & Backend Validation'],
     icon: 'csharp.png',
     image: 'events.jpg',
     gif: 'events.gif',
@@ -529,12 +526,7 @@ export const fullstack_projects: Project[] = [
     title: 'Shows',
     url: 'https://shows.niemo.io',
     stack: ['Python', 'Flask', 'MySQL'],
-    bullets: [
-      'Create, Read, Update, Delete',
-      'Form Validation',
-      'Bcrypt Password Hashing',
-      'Direct SQL Query',
-    ],
+    bullets: ['Create, Read, Update, Delete', 'Form Validation', 'Bcrypt Password Hashing', 'Direct SQL Query'],
     description:
       'A simple, clean, TV show management system with user authentication, validation, and CRUD database operations.',
     icon: 'python.png',
@@ -581,17 +573,12 @@ export const fullstack_projects: Project[] = [
     supportsMobile: true,
     hasSound: true,
     buttonStartText: 'View',
-    description:
-      'A collection of experimental nicknacks and playthings made practicing web basics.',
+    description: 'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
 ];
 
 // Backward compatibility - combined array
-export const coding_projects: Project[] = [
-  ...compsci_projects,
-  ...videogame_projects,
-  ...fullstack_projects,
-];
+export const coding_projects: Project[] = [...compsci_projects, ...videogame_projects, ...fullstack_projects];
 
 export const art_projects: Project[] = [
   {
@@ -733,12 +720,7 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Applications',
-        details: [
-          'Text Classification',
-          'Audio Classification',
-          'Image Classification',
-          'Bot AI for Games',
-        ],
+        details: ['Text Classification', 'Audio Classification', 'Image Classification', 'Bot AI for Games'],
       },
     ],
   },
