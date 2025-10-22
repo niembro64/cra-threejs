@@ -369,7 +369,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'A physics simulation using raycasting to detect and respond to collisions. How many collisions with the walls means the ball is outside?',
+      'A physics simulation using raycasting to detect and respond to collisions. How many collisions with the walls means a ball is outside?',
   },
 ];
 
