@@ -233,6 +233,7 @@ export const educations: Education[] = [
   },
 ];
 
+import { html } from 'cheerio/dist/commonjs/static';
 import { CSSProperties } from 'react';
 
 export const tooltipDelay = 500;
@@ -361,7 +362,7 @@ export const compsci_projects: Project[] = [
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
     bullets: ['Choose Parameters', 'Watch the Simulation', 'Naive vs Raycast Solutions'],
-    icon: iconPhaser,
+    icon: 'html_css_js.png',
     image: 'raycast.jpg',
     gif: 'raycast.gif',
     video: 'raycast.mp4',
