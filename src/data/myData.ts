@@ -360,7 +360,7 @@ export const compsci_projects: Project[] = [
     url: 'https://games.niemo.io/raycast',
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
-    bullets: ['Choose Parameters', 'Watch the Simulation', 'Naive vs Raycast Comparison'],
+    bullets: ['Choose Parameters', 'Watch the Simulation', 'Naive vs Raycast Solutions'],
     icon: iconPhaser,
     image: 'raycast.jpg',
     gif: 'raycast.gif',
@@ -370,7 +370,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'A physics simulation using raycasting to detect and respond to collisions. How many walls should the ray collide with?',
+      'A physics simulation using raycasting to detect and respond to collisions. How many collisions with the walls means the ball is outside?',
   },
 ];
 
