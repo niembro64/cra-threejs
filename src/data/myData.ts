@@ -356,7 +356,7 @@ export const compsci_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Raycast',
+    title: 'Raycasting',
     url: 'https://games.niemo.io/raycast',
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
@@ -370,7 +370,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'A simple physics simulation using raycasting to detect and respond to collisions. How many walls should the ray collide with?',
+      'A physics simulation using raycasting to detect and respond to collisions. How many walls should the ray collide with?',
   },
 ];
 
