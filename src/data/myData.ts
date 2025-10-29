@@ -294,7 +294,7 @@ const iconReact = 'react.png';
 
 export const compsci_projects: Project[] = [
   {
-    dates: '2025',
+    dates: '',
     projectStatus: 'ok',
     title: 'GENETIC RACING',
     url: 'https://games.niemo.io/genetic-racing',
