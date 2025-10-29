@@ -315,7 +315,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'Watch neural networks of different architectures learn to drive through genetic evolution, zero backpropagation. Starting with random weights, cars use distance sensors as inputs to control steering. The best performer from each generation passes its brain to the next, gradually improving over time.',
+      'Watch neural networks of different architectures learn to drive through genetic evolution, no backprop. Starting with random weights, cars use distance sensors as inputs to control steering. The best performer passes its brain to the next generation, where it is mutated and evolved.',
   },
   {
     dates: null,
