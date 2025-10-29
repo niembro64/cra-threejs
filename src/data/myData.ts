@@ -298,15 +298,13 @@ export const compsci_projects: Project[] = [
     projectStatus: 'ok',
     title: 'GENETIC RACING',
     url: 'https://games.niemo.io/genetic-racing',
-    stack: ['Canvas', 'BrainJS', 'Vue'],
-    type: 'Neural Network Evolution Simulation',
+    stack: ['Canvas', 'Vue', 'Neural Networks'],
+    type: 'NN Evolution Simulation',
     bullets: [
       'Genetic Algorithm',
-      'Neural Network (BrainJS)',
-      'Distance Sensors (Raycasting)',
+      'Distance Sensor Raycasting',
       'Autonomous Car Control',
       'Generation-Based Evolution',
-      'Pure Simulation (No Player Input)',
     ],
     icon: 'vue.svg',
     image: 'genetic-racing.jpg',
@@ -317,7 +315,7 @@ export const compsci_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Run',
     description:
-      'Watch neural networks learn to drive through genetic evolution. Starting with random weights, cars use distance sensors as inputs to control steering. The best performer from each generation passes its brain to the next, gradually improving over time.',
+      'Watch neural networks of different architectures learn to drive through genetic evolution, zero backpropagation. Starting with random weights, cars use distance sensors as inputs to control steering. The best performer from each generation passes its brain to the next, gradually improving over time.',
   },
   {
     dates: null,
