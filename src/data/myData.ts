@@ -294,6 +294,31 @@ const iconReact = 'react.png';
 
 export const compsci_projects: Project[] = [
   {
+    dates: '2025',
+    projectStatus: 'ok',
+    title: 'Function Approximation',
+    url: 'https://games.niemo.io/function-approximation',
+    stack: ['Vue', 'TypeScript', 'Genetic Algorithm'],
+    type: 'Polynomial Fitting via Evolution',
+    bullets: [
+      'Genetic Algorithm Evolution',
+      'Adaptive Mutation Variance',
+      'Weight-Proportional Scaling',
+      'Interactive Point Dragging',
+      'Real-time Visualization',
+    ],
+    icon: 'vue.svg',
+    image: 'function-approximation.jpg',
+    gif: 'function-approximation.gif',
+    video: 'function-approximation.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Run',
+    description:
+      'Watch a genetic algorithm evolve polynomial functions to fit data points. Features adaptive mutation variance based on fitness, weight-proportional scaling, and interactive point manipulation. Visualize the evolution process in real-time with configurable parameters.',
+  },
+  {
     dates: '',
     projectStatus: 'ok',
     title: 'GENETIC RACING',
