@@ -6,6 +6,7 @@ import { isThin } from './Main';
 import ProjectDemo from './ProjectDemo';
 import {
   myDataShort,
+  ai_projects,
   compsci_projects,
   videogame_projects,
   fullstack_projects,
@@ -39,6 +40,39 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           <p className="pixel-font animate-bounce text-xl text-blue-300">↓ scroll down here ↓</p>
         </div>
       </div>
+      {/* AI Projects Section */}
+      <div className="mb-24">
+        <div className="mb-12 text-center">
+          <div className="mb-4">
+            <PixelArtText
+              scrollContainerSelector=".pixel-text-ai-projects"
+              pixelColor="#fff"
+              text=" AI "
+            />
+          </div>
+          <p className="pixel-font pt-4 text-2xl text-blue-300">
+            Neural Networks & Genetic Algorithms
+          </p>
+        </div>
+        <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
+          {ai_projects.map((project, index) => (
+            <div key={project.title + index} className="transition-all duration-300">
+              <ProjectDemo
+                key={index}
+                index={index}
+                project={project}
+                isMuted={isMutedArray[index]}
+                setIsMuted={() => {
+                  const nextState: boolean = !isMutedArray[index];
+                  setIsMuted(index, nextState);
+                }}
+                hasTouchedAMuteButton={hasTouchedAudioButton}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Comp-Sci Projects Section */}
       <div className="mb-24">
         <div className="mb-12 text-center">
@@ -61,21 +95,24 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
           </p>
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
-          {compsci_projects.map((project, index) => (
-            <div key={project.title + index} className="transition-all duration-300">
-              <ProjectDemo
-                key={index}
-                index={index}
-                project={project}
-                isMuted={isMutedArray[index]}
-                setIsMuted={() => {
-                  const nextState: boolean = !isMutedArray[index];
-                  setIsMuted(index, nextState);
-                }}
-                hasTouchedAMuteButton={hasTouchedAudioButton}
-              />
-            </div>
-          ))}
+          {compsci_projects.map((project, index) => {
+            const globalIndex = ai_projects.length + index;
+            return (
+              <div key={project.title + index} className="transition-all duration-300">
+                <ProjectDemo
+                  key={index}
+                  index={globalIndex}
+                  project={project}
+                  isMuted={isMutedArray[globalIndex]}
+                  setIsMuted={() => {
+                    const nextState: boolean = !isMutedArray[globalIndex];
+                    setIsMuted(globalIndex, nextState);
+                  }}
+                  hasTouchedAMuteButton={hasTouchedAudioButton}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -101,7 +138,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {fullstack_projects.map((project, index) => {
-            const globalIndex = compsci_projects.length + videogame_projects.length + index;
+            const globalIndex = ai_projects.length + compsci_projects.length + videogame_projects.length + index;
             return (
               <div key={project.title + index} className="transition-all duration-300">
                 <ProjectDemo
@@ -143,7 +180,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         </div>
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {videogame_projects.map((project, index) => {
-            const globalIndex = compsci_projects.length + index;
+            const globalIndex = ai_projects.length + compsci_projects.length + index;
             return (
               <div key={project.title + index} className="transition-all duration-300">
                 <ProjectDemo
@@ -178,6 +215,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = () => {
         <div className={`grid grid-cols-1 gap-16 ${isThin ? 'px-0' : 'px-0'}`}>
           {art_projects.map((project, index) => {
             const globalIndex =
+              ai_projects.length +
               compsci_projects.length +
               videogame_projects.length +
               fullstack_projects.length +

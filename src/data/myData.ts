@@ -292,7 +292,7 @@ const iconPhaser = 'phaser-icon.png';
 const iconThreeJs = 'threejs.png';
 const iconReact = 'react.png';
 
-export const compsci_projects: Project[] = [
+export const ai_projects: Project[] = [
   {
     dates: '2025',
     projectStatus: 'ok',
@@ -368,6 +368,9 @@ export const compsci_projects: Project[] = [
     description:
       'Wiggle the "weights" to see how they affect the downstream output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
+];
+
+export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
@@ -631,7 +634,7 @@ export const fullstack_projects: Project[] = [
 ];
 
 // Backward compatibility - combined array
-export const coding_projects: Project[] = [...compsci_projects, ...videogame_projects, ...fullstack_projects];
+export const coding_projects: Project[] = [...ai_projects, ...compsci_projects, ...videogame_projects, ...fullstack_projects];
 
 export const art_projects: Project[] = [
   {
