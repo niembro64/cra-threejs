@@ -294,7 +294,7 @@ const iconReact = 'react.png';
 
 export const ai_projects: Project[] = [
   {
-    dates: '2025',
+    dates: '',
     projectStatus: 'ok',
     title: 'Token Embedding',
     url: 'https://games.niemo.io/token-embedding',
@@ -319,7 +319,7 @@ export const ai_projects: Project[] = [
       'Explore word relationships in 3D space. See how "italy" is to "pasta" as "japan" is to "____" - visualize word analogies using GloVe embeddings compressed from 50D to 3D via PCA.',
   },
   {
-    dates: '2025',
+    dates: '',
     projectStatus: 'ok',
     title: 'Function Approximation',
     url: 'https://games.niemo.io/function-approximation',
