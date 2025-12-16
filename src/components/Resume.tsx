@@ -1,7 +1,7 @@
 // Resume.tsx
 
 import React from 'react';
-import { EricResumeDescription, showSmashedGif } from '../data/myData';
+import { EricResumeDescription, showProfileAbout, showSmashedGif } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
 
@@ -35,13 +35,15 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <section className={`px-4 py-12 ${isThin ? 'bg-black/80' : ''} text-center`}>
-            <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
-              <img
-                className="transition-transform duration-500 hover:scale-105"
-                src="/eric.jpg"
-                alt="Picture of Eric"
-              />
-            </div>
+            {showProfileAbout && (
+              <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
+                <img
+                  className="transition-transform duration-500 hover:scale-105"
+                  src="/eric.jpg"
+                  alt="Picture of Eric"
+                />
+              </div>
+            )}
 
             <PixelArtText
               scrollContainerSelector=".pixel-text-eric-niemeyer"
@@ -59,7 +61,9 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <div className="mb-20" />
               )}
             </div>
-            <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>
+            {showProfileAbout && (
+              <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>
+            )}
           </section>
           <div className="h-40" />
           <div className="h-40" />
@@ -82,7 +86,7 @@ export const Resume: React.FC<ResumeProps> = () => {
         </>
       )}
 
-      {!isThin && (
+      {!isThin && showProfileAbout && (
         <section className={`px-4 py-12 ${isThin ? 'bg-slate-900/50' : ''} text-center`}>
           <div className="h-40" />
           <div className="my-8 flex flex-row items-center justify-center overflow-hidden">

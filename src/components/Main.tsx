@@ -16,6 +16,7 @@ import appleModelUrl from '../assets/w.glb';
 // import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore';
 import {
+  showContactSection,
   showKirbyGame,
   showSmashedGif,
   tooltipDelay,
@@ -457,64 +458,66 @@ const Main: React.FC = () => {
 
             <div className="h-40" />
 
-            <div className={!isThin ? '' : 'border border-black/0 bg-black/80'}>
-              <div className="mb-4 mt-16">
-                <PixelArtText
-                  scrollContainerSelector=".pixel-text-contact"
-                  pixelColor="#fff"
-                  text=" CONTACT "
+            {showContactSection && (
+              <div className={!isThin ? '' : 'border border-black/0 bg-black/80'}>
+                <div className="mb-4 mt-16">
+                  <PixelArtText
+                    scrollContainerSelector=".pixel-text-contact"
+                    pixelColor="#fff"
+                    text=" CONTACT "
+                  />
+                </div>
+                <ContactSection
+                  animateKirby={animateKirby}
+                  onPhoneClick={() => window.open('tel:618-616-3380')}
+                  handleKirbyClick={handleKirbyClick}
                 />
-              </div>
-              <ContactSection
-                animateKirby={animateKirby}
-                onPhoneClick={() => window.open('tel:618-616-3380')}
-                handleKirbyClick={handleKirbyClick}
-              />
 
-              <section
-                className={`${
-                  isThin
-                    ? showDemoNavigationGame
-                      ? 'h-[500px]'
-                      : 'h-[200px]'
-                    : showDemoNavigationGame
-                      ? 'h-[700px]'
-                      : 'h-[300px]'
-                } relative z-30 flex flex-col items-center justify-end`}
-              >
-                {showDemoNavigationGame ? (
-                  <>
-                    <iframe
-                      className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
-                      src="https://projects.niemo.io"
-                      title="Projects"
-                      allowFullScreen
-                    ></iframe>
-                    <img
-                      className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isThin ? 'top-28' : 'top-2 opacity-50'}`}
-                      src="/remove.png"
-                      alt="Close"
-                      onClick={() => setShowDemoNavigationGame(false)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    {showKirbyGame && (
-                      <div
-                        className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
-                      >
-                        <img
-                          className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
-                          src="/qwhite_hardpixels_transbg.png"
-                          alt="Question Mark"
-                          onClick={handleKirbyClick}
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-              </section>
-            </div>
+                <section
+                  className={`${
+                    isThin
+                      ? showDemoNavigationGame
+                        ? 'h-[500px]'
+                        : 'h-[200px]'
+                      : showDemoNavigationGame
+                        ? 'h-[700px]'
+                        : 'h-[300px]'
+                  } relative z-30 flex flex-col items-center justify-end`}
+                >
+                  {showDemoNavigationGame ? (
+                    <>
+                      <iframe
+                        className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} justify-self-center shadow-xl transition-all`}
+                        src="https://projects.niemo.io"
+                        title="Projects"
+                        allowFullScreen
+                      ></iframe>
+                      <img
+                        className={`absolute right-2 z-40 h-12 w-12 cursor-pointer transition-all hover:scale-105 hover:opacity-100 active:opacity-50 ${isThin ? 'top-28' : 'top-2 opacity-50'}`}
+                        src="/remove.png"
+                        alt="Close"
+                        onClick={() => setShowDemoNavigationGame(false)}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      {showKirbyGame && (
+                        <div
+                          className={`${isThin ? 'h-[400px] w-full' : 'h-[800px] w-full'} flex flex-col items-center justify-center justify-self-center shadow-xl transition-all`}
+                        >
+                          <img
+                            className="pixel-art mt-4 h-full origin-center transform cursor-pointer justify-self-center opacity-10 transition-all hover:scale-105 hover:opacity-50 active:scale-95 active:opacity-100"
+                            src="/qwhite_hardpixels_transbg.png"
+                            alt="Question Mark"
+                            onClick={handleKirbyClick}
+                          />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </section>
+              </div>
+            )}
           </div>
         </div>
         <Tooltip

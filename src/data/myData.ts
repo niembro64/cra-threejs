@@ -1,6 +1,8 @@
 // myData.ts
 export const showSmashedGif: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
+export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
+export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
 
 export interface BulletObject {
   title: string;
@@ -488,7 +490,7 @@ export const videogame_projects: Project[] = [
       'Client-Side Prediction',
       'Server-Client Reconciliation',
     ],
-    icon: 'vue.svg',
+    icon: 'phaser-icon.png',
     image: 'budget-annihilation.jpg',
     gif: 'budget-annihilation.gif',
     video: 'budget-annihilation.mp4',
