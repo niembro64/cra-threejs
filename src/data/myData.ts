@@ -480,7 +480,7 @@ export const videogame_projects: Project[] = [
     dates: null,
     projectStatus: 'ok',
     title: 'Budget Annihilation',
-    url: 'https://games.niemo.io/rts-prototype',
+    url: 'https://games.niemo.io/budget-annihilation',
     stack: ['Vue', 'Phaser', 'TypeScript', 'PeerJS'],
     type: 'Real-Time Strategy',
     bullets: [
