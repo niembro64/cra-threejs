@@ -495,7 +495,7 @@ export const videogame_projects: Project[] = [
     gif: 'budget-annihilation.gif',
     video: 'budget-annihilation.mp4',
     supportsDesktop: true,
-    supportsMobile: false,
+    supportsMobile: true,
     hasSound: false,
     buttonStartText: 'Play',
     description:
