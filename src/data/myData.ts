@@ -474,6 +474,31 @@ export const videogame_projects: Project[] = [
     description:
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
+  {
+    dates: null,
+    projectStatus: 'ok',
+    title: 'Budget Annihilation',
+    url: 'https://games.niemo.io/rts-prototype',
+    stack: ['Vue', 'Phaser', 'TypeScript', 'PeerJS'],
+    type: 'Real-Time Strategy',
+    bullets: [
+      'Keyboard & Mouse Support',
+      'Online Multiplayer',
+      'Authoritative Server',
+      'Client-Side Prediction',
+      'Server-Client Reconciliation',
+    ],
+    icon: 'vue.svg',
+    image: 'budget-annihilation.jpg',
+    gif: 'budget-annihilation.gif',
+    video: 'budget-annihilation.mp4',
+    supportsDesktop: true,
+    supportsMobile: false,
+    hasSound: false,
+    buttonStartText: 'Play',
+    description:
+      'A exercise in force, momentum, and mass physics inspired by Total Annihilation. Build factories, manage your economy, and command an army of wheeled, treaded, and legged units.',
+  },
 
   {
     dates: '2024 - Ongoing',
@@ -659,7 +684,12 @@ export const fullstack_projects: Project[] = [
 ];
 
 // Backward compatibility - combined array
-export const coding_projects: Project[] = [...ai_projects, ...compsci_projects, ...videogame_projects, ...fullstack_projects];
+export const coding_projects: Project[] = [
+  ...ai_projects,
+  ...compsci_projects,
+  ...videogame_projects,
+  ...fullstack_projects,
+];
 
 export const art_projects: Project[] = [
   {
