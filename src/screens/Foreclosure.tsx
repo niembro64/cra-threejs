@@ -187,7 +187,7 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
 
   // --- Retain original logic for extracting the address ---
   let address = '';
-  const headingElement = doc.getElementById('ctl00_cphBody_lblHeading');
+  const headingElement = doc.getElementById('cphBody_lblHeading');
   if (headingElement) {
     const headingHtml = headingElement.innerHTML;
     // Look for "ADDRESS:" followed by optional <br> tags and capture the text
@@ -228,7 +228,7 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
   let committeeFax = '';
   let committeeEmail = '';
 
-  const committeeElement = doc.getElementById('ctl00_cphBody_lblCommittee');
+  const committeeElement = doc.getElementById('cphBody_lblCommittee');
   // Retain original text value for the existing committee field.
   const committeeOriginal = committeeElement ? committeeElement.textContent?.trim() || '' : '';
 
@@ -290,21 +290,21 @@ function parsePublicAuctionNotice(htmlString: string): PublicAuctionNotice {
   // --- Return the combined auction notice object ---
   return {
     // --- Existing fields (untouched) ---
-    caseCaption: getText('ctl00_cphBody_uEfileCaseInfo1_lblCaseCap'),
-    fileDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblFileDate'),
-    docketNumber: getText('ctl00_cphBody_uEfileCaseInfo1_hlnkDocketNo'),
-    returnDate: getText('ctl00_cphBody_uEfileCaseInfo1_lblRetDate'),
-    town: getText('ctl00_cphBody_hlnktown1'),
-    saleDate: getText('ctl00_cphBody_lblSaleDate'),
-    saleTime: getText('ctl00_cphBody_lblSaleTime'),
-    inspectionCommencingAt: getText('ctl00_cphBody_lblInsp'),
-    noticeFrom: getText('ctl00_cphBody_lblNoticeFrom'),
-    noticeThru: getText('ctl00_cphBody_lblNoticeThru'),
-    heading: getText('ctl00_cphBody_lblHeading'),
-    body: getText('ctl00_cphBody_lblBody'),
+    caseCaption: getText('cphBody_uEfileCaseInfo1_lblCaseCap'),
+    fileDate: getText('cphBody_uEfileCaseInfo1_lblFileDate'),
+    docketNumber: getText('cphBody_uEfileCaseInfo1_hlnkDocketNo'),
+    returnDate: getText('cphBody_uEfileCaseInfo1_lblRetDate'),
+    town: getText('cphBody_hlnktown1'),
+    saleDate: getText('cphBody_lblSaleDate'),
+    saleTime: getText('cphBody_lblSaleTime'),
+    inspectionCommencingAt: getText('cphBody_lblInsp'),
+    noticeFrom: getText('cphBody_lblNoticeFrom'),
+    noticeThru: getText('cphBody_lblNoticeThru'),
+    heading: getText('cphBody_lblHeading'),
+    body: getText('cphBody_lblBody'),
     // Original committee field remains untouched.
     committee: committeeOriginal,
-    status: getText('ctl00_cphBody_lblStatus'),
+    status: getText('cphBody_lblStatus'),
     address: address,
     dollarAmountString: dollarAmountFound,
     dollarAmountNumber: parseFloat(dollarAmountFound.replace(/[^0-9.-]+/g, '')),
@@ -338,7 +338,7 @@ function extractPostingIds(htmlString: string, cityName: string): string[] {
   const doc = parser.parseFromString(htmlString, 'text/html');
 
   // Get the table that holds the foreclosure sales records
-  const salesTable = doc.getElementById('ctl00_cphBody_GridView1');
+  const salesTable = doc.getElementById('cphBody_GridView1');
   if (!salesTable) {
     return [];
   }
@@ -384,25 +384,20 @@ function extractCityInfo(htmlString: string): CityInfo[] {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, 'text/html');
 
-  // Select all anchor elements with an href containing "PendPostbyTownDetails.aspx?town="
-  const cityLinks = doc.querySelectorAll("a[href*='PendPostbyTownDetails.aspx?town=']");
+  // Select all anchor elements linking to a town-details page. The site switched
+  // the query param from `town=` to `Town=`, so match case-insensitively.
+  const cityLinks = doc.querySelectorAll("a[href*='PendPostbyTownDetails.aspx?' i]");
 
   const cities: CityInfo[] = [];
 
-  // Iterate over the city links to extract the name and the count
+  // Iterate over the city links to extract the name and the count.
+  // Current DOM is a GridView table: each row has <td><a>Name</a></td><td><span id="cphBody_GridView1_lblTownCount_N">count</span></td>.
   cityLinks.forEach((link) => {
     const name = link.textContent?.trim() || '';
 
-    // The expected structure is:
-    // <a>City Name</a> <span> (</span> <span>Number</span> <span>)</span> <br>...
-    const firstSpan = link.nextElementSibling;
-    let count = 0;
-    if (firstSpan) {
-      const countSpan = firstSpan.nextElementSibling;
-      if (countSpan) {
-        count = parseInt(countSpan.textContent || '0', 10);
-      }
-    }
+    const row = link.closest('tr');
+    const countSpan = row?.querySelector("span[id*='lblTownCount']");
+    const count = parseInt(countSpan?.textContent?.trim() || '0', 10);
 
     cities.push({ name, count });
   });
