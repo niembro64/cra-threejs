@@ -11,13 +11,13 @@ const project: Project = {
 
 describe('project media helpers', () => {
   it('selects lightweight media for low or unknown connection quality', () => {
-    expect(selectProjectMedia(project, null, false)).toBe('preview.jpg');
-    expect(selectProjectMedia(project, 'low', false)).toBe('preview.jpg');
+    expect(selectProjectMedia(project, null)).toBe('preview.jpg');
+    expect(selectProjectMedia(project, 'low')).toBe('preview.jpg');
   });
 
-  it('selects GIFs for mobile and video for desktop when bandwidth allows', () => {
-    expect(selectProjectMedia(project, 'medium', true)).toBe('preview.gif');
-    expect(selectProjectMedia(project, 'high', false)).toBe('preview.mp4');
+  it('selects efficient video previews when bandwidth allows', () => {
+    expect(selectProjectMedia(project, 'medium')).toBe('preview.mp4');
+    expect(selectProjectMedia(project, 'high')).toBe('preview.mp4');
   });
 
   it('recognizes supported media extensions with URLs and mixed casing', () => {

@@ -7,16 +7,13 @@ const firstAvailable = (...sources: Array<string | null>): string | null =>
 
 export const selectProjectMedia = (
   project: Project,
-  connectionQuality: ConnectionQualityType | null,
-  preferGif: boolean
+  connectionQuality: ConnectionQualityType | null
 ): string | null => {
   if (connectionQuality === 'low' || connectionQuality === null) {
     return firstAvailable(project.image, project.gif, project.video);
   }
 
-  return preferGif
-    ? firstAvailable(project.gif, project.video, project.image)
-    : firstAvailable(project.video, project.gif, project.image);
+  return firstAvailable(project.video, project.gif, project.image);
 };
 
 export const getProjectMediaKind = (source: string): ProjectMediaKind | null => {

@@ -23,7 +23,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
 
   const { mediaRef, hasEnteredViewport, isVisible } = useMediaVisibility<HTMLDivElement>();
   const actionRef = useRef<HTMLDivElement>(null);
-  const mediaSource = selectProjectMedia(project, connectionQuality, isMobile);
+  const mediaSource = selectProjectMedia(project, connectionQuality);
   const mediaIsVideo = mediaSource ? getProjectMediaKind(mediaSource) === 'video' : false;
   const canLaunch =
     project.projectStatus === 'ok' && ((isThin && project.supportsMobile) || (!isThin && project.supportsDesktop));
@@ -71,7 +71,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
       <div ref={mediaRef} className="relative p-2 sm:p-4">
         <button
           type="button"
-          className="group block w-full cursor-pointer rounded-3xl focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          className="group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-3xl bg-black/20 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
           onClick={handleMediaClick}
           aria-expanded={isActive}
           aria-label={`${isActive ? 'Hide' : 'View'} details for ${project.title}`}
@@ -88,7 +88,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
 
           {!isActive && hasEnteredViewport && (
             <span
-              className={`pointer-events-none absolute inset-2 flex rounded-3xl transition-opacity duration-300 sm:inset-4 ${
+              className={`pointer-events-none absolute inset-0 flex rounded-3xl transition-opacity duration-300 ${
                 isThin
                   ? 'items-end justify-center opacity-100'
                   : 'items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'
