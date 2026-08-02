@@ -296,6 +296,31 @@ const iconReact = 'react.png';
 
 export const ai_projects: Project[] = [
   {
+    dates: '2026 - Ongoing',
+    projectStatus: 'ok',
+    title: 'AI Chess',
+    url: 'https://games.niemo.io/chess/',
+    stack: ['Vue', 'TypeScript', 'PyTorch', 'TensorFlow.js', 'Three.js'],
+    type: 'Reinforcement Learning Chess AI',
+    bullets: [
+      'Self-Play Reinforcement Learning',
+      'Convolutional Policy + Value Network',
+      'Monte Carlo Tree Search',
+      'Live Neural Network Visualization',
+      'In-Browser Model Inference',
+    ],
+    icon: null,
+    image: 'chess.jpg',
+    gif: 'chess.gif',
+    video: 'chess.mp4',
+    supportsDesktop: true,
+    supportsMobile: true,
+    hasSound: false,
+    buttonStartText: 'Play',
+    description:
+      'Play against a convolutional neural network trained from scratch solely through self-play reinforcement learning—no human games or supervised examples. Inspect how the AI encodes the board, scores moves, and searches for its next play in an interactive visualization.',
+  },
+  {
     dates: '',
     projectStatus: 'ok',
     title: 'Token Embedding',
@@ -477,20 +502,21 @@ export const videogame_projects: Project[] = [
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
   {
-    dates: null,
+    dates: '2025 - Ongoing',
     projectStatus: 'ok',
     title: 'Budget Annihilation',
     url: 'https://games.niemo.io/budget-annihilation',
-    stack: ['Vue', 'Phaser', 'TypeScript', 'PeerJS'],
-    type: 'Real-Time Strategy',
+    stack: ['Vue', 'TypeScript', 'Three.js', 'Rust', 'WebAssembly', 'PeerJS'],
+    type: '3D Physics-Based Real-Time Strategy',
     bullets: [
       'Keyboard & Mouse Support',
       'Online Multiplayer',
-      'Authoritative Server',
-      'Client-Side Prediction',
-      'Server-Client Reconciliation',
+      'Cross-Architecture Deterministic Lockstep',
+      'Rust / WebAssembly Simulation Core',
+      'Force, Mass & Momentum-Based Physics',
+      'Terrain-Aware Pathfinding & Fog of War',
     ],
-    icon: 'phaser-icon.png',
+    icon: null,
     image: 'budget-annihilation.jpg',
     gif: 'budget-annihilation.gif',
     video: 'budget-annihilation.mp4',
@@ -499,7 +525,7 @@ export const videogame_projects: Project[] = [
     hasSound: false,
     buttonStartText: 'Play',
     description:
-      'A exercise in force, momentum, and mass physics inspired by Total Annihilation. Build factories, manage your economy, and command an army of wheeled, treaded, and legged units.',
+      'A full-3D, physics-first RTS inspired by Total Annihilation. Build factories, manage your economy, and command an army across dynamic terrain while every peer runs the same deterministic simulation—even across different CPU architectures.',
   },
 
   {
