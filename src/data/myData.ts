@@ -306,7 +306,7 @@ export const ai_projects: Project[] = [
       'Live Neural Network Visualization',
       'In-Browser Model Inference',
     ],
-    icon: null,
+    icon: 'vue.svg',
     image: 'chess.jpg',
     gif: 'chess.gif',
     video: 'chess.mp4',
