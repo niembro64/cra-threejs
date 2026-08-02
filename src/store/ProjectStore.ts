@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga4';
 import { create } from 'zustand';
-import { ConnectionQualityType, coding_projects, art_projects } from '../data/myData';
+import type { ConnectionQualityType } from '../data/myData';
+import { allProjects } from '../data/projectGroups';
 interface ProjectStoreProps {
   play: boolean;
   setPlay: (m: boolean) => void;
@@ -13,18 +14,16 @@ interface ProjectStoreProps {
   setActiveProjectIndex: (index: number | null) => void;
 }
 
-const allProjects = [...coding_projects, ...art_projects];
+const createMutedArray = () => allProjects.map(() => true);
 
 export const ProjectStore = create<ProjectStoreProps>((set) => ({
   hasTouchedAudioButton: false,
-  mutedArray: [...allProjects.map(() => true)],
+  mutedArray: createMutedArray(),
   play: true,
   connectionQuality: null,
   activeProjectIndex: null,
   setPlay: (newPlayState: boolean) => {
-    set({ hasTouchedAudioButton: true });
-    set({ mutedArray: [...allProjects.map(() => true)] });
-    set({ play: newPlayState });
+    set({ hasTouchedAudioButton: true, mutedArray: createMutedArray(), play: newPlayState });
     ReactGA.event({
       category: 'User',
       action: 'Audio Spectrum Clicked',
@@ -32,11 +31,9 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
     });
   },
   setMuted: (index: number, isMuted: boolean) => {
-    set({ hasTouchedAudioButton: true });
-    set({ play: false });
     set(() => {
-      const m: boolean[] = [...allProjects.map((p) => true)];
-      m[index] = isMuted;
+      const mutedArray = createMutedArray();
+      mutedArray[index] = isMuted;
 
       ReactGA.event({
         category: 'User',
@@ -44,7 +41,7 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
         label: isMuted ? 'Mute' : 'Unmute',
       });
 
-      return { mutedArray: m };
+      return { hasTouchedAudioButton: true, mutedArray, play: false };
     });
   },
   setConnectionQuality: (quality: ConnectionQualityType) => {

@@ -37,6 +37,8 @@ body {
 /* .App wrapper if you want a global container class */
 .App {
   @apply h-screen w-full overflow-y-scroll;
+  height: 100dvh;
+  overscroll-behavior-y: contain;
 }
 
 /* /////////////////////////////////// */

@@ -238,12 +238,9 @@ export const educations: Education[] = [
   },
 ];
 
-import { html } from 'cheerio/dist/commonjs/static';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 export const tooltipDelay = 500;
-
-export const extraTimeLazyLoad = 0;
 
 export const showEmojis: boolean = false;
 
@@ -709,14 +706,6 @@ export const fullstack_projects: Project[] = [
     buttonStartText: 'View',
     description: 'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
-];
-
-// Backward compatibility - combined array
-export const coding_projects: Project[] = [
-  ...ai_projects,
-  ...compsci_projects,
-  ...videogame_projects,
-  ...fullstack_projects,
 ];
 
 export const art_projects: Project[] = [

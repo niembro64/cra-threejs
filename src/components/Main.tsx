@@ -1,9 +1,8 @@
 // Main.tsx
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import ContactSection from './ContactSection';
-import ReactGA from 'react-ga4';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Resume } from './Resume';
 import AudioSpectrogram, { AudioSpectrogramRef } from './Spectrogram';
@@ -24,13 +23,13 @@ import {
   usePolyhedron,
 } from '../data/myData';
 import PixelArtText from './PixelArtText';
-import FancyButton from './FancyButton';
 
 export const phoneNumber = '618-616-3380';
 export const email = 'niemeyer.eric@gmail.com';
 export const isThin: boolean = window.innerWidth < 1200;
-export const isMobile: boolean =
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+export const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  navigator.userAgent
+);
 
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
@@ -39,16 +38,12 @@ const Main: React.FC = () => {
 
   const refContainer = useRef<HTMLDivElement | null>(null);
 
-  const backgroundShapeRef = { current: null as THREE.Object3D | null };
+  const backgroundShapeRef = useRef<THREE.Object3D | null>(null);
 
   const mousePositionCurr = useRef(new THREE.Vector3());
   const mousePositionPrev = useRef(new THREE.Vector3());
   const scrollPosition = useRef(0);
   const scrollPositionAverage = useRef(0);
-  const [pageHeight, setPageHeight] = useState(0);
-  const topElementRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>(0);
-
   const highFreqPowerRef = useRef<number>(0);
   const lowFreqPowerRef = useRef<number>(0);
 
@@ -81,23 +76,6 @@ const Main: React.FC = () => {
     }, bounceDuration);
   };
 
-  const [showEmail, setShowEmail] = useState(false);
-
-  const handleAudioStart = () => {
-    if (spectrogramRef.current) {
-      spectrogramRef.current.startAudio();
-    }
-  };
-
-  const copyToClipboard = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      __DEV__ && console.log('Email copied to clipboard');
-    } catch (err) {
-      __DEV__ && console.error('Failed to copy email: ', err);
-    }
-  }, [email]);
-
   useEffect(() => {
     function onMessage(event: MessageEvent) {
       if (event?.data?.url) {
@@ -122,33 +100,6 @@ const Main: React.FC = () => {
   }, [urlStateCurr, urlStatePrev]);
 
   useEffect(() => {
-    const updatePageHeight = () => {
-      const documentHeight = document.documentElement.getBoundingClientRect().height;
-      setPageHeight(documentHeight);
-    };
-    updatePageHeight();
-    window.addEventListener('resize', updatePageHeight);
-    return () => {
-      window.removeEventListener('resize', updatePageHeight);
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateHeight = () => {
-      if (topElementRef.current) {
-        setHeight(topElementRef.current.offsetHeight);
-      }
-    };
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => {
-      window.removeEventListener('resize', updateHeight);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (height === 0 || pageHeight === 0) return;
-
     const scene: THREE.Scene = new THREE.Scene();
 
     const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -160,12 +111,19 @@ const Main: React.FC = () => {
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
-      preserveDrawingBuffer: true,
       failIfMajorPerformanceCaveat: false,
     });
 
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const onResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', onResize);
 
     const screenWidth = window.innerWidth;
 
@@ -242,11 +200,7 @@ const Main: React.FC = () => {
     scene.add(ambientLightThree);
 
     const getScenePositionFromScreen = (x: number, y: number): THREE.Vector3 => {
-      const vec = new THREE.Vector3(
-        (x / window.innerWidth) * 2 - 1,
-        (-y / window.innerHeight) * 2 + 1,
-        0.5
-      );
+      const vec = new THREE.Vector3((x / window.innerWidth) * 2 - 1, (-y / window.innerHeight) * 2 + 1, 0.5);
       vec.unproject(camera);
       const dir = vec.sub(camera.position).normalize();
       const distance = -camera.position.z / dir.z;
@@ -284,14 +238,14 @@ const Main: React.FC = () => {
     const percentKeep = 0.99995;
     const percentKeepMouse = 0.95;
     let animationFrame = -1;
+    let animationFrameRequest = 0;
 
     const animate = () => {
       animationFrame += 1;
-      requestAnimationFrame(animate);
+      animationFrameRequest = requestAnimationFrame(animate);
 
       scrollPositionAverage.current =
-        percentKeepMouse * scrollPositionAverage.current +
-        (1 - percentKeepMouse) * scrollPosition.current;
+        percentKeepMouse * scrollPositionAverage.current + (1 - percentKeepMouse) * scrollPosition.current;
 
       if (!backgroundShapeRef.current) {
         return;
@@ -303,14 +257,11 @@ const Main: React.FC = () => {
         0.1;
 
       mousePositionPrev.current.x =
-        percentKeepMouse * mousePositionPrev.current.x +
-        (1 - percentKeepMouse) * mousePositionCurr.current.x;
+        percentKeepMouse * mousePositionPrev.current.x + (1 - percentKeepMouse) * mousePositionCurr.current.x;
       mousePositionPrev.current.y =
-        percentKeepMouse * mousePositionPrev.current.y +
-        (1 - percentKeepMouse) * mousePositionCurr.current.y;
+        percentKeepMouse * mousePositionPrev.current.y + (1 - percentKeepMouse) * mousePositionCurr.current.y;
       mousePositionPrev.current.z =
-        percentKeepMouse * mousePositionPrev.current.z +
-        (1 - percentKeepMouse) * mousePositionCurr.current.z;
+        percentKeepMouse * mousePositionPrev.current.z + (1 - percentKeepMouse) * mousePositionCurr.current.z;
 
       if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
         backgroundShapeRef.current.rotation.x =
@@ -320,8 +271,7 @@ const Main: React.FC = () => {
           percentKeep * backgroundShapeRef.current.rotation.y +
           (1 - percentKeep) * (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y);
         backgroundShapeRef.current.rotation.z =
-          percentKeep * backgroundShapeRef.current.rotation.z +
-          (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
+          percentKeep * backgroundShapeRef.current.rotation.z + (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
       } else {
         lowerPowerAccumulatedRef.current =
           (lowerPowerAccumulatedRef.current + Math.pow(highFreqPowerRef.current, 2) * 0.0005) % 360;
@@ -356,16 +306,29 @@ const Main: React.FC = () => {
         pointLightGreen.intensity = (pointLightBlue.intensity + pointLightRed.intensity) / 2;
       }
 
-      renderer.render(scene, camera);
+      if (!document.hidden) renderer.render(scene, camera);
     };
     animate();
 
     return () => {
+      cancelAnimationFrame(animationFrameRequest);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('wheel', onWheel);
+
+      scene.traverse((object) => {
+        if (!(object instanceof THREE.Mesh)) return;
+
+        object.geometry.dispose();
+        const materials = Array.isArray(object.material) ? object.material : [object.material];
+        materials.forEach((material) => material.dispose());
+      });
+      renderer.dispose();
+      renderer.domElement.remove();
+      backgroundShapeRef.current = null;
     };
-  }, [height, pageHeight]);
+  }, []);
 
   const setDefaultHighQuality = () => {
     if (isThin) {
@@ -415,7 +378,7 @@ const Main: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden" ref={topElementRef}>
+    <div className="relative min-h-screen w-full overflow-x-hidden">
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full"></div>
 
       {!isThin && (
@@ -461,11 +424,7 @@ const Main: React.FC = () => {
             {showContactSection && (
               <div className={!isThin ? '' : 'border border-black/0 bg-black/80'}>
                 <div className="mb-4 mt-16">
-                  <PixelArtText
-                    scrollContainerSelector=".pixel-text-contact"
-                    pixelColor="#fff"
-                    text=" CONTACT "
-                  />
+                  <PixelArtText scrollContainerSelector=".pixel-text-contact" pixelColor="#fff" text=" CONTACT " />
                 </div>
                 <ContactSection
                   animateKirby={animateKirby}
