@@ -9,7 +9,7 @@ const services: Service[] = [
     title: 'Connecticut Foreclosures Scraper',
     description: ['Live Connecticut home foreclosure info', 'Requires a special CORS Chrome Extension'],
     projectStatus: 'ok',
-    url: 'https://niemo.io/foreclosure',
+    url: 'https://games.niemo.io/foreclosure/',
     desktop: true,
     mobile: false,
   },
@@ -32,12 +32,6 @@ const services: Service[] = [
     desktop: true,
     mobile: true,
   },
-  // {
-  //   title: 'CT Foreclosures Backend',
-  //   description: 'Simple interface for property status monitoring. Using Backend (Slower)',
-  //   status: 'ok',
-  //   url: 'https://niemo.io/foreclosures_new',
-  // },
   {
     title: 'Audio Editor',
     description: [

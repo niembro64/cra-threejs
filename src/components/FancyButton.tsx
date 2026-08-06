@@ -36,20 +36,10 @@ const FancyButton: React.FC<FancyButtonProps> = ({
   className = '',
   disabled = false,
   type = 'button',
-}) => {
-  // Create an array of individual letters from the text
-  const letters = text.split('').map((char) => (char === ' ' ? '\u00A0' : char));
-
-  return (
-    <button className={`btn-fancy ${className}`} onClick={onClick} disabled={disabled} type={type}>
-      <div className="original">{text}</div>
-      <div className="letters">
-        {letters.map((letter, index) => (
-          <span key={index}>{letter}</span>
-        ))}
-      </div>
-    </button>
-  );
-};
+}) => (
+  <button className={`btn-fancy ${className}`} onClick={onClick} disabled={disabled} type={type}>
+    <span className="btn-fancy-label">{text}</span>
+  </button>
+);
 
 export default FancyButton;
