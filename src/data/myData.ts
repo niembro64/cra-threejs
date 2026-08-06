@@ -1,5 +1,6 @@
 // myData.ts
 export const showSmashedGif: boolean = false;
+export const showProjectTitleIcons: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
 export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
@@ -295,7 +296,7 @@ export const ai_projects: Project[] = [
   {
     dates: '2026 - Ongoing',
     projectStatus: 'ok',
-    title: 'AI Chess',
+    title: 'Neural MCTS Chess',
     url: 'https://games.niemo.io/chess/',
     stack: ['Vue', 'TypeScript', 'PyTorch', 'TensorFlow.js', 'Three.js'],
     type: 'Reinforcement Learning Chess AI',
@@ -320,7 +321,7 @@ export const ai_projects: Project[] = [
   {
     dates: '',
     projectStatus: 'ok',
-    title: 'Token Embedding',
+    title: 'Word Vector Explorer',
     url: 'https://games.niemo.io/token-embedding',
     stack: ['Vue', 'TypeScript', 'Three.js', 'GloVe'],
     type: '3D Word Embedding Visualization',
@@ -345,7 +346,7 @@ export const ai_projects: Project[] = [
   {
     dates: '',
     projectStatus: 'ok',
-    title: 'Function Approximation',
+    title: 'Polynomial Optimization Lab',
     url: 'https://games.niemo.io/function-approximation',
     stack: ['Vue', 'TypeScript', 'Genetic Algorithm'],
     type: 'Polynomial Fitting via Evolution',
@@ -370,7 +371,7 @@ export const ai_projects: Project[] = [
   {
     dates: '',
     projectStatus: 'ok',
-    title: 'GENETIC RACING',
+    title: 'Neuroevolution Racing',
     url: 'https://games.niemo.io/genetic-racing',
     stack: ['Canvas', 'Vue', 'Neural Networks'],
     type: 'NN Evolution Simulation',
@@ -394,7 +395,7 @@ export const ai_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'ATTENTION',
+    title: 'Self-Attention Explorer',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
     type: 'Demonstration of Attention Mechanism in Transformer Models',
@@ -423,7 +424,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Pathfinding',
+    title: 'Graph Search Visualizer',
     url: 'https://games.niemo.io/pathfinding',
     stack: ['Vue', 'TypeScript', 'Tailwind'],
     type: 'Algorithm Visualization',
@@ -442,7 +443,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Axelrod',
+    title: 'Axelrod Tournament',
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
@@ -460,7 +461,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Raycasting',
+    title: 'Collision Detection Lab',
     url: 'https://games.niemo.io/raycast',
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
@@ -482,7 +483,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2022 - Ongoing',
     projectStatus: 'ok',
-    title: 'Smashed Bros',
+    title: 'Smashed: Neural Brawler',
     url: 'https://smashed.niemo.io',
     stack: ['Phaser', 'BrainJS', 'Aseprite', 'Express', 'MongoDB', 'FL Studio'],
     type: 'Multiplayer Platform Fighter',
@@ -501,7 +502,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
-    title: 'Budget Annihilation',
+    title: 'Lockstep Annihilation',
     url: 'https://games.niemo.io/budget-annihilation',
     stack: ['Vue', 'TypeScript', 'Three.js', 'Rust', 'WebAssembly', 'PeerJS'],
     type: '3D Physics-Based Real-Time Strategy',
@@ -528,7 +529,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2024 - Ongoing',
     projectStatus: 'ok',
-    title: 'Seouldat',
+    title: 'Seouldat: Networked Arena',
     url: 'https://seouldat.niemo.io',
     // url: 'http://34.230.11.31:1444/',
     stack: ['Phaser', 'Express', 'Socket.io'],
@@ -554,7 +555,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2024',
     projectStatus: 'ok',
-    title: 'Space',
+    title: 'Galaxy Destroyer',
     url: 'https://games.niemo.io/space',
     stack: ['Phaser', 'React', 'TypeScript', 'FL Studio'],
     type: 'Vertical Scrolling Shooter',
@@ -577,7 +578,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2024',
     projectStatus: 'ok',
-    title: 'Tanks',
+    title: 'Ballistic Gates',
     url: 'https://games.niemo.io/tanks',
     stack: ['Phaser', 'React', 'FL Studio'],
     type: 'Free-Roam Shooter',
@@ -596,7 +597,7 @@ export const videogame_projects: Project[] = [
   {
     dates: '2023',
     projectStatus: 'ok',
-    title: 'Kirby Run',
+    title: 'Portfolio Navigator',
     url: 'https://projects.niemo.io',
     stack: ['Phaser', 'React'],
     type: 'Navigation Game',
@@ -614,7 +615,7 @@ export const videogame_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Drive',
+    title: 'WebGL Drive',
     url: 'https://games.niemo.io/drive',
     stack: ['ThreeJS', 'React'],
     type: '3D Driving Simulation',
@@ -635,7 +636,7 @@ export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
-    title: 'Events',
+    title: 'Event RSVP System',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     type: 'C# Fullstack',
@@ -654,7 +655,7 @@ export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
-    title: 'Shows',
+    title: 'TV Show Registry',
     url: 'https://shows.niemo.io',
     stack: ['Python', 'Flask', 'MySQL'],
     bullets: ['Create, Read, Update, Delete', 'Form Validation', 'Bcrypt Password Hashing', 'Direct SQL Query'],
@@ -673,7 +674,7 @@ export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
-    title: 'Pirates',
+    title: 'Pirate Crew Manager',
     url: 'https://pirates.niemo.io',
     stack: ['React', 'Express', 'MongoDB'],
     description: 'A simple, clean, pirate management system, with CRUD database operations.',
@@ -691,7 +692,7 @@ export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
-    title: 'Design',
+    title: 'Frontend Experiments',
     url: 'https://design.niemo.io',
     stack: ['HTML', 'CSS', 'JavaScript'],
     type: 'Web Styling Fun',
@@ -712,7 +713,7 @@ export const art_projects: Project[] = [
   {
     dates: '2002 - Ongoing',
     projectStatus: 'ok',
-    title: 'Audio',
+    title: 'Original Compositions',
     url: 'https://soundcloud.com/niemoaudio/ars-niemo-small-talk-build-iv',
     stack: ['FL Studio'],
     type: 'Original Music',
@@ -734,7 +735,7 @@ export const art_projects: Project[] = [
   {
     dates: '2013 - 2021',
     projectStatus: 'ok',
-    title: 'Video',
+    title: 'Music Visualizations',
     url: 'https://www.youtube.com/@niemoaudio',
     stack: ['Adobe Premiere', 'After Effects', 'Photoshop'],
     type: 'Visual Effects',

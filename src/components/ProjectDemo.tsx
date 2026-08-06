@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useCallback } from 'react';
 import { ProjectStore } from '../store/ProjectStore';
-import type { Project } from '../data/myData';
+import { showProjectTitleIcons, type Project } from '../data/myData';
 import { useMediaVisibility } from '../hooks/useMediaVisibility';
 import { getProjectMediaKind, selectProjectMedia } from '../utils/projectMedia';
-import { scrollElementToVisualViewportBottom } from '../utils/viewport';
-import FancyButton from './FancyButton';
 import { isMobile, isThin } from './Main';
+import ProjectDetailsModal from './ProjectDetailsModal';
 import ProjectMedia from './ProjectMedia';
 
 interface ProjectDemoProps {
@@ -22,7 +21,6 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
   const hasTouchedAudioButton = ProjectStore((state) => state.hasTouchedAudioButton);
 
   const { mediaRef, hasEnteredViewport, isVisible } = useMediaVisibility<HTMLDivElement>();
-  const actionRef = useRef<HTMLDivElement>(null);
   const mediaSource = selectProjectMedia(project, connectionQuality);
   const mediaIsVideo = mediaSource ? getProjectMediaKind(mediaSource) === 'video' : false;
   const canLaunch =
@@ -32,27 +30,14 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
     setActiveProjectIndex(isActive ? null : index);
   };
 
-  const scrollActionIntoView = () => {
-    if (!isThin || !isActive) return;
-
-    const actionButton = actionRef.current?.querySelector('button');
-    if (actionButton) scrollElementToVisualViewportBottom(actionButton);
-  };
-
-  const handleDetailsTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
-    if (event.currentTarget !== event.target || event.propertyName !== 'grid-template-rows' || !isActive) {
-      return;
-    }
-
-    window.requestAnimationFrame(scrollActionIntoView);
-  };
+  const closeDetails = useCallback(() => setActiveProjectIndex(null), [setActiveProjectIndex]);
 
   const unavailableLabel = project.projectStatus !== 'ok' ? 'Offline' : isThin ? 'Desktop Only' : 'Mobile Only';
 
   return (
     <article className="w-full min-w-0 rounded-2xl transition-all duration-300">
       <div className="mb-4 flex min-h-14 flex-row items-center justify-center text-center">
-        {project.icon && (
+        {showProjectTitleIcons && project.icon && (
           <img
             src={`${process.env.PUBLIC_URL}/${project.icon}`}
             alt=""
@@ -74,7 +59,8 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
           className="group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-3xl bg-black/20 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
           onClick={handleMediaClick}
           aria-expanded={isActive}
-          aria-label={`${isActive ? 'Hide' : 'View'} details for ${project.title}`}
+          aria-haspopup="dialog"
+          aria-label={`View details for ${project.title}`}
         >
           {hasEnteredViewport && mediaSource && (
             <ProjectMedia
@@ -82,7 +68,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
               poster={project.image}
               title={project.title}
               isMuted={isMuted}
-              isVisible={isVisible}
+              isVisible={isVisible && !isActive}
             />
           )}
 
@@ -101,7 +87,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
           )}
         </button>
 
-        {project.hasSound && !isMobile && mediaIsVideo && hasEnteredViewport && (
+        {project.hasSound && !isMobile && mediaIsVideo && hasEnteredViewport && !isActive && (
           <button
             type="button"
             data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}
@@ -121,66 +107,19 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
         )}
       </div>
 
-      {isActive && project.dates && <p className="mt-4 text-center text-xl text-white">{project.dates}</p>}
-
-      <div
-        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
-          isActive ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-        }`}
-        onTransitionEnd={handleDetailsTransitionEnd}
-        aria-hidden={!isActive}
-      >
-        <div className={`min-h-0 overflow-hidden ${isActive ? 'visible' : 'invisible'}`}>
-          <div className="px-2 py-4 sm:px-4">
-            {project.type && (
-              <div className="pixel-font mb-2 text-2xl uppercase text-blue-300">
-                <strong>{project.type}</strong>
-              </div>
-            )}
-
-            {project.description && <p className="mb-4 text-lg text-blue-100">{project.description}</p>}
-
-            {project.stack && (
-              <>
-                <div className="pixel-font text-2xl text-fuchsia-300">
-                  <strong>STACK</strong>
-                </div>
-                <p className="mb-4 text-lg text-fuchsia-100">{project.stack.join(', ')}</p>
-              </>
-            )}
-
-            {project.bullets && (
-              <>
-                <div className="pixel-font text-2xl text-green-300">
-                  <strong>FEATURES</strong>
-                </div>
-                <ul className="list-inside list-disc text-lg text-green-100">
-                  {project.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-
-          <div ref={actionRef} className="px-4 pb-6">
-            {canLaunch ? (
-              <FancyButton
-                text={`${project.buttonStartText} ${project.title}`.toUpperCase()}
-                onClick={() => window.location.assign(project.url)}
-              />
-            ) : (
-              <button
-                type="button"
-                className="w-full rounded-3xl bg-white/50 py-2 text-2xl uppercase text-white/50"
-                disabled
-              >
-                {unavailableLabel}
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+      {isActive && (
+        <ProjectDetailsModal
+          project={project}
+          mediaSource={mediaSource}
+          isMuted={isMuted}
+          canControlSound={project.hasSound && !isMobile && mediaIsVideo}
+          showSoundHint={!hasTouchedAudioButton}
+          canLaunch={canLaunch}
+          unavailableLabel={unavailableLabel}
+          onToggleMuted={() => setMuted(index, !isMuted)}
+          onClose={closeDetails}
+        />
+      )}
     </article>
   );
 };

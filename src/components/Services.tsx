@@ -16,7 +16,7 @@ const services: Service[] = [
   {
     title: 'Westchester Flying Disc Incorporated FYI',
     description: ['Demo proposal functionality for WUDI league website'],
-    projectStatus: 'ok',
+    projectStatus: 'disabled',
     url: 'https://wudi.fyi/',
     desktop: true,
     mobile: true,

@@ -59,7 +59,7 @@ export const ProjectStore = create<ProjectStoreProps>((set) => ({
     if (index !== null) {
       ReactGA.event({
         category: 'User',
-        action: 'Project Expanded',
+        action: 'Project Details Opened',
         label: allProjects[index].title,
       });
     }
