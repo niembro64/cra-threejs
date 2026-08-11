@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import projectAtlasConfig from '../config/projectAtlas.json';
 
 interface BackgroundSceneProps {
   compact: boolean;
@@ -13,8 +14,10 @@ const getSaveDataPreference = (): boolean => {
   return connection?.saveData === true;
 };
 
-const PROJECT_ATLAS_COLUMNS = 5;
-const PROJECT_ATLAS_ROWS = 5;
+const PROJECT_ATLAS_COLUMNS = projectAtlasConfig.columns;
+const PROJECT_ATLAS_ROWS = projectAtlasConfig.rows;
+const PROJECT_ATLAS_WIDTH = PROJECT_ATLAS_COLUMNS * projectAtlasConfig.tileWidth;
+const PROJECT_ATLAS_HEIGHT = PROJECT_ATLAS_ROWS * projectAtlasConfig.tileHeight;
 const PROJECT_ATLAS_LAST_TILE = 20;
 const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4`;
 const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg`;
@@ -22,8 +25,8 @@ const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-at
 const setProjectAtlasUvs = (geometry: THREE.BufferGeometry, firstFaceTile: 0 | 20): void => {
   const uvs = geometry.getAttribute('uv') as THREE.BufferAttribute;
   const faceCount = geometry.getAttribute('position').count / 3;
-  const horizontalInset = 1 / 960;
-  const verticalInset = 1 / 540;
+  const horizontalInset = 1 / PROJECT_ATLAS_WIDTH;
+  const verticalInset = 1 / PROJECT_ATLAS_HEIGHT;
 
   for (let faceIndex = 0; faceIndex < faceCount; faceIndex += 1) {
     // Twenty projects remain fixed while the first face alternates between the
@@ -92,8 +95,8 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
           `#include <map_pars_fragment>
 #ifdef USE_MAP
   vec2 containedProjectAtlasUv(vec2 atlasUv) {
-    const vec2 atlasGrid = vec2(5.0, 5.0);
-    const vec2 tileInset = vec2(5.0 / 960.0, 5.0 / 540.0);
+    const vec2 atlasGrid = vec2(${PROJECT_ATLAS_COLUMNS.toFixed(1)}, ${PROJECT_ATLAS_ROWS.toFixed(1)});
+    const vec2 tileInset = vec2(${(1 / projectAtlasConfig.tileWidth).toFixed(8)}, ${(1 / projectAtlasConfig.tileHeight).toFixed(8)});
     vec2 tile = floor(atlasUv * atlasGrid);
     vec2 triangularUv = (fract(atlasUv * atlasGrid) - tileInset) / (1.0 - 2.0 * tileInset);
     float rowWidth = 1.0 - triangularUv.y;
@@ -123,10 +126,13 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
 
     const configureAtlasTexture = (texture: THREE.Texture) => {
       texture.encoding = THREE.sRGBEncoding;
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
+      const textureFilter = projectAtlasConfig.blur ? THREE.LinearFilter : THREE.NearestFilter;
+      texture.minFilter = textureFilter;
+      texture.magFilter = textureFilter;
       texture.generateMipmaps = false;
-      texture.anisotropy = Math.min(compact ? 2 : 4, renderer.capabilities.getMaxAnisotropy());
+      texture.anisotropy = projectAtlasConfig.blur
+        ? Math.min(compact ? 2 : 4, renderer.capabilities.getMaxAnisotropy())
+        : 1;
     };
 
     const applyAtlasTexture = (texture: THREE.Texture) => {

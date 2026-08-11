@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { readdirSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -8,13 +8,19 @@ const projectRoot = dirname(scriptDirectory);
 const mediaDirectory = join(projectRoot, 'public', 'project_media');
 const atlasFilename = 'project-atlas.mp4';
 const posterFilename = 'project-atlas.jpg';
+const configPath = join(projectRoot, 'src', 'config', 'projectAtlas.json');
+const atlasConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
-const columns = 5;
-const rows = 5;
-const tileWidth = 192;
-const tileHeight = 108;
-const framesPerSecond = 10;
-const durationSeconds = 12;
+const { columns, rows, tileWidth, tileHeight, framesPerSecond, durationSeconds, blur } = atlasConfig;
+
+if (
+  ![columns, rows, tileWidth, tileHeight, framesPerSecond, durationSeconds].every(
+    (value) => Number.isInteger(value) && value > 0
+  ) ||
+  typeof blur !== 'boolean'
+) {
+  throw new Error(`Invalid project atlas configuration in ${configPath}.`);
+}
 
 const sources = readdirSync(mediaDirectory)
   .filter((filename) => filename.endsWith('.mp4') && filename !== atlasFilename)
@@ -38,13 +44,16 @@ const tileInputs = sources.map((_, index) => `[tile${index}]`).join('');
 const layout = sources
   .map((_, index) => `${(index % columns) * tileWidth}_${Math.floor(index / columns) * tileHeight}`)
   .join('|');
+const appearanceFilters = ['eq=contrast=1:brightness=0.03:saturation=0.9'];
+if (blur) appearanceFilters.push('gblur=sigma=0.8');
+appearanceFilters.push('format=yuv420p');
 
 const filterGraph = [
   ...tileFilters,
   `${tileInputs}xstack=inputs=${sources.length}:layout=${layout}:fill=black[stacked]`,
   // Retain color and contrast while taking just enough saturation off for the
   // project footage to sit behind the foreground content.
-  `[stacked]eq=contrast=1:brightness=0.03:saturation=0.9,format=yuv420p[atlas]`,
+  `[stacked]${appearanceFilters.join(',')}[atlas]`,
 ].join(';');
 
 const atlasPath = join(mediaDirectory, atlasFilename);
@@ -67,11 +76,9 @@ const atlasResult = spawnSync(
     '-preset',
     'medium',
     '-crf',
-    '25',
+    '20',
     '-profile:v',
     'main',
-    '-level',
-    '3.1',
     '-tag:v',
     'avc1',
     '-g',
@@ -114,4 +121,7 @@ if (posterResult.status !== 0) {
   process.exit(posterResult.status ?? 1);
 }
 
-console.log(`Generated ${atlasFilename} and ${posterFilename} from ${sources.length} project videos.`);
+console.log(
+  `Generated ${atlasFilename} and ${posterFilename} from ${sources.length} project videos ` +
+    `(${columns * tileWidth}x${rows * tileHeight} at ${framesPerSecond} fps, blur ${blur ? 'on' : 'off'}).`
+);
