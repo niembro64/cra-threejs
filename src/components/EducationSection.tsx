@@ -4,6 +4,7 @@ import React from 'react';
 import { educations, showEmojis } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
+import DeferredImage from './DeferredImage';
 
 const EducationSection: React.FC = () => {
   return (
@@ -13,11 +14,7 @@ const EducationSection: React.FC = () => {
         {/* <h1 className="pixel-font text-center text-6xl font-bold">EDUCATION</h1> */}
 
         <div className="mb-4 mt-10">
-          <PixelArtText
-            scrollContainerSelector=".pixel-text-education"
-            pixelColor="#fff"
-            text=" EDUCATION "
-          />
+          <PixelArtText scrollContainerSelector=".pixel-text-education" pixelColor="#fff" text=" EDUCATION " />
         </div>
       </div>
 
@@ -31,7 +28,7 @@ const EducationSection: React.FC = () => {
             <>
               {edu.image && (
                 <a href={edu.image} target="_blank" rel="noopener noreferrer">
-                  <img
+                  <DeferredImage
                     className="my-4 cursor-pointer rounded-2xl transition-transform duration-500 hover:scale-105"
                     src={edu.image}
                     alt={edu.degree}
@@ -44,9 +41,7 @@ const EducationSection: React.FC = () => {
                     {detail.title}
                     <ul
                       className={`text-md my-2 ml-6 list-disc ${
-                        detail.lines.length > 7
-                          ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:w-1/2'
-                          : ''
+                        detail.lines.length > 7 ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:w-1/2' : ''
                       }`}
                     >
                       {detail.lines.map((l, j) => (
@@ -66,9 +61,7 @@ const EducationSection: React.FC = () => {
                       {detail.title}
                       <ul
                         className={`text-md ml-6 mt-1 w-[90%] list-disc ${
-                          detail.lines.length > 7
-                            ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2'
-                            : ''
+                          detail.lines.length > 7 ? 'grid grid-flow-row grid-cols-1 md:grid-cols-2' : ''
                         }`}
                       >
                         {detail.lines.map((l, j) => (
@@ -82,7 +75,7 @@ const EducationSection: React.FC = () => {
               <div className="flex w-1/2 items-start justify-end">
                 {edu.image ? (
                   <a href={edu.image} target="_blank" rel="noopener noreferrer">
-                    <img
+                    <DeferredImage
                       className="w-full cursor-pointer rounded-2xl transition-transform duration-500 hover:scale-105"
                       src={edu.image}
                       alt={edu.degree}

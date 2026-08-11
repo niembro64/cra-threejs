@@ -1,28 +1,15 @@
 // Main.tsx
 
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import ContactSection from './ContactSection';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Resume } from './Resume';
-import AudioSpectrogram, { AudioSpectrogramRef } from './Spectrogram';
+import AudioSpectrogram from './Spectrogram';
 import { Tooltip } from 'react-tooltip';
-// @ts-ignore
-import appleModelUrl from '../assets/w.glb';
-// @ts-ignore
-// import appleModelUrl from '../assets/snes_pal_controller.glb'
-// // @ts-ignore
-// import appleModelUrl from '../assets/apple.glb'
 import { ProjectStore } from '../store/ProjectStore';
-import {
-  showContactSection,
-  showKirbyGame,
-  showSmashedGif,
-  tooltipDelay,
-  toolTipStyle,
-  usePolyhedron,
-} from '../data/myData';
+import { showContactSection, showKirbyGame, showSmashedGif, tooltipDelay, toolTipStyle } from '../data/myData';
 import PixelArtText from './PixelArtText';
+
+const BackgroundScene = lazy(() => import('./BackgroundScene'));
 
 export const phoneNumber = '618-616-3380';
 export const email = 'niemeyer.eric@gmail.com';
@@ -33,25 +20,24 @@ export const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMo
 
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
+interface NetworkInformation {
+  downlink?: number;
+  effectiveType?: string;
+  saveData?: boolean;
+}
+
+type IdleWindow = Window &
+  typeof globalThis & {
+    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+    cancelIdleCallback?: (handle: number) => void;
+  };
+
 const Main: React.FC = () => {
-  const { setConnectionQuality } = ProjectStore();
-
-  const refContainer = useRef<HTMLDivElement | null>(null);
-
-  const backgroundShapeRef = useRef<THREE.Object3D | null>(null);
-
-  const mousePositionCurr = useRef(new THREE.Vector3());
-  const mousePositionPrev = useRef(new THREE.Vector3());
-  const scrollPosition = useRef(0);
-  const scrollPositionAverage = useRef(0);
+  const setConnectionQuality = ProjectStore((state) => state.setConnectionQuality);
   const highFreqPowerRef = useRef<number>(0);
   const lowFreqPowerRef = useRef<number>(0);
-
-  const lowerPowerAccumulatedRef = useRef<number>(0);
-  const upperPowerAccumulatedRef = useRef<number>(0);
-
   const audioRef = useRef<HTMLAudioElement>(null);
-  const spectrogramRef = useRef<AudioSpectrogramRef>(null);
+  const [sceneReady, setSceneReady] = useState(false);
 
   const [urlStateCurr, setUrlStateCurr] = useState<URL | null>(null);
   const [urlStatePrev, setUrlStatePrev] = useState<URL | null>(null);
@@ -100,292 +86,49 @@ const Main: React.FC = () => {
   }, [urlStateCurr, urlStatePrev]);
 
   useEffect(() => {
-    const scene: THREE.Scene = new THREE.Scene();
+    const idleWindow = window as IdleWindow;
+    let timeoutId = 0;
+    let idleId = 0;
 
-    const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
-      750,
-      window.innerWidth / window.innerHeight,
-      0.2,
-      10000
-    );
-    const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      failIfMajorPerformanceCaveat: false,
-    });
-
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
-    const screenWidth = window.innerWidth;
-
-    const globalX: number = isThin ? 0 : -screenWidth / 30;
-
-    if (usePolyhedron) {
-      // Create polyhedron (icosahedron)
-      const geometry = new THREE.IcosahedronGeometry(50, 0);
-      const material = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        flatShading: true,
-        metalness: 0.5,
-        roughness: 0.5,
-      });
-      const polyhedron = new THREE.Mesh(geometry, material);
-      polyhedron.position.x = globalX;
-      scene.add(polyhedron);
-      backgroundShapeRef.current = polyhedron;
+    if (idleWindow.requestIdleCallback) {
+      idleId = idleWindow.requestIdleCallback(() => setSceneReady(true), { timeout: 1200 });
     } else {
-      // Load GLB model (WD-40)
-      const loader = new GLTFLoader();
-      loader.load(
-        appleModelUrl,
-        (gltf) => {
-          const apple = gltf.scene;
-
-          // Apply scaling to match the size of the previous icosahedron
-
-          const scale = 60;
-
-          apple.scale.set(scale, scale, scale);
-          // apple.scale.set(90, 90, 90)
-
-          // Set position
-          apple.position.x = globalX;
-
-          // Add the model to the scene
-          scene.add(apple);
-
-          // Store reference to the model for animations
-          backgroundShapeRef.current = apple;
-        }
-        // Progress and error handlers...
-      );
+      timeoutId = window.setTimeout(() => setSceneReady(true), 150);
     }
-
-    camera.position.z = usePolyhedron ? 150 : 150;
-    camera.position.x = usePolyhedron ? 30 : 0;
-    camera.position.y = usePolyhedron ? 20 : 0;
-
-    const intensity = isThin ? 0.7 : 0.4;
-
-    const intensityLights = usePolyhedron ? intensity : intensity;
-    const intensityAmbient = usePolyhedron ? 0 : intensity;
-
-    const pointLightRed = new THREE.PointLight(0xff0000);
-    pointLightRed.position.set(500 + globalX, 1000, -5);
-    pointLightRed.intensity = intensityLights;
-    scene.add(pointLightRed);
-
-    const pointLightGreen = new THREE.PointLight(0x00ff00);
-    pointLightGreen.position.set(550 + globalX, 1000, -150);
-    pointLightGreen.intensity = intensityLights;
-    scene.add(pointLightGreen);
-
-    const pointLightBlue = new THREE.PointLight(0x0000ff);
-    pointLightBlue.position.set(600 + globalX, 1000, -5);
-    pointLightBlue.intensity = intensityLights;
-    scene.add(pointLightBlue);
-
-    const ambientLightThree = new THREE.AmbientLight(0xffffff);
-    ambientLightThree.intensity = intensityAmbient;
-
-    scene.add(ambientLightThree);
-
-    const getScenePositionFromScreen = (x: number, y: number): THREE.Vector3 => {
-      const vec = new THREE.Vector3((x / window.innerWidth) * 2 - 1, (-y / window.innerHeight) * 2 + 1, 0.5);
-      vec.unproject(camera);
-      const dir = vec.sub(camera.position).normalize();
-      const distance = -camera.position.z / dir.z;
-      return camera.position.clone().add(dir.multiplyScalar(distance));
-    };
-
-    const onMouseMove = (event: MouseEvent) => {
-      const scenePosition = getScenePositionFromScreen(event.clientX, event.clientY);
-      mousePositionCurr.current = scenePosition;
-    };
-    window.addEventListener('mousemove', onMouseMove);
-
-    const onTouchMove = (event: TouchEvent) => {
-      const touch = event.touches[0];
-      const scenePosition = getScenePositionFromScreen(touch.clientX, touch.clientY);
-      mousePositionCurr.current = scenePosition;
-      const distanceTravelled = mousePositionCurr.current.distanceTo(mousePositionPrev.current);
-      scrollPosition.current += distanceTravelled * 0.2;
-    };
-    window.addEventListener('touchmove', onTouchMove);
-
-    const onWheel = (event: WheelEvent) => {
-      const wheelDelta = event.deltaY * 0.1;
-      scrollPosition.current += wheelDelta;
-    };
-    window.addEventListener('wheel', onWheel);
-
-    if (refContainer.current) {
-      refContainer.current.appendChild(renderer.domElement);
-    }
-
-    const x = 0.0093;
-    const y = 0.007;
-    const z = 0.001;
-    const percentKeep = 0.99995;
-    const percentKeepMouse = 0.95;
-    let animationFrame = -1;
-    let animationFrameRequest = 0;
-
-    const animate = () => {
-      animationFrame += 1;
-      animationFrameRequest = requestAnimationFrame(animate);
-
-      scrollPositionAverage.current =
-        percentKeepMouse * scrollPositionAverage.current + (1 - percentKeepMouse) * scrollPosition.current;
-
-      if (!backgroundShapeRef.current) {
-        return;
-      }
-
-      backgroundShapeRef.current.rotation.z =
-        (percentKeepMouse * backgroundShapeRef.current.position.z +
-          (1 - percentKeepMouse) * scrollPositionAverage.current) *
-        0.1;
-
-      mousePositionPrev.current.x =
-        percentKeepMouse * mousePositionPrev.current.x + (1 - percentKeepMouse) * mousePositionCurr.current.x;
-      mousePositionPrev.current.y =
-        percentKeepMouse * mousePositionPrev.current.y + (1 - percentKeepMouse) * mousePositionCurr.current.y;
-      mousePositionPrev.current.z =
-        percentKeepMouse * mousePositionPrev.current.z + (1 - percentKeepMouse) * mousePositionCurr.current.z;
-
-      if (isMobile || isThin || !audioRef.current || audioRef.current.paused) {
-        backgroundShapeRef.current.rotation.x =
-          percentKeep * backgroundShapeRef.current.rotation.x +
-          (1 - percentKeep) * (20 * Math.sin(animationFrame * x) + mousePositionPrev.current.x);
-        backgroundShapeRef.current.rotation.y =
-          percentKeep * backgroundShapeRef.current.rotation.y +
-          (1 - percentKeep) * (20 * Math.sin(animationFrame * y) + mousePositionPrev.current.y);
-        backgroundShapeRef.current.rotation.z =
-          percentKeep * backgroundShapeRef.current.rotation.z + (1 - percentKeep) * (20 * Math.sin(animationFrame * z));
-      } else {
-        lowerPowerAccumulatedRef.current =
-          (lowerPowerAccumulatedRef.current + Math.pow(highFreqPowerRef.current, 2) * 0.0005) % 360;
-        upperPowerAccumulatedRef.current =
-          (upperPowerAccumulatedRef.current + Math.pow(lowFreqPowerRef.current, 3) * 0.002) % 360;
-        // lowerPowerAccumulatedRef.current =
-        //   (lowerPowerAccumulatedRef.current +
-        //     Math.pow(highFreqPowerRef.current, 1) * 0.002) %
-        //   360
-        // upperPowerAccumulatedRef.current =
-        //   (upperPowerAccumulatedRef.current +
-        //     Math.pow(lowFreqPowerRef.current, 3) * 0.001) %
-        //   360
-
-        const percentKeepPowerShort = 0.5;
-        const percentKeepPowerLong = 0.5;
-
-        backgroundShapeRef.current.rotation.x =
-          backgroundShapeRef.current.rotation.x * percentKeepPowerShort +
-          lowerPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
-
-        backgroundShapeRef.current.rotation.y =
-          backgroundShapeRef.current.rotation.y * percentKeepPowerShort +
-          upperPowerAccumulatedRef.current * (1 - percentKeepPowerShort);
-
-        pointLightRed.intensity =
-          pointLightRed.intensity * percentKeepPowerLong +
-          (0.5 + highFreqPowerRef.current * 0.2) * (1 - percentKeepPowerLong);
-        pointLightBlue.intensity =
-          pointLightBlue.intensity * percentKeepPowerLong +
-          (0.5 + lowFreqPowerRef.current * 0.2) * (1 - percentKeepPowerLong);
-        pointLightGreen.intensity = (pointLightBlue.intensity + pointLightRed.intensity) / 2;
-      }
-
-      if (!document.hidden) renderer.render(scene, camera);
-    };
-    animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameRequest);
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('wheel', onWheel);
-
-      scene.traverse((object) => {
-        if (!(object instanceof THREE.Mesh)) return;
-
-        object.geometry.dispose();
-        const materials = Array.isArray(object.material) ? object.material : [object.material];
-        materials.forEach((material) => material.dispose());
-      });
-      renderer.dispose();
-      renderer.domElement.remove();
-      backgroundShapeRef.current = null;
+      window.clearTimeout(timeoutId);
+      if (idleId) idleWindow.cancelIdleCallback?.(idleId);
     };
   }, []);
 
-  const setDefaultHighQuality = () => {
-    if (isThin) {
+  useEffect(() => {
+    const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+    const defaultQuality = isThin ? 'medium' : 'high';
+
+    if (connection?.saveData || connection?.effectiveType?.includes('2g') || (connection?.downlink ?? 10) < 1) {
+      setConnectionQuality('low');
+    } else if (connection?.effectiveType === '3g' || (connection?.downlink ?? 10) < 2) {
       setConnectionQuality('medium');
     } else {
-      setConnectionQuality('high');
+      setConnectionQuality(defaultQuality);
     }
-  };
-
-  useEffect(() => {
-    // @ts-ignore
-    const connection =
-      // @ts-ignore
-      navigator.connection ||
-      // @ts-ignore
-      navigator.webkitConnection ||
-      // @ts-ignore
-      navigator.mozConnection;
-    if (connection) {
-      // If downlink is available, use it to decide
-      if (connection.downlink) {
-        const downlinkMbps = connection.downlink;
-        console.log('Downlink (Mbps):', downlinkMbps);
-        if (downlinkMbps < 1) {
-          setConnectionQuality('low');
-        } else if (downlinkMbps < 2) {
-          setConnectionQuality('medium');
-        } else {
-          setDefaultHighQuality();
-        }
-      } else if (connection.effectiveType) {
-        const effectiveType = connection.effectiveType;
-        console.log('Effective type:', effectiveType);
-        if (effectiveType.includes('2g')) {
-          setConnectionQuality('low');
-        } else if (effectiveType === '3g') {
-          setConnectionQuality('medium');
-        } else {
-          setDefaultHighQuality();
-        }
-      } else {
-        setDefaultHighQuality();
-      }
-    } else {
-      setDefaultHighQuality();
-    }
-  }, []);
+  }, [setConnectionQuality]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full"></div>
 
-      {!isThin && (
-        // overflow is totally visible
-        <div className="fixed top-0 -z-10 h-full" ref={refContainer} />
+      {sceneReady && (
+        <Suspense fallback={null}>
+          <BackgroundScene
+            compact={isThin || isMobile}
+            highFreqPowerRef={highFreqPowerRef}
+            lowFreqPowerRef={lowFreqPowerRef}
+            audioRef={audioRef}
+          />
+        </Suspense>
       )}
-      {isThin && <div className="fixed left-0 top-0 -z-10 h-full w-full" ref={refContainer} />}
 
       {/* Desktop Resume & AudioSpectrogram */}
       {!isThin && (
@@ -403,7 +146,6 @@ const Main: React.FC = () => {
           </div>
           <div className="absolute bottom-2 left-0 flex w-full justify-center">
             <AudioSpectrogram
-              ref={spectrogramRef}
               highFreqPowerRef={highFreqPowerRef}
               lowFreqPowerRef={lowFreqPowerRef}
               audioRef={audioRef}

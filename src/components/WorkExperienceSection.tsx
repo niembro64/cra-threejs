@@ -4,6 +4,7 @@ import React from 'react';
 import { jobs, showEmojis } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
+import DeferredImage from './DeferredImage';
 
 const WorkExperienceSection: React.FC = () => {
   return (
@@ -13,16 +14,12 @@ const WorkExperienceSection: React.FC = () => {
         {/* <h1 className="pixel-font text-6xl font-bold">WORK</h1> */}
 
         <div className="mb-4 mt-10">
-          <PixelArtText
-            scrollContainerSelector=".pixel-text-work"
-            pixelColor="#fff"
-            text=" WORK "
-          />
+          <PixelArtText scrollContainerSelector=".pixel-text-work" pixelColor="#fff" text=" WORK " />
         </div>
       </div>
       {jobs.map((job, idx) => (
         <div key={job.title + idx} className="mb-16 flex flex-col items-center justify-center">
-          <img
+          <DeferredImage
             src={process.env.PUBLIC_URL + '/' + job.image}
             alt="logo"
             className="mb-4 h-24 w-auto rounded-2xl"
@@ -35,9 +32,7 @@ const WorkExperienceSection: React.FC = () => {
             {job.details.map((detail, i) => (
               <li key={i} className="mb-8">
                 {detail.title}
-                <ul
-                  className={`text-md ml-6 mt-1 w-[90%] list-disc ${'grid grid-flow-row grid-cols-2'}`}
-                >
+                <ul className={`text-md ml-6 mt-1 w-[90%] list-disc ${'grid grid-flow-row grid-cols-2'}`}>
                   {detail.lines.map((l, j) => (
                     <li key={j}>{l}</li>
                   ))}

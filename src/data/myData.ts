@@ -161,7 +161,7 @@ export const jobs: Job[] = [
 export const educations: Education[] = [
   {
     dates: '2018',
-    image: 'diploma_clean_01.png',
+    image: 'diploma_clean_01.webp',
     degree: 'BS Computer Engineering',
     school: 'Southern Illinois University Edwardsville',
     details: [
@@ -928,7 +928,7 @@ const laptop_docking_station = 'Docking Station for Macbook Pro M1 & Windows 11 
 
 export const workEnvironments: DeskEnvironment[] = [
   {
-    image: '/wfh_cut.jpg',
+    image: '/wfh_cut.webp',
     title: 'Home WorkStation',
     description: [
       '42U Server Rack for Home Lab',
@@ -942,7 +942,7 @@ export const workEnvironments: DeskEnvironment[] = [
     ],
   },
   {
-    image: '/bedroom.JPG',
+    image: '/bedroom.webp',
     title: 'Bedroom Desk',
     description: [
       laptop_docking_station,
@@ -952,7 +952,7 @@ export const workEnvironments: DeskEnvironment[] = [
     ],
   },
   {
-    image: '/office_cut.jpg',
+    image: '/office_cut.webp',
     title: 'Office Desk',
     description: [
       laptop_docking_station,
@@ -962,7 +962,7 @@ export const workEnvironments: DeskEnvironment[] = [
     ],
   },
   {
-    image: '/gpus.JPG',
+    image: '/gpus.webp',
     title: 'AI Development',
     description: ['Ubuntu Linux w/ NVIDIA & AMD GPUs for Neural Network Training'],
   },

@@ -16,6 +16,7 @@ import appleModelUrl from '../assets/w.glb';
 // import appleModelUrl from '../assets/snes_pal_controller.glb'
 // import appleModelUrl from '../assets/apple.glb'
 import '../drkcln.scss';
+import '../drkcln-global.scss';
 
 const DrkClnBrand: React.FC = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -34,12 +35,7 @@ const DrkClnBrand: React.FC = () => {
     sceneRef.current = scene;
     scene.background = new THREE.Color(0x000000);
 
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     cameraRef.current = camera;
     camera.position.z = 5;
 
@@ -136,10 +132,7 @@ const DrkClnBrand: React.FC = () => {
   return (
     <div className="drkcln-page relative min-h-screen overflow-x-hidden bg-black font-mono text-green-400">
       <div className="z-50 p-4">
-        <a
-          href="https://niemo.io"
-          className="rounded bg-green-800 px-4 py-2 text-green-400 hover:bg-green-700"
-        >
+        <a href="https://niemo.io" className="rounded bg-green-800 px-4 py-2 text-green-400 hover:bg-green-700">
           niemo.io
         </a>
       </div>

@@ -25,11 +25,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <PixelArtText
-            scrollContainerSelector=".pixel-text-niemo-io"
-            pixelColor="#fff"
-            text=" NIEMO.IO "
-          />
+          <PixelArtText scrollContainerSelector=".pixel-text-niemo-io" pixelColor="#fff" text=" NIEMO.IO " />
 
           <div className="h-40" />
           <div className="h-40" />
@@ -41,6 +37,8 @@ export const Resume: React.FC<ResumeProps> = () => {
                   className="transition-transform duration-500 hover:scale-105"
                   src="/eric.jpg"
                   alt="Picture of Eric"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             )}
@@ -50,9 +48,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               pixelColor="#fff"
               text=" ERIC NIEMEYER "
             />
-            <p className="pixel-font mt-4 text-2xl uppercase text-blue-300">
-              Stamford, Connecticut
-            </p>
+            <p className="pixel-font mt-4 text-2xl uppercase text-blue-300">Stamford, Connecticut</p>
 
             <div className="mb-4 flex flex-row items-center justify-center">
               {showSmashedGif ? (
@@ -61,9 +57,7 @@ export const Resume: React.FC<ResumeProps> = () => {
                 <div className="mb-20" />
               )}
             </div>
-            {showProfileAbout && (
-              <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>
-            )}
+            {showProfileAbout && <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>}
           </section>
           <div className="h-40" />
           <div className="h-40" />
@@ -95,6 +89,8 @@ export const Resume: React.FC<ResumeProps> = () => {
                 className="transition-transform duration-500 hover:scale-105"
                 src="/eric.jpg"
                 alt="Picture of Eric"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -105,27 +101,39 @@ export const Resume: React.FC<ResumeProps> = () => {
         </section>
       )}
 
-      <WorkExperienceSection />
+      <div className="performance-section">
+        <WorkExperienceSection />
+      </div>
 
       <div className="h-40" />
 
-      <EducationSection />
+      <div className="performance-section">
+        <EducationSection />
+      </div>
 
       <div className="h-40" />
 
-      <SkillsSection />
+      <div className="performance-section">
+        <SkillsSection />
+      </div>
 
       <div className="h-40" />
 
-      <WorkEnvironment />
+      <div className="performance-section">
+        <WorkEnvironment />
+      </div>
 
       <div className="h-40" />
 
-      <TriviaSection />
+      <div className="performance-section">
+        <TriviaSection />
+      </div>
 
       <div className="h-40" />
 
-      <SocialMediaSection />
+      <div className="performance-section">
+        <SocialMediaSection />
+      </div>
     </div>
   );
 };

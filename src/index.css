@@ -8,10 +8,81 @@
   src: url('./fonts/pixel_operator/PixelOperator.ttf');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 .pixel-font {
   font-family: 'PixelOperator', sans-serif;
+}
+
+.pixel-art-text {
+  contain: layout paint style;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.pixel-art-text__grid {
+  display: grid;
+  inset: 0;
+  position: absolute;
+}
+
+.pixel-art-text__pixel {
+  min-height: 1px;
+  min-width: 1px;
+  opacity: 0;
+}
+
+.pixel-art-text__pixel--visible {
+  animation: pixel-art-text-enter 0.5s forwards;
+  animation-delay: var(--pixel-delay);
+  border: 0.5px solid white;
+}
+
+.performance-section {
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
+.performance-project-group {
+  contain-intrinsic-size: auto 1800px;
+}
+
+@keyframes pixel-art-text-enter {
+  0% {
+    background-color: transparent;
+    opacity: 0;
+    transform: var(--pixel-start-transform);
+  }
+  55% {
+    background-color: var(--pixel-random-color);
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    background-color: var(--pixel-final-color);
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .pixel-art-text__pixel--visible {
+    background-color: var(--pixel-final-color);
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Scrollbar customization can be done with a plugin or global CSS. */

@@ -2,13 +2,13 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 interface MediaVisibility<T extends HTMLElement> {
   mediaRef: RefObject<T>;
-  hasEnteredViewport: boolean;
+  shouldLoadMedia: boolean;
   isVisible: boolean;
 }
 
 export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> => {
   const mediaRef = useRef<T>(null);
-  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const [shouldLoadMedia, setShouldLoadMedia] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -16,26 +16,28 @@ export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> 
     if (!mediaElement) return;
 
     if (!('IntersectionObserver' in window)) {
-      setHasEnteredViewport(true);
+      setShouldLoadMedia(true);
       setIsVisible(true);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-        if (entry.isIntersecting) setHasEnteredViewport(true);
-      },
-      {
-        root: null,
-        rootMargin: '200px 0px',
-        threshold: 0.05,
-      }
+    const preloadObserver = new IntersectionObserver(([entry]) => setShouldLoadMedia(entry.isIntersecting), {
+      root: null,
+      rootMargin: '400px 0px',
+      threshold: 0,
+    });
+    const playbackObserver = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.1),
+      { root: null, rootMargin: '0px', threshold: [0, 0.1] }
     );
 
-    observer.observe(mediaElement);
-    return () => observer.disconnect();
+    preloadObserver.observe(mediaElement);
+    playbackObserver.observe(mediaElement);
+    return () => {
+      preloadObserver.disconnect();
+      playbackObserver.disconnect();
+    };
   }, []);
 
-  return { mediaRef, hasEnteredViewport, isVisible };
+  return { mediaRef, shouldLoadMedia, isVisible };
 };

@@ -21,13 +21,23 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
     const video = videoRef.current;
     if (!video) return;
 
-    if (isVisible) {
-      void video.play().catch(() => {
-        // Autoplay may be denied until the user interacts with the page.
-      });
-    } else {
+    const updatePlayback = () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (isVisible && !document.hidden && !reduceMotion) {
+        void video.play().catch(() => {
+          // Autoplay may be denied until the user interacts with the page.
+        });
+      } else {
+        video.pause();
+      }
+    };
+
+    updatePlayback();
+    document.addEventListener('visibilitychange', updatePlayback);
+    return () => {
+      document.removeEventListener('visibilitychange', updatePlayback);
       video.pause();
-    }
+    };
   }, [isVisible, source]);
 
   if (mediaKind === 'video') {
@@ -37,11 +47,12 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
         className={mediaClassName}
         src={sourceUrl}
         poster={poster ? mediaBasePath + poster : undefined}
-        autoPlay={isVisible}
         muted={isMuted}
         loop
         playsInline
-        preload="metadata"
+        preload={isVisible ? 'metadata' : 'none'}
+        width={1280}
+        height={720}
         aria-label={`${title} video preview`}
       />
     );
@@ -55,6 +66,8 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
         alt={`${title} preview`}
         loading="lazy"
         decoding="async"
+        width={1280}
+        height={720}
         draggable={false}
       />
     );

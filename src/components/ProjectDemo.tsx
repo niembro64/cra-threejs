@@ -20,7 +20,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
   const setMuted = ProjectStore((state) => state.setMuted);
   const hasTouchedAudioButton = ProjectStore((state) => state.hasTouchedAudioButton);
 
-  const { mediaRef, hasEnteredViewport, isVisible } = useMediaVisibility<HTMLDivElement>();
+  const { mediaRef, shouldLoadMedia, isVisible } = useMediaVisibility<HTMLDivElement>();
   const mediaSource = selectProjectMedia(project, connectionQuality);
   const mediaIsVideo = mediaSource ? getProjectMediaKind(mediaSource) === 'video' : false;
   const canLaunch =
@@ -35,7 +35,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
   const unavailableLabel = project.projectStatus !== 'ok' ? 'Offline' : isThin ? 'Desktop Only' : 'Mobile Only';
 
   return (
-    <article className="w-full min-w-0 rounded-2xl transition-all duration-300">
+    <article className="w-full min-w-0 rounded-2xl">
       <div className="mb-4 flex min-h-14 flex-row items-center justify-center text-center">
         {showProjectTitleIcons && project.icon && (
           <img
@@ -62,7 +62,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
           aria-haspopup="dialog"
           aria-label={`View details for ${project.title}`}
         >
-          {hasEnteredViewport && mediaSource && (
+          {!isActive && shouldLoadMedia && mediaSource && (
             <ProjectMedia
               source={mediaSource}
               poster={project.image}
@@ -72,7 +72,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
             />
           )}
 
-          {!isActive && hasEnteredViewport && (
+          {!isActive && shouldLoadMedia && (
             <span
               className={`pointer-events-none absolute inset-0 flex rounded-3xl transition-opacity duration-300 ${
                 isThin
@@ -87,7 +87,7 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
           )}
         </button>
 
-        {project.hasSound && !isMobile && mediaIsVideo && hasEnteredViewport && !isActive && (
+        {project.hasSound && !isMobile && mediaIsVideo && shouldLoadMedia && !isActive && (
           <button
             type="button"
             data-tooltip-content={isMuted ? 'Unmute' : 'Mute'}

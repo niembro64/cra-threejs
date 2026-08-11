@@ -9,7 +9,10 @@ interface ProjectGroupProps {
 }
 
 const ProjectGroup: React.FC<ProjectGroupProps> = ({ group }) => (
-  <section className="mb-24 w-full" aria-labelledby={`${group.id}-heading`}>
+  <section
+    className="performance-section performance-project-group mb-24 w-full"
+    aria-labelledby={`${group.id}-heading`}
+  >
     <h2 id={`${group.id}-heading`} className="sr-only">
       {group.headingLines.join(' ').trim()}
     </h2>
@@ -26,7 +29,7 @@ const ProjectGroup: React.FC<ProjectGroupProps> = ({ group }) => (
     </div>
     <div className={`grid items-start gap-y-16 ${isThin ? 'grid-cols-1' : 'grid-cols-2 gap-x-8'}`}>
       {group.projects.map((project, projectIndex) => (
-        <div key={project.title} className="min-w-0 transition-all duration-300">
+        <div key={project.title} className="min-w-0">
           <ProjectDemo index={group.startIndex + projectIndex} project={project} />
         </div>
       ))}
