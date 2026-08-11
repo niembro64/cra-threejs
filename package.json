@@ -42,6 +42,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
+    "generate:project-atlas": "node scripts/generate-project-atlas.mjs",
     "typecheck": "tsc --noEmit"
   },
   "eslintConfig": {

@@ -67,7 +67,7 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
     );
   }
 
-  if (mediaKind === 'gif' || mediaKind === 'image') {
+  if (mediaKind === 'image') {
     // Mounting is already controlled by IntersectionObserver, so eager loading
     // here means "eager within the prefetch window," not page-wide.
     return (

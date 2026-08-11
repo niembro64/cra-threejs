@@ -13,6 +13,38 @@ const getSaveDataPreference = (): boolean => {
   return connection?.saveData === true;
 };
 
+const PROJECT_ATLAS_COLUMNS = 5;
+const PROJECT_ATLAS_ROWS = 5;
+const PROJECT_ATLAS_LAST_TILE = 20;
+const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4`;
+const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg`;
+
+const setProjectAtlasUvs = (geometry: THREE.BufferGeometry, firstFaceTile: 0 | 20): void => {
+  const uvs = geometry.getAttribute('uv') as THREE.BufferAttribute;
+  const faceCount = geometry.getAttribute('position').count / 3;
+  const horizontalInset = 1 / 960;
+  const verticalInset = 1 / 540;
+
+  for (let faceIndex = 0; faceIndex < faceCount; faceIndex += 1) {
+    // Twenty projects remain fixed while the first face alternates between the
+    // remaining two, allowing all 21 projects to appear on a 20-face shape.
+    const tileIndex = faceIndex === 0 ? firstFaceTile : faceIndex;
+    const column = tileIndex % PROJECT_ATLAS_COLUMNS;
+    const row = Math.floor(tileIndex / PROJECT_ATLAS_COLUMNS);
+    const uMin = column / PROJECT_ATLAS_COLUMNS + horizontalInset;
+    const uMax = (column + 1) / PROJECT_ATLAS_COLUMNS - horizontalInset;
+    const vMin = 1 - (row + 1) / PROJECT_ATLAS_ROWS + verticalInset;
+    const vMax = 1 - row / PROJECT_ATLAS_ROWS - verticalInset;
+    const vertexOffset = faceIndex * 3;
+
+    uvs.setXY(vertexOffset, (uMin + uMax) / 2, vMax);
+    uvs.setXY(vertexOffset + 1, uMin, vMin);
+    uvs.setXY(vertexOffset + 2, uMax, vMin);
+  }
+
+  uvs.needsUpdate = true;
+};
+
 const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowerRef, lowFreqPowerRef, audioRef }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -50,10 +82,115 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
       flatShading: true,
       metalness: 0.5,
       roughness: 0.5,
+      emissive: 0xffffff,
+      emissiveIntensity: compact ? 0.22 : 0.15,
     });
+    material.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader
+        .replace(
+          '#include <map_pars_fragment>',
+          `#include <map_pars_fragment>
+#ifdef USE_MAP
+  vec2 containedProjectAtlasUv(vec2 atlasUv) {
+    const vec2 atlasGrid = vec2(5.0, 5.0);
+    const vec2 tileInset = vec2(5.0 / 960.0, 5.0 / 540.0);
+    vec2 tile = floor(atlasUv * atlasGrid);
+    vec2 triangularUv = (fract(atlasUv * atlasGrid) - tileInset) / (1.0 - 2.0 * tileInset);
+    float rowWidth = 1.0 - triangularUv.y;
+    float containedU = rowWidth > 0.001
+      ? (triangularUv.x - triangularUv.y * 0.5) / rowWidth
+      : 0.5;
+    vec2 containedUv = vec2(clamp(containedU, 0.0, 1.0), clamp(triangularUv.y, 0.0, 1.0));
+    return (tile + tileInset + containedUv * (1.0 - 2.0 * tileInset)) / atlasGrid;
+  }
+#endif`
+        )
+        .replace('texture2D( map, vUv )', 'texture2D( map, containedProjectAtlasUv( vUv ) )')
+        .replace('texture2D( emissiveMap, vUv )', 'texture2D( emissiveMap, containedProjectAtlasUv( vUv ) )');
+    };
+    material.customProgramCacheKey = () => 'contained-project-atlas-v1';
     const shape = new THREE.Mesh(geometry, material);
     shape.position.x = globalX;
     scene.add(shape);
+    setProjectAtlasUvs(geometry, 0);
+
+    let atlasPosterTexture: THREE.Texture | null = null;
+    let atlasVideoTexture: THREE.VideoTexture | null = null;
+    let atlasVideo: HTMLVideoElement | null = null;
+    let atlasCycleTimer = 0;
+    let atlasVideoIsApplied = false;
+    let sceneDisposed = false;
+
+    const configureAtlasTexture = (texture: THREE.Texture) => {
+      texture.encoding = THREE.sRGBEncoding;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.generateMipmaps = false;
+      texture.anisotropy = Math.min(compact ? 2 : 4, renderer.capabilities.getMaxAnisotropy());
+    };
+
+    const applyAtlasTexture = (texture: THREE.Texture) => {
+      if (sceneDisposed) {
+        texture.dispose();
+        return;
+      }
+
+      material.map = texture;
+      material.emissiveMap = texture;
+      material.needsUpdate = true;
+      if (prefersReducedMotion) renderer.render(scene, camera);
+    };
+
+    const loadingPosterTexture = new THREE.TextureLoader().load(PROJECT_ATLAS_POSTER, (texture) => {
+      if (atlasVideoIsApplied) {
+        texture.dispose();
+        if (atlasPosterTexture === texture) atlasPosterTexture = null;
+        return;
+      }
+
+      applyAtlasTexture(texture);
+    });
+    configureAtlasTexture(loadingPosterTexture);
+    atlasPosterTexture = loadingPosterTexture;
+
+    if (!prefersReducedMotion && !saveData) {
+      const video = document.createElement('video');
+      atlasVideo = video;
+      video.crossOrigin = 'anonymous';
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = 'auto';
+      video.disablePictureInPicture = true;
+      video.setAttribute('playsinline', '');
+
+      const onAtlasLoaded = () => {
+        if (sceneDisposed) return;
+
+        const texture = new THREE.VideoTexture(video);
+        configureAtlasTexture(texture);
+        atlasVideoTexture = texture;
+        atlasVideoIsApplied = true;
+        applyAtlasTexture(texture);
+        atlasPosterTexture?.dispose();
+        atlasPosterTexture = null;
+      };
+
+      video.addEventListener('loadeddata', onAtlasLoaded, { once: true });
+      video.src = PROJECT_ATLAS_VIDEO;
+      video.load();
+      void video.play().catch(() => {
+        // Muted inline video normally autoplays; the poster remains available
+        // if a browser still requires interaction.
+      });
+
+      let showLastProject = false;
+      atlasCycleTimer = window.setInterval(() => {
+        showLastProject = !showLastProject;
+        setProjectAtlasUvs(geometry, showLastProject ? PROJECT_ATLAS_LAST_TILE : 0);
+      }, 6000);
+    }
 
     camera.position.set(compact ? 0 : 30, compact ? 0 : 20, 150);
 
@@ -69,7 +206,9 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     const pointLightBlue = new THREE.PointLight(0x0000ff, baseIntensity);
     pointLightBlue.position.set(600 + globalX, 1000, -5);
     scene.add(pointLightBlue);
-    scene.add(new THREE.AmbientLight(0xffffff, 0));
+    // A low ambient contribution keeps project footage legible on faces turned
+    // away from the colored point lights without flattening the faceted shape.
+    scene.add(new THREE.AmbientLight(0xffffff, compact ? 0.2 : 0.12));
 
     const mouseTarget = new THREE.Vector2();
     const mouseSmoothed = new THREE.Vector2();
@@ -148,8 +287,15 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     };
 
     const onVisibilityChange = () => {
-      if (document.hidden) stopRendering();
-      else startRendering();
+      if (document.hidden) {
+        stopRendering();
+        atlasVideo?.pause();
+      } else {
+        startRendering();
+        void atlasVideo?.play().catch(() => {
+          // The static atlas poster remains visible if autoplay is unavailable.
+        });
+      }
     };
 
     const onResize = () => {
@@ -180,12 +326,19 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     else startRendering();
 
     return () => {
+      sceneDisposed = true;
       stopRendering();
       window.cancelAnimationFrame(resizeRequest);
+      window.clearInterval(atlasCycleTimer);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       (scrollElement ?? window).removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibilityChange);
+      atlasVideo?.pause();
+      atlasVideo?.removeAttribute('src');
+      atlasVideo?.load();
+      atlasPosterTexture?.dispose();
+      atlasVideoTexture?.dispose();
       geometry.dispose();
       material.dispose();
       renderer.dispose();

@@ -5,7 +5,6 @@ import { getProjectMediaKind, selectProjectMedia } from './projectMedia';
 const project: Project = {
   ...ai_projects[0],
   image: 'preview.jpg',
-  gif: 'preview.gif',
   video: 'preview.mp4',
 };
 
@@ -20,10 +19,15 @@ describe('project media helpers', () => {
     expect(selectProjectMedia(project, 'high')).toBe('preview.mp4');
   });
 
+  it('falls back between posters and videos without requiring GIF assets', () => {
+    expect(selectProjectMedia({ ...project, image: null }, 'low')).toBe('preview.mp4');
+    expect(selectProjectMedia({ ...project, video: null }, 'high')).toBe('preview.jpg');
+  });
+
   it('recognizes supported media extensions with URLs and mixed casing', () => {
     expect(getProjectMediaKind('demo.WEBM?cache=1')).toBe('video');
-    expect(getProjectMediaKind('demo.gif#frame')).toBe('gif');
     expect(getProjectMediaKind('demo.avif')).toBe('image');
+    expect(getProjectMediaKind('demo.gif#frame')).toBeNull();
     expect(getProjectMediaKind('demo.txt')).toBeNull();
   });
 });
