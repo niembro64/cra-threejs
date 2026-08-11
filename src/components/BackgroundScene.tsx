@@ -27,7 +27,7 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: !compact && !saveData,
+        antialias: true,
         alpha: true,
         powerPreference: compact || saveData ? 'low-power' : 'high-performance',
         failIfMajorPerformanceCaveat: true,
