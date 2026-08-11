@@ -116,7 +116,7 @@ const Main: React.FC = () => {
   }, [setConnectionQuality]);
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
+    <div className="relative min-h-screen w-full overflow-x-clip">
       <div className="absolute left-0 top-0 -z-10 min-h-screen w-full"></div>
 
       {sceneReady && (

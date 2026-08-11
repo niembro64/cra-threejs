@@ -14,31 +14,46 @@ const DeferredImage: React.FC<DeferredImageProps> = ({ src, alt = '', ...imagePr
     const image = imageRef.current;
     if (!image || shouldLoad) return;
 
-    if (!('IntersectionObserver' in window)) {
-      setShouldLoad(true);
-      return;
-    }
+    const scrollRoot = image.closest<HTMLElement>('.App');
+    let prefetchFrame = 0;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
+    const checkPrefetchWindow = () => {
+      prefetchFrame = 0;
+      const imageBounds = image.getBoundingClientRect();
+      const rootBounds = scrollRoot?.getBoundingClientRect();
+      const rootTop = rootBounds?.top ?? 0;
+      const rootBottom = rootBounds?.bottom ?? window.innerHeight;
+
+      if (imageBounds.bottom >= rootTop - 600 && imageBounds.top <= rootBottom + 1600) {
         setShouldLoad(true);
-        observer.disconnect();
-      },
-      { root: null, rootMargin: '800px 0px', threshold: 0 }
-    );
+      }
+    };
 
-    observer.observe(image);
-    return () => observer.disconnect();
+    const schedulePrefetchCheck = () => {
+      if (prefetchFrame) return;
+      prefetchFrame = window.requestAnimationFrame(checkPrefetchWindow);
+    };
+
+    checkPrefetchWindow();
+    (scrollRoot ?? window).addEventListener('scroll', schedulePrefetchCheck, { passive: true });
+    window.addEventListener('resize', schedulePrefetchCheck, { passive: true });
+
+    return () => {
+      window.cancelAnimationFrame(prefetchFrame);
+      (scrollRoot ?? window).removeEventListener('scroll', schedulePrefetchCheck);
+      window.removeEventListener('resize', schedulePrefetchCheck);
+    };
   }, [shouldLoad]);
 
+  // The custom observer is the loading boundary; native lazy loading would
+  // otherwise be free to postpone the real source until it is visible.
   return (
     <img
       {...imageProps}
       ref={imageRef}
       src={shouldLoad ? src : transparentPixel}
       alt={alt}
-      loading="lazy"
+      loading="eager"
       decoding="async"
     />
   );

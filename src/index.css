@@ -37,7 +37,8 @@
 }
 
 .performance-project-group {
-  contain-intrinsic-size: auto 1800px;
+  /* Keep card geometry available so media observers can prefetch ahead. */
+  contain: layout paint style;
 }
 
 @media (prefers-reduced-motion: reduce) {

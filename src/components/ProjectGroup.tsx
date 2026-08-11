@@ -9,10 +9,7 @@ interface ProjectGroupProps {
 }
 
 const ProjectGroup: React.FC<ProjectGroupProps> = ({ group }) => (
-  <section
-    className="performance-section performance-project-group mb-24 w-full"
-    aria-labelledby={`${group.id}-heading`}
-  >
+  <section className="performance-project-group mb-24 w-full" aria-labelledby={`${group.id}-heading`}>
     <h2 id={`${group.id}-heading`} className="sr-only">
       {group.headingLines.join(' ').trim()}
     </h2>

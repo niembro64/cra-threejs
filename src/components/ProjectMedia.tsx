@@ -21,6 +21,15 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
     const video = videoRef.current;
     if (!video) return;
 
+    // This component is only mounted inside the bounded prefetch window, so
+    // explicitly start buffering rather than waiting for viewport visibility.
+    video.load();
+  }, [source]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
     const updatePlayback = () => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (isVisible && !document.hidden && !reduceMotion) {
@@ -50,7 +59,7 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
         muted={isMuted}
         loop
         playsInline
-        preload={isVisible ? 'metadata' : 'none'}
+        preload="auto"
         width={1280}
         height={720}
         aria-label={`${title} video preview`}
@@ -59,12 +68,14 @@ const ProjectMedia: React.FC<ProjectMediaProps> = ({ source, poster, title, isMu
   }
 
   if (mediaKind === 'gif' || mediaKind === 'image') {
+    // Mounting is already controlled by IntersectionObserver, so eager loading
+    // here means "eager within the prefetch window," not page-wide.
     return (
       <img
         className={mediaClassName}
         src={sourceUrl}
         alt={`${title} preview`}
-        loading="lazy"
+        loading="eager"
         decoding="async"
         width={1280}
         height={720}

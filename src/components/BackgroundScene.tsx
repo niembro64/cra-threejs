@@ -77,44 +77,68 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     let scrollSmoothed = 0;
     let lowerPowerAccumulated = 0;
     let upperPowerAccumulated = 0;
-    let frame = 0;
+    let rotationX = 0;
+    let rotationY = 0;
+    let rotationZ = 0;
+    let audioWasPlaying = false;
     let frameRequest = 0;
     let resizeRequest = 0;
     let lastRenderTime = 0;
-    const targetFps = compact || saveData ? 30 : 60;
-    const frameInterval = 1000 / targetFps;
     const scrollElement = document.querySelector<HTMLElement>('.App');
 
     const renderFrame = (time: number) => {
       frameRequest = window.requestAnimationFrame(renderFrame);
-      if (time - lastRenderTime < frameInterval) return;
-
-      const elapsedFrames = Math.min((time - lastRenderTime) / (1000 / 60), 4);
+      const elapsedMilliseconds = time - lastRenderTime;
       lastRenderTime = time;
-      frame += elapsedFrames;
-      scrollSmoothed += (scrollTarget - scrollSmoothed) * 0.05;
-      mouseSmoothed.lerp(mouseTarget, 0.05);
-      shape.rotation.z += (scrollSmoothed * 0.001 - shape.rotation.z) * 0.05;
+      const deltaSeconds = Math.min(elapsedMilliseconds / 1000, 0.05);
+      const elapsedFrames = deltaSeconds * 60;
+      const motionBlend = 1 - Math.exp(-8 * deltaSeconds);
+      const audioBlend = 1 - Math.exp(-42 * deltaSeconds);
+      const lightBlend = 1 - Math.exp(-20 * deltaSeconds);
 
-      if (!audioRef.current || audioRef.current.paused) {
-        shape.rotation.x += (20 * Math.sin(frame * 0.0093) + mouseSmoothed.x - shape.rotation.x) * 0.00005;
-        shape.rotation.y += (20 * Math.sin(frame * 0.007) + mouseSmoothed.y - shape.rotation.y) * 0.00005;
+      scrollSmoothed += (scrollTarget - scrollSmoothed) * motionBlend;
+      mouseSmoothed.lerp(mouseTarget, motionBlend);
+
+      const audioIsPlaying = Boolean(audioRef.current && !audioRef.current.paused);
+      if (!audioIsPlaying) {
+        audioWasPlaying = false;
+        // Time-based angular velocity keeps the same speed at 30, 60, and
+        // higher display refresh rates instead of relying on frame count.
+        rotationX += 0.22 * deltaSeconds;
+        rotationY += 0.32 * deltaSeconds;
+        rotationZ += 0.08 * deltaSeconds;
       } else {
-        lowerPowerAccumulated = (lowerPowerAccumulated + Math.pow(highFreqPowerRef.current, 2) * 0.0005) % 360;
-        upperPowerAccumulated = (upperPowerAccumulated + Math.pow(lowFreqPowerRef.current, 3) * 0.002) % 360;
-        shape.rotation.x = shape.rotation.x * 0.5 + lowerPowerAccumulated * 0.5;
-        shape.rotation.y = shape.rotation.y * 0.5 + upperPowerAccumulated * 0.5;
-        pointLightRed.intensity = pointLightRed.intensity * 0.5 + (0.5 + highFreqPowerRef.current * 0.2) * 0.5;
-        pointLightBlue.intensity = pointLightBlue.intensity * 0.5 + (0.5 + lowFreqPowerRef.current * 0.2) * 0.5;
-        pointLightGreen.intensity = (pointLightBlue.intensity + pointLightRed.intensity) / 2;
+        if (!audioWasPlaying) {
+          lowerPowerAccumulated = rotationX;
+          upperPowerAccumulated = rotationY;
+          audioWasPlaying = true;
+        }
+
+        lowerPowerAccumulated += Math.pow(highFreqPowerRef.current, 2) * 0.0005 * elapsedFrames;
+        upperPowerAccumulated += Math.pow(lowFreqPowerRef.current, 3) * 0.002 * elapsedFrames;
+        rotationX += (lowerPowerAccumulated - rotationX) * audioBlend;
+        rotationY += (upperPowerAccumulated - rotationY) * audioBlend;
+        rotationZ += 0.08 * deltaSeconds;
       }
+
+      const mouseInfluence = audioIsPlaying ? 0 : 0.035;
+      shape.rotation.x = rotationX + mouseSmoothed.x * mouseInfluence;
+      shape.rotation.y = rotationY + mouseSmoothed.y * mouseInfluence;
+      shape.rotation.z = rotationZ + scrollSmoothed * 0.001;
+
+      const redTarget = audioIsPlaying ? 0.5 + highFreqPowerRef.current * 0.2 : baseIntensity;
+      const blueTarget = audioIsPlaying ? 0.5 + lowFreqPowerRef.current * 0.2 : baseIntensity;
+      pointLightRed.intensity += (redTarget - pointLightRed.intensity) * lightBlend;
+      pointLightBlue.intensity += (blueTarget - pointLightBlue.intensity) * lightBlend;
+      pointLightGreen.intensity +=
+        ((pointLightBlue.intensity + pointLightRed.intensity) / 2 - pointLightGreen.intensity) * lightBlend;
 
       renderer.render(scene, camera);
     };
 
     const startRendering = () => {
       if (frameRequest || document.hidden || prefersReducedMotion) return;
-      lastRenderTime = performance.now() - frameInterval;
+      lastRenderTime = performance.now();
       frameRequest = window.requestAnimationFrame(renderFrame);
     };
 
@@ -150,6 +174,7 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
     if (!compact) window.addEventListener('mousemove', onMouseMove, { passive: true });
     (scrollElement ?? window).addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
+    onScroll();
 
     if (prefersReducedMotion) renderer.render(scene, camera);
     else startRendering();
