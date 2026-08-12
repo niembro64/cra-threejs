@@ -112,9 +112,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
         aria-labelledby={titleId}
         aria-describedby={project.description ? descriptionId : undefined}
         tabIndex={-1}
-        className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-3xl overflow-y-auto overscroll-contain rounded-3xl border border-blue-300/50 bg-slate-950 shadow-2xl outline-none sm:max-h-[calc(100dvh-4rem)]"
+        className="relative flex max-h-[calc(100dvh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-blue-300/50 bg-slate-950 shadow-2xl outline-none sm:max-h-[calc(100dvh-4rem)]"
       >
-        <header className="sticky top-0 z-10 flex items-start gap-3 border-b border-white/10 bg-slate-950/95 px-5 py-5 pr-16 backdrop-blur sm:px-8 sm:py-6 sm:pr-20">
+        <header className="relative z-10 flex shrink-0 items-start gap-3 border-b border-white/10 bg-slate-950/95 px-5 py-5 pr-16 backdrop-blur sm:px-8 sm:py-6 sm:pr-20">
           {showProjectTitleIcons && project.icon && (
             <img
               src={`${process.env.PUBLIC_URL}/${project.icon}`}
@@ -141,84 +141,86 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
           </button>
         </header>
 
-        {mediaSource && (
-          <div className="px-5 pt-6 sm:px-8 sm:pt-8">
-            <div className="relative">
-              <ProjectMedia
-                source={mediaSource}
-                poster={project.image}
-                title={project.title}
-                isMuted={isMuted}
-                isVisible
-                viewTransitionName={viewTransitionName}
-                initialVideoTime={initialVideoTime}
-                onVideoElement={onVideoElement}
-              />
-              {canControlSound && (
-                <button
-                  type="button"
-                  className="absolute bottom-2 right-2 z-10 rounded-full bg-black/70 p-2 text-white shadow-xl transition-colors hover:bg-white/30 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
-                  onClick={onToggleMuted}
-                  aria-label={isMuted ? `Unmute ${project.title}` : `Mute ${project.title}`}
-                >
-                  <img
-                    src={`${process.env.PUBLIC_URL}/${isMuted ? 'no-sound.png' : 'sound.png'}`}
-                    alt=""
-                    className="h-8 w-8"
-                  />
-                  {showSoundHint && (
-                    <span className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50" />
-                  )}
-                </button>
-              )}
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          {mediaSource && (
+            <div className="px-5 pt-6 sm:px-8 sm:pt-8">
+              <div className="relative">
+                <ProjectMedia
+                  source={mediaSource}
+                  poster={project.image}
+                  title={project.title}
+                  isMuted={isMuted}
+                  isVisible
+                  viewTransitionName={viewTransitionName}
+                  initialVideoTime={initialVideoTime}
+                  onVideoElement={onVideoElement}
+                />
+                {canControlSound && (
+                  <button
+                    type="button"
+                    className="absolute bottom-2 right-2 z-10 rounded-full bg-black/70 p-2 text-white shadow-xl transition-colors hover:bg-white/30 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+                    onClick={onToggleMuted}
+                    aria-label={isMuted ? `Unmute ${project.title}` : `Mute ${project.title}`}
+                  >
+                    <img
+                      src={`${process.env.PUBLIC_URL}/${isMuted ? 'no-sound.png' : 'sound.png'}`}
+                      alt=""
+                      className="h-8 w-8"
+                    />
+                    {showSoundHint && (
+                      <span className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50" />
+                    )}
+                  </button>
+                )}
+              </div>
+              <div className="pt-4">
+                {canLaunch ? (
+                  <FancyButton text="START" onClick={() => window.location.assign(project.url)} />
+                ) : (
+                  <button
+                    type="button"
+                    className="w-full rounded-3xl bg-white/10 py-3 text-2xl uppercase text-white/50"
+                    disabled
+                  >
+                    {unavailableLabel}
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="pt-4">
-              {canLaunch ? (
-                <FancyButton text="START" onClick={() => window.location.assign(project.url)} />
-              ) : (
-                <button
-                  type="button"
-                  className="w-full rounded-3xl bg-white/10 py-3 text-2xl uppercase text-white/50"
-                  disabled
-                >
-                  {unavailableLabel}
-                </button>
-              )}
-            </div>
+          )}
+
+          <div className="space-y-5 px-5 py-6 sm:px-8 sm:py-8">
+            {project.type && (
+              <section>
+                <h3 className="pixel-font text-2xl uppercase text-blue-300">Type</h3>
+                <p className="mt-1 text-lg text-blue-100">{project.type}</p>
+              </section>
+            )}
+
+            {project.description && (
+              <p id={descriptionId} className="text-lg leading-relaxed text-blue-100">
+                {project.description}
+              </p>
+            )}
+
+            {project.stack && (
+              <section>
+                <h3 className="pixel-font text-2xl uppercase text-fuchsia-300">Stack</h3>
+                <p className="mt-1 text-lg text-fuchsia-100">{project.stack.join(', ')}</p>
+              </section>
+            )}
+
+            {project.bullets && (
+              <section>
+                <h3 className="pixel-font text-2xl uppercase text-green-300">Features</h3>
+                <ul className="mt-1 list-outside list-disc space-y-1 pl-6 text-lg text-green-100">
+                  {project.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
-        )}
-
-        <div className="space-y-5 px-5 py-6 sm:px-8 sm:py-8">
-          {project.type && (
-            <section>
-              <h3 className="pixel-font text-2xl uppercase text-blue-300">Type</h3>
-              <p className="mt-1 text-lg text-blue-100">{project.type}</p>
-            </section>
-          )}
-
-          {project.description && (
-            <p id={descriptionId} className="text-lg leading-relaxed text-blue-100">
-              {project.description}
-            </p>
-          )}
-
-          {project.stack && (
-            <section>
-              <h3 className="pixel-font text-2xl uppercase text-fuchsia-300">Stack</h3>
-              <p className="mt-1 text-lg text-fuchsia-100">{project.stack.join(', ')}</p>
-            </section>
-          )}
-
-          {project.bullets && (
-            <section>
-              <h3 className="pixel-font text-2xl uppercase text-green-300">Features</h3>
-              <ul className="mt-1 list-outside list-disc space-y-1 pl-6 text-lg text-green-100">
-                {project.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </section>
-          )}
         </div>
       </div>
     </div>,
