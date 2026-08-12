@@ -5,5 +5,10 @@
   "tileHeight": 216,
   "framesPerSecond": 30,
   "durationSeconds": 12,
-  "blur": false
+  "blur": false,
+  "temporalSmear": {
+    "enabled": true,
+    "radiusFrames": 4,
+    "decay": 0.65
+  }
 }
