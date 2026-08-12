@@ -12,8 +12,8 @@ export interface ProjectGroup {
 const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
   {
     id: 'ai-projects',
-    headingLines: [' AI '],
-    subtitle: 'Neural Networks & Genetic Algorithms',
+    headingLines: [' ML '],
+    subtitle: 'Neural Nets & Optimizations',
     projects: ai_projects,
   },
   {
