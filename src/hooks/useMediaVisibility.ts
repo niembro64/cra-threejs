@@ -6,6 +6,9 @@ interface MediaVisibility<T extends HTMLElement> {
   isVisible: boolean;
 }
 
+const MIN_MEDIA_LOAD_BUFFER_PX = 2400;
+const MIN_MEDIA_UNLOAD_BUFFER_PX = 4200;
+
 export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> => {
   const mediaRef = useRef<T>(null);
   const [shouldLoadMedia, setShouldLoadMedia] = useState(false);
@@ -27,9 +30,16 @@ export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> 
       const rootBounds = scrollRoot?.getBoundingClientRect();
       const rootTop = rootBounds?.top ?? 0;
       const rootBottom = rootBounds?.bottom ?? window.innerHeight;
-      const isInsidePrefetchWindow = mediaBounds.bottom >= rootTop - 600 && mediaBounds.top <= rootBottom + 1600;
+      const rootHeight = rootBottom - rootTop;
+      const loadBufferPx = Math.max(MIN_MEDIA_LOAD_BUFFER_PX, rootHeight * 2);
+      const unloadBufferPx = Math.max(MIN_MEDIA_UNLOAD_BUFFER_PX, rootHeight * 3);
 
-      setShouldLoadMedia((current) => (current === isInsidePrefetchWindow ? current : isInsidePrefetchWindow));
+      setShouldLoadMedia((current) => {
+        const bufferPx = current ? unloadBufferPx : loadBufferPx;
+        const shouldBeLoaded = mediaBounds.bottom >= rootTop - bufferPx && mediaBounds.top <= rootBottom + bufferPx;
+
+        return current === shouldBeLoaded ? current : shouldBeLoaded;
+      });
     };
 
     const schedulePrefetchCheck = () => {
