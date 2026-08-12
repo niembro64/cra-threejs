@@ -17,18 +17,13 @@ import WorkExperienceSection from './WorkExperienceSection';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ResumeProps {}
 
+const mobileIntroTextSequence = [' NIEMO.IO ', ' ERIC NIEMEYER '];
+
 export const Resume: React.FC<ResumeProps> = () => {
   return (
     <div className="main-top w-full py-4 md:px-12">
       {isThin && (
         <>
-          <div className="h-40" />
-          <div className="h-40" />
-          <div className="h-40" />
-          <section className="bg-black/80 px-4 py-12 text-center">
-            <PixelArtText scrollContainerSelector=".pixel-text-niemo-io" pixelColor="#fff" text=" NIEMO.IO " />
-          </section>
-
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
@@ -46,9 +41,12 @@ export const Resume: React.FC<ResumeProps> = () => {
             )}
 
             <PixelArtText
-              scrollContainerSelector=".pixel-text-eric-niemeyer"
+              scrollContainerSelector=".pixel-text-niemo-io"
               pixelColor="#fff"
-              text=" ERIC NIEMEYER "
+              text=" NIEMO.IO "
+              textSequence={mobileIntroTextSequence}
+              holdDurationMs={3000}
+              unbuildBetweenText
             />
 
             {showSmashedGif && (

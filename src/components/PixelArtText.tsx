@@ -1,10 +1,13 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { LETTERS_NICE } from '../data/textMappers';
 import { getSnappedCellBounds } from '../utils/pixelCanvas';
 import { isThin } from './Main';
 
 interface PixelArtTextProps {
   text: string;
+  textSequence?: string[];
+  holdDurationMs?: number;
+  unbuildBetweenText?: boolean;
   pixelColor?: string;
   scrollContainerSelector?: string;
   totalHorzPixels?: number;
@@ -31,6 +34,9 @@ const LETTER_HEIGHT = LETTERS_NICE.A.length;
 const PIXEL_ANIMATION_DURATION = 500;
 const MAX_PIXEL_DELAY = 700;
 const MAX_DEVICE_PIXEL_RATIO = 2;
+const DEFAULT_HOLD_DURATION_MS = 3000;
+
+type AnimationPhase = 'build' | 'unbuild';
 
 const parseHexColor = (color: string): RgbColor => {
   const compactHex = color.replace('#', '');
@@ -57,16 +63,42 @@ const mixColors = (from: RgbColor, to: RgbColor, amount: number): string => {
 
 const PixelArtText: React.FC<PixelArtTextProps> = ({
   text,
+  textSequence,
+  holdDurationMs = DEFAULT_HOLD_DURATION_MS,
+  unbuildBetweenText = false,
   pixelColor = '#000',
   scrollContainerSelector,
   totalHorzPixels = 100,
   colorOptions = DEFAULT_COLORS,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sequence = useMemo(() => (textSequence?.length ? textSequence : [text]), [text, textSequence]);
+  const sequenceKey = useMemo(() => sequence.join('\u0000'), [sequence]);
+  const [sequenceIndex, setSequenceIndex] = useState(0);
+  const [animationPhase, setAnimationPhase] = useState<AnimationPhase>('build');
+  const displayText = sequence[sequenceIndex] ?? text;
+  const shouldCycleText = sequence.length > 1;
+  const shouldUnbuildText = unbuildBetweenText || shouldCycleText;
   const finalColor = useMemo(() => parseHexColor(pixelColor), [pixelColor]);
 
+  useEffect(() => {
+    setSequenceIndex(0);
+    setAnimationPhase('build');
+  }, [sequenceKey]);
+
   const { columns, pixels } = useMemo(() => {
-    const characters = Array.from(text);
+    const getContentWidth = (value: string) => {
+      const characters = Array.from(value);
+
+      return characters.reduce((width, character, characterIndex) => {
+        const pattern = LETTERS_NICE[character];
+        if (!pattern) throw new Error(`Unsupported character: "${character}".`);
+
+        return width + pattern[0].length + (characterIndex === characters.length - 1 ? 0 : 1);
+      }, 0);
+    };
+
+    const characters = Array.from(displayText);
     const rows = Array<string>(LETTER_HEIGHT).fill('');
 
     characters.forEach((character, characterIndex) => {
@@ -79,7 +111,10 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     });
 
     const contentWidth = rows[0].length;
-    const columnsToUse = isThin ? contentWidth : Math.max(totalHorzPixels, contentWidth);
+    const sequenceContentWidth = sequence.reduce((width, value) => Math.max(width, getContentWidth(value)), 0);
+    const columnsToUse = isThin
+      ? Math.max(contentWidth, sequenceContentWidth)
+      : Math.max(totalHorzPixels, contentWidth, sequenceContentWidth);
     const leftPadding = Math.floor((columnsToUse - contentWidth) / 2);
     const descriptors: PixelDescriptor[] = [];
 
@@ -100,7 +135,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     });
 
     return { columns: columnsToUse, pixels: descriptors };
-  }, [colorOptions, pixelColor, text, totalHorzPixels]);
+  }, [colorOptions, displayText, pixelColor, sequence, totalHorzPixels]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -115,6 +150,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     let deviceScale = 1;
     let hasStarted = false;
     let isDisposed = false;
+    let holdTimeout = 0;
     const totalAnimationTime =
       pixels.reduce((latest, pixel) => Math.max(latest, pixel.delay), 0) + PIXEL_ANIMATION_DURATION;
 
@@ -147,18 +183,43 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
       context.globalAlpha = 1;
     };
 
+    const drawPhase = (elapsedTime: number) => {
+      draw(animationPhase === 'unbuild' ? totalAnimationTime - elapsedTime : elapsedTime);
+    };
+
+    const finishAnimation = () => {
+      if (animationPhase === 'build') {
+        lastElapsedTime = totalAnimationTime;
+        draw(totalAnimationTime);
+
+        if (shouldUnbuildText) {
+          holdTimeout = window.setTimeout(() => {
+            if (!isDisposed) setAnimationPhase('unbuild');
+          }, holdDurationMs);
+        }
+        return;
+      }
+
+      lastElapsedTime = totalAnimationTime;
+      draw(0);
+
+      if (shouldCycleText) {
+        setSequenceIndex((currentIndex) => (currentIndex + 1) % sequence.length);
+        setAnimationPhase('build');
+      }
+    };
+
     const animate = (timestamp: number) => {
       if (isDisposed) return;
       if (animationStartTime === null) animationStartTime = timestamp;
 
       lastElapsedTime = timestamp - animationStartTime;
-      draw(lastElapsedTime);
+      drawPhase(lastElapsedTime);
 
       if (lastElapsedTime < totalAnimationTime) {
         animationFrame = window.requestAnimationFrame(animate);
       } else {
-        lastElapsedTime = totalAnimationTime;
-        draw(totalAnimationTime);
+        finishAnimation();
       }
     };
 
@@ -168,7 +229,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
 
       if (skipAnimation) {
         lastElapsedTime = totalAnimationTime;
-        draw(totalAnimationTime);
+        draw(animationPhase === 'unbuild' ? 0 : totalAnimationTime);
       } else {
         animationFrame = window.requestAnimationFrame(animate);
       }
@@ -186,7 +247,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
         canvas.width = width;
         canvas.height = height;
       }
-      draw(lastElapsedTime);
+      drawPhase(lastElapsedTime);
     };
 
     resizeCanvas();
@@ -215,17 +276,28 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
 
     return () => {
       isDisposed = true;
+      window.clearTimeout(holdTimeout);
       window.cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', resizeCanvas);
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
     };
-  }, [columns, finalColor, pixels, scrollContainerSelector]);
+  }, [
+    animationPhase,
+    columns,
+    finalColor,
+    holdDurationMs,
+    pixels,
+    scrollContainerSelector,
+    sequence.length,
+    shouldCycleText,
+    shouldUnbuildText,
+  ]);
 
   return (
     <div className="pixel-art-text" style={{ aspectRatio: `${columns} / ${LETTER_HEIGHT}` }}>
-      <canvas ref={canvasRef} className="pixel-art-text__canvas" role="img" aria-label={text.trim()}>
-        {text.trim()}
+      <canvas ref={canvasRef} className="pixel-art-text__canvas" role="img" aria-label={displayText.trim()}>
+        {displayText.trim()}
       </canvas>
     </div>
   );
