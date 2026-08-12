@@ -6,6 +6,7 @@ import { isThin } from './Main';
 interface PixelArtTextProps {
   text: string;
   textSequence?: string[];
+  reserveSequenceWidth?: boolean;
   holdDurationMs?: number;
   unbuildBetweenText?: boolean;
   pixelColor?: string;
@@ -64,6 +65,7 @@ const mixColors = (from: RgbColor, to: RgbColor, amount: number): string => {
 const PixelArtText: React.FC<PixelArtTextProps> = ({
   text,
   textSequence,
+  reserveSequenceWidth = true,
   holdDurationMs = DEFAULT_HOLD_DURATION_MS,
   unbuildBetweenText = false,
   pixelColor = '#000',
@@ -111,7 +113,9 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     });
 
     const contentWidth = rows[0].length;
-    const sequenceContentWidth = sequence.reduce((width, value) => Math.max(width, getContentWidth(value)), 0);
+    const sequenceContentWidth = reserveSequenceWidth
+      ? sequence.reduce((width, value) => Math.max(width, getContentWidth(value)), 0)
+      : contentWidth;
     const columnsToUse = isThin
       ? Math.max(contentWidth, sequenceContentWidth)
       : Math.max(totalHorzPixels, contentWidth, sequenceContentWidth);
@@ -135,7 +139,7 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     });
 
     return { columns: columnsToUse, pixels: descriptors };
-  }, [colorOptions, displayText, pixelColor, sequence, totalHorzPixels]);
+  }, [colorOptions, displayText, pixelColor, reserveSequenceWidth, sequence, totalHorzPixels]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

@@ -27,7 +27,7 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
           <div className="h-40" />
           <div className="h-40" />
-          <section className="bg-black/80 px-4 py-12 text-center">
+          <section className="py-12 text-center">
             {showProfileAbout && (
               <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
                 <img
@@ -45,6 +45,7 @@ export const Resume: React.FC<ResumeProps> = () => {
               pixelColor="#fff"
               text=" NIEMO.IO "
               textSequence={mobileIntroTextSequence}
+              reserveSequenceWidth={false}
               holdDurationMs={3000}
               unbuildBetweenText
             />
