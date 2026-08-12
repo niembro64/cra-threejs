@@ -4,6 +4,7 @@ export const showProjectTitleIcons: boolean = false;
 export const show_dates: boolean = false;
 export const showMusicEducationSection: boolean = false;
 export const showServicesSection: boolean = false;
+export const showWebGLDriveProject: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
 export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
@@ -72,7 +73,7 @@ export const jobs: Job[] = [
         ],
       },
       {
-        title: 'Designed, trained, and deployed various AI model architectures',
+        title: 'Designed, trained, and deployed model architectures',
         lines: [
           'Pytorch',
           'BrainJS',
@@ -276,6 +277,23 @@ export const mediaBasePath = process.env.PUBLIC_URL + '/project_media/';
 const iconPhaser = 'phaser-icon.png';
 const iconThreeJs = 'threejs.png';
 const iconReact = 'react.png';
+
+const webGLDriveProject: Project = {
+  dates: null,
+  projectStatus: 'ok',
+  title: 'WebGL Drive',
+  url: 'https://games.niemo.io/drive',
+  stack: ['ThreeJS', 'React'],
+  type: '3D Driving Simulation',
+  bullets: ['Keyboard Controls'],
+  icon: iconThreeJs,
+  image: 'drive.jpg',
+  video: 'drive.mp4',
+  supportsDesktop: true,
+  supportsMobile: false,
+  hasSound: false,
+  description: 'A simple 3D driving simulation - in progress.',
+};
 
 export const ai_projects: Project[] = [
   {
@@ -569,22 +587,7 @@ export const videogame_projects: Project[] = [
     hasSound: false,
     description: 'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
-  {
-    dates: null,
-    projectStatus: 'ok',
-    title: 'WebGL Drive',
-    url: 'https://games.niemo.io/drive',
-    stack: ['ThreeJS', 'React'],
-    type: '3D Driving Simulation',
-    bullets: ['Keyboard Controls'],
-    icon: iconThreeJs,
-    image: 'drive.jpg',
-    video: 'drive.mp4',
-    supportsDesktop: true,
-    supportsMobile: false,
-    hasSound: false,
-    description: 'A simple 3D driving simulation - in progress.',
-  },
+  ...(showWebGLDriveProject ? [webGLDriveProject] : []),
 ];
 
 export const fullstack_projects: Project[] = [
@@ -750,34 +753,29 @@ export type Skill = {
 
 export const skills: SkillCategory[] = [
   {
-    emoji: '💻',
-    title: 'Web Development',
-    dates: '2019 - Present',
+    emoji: '🖥️',
+    title: 'Desktop & Embedded',
+    dates: '2018 - Present',
     skills: [
       {
-        title: 'Frontend',
-        details: ['React', 'React Native', 'Vue', 'Angular', 'TypeScript', 'SCSS', 'Tailwind'],
+        title: 'Languages',
+        details: ['C', 'C++', 'Assembly', 'C#', 'Java', 'Python'],
       },
       {
-        title: 'Backend',
-        details: ['Node', 'Express', 'Laravel', 'Flask', 'C#', 'Python', 'PHP'],
+        title: 'Hardware',
+        details: ['Raspberry Pi', 'ESP32', 'Arduino', 'Microcontrollers'],
       },
       {
-        title: 'Databases',
-        details: ['MongoDB', 'SQL', 'MySQL', 'PostgreSQL', 'SQLite'],
+        title: 'Architectures',
+        details: ['x86_64', 'ARM64', 'MIPS', 'LR35902'],
       },
-      // {
-      //   title: 'APIs',
-      //   details: ['REST', 'Websockets', 'Socket.io'],
-      // },
       {
-        title: 'Deployment',
-        details: ['AWS', 'Docker', 'GitLab', 'Github'],
+        title: 'Signal Processing',
+        details: ['FFmpeg', 'FFT', 'Communications', 'Filtering', 'Spectrograms'],
       },
     ],
   },
   {
-    // brain
     emoji: '🧠',
     title: 'AI & ML',
     dates: '2022 - Present',
@@ -809,17 +807,78 @@ export const skills: SkillCategory[] = [
     ],
   },
   {
+    emoji: '☁️',
+    title: 'Web',
+    dates: '2019 - Present',
+    skills: [
+      {
+        title: 'Frontend',
+        details: ['JavaScript', 'TypeScript', 'React', 'Vue', 'Angular', 'HTML', 'CSS', 'SCSS', 'Tailwind'],
+      },
+      {
+        title: 'Backend',
+        details: ['Node', 'Express', 'Laravel', 'Flask', 'Django', 'FastAPI', 'C#', 'Python', 'PHP'],
+      },
+      {
+        title: 'Databases',
+        details: ['MongoDB', 'SQL', 'MySQL', 'PostgreSQL', 'SQLite'],
+      },
+      {
+        title: 'Deployment',
+        details: ['AWS', 'EC2', 'S3', 'Docker', 'GitLab', 'Github'],
+      },
+    ],
+  },
+  {
     emoji: '🕹️',
     title: 'Game Engines',
     dates: '2019 - Present',
     skills: [
       {
         title: 'Browser-Based',
-        details: ['Phaser JS', 'Three JS', 'HTML Canvas'],
+        details: ['Phaser JS', 'Three JS', 'HTML Canvas', 'Custom'],
       },
       {
         title: 'Device-Based',
-        details: ['React Native Game Engine', 'N64 ROM Hacking', 'Raspberry Pi', 'Unity Game Engine'],
+        details: ['React Native Game Engine', 'N64 ROM Hacking', 'Raspberry Pi', 'Unity Game Engine', 'Custom'],
+      },
+    ],
+  },
+  {
+    emoji: '📱',
+    title: 'Mobile',
+    dates: '2019 - Present',
+    skills: [
+      {
+        title: 'Apps',
+        details: ['React Native', 'RN CLI', 'RN Expo', 'Native iOS', 'Native Android'],
+      },
+      {
+        title: 'Platforms',
+        details: ['iPhone', 'iPad', 'Android'],
+      },
+    ],
+  },
+  {
+    emoji: '🌏',
+    title: 'Human Languages',
+    dates: '2008 - Present',
+    skills: [
+      {
+        title: 'English',
+        details: ['US Citizen'],
+      },
+      {
+        title: 'Italian',
+        details: ['Conversational'],
+      },
+      {
+        title: 'Spanish',
+        details: ['Intermediate'],
+      },
+      {
+        title: 'Korean',
+        details: ['Basic'],
       },
     ],
   },
@@ -843,30 +902,6 @@ export const skills: SkillCategory[] = [
       {
         title: 'Genres',
         details: ['Classical', 'Flamenco', 'EDM', 'Drum & Bass', 'Pixel Art'],
-      },
-    ],
-  },
-
-  {
-    emoji: '🌏',
-    title: 'Human Languages',
-    dates: '2008 - Present',
-    skills: [
-      {
-        title: 'English',
-        details: ['Native USA'],
-      },
-      {
-        title: 'Italian',
-        details: ['Conversational'],
-      },
-      {
-        title: 'Spanish',
-        details: ['Intermediate'],
-      },
-      {
-        title: 'Korean',
-        details: ['Basic'],
       },
     ],
   },

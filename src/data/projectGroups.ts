@@ -37,7 +37,7 @@ const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
   {
     id: 'art-projects',
     headingLines: [' ART '],
-    subtitle: 'Original Music & Visuals',
+    subtitle: 'Original Audio & Visuals',
     projects: art_projects,
   },
 ];
