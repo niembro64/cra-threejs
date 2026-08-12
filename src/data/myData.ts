@@ -781,21 +781,34 @@ export const skills: SkillCategory[] = [
     title: 'AI & ML',
     dates: '2022 - Present',
     skills: [
-      // {
-      //   title: 'Frameworks',
-      //   details: ['Pytorch', 'BrainJS'],
-      // },
-      {
-        title: 'Architectures',
-        details: ['Pytorch', 'BrainJS', 'FeedForward', 'RNN', 'Convolutional', 'Transformer'],
-      },
-      {
-        title: 'Applications',
-        details: ['Text Classification', 'Audio Classification', 'Image Classification', 'Bot AI for Games'],
-      },
       {
         title: 'AI Systems',
         details: ['MCP', 'RAG', 'Embeddings', 'Semantic Search', 'Vector Databases', 'Tool Calling', 'AI Agents'],
+      },
+      {
+        title: 'Training Paradigms',
+        details: [
+          'Supervised Learning',
+          'Reinforcement Learning',
+          'Self-Play',
+          'Genetic Algorithm',
+        ],
+      },
+      {
+        title: 'Architectures',
+        details: ['MLP', 'RNN', 'CNN', 'Transformer'],
+      },
+      {
+        title: 'Applications',
+        details: [
+          'Pytorch',
+          'BrainJS',
+          'TensorFlow.js',
+          'Text Classification',
+          'Audio Classification',
+          'Image Classification',
+          'Game AI Bots',
+        ],
       },
     ],
   },
