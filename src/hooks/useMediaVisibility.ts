@@ -8,6 +8,8 @@ interface MediaVisibility<T extends HTMLElement> {
 
 const MIN_MEDIA_LOAD_BUFFER_PX = 2400;
 const MIN_MEDIA_UNLOAD_BUFFER_PX = 4200;
+const MIN_MEDIA_PLAY_BUFFER_PX = 1400;
+const MIN_MEDIA_PAUSE_BUFFER_PX = 2200;
 
 export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> => {
   const mediaRef = useRef<T>(null);
@@ -40,6 +42,15 @@ export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> 
 
         return current === shouldBeLoaded ? current : shouldBeLoaded;
       });
+
+      setIsVisible((current) => {
+        const bufferPx = current
+          ? Math.max(MIN_MEDIA_PAUSE_BUFFER_PX, rootHeight * 2)
+          : Math.max(MIN_MEDIA_PLAY_BUFFER_PX, rootHeight * 1.25);
+        const shouldBePlaying = mediaBounds.bottom >= rootTop - bufferPx && mediaBounds.top <= rootBottom + bufferPx;
+
+        return current === shouldBePlaying ? current : shouldBePlaying;
+      });
     };
 
     const schedulePrefetchCheck = () => {
@@ -51,26 +62,10 @@ export const useMediaVisibility = <T extends HTMLElement>(): MediaVisibility<T> 
     (scrollRoot ?? window).addEventListener('scroll', schedulePrefetchCheck, { passive: true });
     window.addEventListener('resize', schedulePrefetchCheck, { passive: true });
 
-    if (!('IntersectionObserver' in window)) {
-      setIsVisible(true);
-      return () => {
-        window.cancelAnimationFrame(prefetchFrame);
-        (scrollRoot ?? window).removeEventListener('scroll', schedulePrefetchCheck);
-        window.removeEventListener('resize', schedulePrefetchCheck);
-      };
-    }
-
-    const playbackObserver = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.1),
-      { root: scrollRoot, rootMargin: '0px', threshold: [0, 0.1] }
-    );
-
-    playbackObserver.observe(mediaElement);
     return () => {
       window.cancelAnimationFrame(prefetchFrame);
       (scrollRoot ?? window).removeEventListener('scroll', schedulePrefetchCheck);
       window.removeEventListener('resize', schedulePrefetchCheck);
-      playbackObserver.disconnect();
     };
   }, []);
 
