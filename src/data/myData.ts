@@ -267,7 +267,6 @@ export interface Project {
   supportsMobile: boolean;
   supportsDesktop: boolean;
   hasSound: boolean;
-  buttonStartText: string;
   description?: string;
 }
 
@@ -298,7 +297,6 @@ export const ai_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Play',
     description:
       'Play against a convolutional neural network trained from scratch solely through self-play reinforcement learning—no human games or supervised examples. Inspect how the AI encodes the board, scores moves, and searches for its next play in an interactive visualization.',
   },
@@ -322,7 +320,6 @@ export const ai_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'Explore word relationships in 3D space. See how "italy" is to "pasta" as "japan" is to "____" - visualize word analogies using GloVe embeddings compressed from 50D to 3D via PCA.',
   },
@@ -346,7 +343,6 @@ export const ai_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'Watch a genetic algorithm evolve polynomial functions to fit data points. Features adaptive mutation variance based on fitness, weight-proportional scaling, and interactive point manipulation. Visualize the evolution process in real-time with configurable parameters.',
   },
@@ -369,7 +365,6 @@ export const ai_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'Watch neural networks of different architectures learn to drive through genetic evolution, no backprop. Starting with random weights, cars use distance sensors as inputs to control steering. The best performer passes its brain to the next generation, where it is mutated and evolved.',
   },
@@ -394,7 +389,6 @@ export const ai_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'Wiggle the "weights" to see how they affect the downstream output. Add and remove tokens to see how they affect the output. "Training" mode is in progress.',
   },
@@ -415,7 +409,6 @@ export const compsci_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'Visualize popular pathfinding algorithms in action. Watch as BFS, DFS, Greedy, Dijkstra, and A* navigate through obstacles to find the optimal path.',
   },
@@ -433,7 +426,6 @@ export const compsci_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description: "An ethics ecological simulation that extends Axelrod's Tournament - Would you cooperate or defect?",
   },
   {
@@ -450,7 +442,6 @@ export const compsci_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Run',
     description:
       'A physics simulation comparing collision detection methods, a naive approach vs raycasting. How many collisions with the walls means a ball is outside?',
   },
@@ -471,7 +462,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
-    buttonStartText: 'Play',
     description:
       'This project represents 2+ years of experimentation with neural networks and game design. Play with friends or watch a bunch of bots duke it out.',
   },
@@ -496,7 +486,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Play',
     description:
       'A full-3D, physics-first RTS inspired by Total Annihilation. Build factories, manage your economy, and command an army across dynamic terrain while every peer runs the same deterministic simulation—even across different CPU architectures.',
   },
@@ -522,7 +511,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: true,
-    buttonStartText: 'Play',
     description:
       "Grab your keyboard, aim your mouse, and enter the fight! Open the game again in a second tab on your computer, or tell a friend to join you - it's time to battle online!",
   },
@@ -544,7 +532,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
-    buttonStartText: 'Play',
     description:
       "Niemo's take on a classic - shoot the bad guys, dodge the bullets, & look out for the big bad boss! Which weapon will you choose?",
   },
@@ -562,7 +549,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
-    buttonStartText: 'Play',
     description:
       'A unique "bullet gate" mechanic - various gate types mirror, transmit, refract, and multiply bullets.',
   },
@@ -580,7 +566,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'Play',
     description: 'An unholy blending of Phaser and React - make Kirby fly around with your finger or mouse.',
   },
   {
@@ -597,7 +582,6 @@ export const videogame_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: false,
     hasSound: false,
-    buttonStartText: 'Play',
     description: 'A simple 3D driving simulation - in progress.',
   },
 ];
@@ -617,7 +601,6 @@ export const fullstack_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'View',
     description:
       'A simple, clean, event management system with user authentication, validation, and CRUD database operations.',
   },
@@ -637,7 +620,6 @@ export const fullstack_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'View',
   },
   {
     dates: '2022',
@@ -654,7 +636,6 @@ export const fullstack_projects: Project[] = [
     type: 'JavaScript Fullstack',
     supportsMobile: true,
     hasSound: false,
-    buttonStartText: 'View',
   },
   {
     dates: '2022',
@@ -670,7 +651,6 @@ export const fullstack_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
-    buttonStartText: 'View',
     description: 'A collection of experimental nicknacks and playthings made practicing web basics.',
   },
 ];
@@ -694,7 +674,6 @@ export const art_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
-    buttonStartText: 'Go to',
     description: "A collection of Niemo's original music created over the years.",
   },
   {
@@ -715,7 +694,6 @@ export const art_projects: Project[] = [
     supportsDesktop: true,
     supportsMobile: true,
     hasSound: true,
-    buttonStartText: 'Go to',
     description: 'Branded visualizations added to original music.',
   },
 ];

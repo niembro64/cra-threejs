@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { ProjectStore } from '../store/ProjectStore';
 import { showProjectTitleIcons, type Project } from '../data/myData';
 import { useMediaVisibility } from '../hooks/useMediaVisibility';
@@ -12,6 +13,13 @@ interface ProjectDemoProps {
   index: number;
 }
 
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (updateCallback: () => void) => void;
+};
+
+const getVideoTime = (video: HTMLVideoElement | null): number =>
+  video && Number.isFinite(video.currentTime) ? video.currentTime : 0;
+
 const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
   const connectionQuality = ProjectStore((state) => state.connectionQuality);
   const isActive = ProjectStore((state) => state.activeProjectIndex === index);
@@ -19,18 +27,61 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
   const isMuted = ProjectStore((state) => state.mutedArray[index] ?? true);
   const setMuted = ProjectStore((state) => state.setMuted);
   const hasTouchedAudioButton = ProjectStore((state) => state.hasTouchedAudioButton);
+  const cardVideoRef = useRef<HTMLVideoElement | null>(null);
+  const modalVideoRef = useRef<HTMLVideoElement | null>(null);
+  const cardInitialVideoTimeRef = useRef(0);
+  const modalInitialVideoTimeRef = useRef(0);
 
   const { mediaRef, shouldLoadMedia, isVisible } = useMediaVisibility<HTMLDivElement>();
   const mediaSource = selectProjectMedia(project, connectionQuality);
   const mediaIsVideo = mediaSource ? getProjectMediaKind(mediaSource) === 'video' : false;
+  const viewTransitionName = `project-media-${index}`;
   const canLaunch =
     project.projectStatus === 'ok' && ((isThin && project.supportsMobile) || (!isThin && project.supportsDesktop));
 
-  const handleMediaClick = () => {
-    setActiveProjectIndex(isActive ? null : index);
-  };
+  const startActiveProjectTransition = useCallback(
+    (nextIndex: number | null) => {
+      const applyUpdate = () => setActiveProjectIndex(nextIndex);
+      const transitionDocument = document as ViewTransitionDocument;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const closeDetails = useCallback(() => setActiveProjectIndex(null), [setActiveProjectIndex]);
+      if (!transitionDocument.startViewTransition || reduceMotion) {
+        applyUpdate();
+        return;
+      }
+
+      transitionDocument.startViewTransition(() => {
+        flushSync(applyUpdate);
+      });
+    },
+    [setActiveProjectIndex]
+  );
+
+  const setCardVideoElement = useCallback((video: HTMLVideoElement | null) => {
+    cardVideoRef.current = video;
+  }, []);
+
+  const setModalVideoElement = useCallback((video: HTMLVideoElement | null) => {
+    modalVideoRef.current = video;
+  }, []);
+
+  const openDetails = useCallback(() => {
+    modalInitialVideoTimeRef.current = getVideoTime(cardVideoRef.current);
+    startActiveProjectTransition(index);
+  }, [index, startActiveProjectTransition]);
+
+  const closeDetails = useCallback(() => {
+    cardInitialVideoTimeRef.current = getVideoTime(modalVideoRef.current);
+    startActiveProjectTransition(null);
+  }, [startActiveProjectTransition]);
+
+  const handleMediaClick = useCallback(() => {
+    if (isActive) {
+      closeDetails();
+    } else {
+      openDetails();
+    }
+  }, [closeDetails, isActive, openDetails]);
 
   const unavailableLabel = project.projectStatus !== 'ok' ? 'Offline' : isThin ? 'Desktop Only' : 'Mobile Only';
 
@@ -69,6 +120,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
               title={project.title}
               isMuted={isMuted}
               isVisible={isVisible && !isActive}
+              viewTransitionName={viewTransitionName}
+              initialVideoTime={cardInitialVideoTimeRef.current}
+              onVideoElement={setCardVideoElement}
             />
           )}
 
@@ -116,6 +170,9 @@ const ProjectDemo: React.FC<ProjectDemoProps> = ({ project, index }) => {
           showSoundHint={!hasTouchedAudioButton}
           canLaunch={canLaunch}
           unavailableLabel={unavailableLabel}
+          viewTransitionName={viewTransitionName}
+          initialVideoTime={modalInitialVideoTimeRef.current}
+          onVideoElement={setModalVideoElement}
           onToggleMuted={() => setMuted(index, !isMuted)}
           onClose={closeDetails}
         />

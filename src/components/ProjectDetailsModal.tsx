@@ -12,6 +12,9 @@ interface ProjectDetailsModalProps {
   showSoundHint: boolean;
   canLaunch: boolean;
   unavailableLabel: string;
+  viewTransitionName?: string;
+  initialVideoTime?: number;
+  onVideoElement?: (video: HTMLVideoElement | null) => void;
   onToggleMuted: () => void;
   onClose: () => void;
 }
@@ -33,6 +36,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
   showSoundHint,
   canLaunch,
   unavailableLabel,
+  viewTransitionName,
+  initialVideoTime,
+  onVideoElement,
   onToggleMuted,
   onClose,
 }) => {
@@ -144,6 +150,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 title={project.title}
                 isMuted={isMuted}
                 isVisible
+                viewTransitionName={viewTransitionName}
+                initialVideoTime={initialVideoTime}
+                onVideoElement={onVideoElement}
               />
               {canControlSound && (
                 <button
@@ -160,6 +169,19 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                   {showSoundHint && (
                     <span className="animation-delay-2000 absolute left-0 top-0 h-full w-full animate-ping rounded-full bg-white opacity-50" />
                   )}
+                </button>
+              )}
+            </div>
+            <div className="pt-4">
+              {canLaunch ? (
+                <FancyButton text="START" onClick={() => window.location.assign(project.url)} />
+              ) : (
+                <button
+                  type="button"
+                  className="w-full rounded-3xl bg-white/10 py-3 text-2xl uppercase text-white/50"
+                  disabled
+                >
+                  {unavailableLabel}
                 </button>
               )}
             </div>
@@ -198,23 +220,6 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
             </section>
           )}
         </div>
-
-        <footer className="border-t border-white/10 px-5 pb-3 pt-5 sm:px-8">
-          {canLaunch ? (
-            <FancyButton
-              text={`${project.buttonStartText} ${project.title}`.toUpperCase()}
-              onClick={() => window.location.assign(project.url)}
-            />
-          ) : (
-            <button
-              type="button"
-              className="mb-4 w-full rounded-3xl bg-white/10 py-3 text-2xl uppercase text-white/50"
-              disabled
-            >
-              {unavailableLabel}
-            </button>
-          )}
-        </footer>
       </div>
     </div>,
     document.body
