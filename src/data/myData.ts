@@ -793,6 +793,10 @@ export const skills: SkillCategory[] = [
         title: 'Applications',
         details: ['Text Classification', 'Audio Classification', 'Image Classification', 'Bot AI for Games'],
       },
+      {
+        title: 'AI Systems',
+        details: ['MCP', 'RAG', 'Embeddings', 'Semantic Search', 'Vector Databases', 'Tool Calling', 'AI Agents'],
+      },
     ],
   },
   {
