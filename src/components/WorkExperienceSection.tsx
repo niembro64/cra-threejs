@@ -1,7 +1,7 @@
 // WorkExperienceSection.tsx
 
 import React from 'react';
-import { jobs, showEmojis } from '../data/myData';
+import { jobs, show_dates, showEmojis } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
 import DeferredImage from './DeferredImage';
@@ -27,7 +27,7 @@ const WorkExperienceSection: React.FC = () => {
           <h4 className="mb-1 text-center text-3xl font-bold text-blue-300">{job.company}</h4>
           <p className="mb-1 text-center text-2xl italic text-fuchsia-300">{job.title}</p>
           <p className="mb-0 text-center text-xl text-teal-300">{job.location}</p>
-          <p className="mb-6 text-center text-xl text-white/50">{job.dates}</p>
+          {show_dates && <p className="mb-6 text-center text-xl text-white/50">{job.dates}</p>}
           <ul className={`ml-6 mt-2 ${isThin ? 'w-full' : 'w-1/2'} list-disc text-xl`}>
             {job.details.map((detail, i) => (
               <li key={i} className="mb-8">

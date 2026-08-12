@@ -17,7 +17,7 @@ const ProjectsSection: React.FC = () => (
       </div>
       <p className="pixel-font pt-4 text-2xl text-blue-300">{myDataShort}</p>
       <div className="mt-8 flex flex-col items-center">
-        <p className="pixel-font animate-bounce text-xl text-blue-300">↓ scroll down here ↓</p>
+        <p className="pixel-font animate-bounce text-xl text-blue-300">↓ scroll down ↓</p>
       </div>
     </div>
 

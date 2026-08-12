@@ -1,7 +1,7 @@
 // SkillsSection.tsx
 
 import React from 'react';
-import { skills, showEmojis } from '../data/myData';
+import { show_dates, skills, showEmojis } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
 
@@ -26,7 +26,9 @@ const SkillsSection: React.FC = () => {
             <h2 className="mb-2 text-center text-3xl font-bold text-blue-300">
               {category.title + ' ' + category.emoji}
             </h2>
-            <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
+            {show_dates && category.dates && (
+              <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
+            )}
             <div className="mt-2 grid list-disc grid-flow-row grid-cols-2 text-sm">
               {category.skills.map((skill, i) => (
                 <div key={i} className="mb-4">
@@ -63,7 +65,9 @@ const SkillsSection: React.FC = () => {
             <h2 className="mb-2 text-center text-3xl font-bold text-blue-300">
               {category.title + ' ' + category.emoji}
             </h2>
-            <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
+            {show_dates && category.dates && (
+              <p className="mb-2 text-center text-xl text-white/50">{category.dates}</p>
+            )}
             <div className={`mt-2 flex list-disc flex-row justify-center gap-12 text-sm`}>
               {category.skills.map((skill, i) => (
                 <div key={i} className="mb-4">

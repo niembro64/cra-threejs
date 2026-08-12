@@ -1,7 +1,7 @@
 // EducationSection.tsx
 
 import React from 'react';
-import { educations, showEmojis } from '../data/myData';
+import { educations, show_dates, showEmojis } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
 import DeferredImage from './DeferredImage';
@@ -22,7 +22,7 @@ const EducationSection: React.FC = () => {
         <div key={idx} className="mx-4 mb-8 mt-16 flex flex-col items-center justify-center">
           <h4 className="mb-2 text-center text-3xl font-bold text-blue-300">{edu.degree}</h4>
           <p className="mb-2 text-center text-xl italic text-fuchsia-300">{edu.school}</p>
-          <p className="mb-4 text-xl text-white/50">{edu.dates}</p>
+          {show_dates && <p className="mb-4 text-xl text-white/50">{edu.dates}</p>}
 
           {isThin ? (
             <>

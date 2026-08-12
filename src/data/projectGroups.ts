@@ -13,7 +13,7 @@ const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
   {
     id: 'ai-projects',
     headingLines: [' ML '],
-    subtitle: 'Neural Nets & Optimizations',
+    subtitle: 'Neural Nets & Optimization',
     projects: ai_projects,
   },
   {

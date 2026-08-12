@@ -1,6 +1,8 @@
 // myData.ts
 export const showSmashedGif: boolean = false;
 export const showProjectTitleIcons: boolean = false;
+export const show_dates: boolean = false;
+export const showMusicEducationSection: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
 export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
@@ -29,25 +31,16 @@ export interface Education {
 
 export const jobs: Job[] = [
   {
-    image: 'sentien.png',
-    company: 'Sentien',
-    title: 'Head of Engineering',
+    image: 'venturetec.png',
+    company: 'Venturetec',
+    title: 'Head of Engineering / Lead Software Engineer',
     location: 'Stamford, Connecticut',
-    dates: '2024 - Present',
+    dates: '2022 - Present',
     details: [
       {
         title: 'Architecting, training, and implementing in-house AI systems to detect and prevent fraud',
         lines: [],
       },
-    ],
-  },
-  {
-    image: 'venturetec.png',
-    company: 'Venturetec',
-    title: 'Lead Software Engineer',
-    location: 'Stamford, Connecticut',
-    dates: '2022 - 2024',
-    details: [
       {
         title: 'Diagrammed, and implemented complex fullstack web + mobile apps',
         lines: [
@@ -103,23 +96,14 @@ export const jobs: Job[] = [
   {
     image: 'ra.svg',
     company: 'Rockwell Automation',
-    title: 'Software Engineer II',
+    title: 'Software Engineer II / JR Software Engineer',
     location: 'St. Louis, Missouri',
-    dates: '2020 - 2022',
+    dates: '2018 - 2022',
     details: [
       {
         title: 'Developed machine execution systems for fortune 500 companies',
         lines: ['3M', 'Lucid Motors', 'Cooper Tires', 'Continental Tires'],
       },
-    ],
-  },
-  {
-    image: 'maverick_trans.png',
-    company: 'Maverick Technologies',
-    title: 'JR Software Engineer',
-    location: 'St. Louis, Missouri',
-    dates: '2018 - 2020',
-    details: [
       {
         title: 'Developed machine execution systems',
         lines: ['Maple-L Foods', 'Green-L Foods'],
@@ -157,6 +141,19 @@ export const jobs: Job[] = [
     ],
   },
 ];
+
+const musicEducation: Education = {
+  dates: '2010',
+  image: 'lcc.png',
+  degree: 'AA Music Education',
+  school: 'Lewis & Clark Community College',
+  details: [
+    {
+      title: 'Areas of Study',
+      lines: ['Violin Performance', 'Music Theory', 'Languages'],
+    },
+  ],
+};
 
 export const educations: Education[] = [
   {
@@ -225,18 +222,7 @@ export const educations: Education[] = [
       },
     ],
   },
-  {
-    dates: '2010',
-    image: 'lcc.png',
-    degree: 'AA Music Education',
-    school: 'Lewis & Clark Community College',
-    details: [
-      {
-        title: 'Areas of Study',
-        lines: ['Violin Performance', 'Music Theory', 'Languages'],
-      },
-    ],
-  },
+  ...(showMusicEducationSection ? [musicEducation] : []),
 ];
 
 import type { CSSProperties } from 'react';
@@ -295,7 +281,7 @@ export const ai_projects: Project[] = [
   {
     dates: '2026 - Ongoing',
     projectStatus: 'ok',
-    title: 'Neural MCTS Chess',
+    title: 'Conv-Net Chess',
     url: 'https://games.niemo.io/chess/',
     stack: ['Vue', 'TypeScript', 'PyTorch', 'TensorFlow.js', 'Three.js'],
     type: 'Reinforcement Learning Chess AI',
@@ -343,7 +329,7 @@ export const ai_projects: Project[] = [
   {
     dates: '',
     projectStatus: 'ok',
-    title: 'Polynomial Optimization Lab',
+    title: 'Polynomial Optimization',
     url: 'https://games.niemo.io/function-approximation',
     stack: ['Vue', 'TypeScript', 'Genetic Algorithm'],
     type: 'Polynomial Fitting via Evolution',
@@ -367,7 +353,7 @@ export const ai_projects: Project[] = [
   {
     dates: '',
     projectStatus: 'ok',
-    title: 'Neuroevolution Racing',
+    title: 'Genetic Algo Racing',
     url: 'https://games.niemo.io/genetic-racing',
     stack: ['Canvas', 'Vue', 'Neural Networks'],
     type: 'NN Evolution Simulation',
@@ -390,7 +376,7 @@ export const ai_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Self-Attention Explorer',
+    title: 'Attention Mechanism',
     url: 'https://games.niemo.io/attention',
     stack: ['React', 'Tailwind'],
     type: 'Demonstration of Attention Mechanism in Transformer Models',
@@ -418,7 +404,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Graph Search Visualizer',
+    title: 'Pathfinding',
     url: 'https://games.niemo.io/pathfinding',
     stack: ['Vue', 'TypeScript', 'Tailwind'],
     type: 'Algorithm Visualization',
@@ -436,7 +422,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Axelrod Tournament',
+    title: 'Extended Axelrod',
     url: 'https://games.niemo.io/axelrod',
     stack: ['Phaser', 'React'],
     type: 'Game Theory Simulation',
@@ -453,7 +439,7 @@ export const compsci_projects: Project[] = [
   {
     dates: null,
     projectStatus: 'ok',
-    title: 'Collision Detection Lab',
+    title: 'Collision Detection',
     url: 'https://games.niemo.io/raycast',
     stack: ['HTML5 Canvas', 'JavaScript'],
     type: 'Physics Simulation',
@@ -620,7 +606,7 @@ export const fullstack_projects: Project[] = [
   {
     dates: '2022',
     projectStatus: 'ok',
-    title: 'Event RSVP System',
+    title: 'RSVP System',
     url: 'https://events.niemo.io',
     stack: ['C#, ASP.NET Core', 'MySQL'],
     type: 'C# Fullstack',
@@ -734,7 +720,7 @@ export const art_projects: Project[] = [
   },
 ];
 
-export const myDataShort = 'Original Fullstack Apps, Games, and AI for Mobile & Desktop';
+export const myDataShort = 'Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud';
 
 export const EricResumeDescription =
   'Engineer specializing in full-stack web & mobile apps, neural network training & deployment, and game building - emphasizing defensive programming, strict type safety, and elegant solutions.';

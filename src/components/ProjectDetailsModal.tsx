@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { showProjectTitleIcons, type Project } from '../data/myData';
+import { show_dates, showProjectTitleIcons, type Project } from '../data/myData';
 import FancyButton from './FancyButton';
 import ProjectMedia from './ProjectMedia';
 
@@ -120,7 +120,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
             <h2 id={titleId} className="pixel-font text-3xl uppercase leading-tight text-white sm:text-4xl">
               <strong>{project.title}</strong>
             </h2>
-            {project.dates && <p className="mt-1 text-base text-blue-200 sm:text-lg">{project.dates}</p>}
+            {show_dates && project.dates && (
+              <p className="mt-1 text-base text-blue-200 sm:text-lg">{project.dates}</p>
+            )}
           </div>
           <button
             ref={closeButtonRef}
