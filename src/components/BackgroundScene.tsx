@@ -22,6 +22,12 @@ const PROJECT_ATLAS_HEIGHT = PROJECT_ATLAS_ROWS * projectAtlasConfig.tileHeight;
 const PROJECT_ATLAS_LAST_TILE = 20;
 const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4?v=${projectAtlasAssets.version}`;
 const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg?v=${projectAtlasAssets.version}`;
+const PROJECT_VIDEO_STRENGTH = projectAtlasConfig.surfaceTreatment.videoStrength;
+const [PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE] =
+  projectAtlasConfig.surfaceTreatment.purpleLinearRgb;
+const PROJECT_PURPLE_SHADER_COLOR = [PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE]
+  .map((channel) => channel.toFixed(4))
+  .join(', ');
 
 const setProjectAtlasUvs = (geometry: THREE.BufferGeometry, firstFaceTile: 0 | 20): void => {
   const uvs = geometry.getAttribute('uv') as THREE.BufferAttribute;
@@ -86,8 +92,10 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
       flatShading: true,
       metalness: 0.5,
       roughness: 0.5,
-      emissive: 0xffffff,
-      emissiveIntensity: compact ? 0.22 : 0.15,
+      emissive: new THREE.Color(PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE),
+      emissiveIntensity: compact
+        ? projectAtlasConfig.surfaceTreatment.emissiveIntensity.compact
+        : projectAtlasConfig.surfaceTreatment.emissiveIntensity.default,
     });
     material.onBeforeCompile = (shader) => {
       shader.fragmentShader = shader.fragmentShader
@@ -110,9 +118,19 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
 #endif`
         )
         .replace('texture2D( map, vUv )', 'texture2D( map, containedProjectAtlasUv( vUv ) )')
+        .replace(
+          'diffuseColor *= sampledDiffuseColor;',
+          `sampledDiffuseColor.rgb = mix(
+  vec3(${PROJECT_PURPLE_SHADER_COLOR}),
+  sampledDiffuseColor.rgb,
+  ${PROJECT_VIDEO_STRENGTH.toFixed(4)}
+);
+diffuseColor *= sampledDiffuseColor;`
+        )
         .replace('texture2D( emissiveMap, vUv )', 'texture2D( emissiveMap, containedProjectAtlasUv( vUv ) )');
     };
-    material.customProgramCacheKey = () => 'contained-project-atlas-v1';
+    material.customProgramCacheKey = () =>
+      `contained-project-atlas-v2-${PROJECT_VIDEO_STRENGTH}-${PROJECT_PURPLE_SHADER_COLOR}`;
     const shape = new THREE.Mesh(geometry, material);
     shape.position.x = globalX;
     scene.add(shape);

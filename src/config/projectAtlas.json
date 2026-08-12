@@ -10,5 +10,13 @@
     "enabled": true,
     "radiusFrames": 4,
     "decay": 0.65
+  },
+  "surfaceTreatment": {
+    "videoStrength": 0.68,
+    "purpleLinearRgb": [0.12, 0.03, 0.22],
+    "emissiveIntensity": {
+      "compact": 0.12,
+      "default": 0.08
+    }
   }
 }
