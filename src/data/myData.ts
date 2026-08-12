@@ -96,7 +96,7 @@ export const jobs: Job[] = [
   {
     image: 'ra.svg',
     company: 'Rockwell Automation',
-    title: 'Software Engineer II / JR Software Engineer',
+    title: 'Software Engineer II',
     location: 'St. Louis, Missouri',
     dates: '2018 - 2022',
     details: [
