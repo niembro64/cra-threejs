@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import projectAtlasConfig from '../config/projectAtlas.json';
+import projectAtlasAssets from '../config/projectAtlasAssets.json';
 
 interface BackgroundSceneProps {
   compact: boolean;
@@ -19,8 +20,8 @@ const PROJECT_ATLAS_ROWS = projectAtlasConfig.rows;
 const PROJECT_ATLAS_WIDTH = PROJECT_ATLAS_COLUMNS * projectAtlasConfig.tileWidth;
 const PROJECT_ATLAS_HEIGHT = PROJECT_ATLAS_ROWS * projectAtlasConfig.tileHeight;
 const PROJECT_ATLAS_LAST_TILE = 20;
-const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4`;
-const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg`;
+const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4?v=${projectAtlasAssets.version}`;
+const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg?v=${projectAtlasAssets.version}`;
 
 const setProjectAtlasUvs = (geometry: THREE.BufferGeometry, firstFaceTile: 0 | 20): void => {
   const uvs = geometry.getAttribute('uv') as THREE.BufferAttribute;

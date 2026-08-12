@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +10,7 @@ const mediaDirectory = join(projectRoot, 'public', 'project_media');
 const atlasFilename = 'project-atlas.mp4';
 const posterFilename = 'project-atlas.jpg';
 const configPath = join(projectRoot, 'src', 'config', 'projectAtlas.json');
+const assetsConfigPath = join(projectRoot, 'src', 'config', 'projectAtlasAssets.json');
 const atlasConfig = JSON.parse(readFileSync(configPath, 'utf8'));
 
 const { columns, rows, tileWidth, tileHeight, framesPerSecond, durationSeconds, blur, temporalSmear } = atlasConfig;
@@ -130,6 +132,7 @@ if (atlasResult.status !== 0) {
   process.exit(atlasResult.status ?? 1);
 }
 
+const posterPath = join(mediaDirectory, posterFilename);
 const posterResult = spawnSync(
   'ffmpeg',
   [
@@ -147,7 +150,7 @@ const posterResult = spawnSync(
     '-q:v',
     '3',
     '-y',
-    join(mediaDirectory, posterFilename),
+    posterPath,
   ],
   { stdio: 'inherit' }
 );
@@ -156,8 +159,15 @@ if (posterResult.status !== 0) {
   process.exit(posterResult.status ?? 1);
 }
 
+const assetVersion = createHash('sha256')
+  .update(readFileSync(atlasPath))
+  .update(readFileSync(posterPath))
+  .digest('hex')
+  .slice(0, 12);
+writeFileSync(assetsConfigPath, `${JSON.stringify({ version: assetVersion }, null, 2)}\n`);
+
 console.log(
   `Generated ${atlasFilename} and ${posterFilename} from ${sources.length} project videos ` +
     `(${columns * tileWidth}x${rows * tileHeight} at ${framesPerSecond} fps, blur ${blur ? 'on' : 'off'}, ` +
-    `ring smear ${temporalSmear.enabled ? `±${temporalSmear.radiusFrames} frames` : 'off'}).`
+    `ring smear ${temporalSmear.enabled ? `±${temporalSmear.radiusFrames} frames` : 'off'}, version ${assetVersion}).`
 );
