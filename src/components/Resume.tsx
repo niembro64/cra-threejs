@@ -22,11 +22,17 @@ export const Resume: React.FC<ResumeProps> = () => {
     <div className="main-top w-full py-4 md:px-12">
       {isThin && (
         <>
-          <section className="px-4 py-24 text-center">
+          <div className="h-40" />
+          <div className="h-40" />
+          <div className="h-40" />
+          <section className="bg-black/80 px-4 py-12 text-center">
             <PixelArtText scrollContainerSelector=".pixel-text-niemo-io" pixelColor="#fff" text=" NIEMO.IO " />
           </section>
 
-          <section className={`px-4 py-24 ${isThin ? 'bg-black/80' : ''} text-center`}>
+          <div className="h-40" />
+          <div className="h-40" />
+          <div className="h-40" />
+          <section className="bg-black/80 px-4 py-12 text-center">
             {showProfileAbout && (
               <div className="m-8 flex flex-row items-center justify-center overflow-hidden rounded-2xl">
                 <img
@@ -45,15 +51,15 @@ export const Resume: React.FC<ResumeProps> = () => {
               text=" ERIC NIEMEYER "
             />
 
-            <div className="mb-4 flex flex-row items-center justify-center">
-              {showSmashedGif ? (
+            {showSmashedGif && (
+              <div className="mt-4 flex flex-row items-center justify-center">
                 <img className="pixel-art w-4/5" src="/smashed_small.gif" alt="gif" />
-              ) : (
-                <div className="mb-20" />
-              )}
-            </div>
+              </div>
+            )}
             {showProfileAbout && <p className="mb-4 p-8 text-2xl text-blue-100">{EricResumeDescription}</p>}
           </section>
+          <div className="h-40" />
+          <div className="h-40" />
         </>
       )}
 
