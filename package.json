@@ -39,6 +39,7 @@
   "scripts": {
     "start": "node scripts/start-lan.mjs",
     "start:local": "react-scripts start",
+    "urls:lan": "node scripts/start-lan.mjs --urls-only --all",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
