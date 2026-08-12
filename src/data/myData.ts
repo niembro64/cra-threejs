@@ -164,7 +164,7 @@ export const educations: Education[] = [
     school: 'Southern Illinois University Edwardsville',
     details: [
       {
-        title: 'With Honors, 3.73 GPA',
+        title: "Dean's List, 3.73 GPA",
         lines: [],
       },
       {
@@ -198,7 +198,7 @@ export const educations: Education[] = [
     school: 'Coding Dojo',
     details: [
       {
-        title: 'Certificate w/ Highest Honors',
+        title: 'Graduated with Highest Honors',
         lines: ['Fundamentals', 'Python Stack', 'MERN Stack', 'C# Stack'],
       },
       {
