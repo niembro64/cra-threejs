@@ -11,8 +11,14 @@ export interface ProjectGroup {
 
 const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
   {
-    id: 'ai-projects',
-    headingLines: [' ML '],
+    id: 'videogame-projects',
+    headingLines: [' VIDEO ', ' GAMES '],
+    subtitle: 'Browser & Mobile Games with Original Art & Sound',
+    projects: videogame_projects,
+  },
+  {
+    id: 'machine-learning-projects',
+    headingLines: [' MACHINE ', ' LEARNING '],
     subtitle: 'Neural Nets & Optimization',
     projects: ai_projects,
   },
@@ -27,12 +33,6 @@ const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
     headingLines: [' FULL STACK ', ' WEB '],
     subtitle: 'Complete Web Apps with Database Integration',
     projects: fullstack_projects,
-  },
-  {
-    id: 'videogame-projects',
-    headingLines: [' VIDEO ', ' GAMES '],
-    subtitle: 'Browser & Mobile Games with Original Art & Sound',
-    projects: videogame_projects,
   },
   {
     id: 'art-projects',
