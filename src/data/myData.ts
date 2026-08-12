@@ -3,6 +3,7 @@ export const showSmashedGif: boolean = false;
 export const showProjectTitleIcons: boolean = false;
 export const show_dates: boolean = false;
 export const showMusicEducationSection: boolean = false;
+export const showServicesSection: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
 export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
@@ -193,7 +194,7 @@ export const educations: Education[] = [
   {
     dates: '2022',
     image: 'coding_dojo_cert.png',
-    degree: 'Web Development Bootcamp',
+    degree: 'Web Development Certificate Program',
     school: 'Coding Dojo',
     details: [
       {
