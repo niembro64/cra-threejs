@@ -3,7 +3,7 @@
   "rows": 5,
   "tileWidth": 384,
   "tileHeight": 216,
-  "framesPerSecond": 60,
+  "framesPerSecond": 30,
   "durationSeconds": 12,
   "blur": false
 }
