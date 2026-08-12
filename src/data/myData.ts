@@ -787,16 +787,11 @@ export const skills: SkillCategory[] = [
       },
       {
         title: 'Training Paradigms',
-        details: [
-          'Supervised Learning',
-          'Reinforcement Learning',
-          'Self-Play',
-          'Genetic Algorithm',
-        ],
+        details: ['Supervised Learning', 'Reinforcement Learning', 'Self-Play', 'Genetic Algorithm'],
       },
       {
         title: 'Architectures',
-        details: ['MLP', 'RNN', 'CNN', 'Transformer'],
+        details: ['MLP', 'RNN', 'CNN', 'Transformer Encoder', 'Transformer Decoder', 'Attention Mechanism'],
       },
       {
         title: 'Applications',
