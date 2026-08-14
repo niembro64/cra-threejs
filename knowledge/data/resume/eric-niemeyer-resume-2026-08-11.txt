@@ -1,0 +1,58 @@
+                                                     ●​ Designed manufacturing execution
+           ERIC NIEMEYER                                systems for Fortune 500 companies.
+        Stamford, CT · [private phone omitted]                  ●​ Integrated industrial control systems
+         [private email omitted]                        with ERP platforms for production
+                                                        manufacturing environments.
+                                                     ●​ Worked in secure industrial
+            niemo.io
+                                                        environments requiring client-specific
+            linkedin.com/in/eric-niemo
+            github.com/niembro64                        access authorization/background
+                                                        clearance.
+                    INTRO
+                                                  Tech: Python, Java, pNuts, SQL
+Tech engineer and hands-on team leader
+currently focusing on full-stack web                              EDUCATION
+applications and machine learning. Known for
+applying defensive finite-state-machine           Southern Illinois University Edwardsville, IL​
+architecture to structure complex product          B.S. Computer Engineering (honors) | 2018
+behavior into well-defined states, transitions,
+                                                  Relevant coursework: Data Struct & Alg, OS
+and failure cases. Experienced translating
+                                                  Design, Assembly, C, C++, PCB Design,
+evolving requirements into deployed production
+                                                  Microcontrollers, DSP
+systems.
+                                                  Full-Time Web-Dev Bootcamp: Coding Dojo
+            WORK EXPERIENCE
+                                                               (honors) | 2022
+Venturetec (Sentien) | Principal Machine          Relevant coursework: Python, JavaScript, C#,
+Learning Engineer | 2022 - Present | Stamford,    Flask, React, Express, .NET, MySQL,
+CT                                                MongoDB, BCrypt, AWS
+   ●​ Designed, trained, and deployed             Microsoft Technology Associate: Database
+      in-house transcript/audio classification       Administration Fundamentals | 2019
+      systems and end-to-end ML pipelines
+      for real-time phone fraud detection,        Southern Illinois University Edwardsville, IL​
+      including data preparation, redaction,        B.S. Secondary Education, Physics | 2013
+      evaluation, and deployment.
+   ●​ Integrated internal ML models with                  ADDITIONAL EXPERIENCE
+      telephony, transcription, redaction, and
+      real-time WebSocket workflows across        Team Sports Leadership
+      full-stack, mobile, and ML-backed client
+      applications.                               Player, team captain, and league manager for
+   ●​ Owned core architecture from prototype      organized team sports in the St. Louis area.
+      through production, serving as lead
+      engineer and primary technical contact      Independent Game Development
+      for founders, investors, product
+                                                  Designing, developing, and deploying
+      stakeholders, and client projects.
+                                                  simulations and online real-time video games.
+Tech: TypeScript, PHP, Python, SQL,
+                                                  Tech: TypeScript, Rust, C++, WebAssembly,
+MongoDB, Neural Nets, MLflow, PyTorch,
+                                                  WebSockets, PyTorch, BrainJS
+Linux, WebSockets, REST APIs
+
+Rockwell Automation | Software Engineer II |
+       2018 - 2022 | St. Louis, MO
+

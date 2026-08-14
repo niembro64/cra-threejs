@@ -8,7 +8,6 @@ interface PixelArtTextProps {
   textSequence?: string[];
   reserveSequenceWidth?: boolean;
   holdDurationMs?: number;
-  unbuildBetweenText?: boolean;
   pixelColor?: string;
   scrollContainerSelector?: string;
   totalHorzPixels?: number;
@@ -36,6 +35,7 @@ const PIXEL_ANIMATION_DURATION = 500;
 const MAX_PIXEL_DELAY = 700;
 const MAX_DEVICE_PIXEL_RATIO = 2;
 const DEFAULT_HOLD_DURATION_MS = 3000;
+const EMPTY_HOLD_DURATION_MS = 400;
 
 type AnimationPhase = 'build' | 'unbuild';
 
@@ -67,7 +67,6 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   textSequence,
   reserveSequenceWidth = true,
   holdDurationMs = DEFAULT_HOLD_DURATION_MS,
-  unbuildBetweenText = false,
   pixelColor = '#000',
   scrollContainerSelector,
   totalHorzPixels = 100,
@@ -79,8 +78,6 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
   const [sequenceIndex, setSequenceIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<AnimationPhase>('build');
   const displayText = sequence[sequenceIndex] ?? text;
-  const shouldCycleText = sequence.length > 1;
-  const shouldUnbuildText = unbuildBetweenText || shouldCycleText;
   const finalColor = useMemo(() => parseHexColor(pixelColor), [pixelColor]);
 
   useEffect(() => {
@@ -192,25 +189,22 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     };
 
     const finishAnimation = () => {
-      if (animationPhase === 'build') {
-        lastElapsedTime = totalAnimationTime;
-        draw(totalAnimationTime);
+      lastElapsedTime = totalAnimationTime;
 
-        if (shouldUnbuildText) {
-          holdTimeout = window.setTimeout(() => {
-            if (!isDisposed) setAnimationPhase('unbuild');
-          }, holdDurationMs);
-        }
+      if (animationPhase === 'build') {
+        draw(totalAnimationTime);
+        holdTimeout = window.setTimeout(() => {
+          if (!isDisposed) setAnimationPhase('unbuild');
+        }, holdDurationMs);
         return;
       }
 
-      lastElapsedTime = totalAnimationTime;
       draw(0);
-
-      if (shouldCycleText) {
+      holdTimeout = window.setTimeout(() => {
+        if (isDisposed) return;
         setSequenceIndex((currentIndex) => (currentIndex + 1) % sequence.length);
         setAnimationPhase('build');
-      }
+      }, EMPTY_HOLD_DURATION_MS);
     };
 
     const animate = (timestamp: number) => {
@@ -294,8 +288,6 @@ const PixelArtText: React.FC<PixelArtTextProps> = ({
     pixels,
     scrollContainerSelector,
     sequence.length,
-    shouldCycleText,
-    shouldUnbuildText,
   ]);
 
   return (

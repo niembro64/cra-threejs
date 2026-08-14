@@ -1,0 +1,145 @@
+                                           ERIC NIEMEYER
+
+                       Stamford, CT · [private phone omitted] · [private email omitted]
+                     niemo.io · linkedin.com/in/eric-niemo · github.com/niembro64
+
+INTRO
+
+Engineer and hands‑on leader specializing in full-stack, machine learning, simulations, and signal
+processing, across real-time mobile, web, cloud, and desktop platforms. Known for promoting the use
+of finite‑state machines to tame complex product areas. Defensive programmer with strict type
+discipline; draws on signals & systems, physics, set theory, and is usually the first person in the room
+to start diagraming on the whiteboard. Experienced collaborating directly with stakeholders, investors,
+and clients.​
+​
+On weekends Eric develops video games and simulations, then training neural nets to interact
+intelligently in those environments; chess bots trained via pure reinforcement learning, racing bots via
+evolutionary algorithms, fighting bots via supervised learning - are among the many projects he
+machine learning projects he has built for fun.
+
+WORK EXPERIENCE
+
+Sentien​
+Founding Machine Learning Engineer​
+Aug 2024 – Present | Stamford, CT
+
+Architect and lead engineer for full-stack applications, integrating mobile platforms, in-house-trained
+classification models. Designing, training, and deploying state-of-the-art text and audio classification
+solutions using a variety of state-of-the-art architectures - Python, PyTorch, Laravel, Vue, AWS
+Transcribe, Android Studio, and WebSockets.
+
+    ●​ SeniorSafe (Project): Designs and implements audio and text classifiers to identify dangerous
+       signals in phone conversations in real time - developes the SeniorSafe iOS app, handles all
+       audio signal processing in the system.
+
+​
+Venturetec​
+Lead Software Engineer​
+May 2022 – Aug 2024 | Stamford, CT
+
+Lead developer for full-stack applications, often integrating mobile platforms, in-house-trained ML
+models, and game engines.
+
+    ●​ Audience AI (Client): Designed and implemented an ML-driven standup comedy simulation
+       app, and trained and deployed natural language and audio models - BrainJS, React Native
+       iOS and Android.​
+
+    ●​ Sprayer Integrity Program (Client): Developed a cross-platform iOS and Android app - React
+       Native (Expo), Vue, Laravel - to organize and connect the spray foam insulation community.
+
+​
+Rockwell Automation​
+Software Engineer II​
+2018 - 2022 | St. Louis, MO
+
+Designed and implemented manufacturing execution systems (MES) for multiple Fortune 500
+companies, ensuring seamless integration between diverse industrial control systems and ERP
+platforms.
+
+   ●​ Lucid Motors (Client): Developed and maintained greenfield critical software components for
+      high-profile MES system.​
+
+   ●​ 3M (Client): Led the transition and integration between legacy and new MES systems -
+      Python, Java.​
+
+   ●​ Continental Tire (Client): Built Human-Machine Interface (HMI) functionality - Java, pNuts.
+
+Jackson & Mars (MJ & Bruno Mars Experience)​
+Musician and Audio Engineer​
+2019 – 2022 | St. Louis, MO
+
+Performed with and designed audio systems for a pop-rock cover band that played at casinos,
+baseball stadiums, and other high-profile venues.
+
+   ●​ Engineered a sophisticated real-time lip-sync system enabling vocalists to switch seamlessly
+      between live singing and lip-syncing during performances.​
+
+   ●​ Developed a multi-channel in-ear monitoring system that delivered precise audio streams to
+      each musician, ensuring perfect synchronization and enabling complex, high-energy rhythm
+      performances.
+
+대구과학고등학교​
+High School STEM & English Teacher​
+2013 – 2017 | Daegu, South Korea
+
+Taught STEM curricula through English to advanced-placement Korean students.
+
+   ●​ Created a custom application and user interface to compile and manage faculty schedules,
+      streamlining administrative tasks and improving data access.
+
+National Ultimate Frisbee League of South Korea​
+Executive Manager, Team Captain​
+2014 – 2016 | South Korea
+
+Managed league operations for a nationwide sports organization, coordinating board members,
+venues, and team captains across 11 cities. Oversaw large sponsorship negotiations, uniform design,
+and equipment logistics, ensuring operational excellence and budget compliance.
+
+
+
+Associazione Culturale Linguistica Educational​
+English Teacher, Pedagogy Teacher, & Project Manager​
+2008 – 2013 | Sanremo, Italy
+
+Developed and delivered dynamic English and pedagogy courses across 15 cities, adapting curricula
+to diverse learner needs and cultural contexts. Led project management initiatives to organize and
+implement educational programs.
+
+
+EDUCATION
+
+B.S Computer Engineering
+December, 2018 | Edwardsville, Illinois
+Southern Illinois University Edwardsville
+  ●​ GPA 3.73 Honors
+  ●​ Minor in Mathematics
+  ●​ Digital Design, PSpice, Circuits, PCB Design, Microcontrollers, Digital Signal Processing,
+      Signal Communication, Data Structures & Algorithms, OS Design, Linux, Differential
+      Equations, Discrete Mathematics, Engr Statistics
+
+B.S Secondary Education - Physics
+May, 2013 | Edwardsville, Illinois
+Southern Illinois University Edwardsville
+  ●​ Certified High School Science Teacher in Illinois
+
+
+SKILLS
+
+Programming Languages
+Python, TypeScript, JavaScript, Java, C#, C++, C, PHP, Assembly (x86, MIPS, GB-Z80), Verilog,
+Matlab, SQL (MTA-Certified), MongoDB NoSQL, HTML, CSS, SCSS, Tailwind
+
+Frameworks & Libraries
+PyTorch, BrainJS, React, Angular, Vue, Flask, Django, ASP.NET, Laravel, Express, Phaser Game
+Engine, AWS, S3, EC2, Amazon Transcribe, Amazon Polly, Socket.IO, React Native CLI & Expo
+
+Technical
+Neural Networks, Machine Learning, Game Development, 3D Animation, Audio Engineering,
+Image/Video/Audio Editing, Adobe Creative Suite, Servers, AWS EC2, AWS S3, Networking,
+Raspberry Pi Cluster, Arduino, Cryptocurrency Mining, Network Storage, PCB Design, PCB Repair,
+Excel Expert, Retro Game ROM Hacking
+
+Other Interests
+Ultimate Frisbee, Wedding DJ, Music Production, Concert Violinist, Piano Composer, Music
+Featured on Wikipedia, language lover - Italian, Spanish, Some Korean
+

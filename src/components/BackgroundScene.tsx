@@ -118,6 +118,8 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
 #endif`
         )
         .replace('texture2D( map, vUv )', 'texture2D( map, containedProjectAtlasUv( vUv ) )')
+        // A full-value purple tints the project footage without pulling its
+        // brightness down the way a near-black tint color would.
         .replace(
           'diffuseColor *= sampledDiffuseColor;',
           `sampledDiffuseColor.rgb = mix(

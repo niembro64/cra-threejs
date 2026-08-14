@@ -4,6 +4,7 @@ import React from 'react';
 import { EricResumeDescription, showProfileAbout, showServicesSection, showSmashedGif } from '../data/myData';
 import { isThin } from './Main';
 import PixelArtText from './PixelArtText';
+import ResumeVoiceAgent from './ResumeVoiceAgent';
 
 import EducationSection from './EducationSection';
 import ProjectsSection from './ProjectsSection';
@@ -47,7 +48,6 @@ export const Resume: React.FC<ResumeProps> = () => {
               textSequence={mobileIntroTextSequence}
               reserveSequenceWidth={false}
               holdDurationMs={3000}
-              unbuildBetweenText
             />
 
             {showSmashedGif && (
@@ -61,6 +61,8 @@ export const Resume: React.FC<ResumeProps> = () => {
           <div className="h-40" />
         </>
       )}
+
+      <ResumeVoiceAgent />
 
       <ProjectsSection />
 
