@@ -6,7 +6,14 @@ import { Resume } from './Resume';
 import AudioSpectrogram from './Spectrogram';
 import { Tooltip } from 'react-tooltip';
 import { ProjectStore } from '../store/ProjectStore';
-import { showContactSection, showKirbyGame, showSmashedGif, tooltipDelay, toolTipStyle } from '../data/myData';
+import {
+  showContactSection,
+  showKirbyGame,
+  showNiemoRemixPlayer,
+  showSmashedGif,
+  tooltipDelay,
+  toolTipStyle,
+} from '../data/myData';
 import PixelArtText from './PixelArtText';
 
 const BackgroundScene = lazy(() => import('./BackgroundScene'));
@@ -144,13 +151,15 @@ const Main: React.FC = () => {
               />
             )}
           </div>
-          <div className="absolute bottom-2 left-0 flex w-full justify-center">
-            <AudioSpectrogram
-              highFreqPowerRef={highFreqPowerRef}
-              lowFreqPowerRef={lowFreqPowerRef}
-              audioRef={audioRef}
-            />
-          </div>
+          {showNiemoRemixPlayer && (
+            <div className="absolute bottom-2 left-0 flex w-full justify-center">
+              <AudioSpectrogram
+                highFreqPowerRef={highFreqPowerRef}
+                lowFreqPowerRef={lowFreqPowerRef}
+                audioRef={audioRef}
+              />
+            </div>
+          )}
         </div>
       )}
 

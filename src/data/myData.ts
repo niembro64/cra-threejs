@@ -8,6 +8,7 @@ export const showWebGLDriveProject: boolean = false;
 export const usePolyhedron: boolean = true; // Set to true to use polyhedron instead of WD-40 model
 export const showContactSection: boolean = false; // Set to false to hide contact section and everything after
 export const showProfileAbout: boolean = false; // Set to false to hide profile picture and about me
+export const showNiemoRemixPlayer: boolean = false; // Set to true to show the desktop NIEMO REMIX player
 
 export interface BulletObject {
   title: string;
