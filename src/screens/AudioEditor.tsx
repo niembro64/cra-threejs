@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { drawWaveformPeaks } from '../utils/audioWaveform';
 
 interface AudioRegion {
   start: number;
@@ -124,14 +125,7 @@ const AudioEditor: React.FC = () => {
       }
     }
 
-    ctx.strokeStyle = '#0f0';
-    ctx.beginPath();
-    const amp = height / 2;
-    peaks.forEach((p, i) => {
-      ctx.moveTo(i, (1 + p.min) * amp);
-      ctx.lineTo(i, (1 + p.max) * amp);
-    });
-    ctx.stroke();
+    drawWaveformPeaks(ctx, peaks, width, height, '#0f0');
   }, [peaks, showGrid, duration]);
 
   /* ───────────── overlay (selection / play‑head / hover) ───────────── */

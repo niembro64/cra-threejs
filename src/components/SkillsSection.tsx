@@ -8,7 +8,7 @@ import PixelArtText from './PixelArtText';
 const SkillsSection: React.FC = () => {
   if (isThin) {
     return (
-      <section className="bg-black/80 px-4 py-12">
+      <section className="resume-section-surface px-4 py-12">
         <div className="mb-8 text-center">
           {showEmojis && <h1 className="mb-4 text-6xl font-bold">🛠</h1>}
           {/* <h1 className="pixel-font text-6xl font-bold">SKILLS</h1> */}

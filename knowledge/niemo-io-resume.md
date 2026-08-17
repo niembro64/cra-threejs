@@ -270,11 +270,11 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
 
 #### Annihilation++ RTS
 
-- Type: 3D Physics-Based Real-Time Strategy
+- Type: Cross-Architecture (CPU) Desktop Game
 - Dates: 2025 - Ongoing
-- Description: A full-3D, physics-first RTS inspired by Total Annihilation. Build factories, manage your economy, and command an army across dynamic terrain while every peer runs the same deterministic simulation—even across different CPU architectures.
-- Technology: Vue, TypeScript, Three.js, Rust, WebAssembly, PeerJS
-- Features: Keyboard & Mouse Support; Online Multiplayer; Cross-Architecture Deterministic Lockstep; Rust / WebAssembly Simulation Core; Force, Mass & Momentum-Based Physics; Terrain-Aware Pathfinding & Fog of War
+- Description: A cross-architecture desktop RTS written in C++. Its deterministic simulation is designed to run consistently across different CPU architectures while supporting full-3D terrain, physics, factories, resource management, and large armies.
+- Technology: C++
+- Features: Keyboard & Mouse Support; C++ Game & Simulation Core; Cross-Architecture CPU Support; Deterministic Simulation; Force, Mass & Momentum-Based Physics; Terrain-Aware Pathfinding & Fog of War
 - Public URL: https://games.niemo.io/budget-annihilation
 
 #### Seouldat Shooter

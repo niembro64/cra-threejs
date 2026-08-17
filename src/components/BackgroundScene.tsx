@@ -22,12 +22,6 @@ const PROJECT_ATLAS_HEIGHT = PROJECT_ATLAS_ROWS * projectAtlasConfig.tileHeight;
 const PROJECT_ATLAS_LAST_TILE = 20;
 const PROJECT_ATLAS_VIDEO = `${process.env.PUBLIC_URL}/project_media/project-atlas.mp4?v=${projectAtlasAssets.version}`;
 const PROJECT_ATLAS_POSTER = `${process.env.PUBLIC_URL}/project_media/project-atlas.jpg?v=${projectAtlasAssets.version}`;
-const PROJECT_VIDEO_STRENGTH = projectAtlasConfig.surfaceTreatment.videoStrength;
-const [PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE] =
-  projectAtlasConfig.surfaceTreatment.purpleLinearRgb;
-const PROJECT_PURPLE_SHADER_COLOR = [PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE]
-  .map((channel) => channel.toFixed(4))
-  .join(', ');
 
 const setProjectAtlasUvs = (geometry: THREE.BufferGeometry, firstFaceTile: 0 | 20): void => {
   const uvs = geometry.getAttribute('uv') as THREE.BufferAttribute;
@@ -92,7 +86,9 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
       flatShading: true,
       metalness: 0.5,
       roughness: 0.5,
-      emissive: new THREE.Color(PROJECT_PURPLE_RED, PROJECT_PURPLE_GREEN, PROJECT_PURPLE_BLUE),
+      // Neutral self-illumination keeps shaded faces legible without changing
+      // the original colors in the project footage.
+      emissive: new THREE.Color(0xffffff),
       emissiveIntensity: compact
         ? projectAtlasConfig.surfaceTreatment.emissiveIntensity.compact
         : projectAtlasConfig.surfaceTreatment.emissiveIntensity.default,
@@ -118,21 +114,9 @@ const BackgroundScene: React.FC<BackgroundSceneProps> = ({ compact, highFreqPowe
 #endif`
         )
         .replace('texture2D( map, vUv )', 'texture2D( map, containedProjectAtlasUv( vUv ) )')
-        // A full-value purple tints the project footage without pulling its
-        // brightness down the way a near-black tint color would.
-        .replace(
-          'diffuseColor *= sampledDiffuseColor;',
-          `sampledDiffuseColor.rgb = mix(
-  vec3(${PROJECT_PURPLE_SHADER_COLOR}),
-  sampledDiffuseColor.rgb,
-  ${PROJECT_VIDEO_STRENGTH.toFixed(4)}
-);
-diffuseColor *= sampledDiffuseColor;`
-        )
         .replace('texture2D( emissiveMap, vUv )', 'texture2D( emissiveMap, containedProjectAtlasUv( vUv ) )');
     };
-    material.customProgramCacheKey = () =>
-      `contained-project-atlas-v2-${PROJECT_VIDEO_STRENGTH}-${PROJECT_PURPLE_SHADER_COLOR}`;
+    material.customProgramCacheKey = () => 'contained-project-atlas-v3-neutral';
     const shape = new THREE.Mesh(geometry, material);
     shape.position.x = globalX;
     scene.add(shape);
@@ -221,21 +205,26 @@ diffuseColor *= sampledDiffuseColor;`
 
     camera.position.set(compact ? 0 : 30, compact ? 0 : 20, 150);
 
-    const baseIntensity = compact ? 0.7 : 0.4;
-    const pointLightRed = new THREE.PointLight(0xff0000, baseIntensity);
-    pointLightRed.position.set(500 + globalX, 1000, -5);
-    scene.add(pointLightRed);
+    const baseIntensity = compact
+      ? projectAtlasConfig.surfaceTreatment.pointLightIntensity.compact
+      : projectAtlasConfig.surfaceTreatment.pointLightIntensity.default;
+    const pointLightPrimary = new THREE.PointLight(0xffffff, baseIntensity);
+    pointLightPrimary.position.set(500 + globalX, 1000, -5);
+    scene.add(pointLightPrimary);
 
-    const pointLightGreen = new THREE.PointLight(0x00ff00, baseIntensity);
-    pointLightGreen.position.set(550 + globalX, 1000, -150);
-    scene.add(pointLightGreen);
+    const pointLightFill = new THREE.PointLight(0xffffff, baseIntensity);
+    pointLightFill.position.set(550 + globalX, 1000, -150);
+    scene.add(pointLightFill);
 
-    const pointLightBlue = new THREE.PointLight(0x0000ff, baseIntensity);
-    pointLightBlue.position.set(600 + globalX, 1000, -5);
-    scene.add(pointLightBlue);
+    const pointLightRim = new THREE.PointLight(0xffffff, baseIntensity);
+    pointLightRim.position.set(600 + globalX, 1000, -5);
+    scene.add(pointLightRim);
     // A low ambient contribution keeps project footage legible on faces turned
     // away from the colored point lights without flattening the faceted shape.
-    scene.add(new THREE.AmbientLight(0xffffff, compact ? 0.2 : 0.12));
+    const ambientIntensity = compact
+      ? projectAtlasConfig.surfaceTreatment.ambientLightIntensity.compact
+      : projectAtlasConfig.surfaceTreatment.ambientLightIntensity.default;
+    scene.add(new THREE.AmbientLight(0xffffff, ambientIntensity));
 
     const mouseTarget = new THREE.Vector2();
     const mouseSmoothed = new THREE.Vector2();
@@ -292,12 +281,12 @@ diffuseColor *= sampledDiffuseColor;`
       shape.rotation.y = rotationY + mouseSmoothed.y * mouseInfluence;
       shape.rotation.z = rotationZ + scrollSmoothed * 0.001;
 
-      const redTarget = audioIsPlaying ? 0.5 + highFreqPowerRef.current * 0.2 : baseIntensity;
-      const blueTarget = audioIsPlaying ? 0.5 + lowFreqPowerRef.current * 0.2 : baseIntensity;
-      pointLightRed.intensity += (redTarget - pointLightRed.intensity) * lightBlend;
-      pointLightBlue.intensity += (blueTarget - pointLightBlue.intensity) * lightBlend;
-      pointLightGreen.intensity +=
-        ((pointLightBlue.intensity + pointLightRed.intensity) / 2 - pointLightGreen.intensity) * lightBlend;
+      const primaryTarget = audioIsPlaying ? 0.5 + highFreqPowerRef.current * 0.2 : baseIntensity;
+      const rimTarget = audioIsPlaying ? 0.5 + lowFreqPowerRef.current * 0.2 : baseIntensity;
+      pointLightPrimary.intensity += (primaryTarget - pointLightPrimary.intensity) * lightBlend;
+      pointLightRim.intensity += (rimTarget - pointLightRim.intensity) * lightBlend;
+      pointLightFill.intensity +=
+        ((pointLightRim.intensity + pointLightPrimary.intensity) / 2 - pointLightFill.intensity) * lightBlend;
 
       renderer.render(scene, camera);
     };

@@ -164,7 +164,7 @@ const Main: React.FC = () => {
             <div className="h-40" />
 
             {showContactSection && (
-              <div className={!isThin ? '' : 'border border-black/0 bg-black/80'}>
+              <div className={!isThin ? '' : 'resume-section-surface border border-black/0'}>
                 <div className="mb-4 mt-16">
                   <PixelArtText scrollContainerSelector=".pixel-text-contact" pixelColor="#fff" text=" CONTACT " />
                 </div>

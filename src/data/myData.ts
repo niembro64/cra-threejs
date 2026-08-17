@@ -494,13 +494,13 @@ export const videogame_projects: Project[] = [
     projectStatus: 'ok',
     title: 'Annihilation++ RTS',
     url: 'https://games.niemo.io/budget-annihilation',
-    stack: ['Vue', 'TypeScript', 'Three.js', 'Rust', 'WebAssembly', 'PeerJS'],
-    type: '3D Physics-Based Real-Time Strategy',
+    stack: ['C++'],
+    type: 'Cross-Architecture (CPU) Desktop Game',
     bullets: [
       'Keyboard & Mouse Support',
-      'Online Multiplayer',
-      'Cross-Architecture Deterministic Lockstep',
-      'Rust / WebAssembly Simulation Core',
+      'C++ Game & Simulation Core',
+      'Cross-Architecture CPU Support',
+      'Deterministic Simulation',
       'Force, Mass & Momentum-Based Physics',
       'Terrain-Aware Pathfinding & Fog of War',
     ],
@@ -508,10 +508,10 @@ export const videogame_projects: Project[] = [
     image: 'budget-annihilation.jpg',
     video: 'budget-annihilation.mp4',
     supportsDesktop: true,
-    supportsMobile: true,
+    supportsMobile: false,
     hasSound: false,
     description:
-      'A full-3D, physics-first RTS inspired by Total Annihilation. Build factories, manage your economy, and command an army across dynamic terrain while every peer runs the same deterministic simulation—even across different CPU architectures.',
+      'A cross-architecture desktop RTS written in C++. Its deterministic simulation is designed to run consistently across different CPU architectures while supporting full-3D terrain, physics, factories, resource management, and large armies.',
   },
 
   {

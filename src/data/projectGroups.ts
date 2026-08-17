@@ -13,7 +13,7 @@ const groupDefinitions: Omit<ProjectGroup, 'startIndex'>[] = [
   {
     id: 'videogame-projects',
     headingLines: [' VIDEO ', ' GAMES '],
-    subtitle: 'Browser & Mobile Games with Original Art & Sound',
+    subtitle: 'Desktop, Browser & Mobile Games with Original Art & Sound',
     projects: videogame_projects,
   },
   {

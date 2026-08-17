@@ -81,7 +81,7 @@ const handleServiceClick = (url: string): void => {
 
 const Services: React.FC<ServicesProps> = ({ isThin }) => {
   return (
-    <section className={`px-4 py-12 ${isThin ? 'bg-black/80' : ''}`}>
+    <section className={`px-4 py-12 ${isThin ? 'resume-section-surface' : ''}`}>
       <div className="mb-16 text-center">
         <div className="mb-4 mt-10">
           <PixelArtText scrollContainerSelector=".pixel-text-services" pixelColor="#fff" text=" SERVICES " />

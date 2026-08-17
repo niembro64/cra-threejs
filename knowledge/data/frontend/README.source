@@ -1,0 +1,5 @@
+# niemo.io frontend sources
+
+The files in `source-files/` are snapshots of the structured data and configuration that drive the niemo.io frontend. They use the unsupported `.source` extension intentionally: the files are retained for provenance, but raw TypeScript and asset configuration are not indexed as conversational text.
+
+The generated `knowledge/niemo-io-resume.md` document provides the compact canonical summary. Dedicated Markdown documents in `knowledge/data/profile/` contain the normalized work experience, education, skills, workspaces/equipment, and trivia/interests used by the résumé voice agent.

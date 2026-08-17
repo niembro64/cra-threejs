@@ -13,6 +13,17 @@ const outputPath = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
   : path.join(projectRoot, 'knowledge', 'niemo-io-resume.md');
 
+const renderMarkdown = (documentLines) =>
+  `${documentLines
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()}\n`;
+
+const writeMarkdown = (filePath, documentLines) => {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, renderMarkdown(documentLines), 'utf8');
+};
+
 const source = fs.readFileSync(sourcePath, 'utf8');
 const transpiled = ts.transpileModule(source, {
   compilerOptions: {
@@ -104,13 +115,117 @@ lines.push('## Public Profiles', '');
 for (const profile of data.socialMedia) lines.push(`- ${profile.platform}: ${profile.url}`);
 lines.push('');
 
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(
-  outputPath,
-  `${lines
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()}\n`,
-  'utf8'
-);
+writeMarkdown(outputPath, lines);
+
+const profileDirectory = path.join(path.dirname(outputPath), 'data', 'profile');
+
+const workLines = [
+  '# Eric Niemeyer — Work Experience',
+  '',
+  '> Canonical source: the public work-experience section of niemo.io.',
+  '',
+  'This document contains Eric Niemeyer’s complete public niemo.io work-experience section.',
+  '',
+];
+for (const job of data.jobs) {
+  workLines.push(
+    `## Work experience: ${job.company} — ${job.title}`,
+    '',
+    `- Company: ${job.company}`,
+    `- Role: ${job.title}`,
+    `- Location: ${job.location}`,
+    `- Dates: ${job.dates}`
+  );
+  for (const detail of job.details) {
+    workLines.push(`- Responsibility: ${detail.title}`);
+    for (const item of detail.lines) workLines.push(`  - Technology, client, or detail: ${item}`);
+  }
+  workLines.push('');
+}
+
+const educationLines = [
+  '# Eric Niemeyer — Education',
+  '',
+  '> Canonical source: the public education section of niemo.io.',
+  '',
+  'This document contains Eric Niemeyer’s complete public education, degrees, honors, certifications, and coursework.',
+  '',
+];
+for (const education of data.educations) {
+  educationLines.push(
+    `## Education: ${education.degree} — ${education.school}`,
+    '',
+    `- Degree or program: ${education.degree}`,
+    `- School: ${education.school}`,
+    `- Completion year: ${education.dates}`
+  );
+  for (const detail of education.details) {
+    educationLines.push(`- Education detail: ${detail.title}`);
+    for (const item of detail.lines) educationLines.push(`  - Coursework, honor, or credential: ${item}`);
+  }
+  educationLines.push('');
+}
+
+const skillLines = [
+  '# Eric Niemeyer — Skills',
+  '',
+  '> Canonical source: the public skills section of niemo.io.',
+  '',
+  'This document contains Eric Niemeyer’s complete public technical, language, artistic, and platform skills.',
+  '',
+];
+for (const category of data.skills) {
+  const categoryLabel =
+    category.title === 'AI & ML'
+      ? 'AI & ML — Artificial Intelligence, Machine Learning, and Neural Networks'
+      : category.title;
+  skillLines.push(`## Skills: ${categoryLabel}`, '');
+  if (category.dates) skillLines.push(`- Experience range: ${category.dates}`);
+  for (const skill of category.skills) skillLines.push(`- ${skill.title}: ${skill.details.join(', ')}`);
+  skillLines.push('');
+}
+
+const workspaceLines = [
+  '# Eric Niemeyer — Workspaces and Equipment',
+  '',
+  '> Canonical source: the public work-environments section of niemo.io.',
+  '',
+  'This document describes Eric Niemeyer’s home workstation, desks, home lab, development devices, and AI-training equipment.',
+  '',
+];
+for (const environment of data.workEnvironments) {
+  workspaceLines.push(`## Workspace: ${environment.title}`, '');
+  for (const detail of environment.description) workspaceLines.push(`- Workspace equipment or feature: ${detail}`);
+  workspaceLines.push('');
+}
+
+const renderTrivia = (content) =>
+  content
+    .map((segment) => (segment.type === 'link' ? `[${segment.text}](${segment.url})` : segment.text))
+    .join('')
+    .trim();
+
+const triviaLines = [
+  '# Eric Niemeyer — Trivia and Personal Interests',
+  '',
+  '> Canonical source: the public trivia section of niemo.io.',
+  '',
+  'This document contains unusual facts, personal interests, music history, sports leadership, and hobbies associated with Eric Niemeyer.',
+  '',
+];
+for (const item of data.triviaItems) {
+  triviaLines.push(`## Trivia: ${item.title}`, '', renderTrivia(item.content), '');
+}
+
+const generatedDocuments = [
+  [path.join(profileDirectory, 'work-experience.md'), workLines],
+  [path.join(profileDirectory, 'education.md'), educationLines],
+  [path.join(profileDirectory, 'skills.md'), skillLines],
+  [path.join(profileDirectory, 'workspaces-and-equipment.md'), workspaceLines],
+  [path.join(profileDirectory, 'trivia-and-interests.md'), triviaLines],
+];
+
+for (const [filePath, documentLines] of generatedDocuments) writeMarkdown(filePath, documentLines);
+
 process.stdout.write(`Generated ${outputPath}\n`);
+for (const [filePath] of generatedDocuments) process.stdout.write(`Generated ${filePath}\n`);

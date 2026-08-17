@@ -12,11 +12,17 @@
     "decay": 0.65
   },
   "surfaceTreatment": {
-    "videoStrength": 0.68,
-    "purpleLinearRgb": [0.62, 0.3, 1.0],
     "emissiveIntensity": {
-      "compact": 0.22,
-      "default": 0.15
+      "compact": 0.36,
+      "default": 0.28
+    },
+    "ambientLightIntensity": {
+      "compact": 0.28,
+      "default": 0.2
+    },
+    "pointLightIntensity": {
+      "compact": 0.8,
+      "default": 0.55
     }
   }
 }
