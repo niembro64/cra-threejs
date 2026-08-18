@@ -125,7 +125,7 @@ export const jobs: Job[] = [
         lines: [],
       },
       {
-        title: 'Built custom software to compile faculty schedules.',
+        title: 'Built custom software to compile faculty schedules',
         lines: [],
       },
     ],
@@ -139,6 +139,10 @@ export const jobs: Job[] = [
     details: [
       {
         title: 'Designed and delivered English courses in 25 cities',
+        lines: [],
+      },
+      {
+        title: 'Tech & software support for the office',
         lines: [],
       },
     ],
