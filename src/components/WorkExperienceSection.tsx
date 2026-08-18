@@ -32,9 +32,11 @@ const WorkExperienceSection: React.FC = () => {
             {job.details.map((detail, i) => (
               <li key={i} className="mb-8">
                 {detail.title}
-                <ul className={`text-md ml-6 mt-1 w-[90%] list-disc ${'grid grid-flow-row grid-cols-2'}`}>
+                <ul className="text-md ml-6 mt-1 grid w-[90%] min-w-0 grid-flow-row grid-cols-2 gap-x-10 gap-y-1 list-disc md:gap-x-14">
                   {detail.lines.map((l, j) => (
-                    <li key={j}>{l}</li>
+                    <li key={j} className="min-w-0 break-words pr-1">
+                      {l}
+                    </li>
                   ))}
                 </ul>
               </li>
