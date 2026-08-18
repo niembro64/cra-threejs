@@ -4,9 +4,9 @@
 
 ## Profile
 
-Engineer specializing in full-stack web & mobile apps, neural network training & deployment, and game building - emphasizing defensive programming, strict type safety, and elegant solutions.
+Engineer specializing in full-stack web and mobile apps, ML classification systems, industrial software, games, and simulation - emphasizing defensive programming, strict type safety, and practical end-to-end delivery.
 
-Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
+Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 
 ## Work Experience
 
@@ -15,6 +15,17 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
 - Location: Stamford, Connecticut
 - Dates: 2022 - Present
 - Architecting, training, and implementing in-house AI systems to detect and prevent fraud
+  - Real-time phone-fraud classification
+  - Two-source audio and transcript workflows
+  - Turn-level transformer classifiers
+  - Conversation-level risk classifiers
+  - PGVector and Postgres semantic search
+  - ElevenLabs voice-agent RAG memory
+  - AWS Transcribe redaction handling
+  - Call-recording consent workflows
+  - Short raw-audio retention policy
+  - PII-aware transcript handling
+  - Robust thresholds, F2, and PR AUC
 - Diagrammed, and implemented complex fullstack web + mobile apps
   - Vue
   - Angular
@@ -41,48 +52,200 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
   - SCSS
   - Tailwind
 - Designed, trained, and deployed model architectures
-  - Pytorch
+  - PyTorch
   - BrainJS
   - MLP
   - RNN
   - CNN
   - Transformer
+  - Attention Masks
   - Tokenizer
+  - Embeddings
   - Text Classifier
   - Audio Classifier
+  - Conversation Classifier
   - Image Classifier
   - Video Classifier
   - Game AI
+- Built human-in-the-loop ML data and demo systems
+  - Training-item creation tools
+  - Label cleaning and backfill workflows
+  - Null-label state design
+  - ASR text augmentation
+  - Investor and new-hire ML demos
+  - Embedding and PCA explanations
+  - Live scam-call detection demos
+  - Stakeholder system walkthroughs
+  - Semantic similarity and diversity scoring
+- Built Audience AI mobile audio product end to end
+  - On-device neural audio scoring
+  - Real-time funny/not-funny scoring
+  - CNN and LSTM audio classifiers
+  - Laughter-versus-speech detection
+  - MFCC, FFT, and spectrum features
+  - Comedy-practice audience simulation
+  - Layered laugh-track engine
+  - React Native iOS and Android
+  - Multi-stage FFmpeg export pipeline
+  - FFmpeg audio/video rendering
+  - Watermarks and end credits
+  - Downloadable and social-ready videos
+  - No external server dependency
+- Led Spray Integrity Program product engineering
+  - React Native Expo mobile app
+  - Vue and Laravel web portal
+  - QR barrel tracking and traceability
+  - Estimate builder and job forms
+  - Contractor rewards and referrals
+  - Product library and support flows
+  - Weather and job metadata capture
+  - React Native Game Engine mini-games
 - Built video games for mobile & desktop
-  - PhaserJS GE
-  - RN Game Engine
+  - PhaserJS
+  - React Native Game Engine
   - Material D&D
+  - Educational reading games
+  - Physics and simulation systems
+  - Networking and game AI
+- Delivered practical client tools and data automation
+  - Angular educational games
+  - Phaser train vocabulary game
+  - Sticker-book interactions
+  - Foreclosure-data scrapers
+  - Government-data dashboards
+  - CSV export workflows
+- Mentored interns, remote workers, and product contributors
+  - Technical onboarding
+  - Task scoping and handoff
+  - Question resolution
+  - Creative product ownership
+  - Remote-worker coordination
+  - Intern mentorship
+- Managed parallel client, startup, and release deadlines
+  - Concurrent product schedules
+  - Client delivery planning
+  - App release deadlines
+  - Git release provenance
+  - iOS and Android version tracking
+  - Reproducible app builds
+  - Documentation for release state
+  - Requirement-change triage
+  - Feature-creep pushback
+  - Scope and payment impact communication
+  - Meeting recap and action items
+  - Time allocation across projects
+  - Startup-priority tradeoffs
+  - Stakeholder expectation setting
+- Led stakeholder, investor, and product demo meetings
+  - SeniorSafe classifier demos
+  - RAG voice-agent walkthroughs
+  - iOS app ownership
+  - Investor value explanations
+  - Quarterly investor progress reports
+  - Problems and steering updates
+  - Potential-client presentations
+  - Multi-person demo rooms
+- Navigated difficult client and payment-boundary conversations
+  - New-requirement triage
+  - Unpaid-scope boundaries
+  - Client relationship management
+  - Business-side tact
+  - Secretary-assisted follow-up
+  - Preserved client goodwill
 
 ### Rockwell Automation — Software Engineer II
 
 - Location: St. Louis, Missouri
 - Dates: 2018 - 2022
-- Developed machine execution systems for fortune 500 companies
-  - 3M
+- Developed manufacturing execution systems for fortune 500 companies
   - Lucid Motors
+  - 3M
   - Cooper Tires
   - Continental Tires
-- Developed machine execution systems
-  - Maple-L Foods
-  - Green-L Foods
+  - Maple Leaf Foods
+  - Green Leaf Foods
+- Integrated plant-floor systems with enterprise software
+  - MES
+  - ERP integration
+  - PLC coordination
+  - PLC ownership alignment
+  - Robotic systems
+  - HMI frontends
+  - Track and trace
+  - SQL databases
+  - Java and Python
+- Led requirements, testing, and offshore handoff work
+  - Lucid Casa Grande onsite integration
+  - 3M evidence-material traceability
+  - Cooper Tire process mapping
+  - Continental Tire HMI work
+  - Offshore team requirements
+  - Mentored newer engineers
+  - Large MES delivery deadlines
+  - Daily and weekly status meetings
+  - Client-meeting action items
+  - Pre-meeting topic collection
+  - OneNote agenda and decision tracking
+  - Cross-company stakeholder coordination
+  - Control-team stakeholder tact
+  - Agile and Jira change tracking
+  - Waterfall change documentation
+  - Schedule-impact communication
+  - Code testing and repair
+  - VBA and Excel tooling
+  - High-consequence production workflows
 
 ### 대구과학고등학교 영재고 — High School ESL & Science Instructor
 
 - Location: Daegu, South Korea
 - Dates: 2013 - 2017
 - Taught STEM-based ESL courses to gifted high-school students
-- Built custom software to compile faculty schedules.
+  - Advanced science in English
+  - AP and gifted-level instruction
+  - Students targeting KAIST and SNU
+  - Cross-cultural technical communication
+  - Teacher curriculum collaboration
+  - Hands-on STEM activity planning
+  - Egg-drop resource-planning lessons
+  - Mentored other teachers
+  - Holistic English assessment
+  - Communication-focused grading
+  - Assembly and classroom leadership
+  - Parent and teacher conferences
+  - Classroom continuity under disruption
+- Built custom software to compile faculty schedules
+  - Searchable schedule interface
+  - Teacher and student lookup
+  - English and Hangul data
+  - Administrative workflow automation
 
 ### A.C.L.E. — ESL Lead Instructor
 
 - Location: Sanremo, Italy
 - Dates: 2008 - 2013
 - Designed and delivered English courses in 25 cities
+  - Teacher-training pedagogy
+  - Curriculum adaptation
+  - Camp and classroom delivery
+  - Mentored teachers on lesson design
+  - Culture-adjacent English activities
+  - Multi-city camp scheduling
+  - Large camps with 30-200 kids
+  - Sports Olympics activities
+  - Drama and skit performances
+  - Weather and indoor contingency plans
+  - End-of-week show adaptation
+  - Classroom disruption planning
+  - Delegated incident response
+  - Conflict resolution
+  - Student-safety logistics
+- Tech & software support for the office
+  - Hardware support
+  - Software support
+  - Training-camp operations
+  - Led UK student excursion logistics
+  - Flights, meals, bedtime schedules
+  - Single-owner action items
 
 ## Education
 
@@ -157,7 +320,7 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
 - Frontend: JavaScript, TypeScript, React, Vue, Angular, HTML, CSS, SCSS, Tailwind
 - Backend: Node, Express, Laravel, Flask, Django, FastAPI, C#, Python, PHP
 - Databases: MongoDB, SQL, MySQL, PostgreSQL, SQLite
-- Deployment: AWS, EC2, S3, Docker, GitLab, Github
+- Deployment: AWS, EC2, S3, Docker, Git, GitLab, Github, Release Tagging, Reproducible Builds
 
 ### Game Engines
 
@@ -270,11 +433,11 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
 
 #### Annihilation++ RTS
 
-- Type: Cross-Architecture (CPU) Desktop Game
+- Type: Commercial C++ Desktop RTS
 - Dates: 2025 - Ongoing
-- Description: A cross-architecture desktop RTS written in C++. Its deterministic simulation is designed to run consistently across different CPU architectures while supporting full-3D terrain, physics, factories, resource management, and large armies.
+- Description: A commercial-release-oriented desktop RTS written in C++ with a custom engine, lockstep deterministic simulation, cross-OS state hashing, force/mass/momentum physics, terrain-aware pathfinding, LOD rendering, spatial partitioning, factories, resources, fog of war, and large armies.
 - Technology: C++
-- Features: Keyboard & Mouse Support; C++ Game & Simulation Core; Cross-Architecture CPU Support; Deterministic Simulation; Force, Mass & Momentum-Based Physics; Terrain-Aware Pathfinding & Fog of War
+- Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Air, Ground & Water Friction; Terrain-Aware A* Pathfinding; Fog of War & Full-Map Simulation; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
 - Public URL: https://games.niemo.io/budget-annihilation
 
 #### Seouldat Shooter

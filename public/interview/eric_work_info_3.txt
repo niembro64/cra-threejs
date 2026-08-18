@@ -1,0 +1,33 @@
+Alright, now we're going to talk about multiple deadlines
+
+Mm-hmm.
+
+. uh So at Accolay... uh I was the English teacher at- in Italy Associazione Culturale Linguistica
+
+Mm-hmm.
+
+Educacional um... You know, multiple deadlines. There was always multiple deadlines. I was the one creating the schedule for not only for not you don't have to talk just listen. uh I was the one creating the schedule for these camps with the kids both in Italy for
+
+Ah. Okay.
+
+for, you know, many, many different weeks all over the uh in many different cities... for months at a time in remote locations and cities etcetera but also in, in England whenever I took the kids to England uh- on a plane- I was managing the schedule for not only the flights, but um.. you know bed time morning time food etc
+
+Mm-hmm. Right.
+
+um I was managing deadlines for also when I was a- the periggoti- pedagogy teacher, I was teaching the teachers how to teach and um of course
+
+Mm-hmm.
+
+, there uh there are multiple deadlines for um all kinds of things so um you know, organizing uh the helpers and the other pedagogy teachers um- to make sure that we have, um- Everything in place. Timelines uh action items assigned to exactly one person type of a thing uh let's see- Regarding multiple deadlines with um uh the National Frisbee League of South Korea uh
+
+Right. Mm-hmm.
+
+Yeah my- I you know, would define at a high level a lot of things that we needed to do and uh my secretary would instantiate them and kind of uh- uh take them on because she also spoke Korean um and uh- of course getting buy in from uh- all the various regional leaders, the board members of the league that were uh voted in by uh- all the league players and all the captains of all the different all the 35 teams in South Korea uh- so you know there's lot there's a lot of deadlines that might have to do with um
+
+Yeah. Sounds like you had
+
+and it also integrated
+
+oh,
+
+Yeah, stop. You don't have to talk uh- it also integrated uh- the ability to send out uh- groups of action items to individuals so these action items are pulled and um emailed with a- with the click of a button once a week. So that's pretty cool. And I built that all uh- from scratch- That- that was VBA mostly uh- that system the emailing system because that was all Excel uh, let's see other- Multiple deadlines yeah, of course all those clients for Rockwell multiple deadlines um- that's what Rockwell was- That was- that's what you know uh- mission execution systems are very, very massive uh- Projects for- Fortune 500 companies um- so VentureTech, multiple deadlines uh- yeah, of course so different clients all working at this- you know, working on different clients and startup projects at the same time um- so in deciding you know when to spend time on what and uh you know, offering uh- when things should be done um you know um- It was a little bit uh- more free flowing but of- of course still schedules were important especially when we had uh- deadlines for app releases etcetera uh Sentien um uh- can't really think of anything schedule-wise uh- well manag managing deadlines I guess um You know, we are- we are I was in charge of the iOS app uh- I'm not sure if there's any deadlines necessarily related to that So I'm going to stop here

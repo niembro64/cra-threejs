@@ -26,7 +26,7 @@ This document contains Eric Niemeyer’s complete public technical, language, ar
 - Frontend: JavaScript, TypeScript, React, Vue, Angular, HTML, CSS, SCSS, Tailwind
 - Backend: Node, Express, Laravel, Flask, Django, FastAPI, C#, Python, PHP
 - Databases: MongoDB, SQL, MySQL, PostgreSQL, SQLite
-- Deployment: AWS, EC2, S3, Docker, GitLab, Github
+- Deployment: AWS, EC2, S3, Docker, Git, GitLab, Github, Release Tagging, Reproducible Builds
 
 ## Skills: Game Engines
 

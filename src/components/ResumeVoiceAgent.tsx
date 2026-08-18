@@ -81,7 +81,7 @@ const ResumeVoiceAgent: React.FC = () => {
                 <PixelArtText pixelColor="#fff" text=" ASK MY RESUME " totalHorzPixels={88} />
               </div>
               <p className="pixel-font mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-blue-200 md:text-xl">
-                Talk with an AI guide that knows about Eric.
+                Talk with a voice agent that knows Eric
               </p>
               <button
                 type="button"

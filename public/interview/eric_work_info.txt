@@ -1,0 +1,273 @@
+ Okay, I'm basically just gonnatalk a bunch because I need a bunch of information transcribed and I'm gonna do it with you
+
+All right.
+
+Alright, so- uh, at Sentien, you know, some work experience Sentien founding machine learning engineer I've been doing that for quite a long time, especially in the past two years full time. uh
+
+Mm-hmm.
+
+Um, so I was architecting and leading. Um, the classification uh system for real time um audio from two concurrent audio sources and classing them, classifying them against um fifty or so uh classification labels um when I started the project, uh, it was just doing um heuristics based on number of times certain words were being uh said and we turned it into- I first built out uh a couple um
+
+Uh-huh. Oh, okay .
+
+RNN style uh classification systems and then eventually decided to move to transformers and uh really got into it and pulled apart uh, you know, a-all kinds of um uh, interesting ways of training it. uh, turn-based-There are three different turn-based with different attention patterns. Some uh with uh classification labels um, so I took the CLS and turned it into a uh, a turn uh classifier. So there's start with a uh the CLS token um weights
+
+Mm-hmm.
+
+and initialize a new token called a turn classifier and then have that um only be updated uh via attention by the tokens in that turn
+
+Mmm.
+
+um That's one architecture, uh, so those tokens themselves have been um uh, updated by previous turns tokens. So in-in all these models that I'm gonna be talking about, uh, we have bidirectional attention within any turn and we have uh attention uh, that can update the tokens of turn N from any of the tokens from turn0 through turn N
+
+Got it.
+
+ So, within a turn, uh, bidirectional attention which gives you uh really clean uh um, you know, really context rich um tokens uh by the by the top of the transformer and you're also uh able to get context and up to the tokens from
+
+ prior uh turns, which are all bidirectional as well. So you can get um N uh uh supervised learning example or items and losses per item and then so that's N losses per item times whatever number of items in your batch um so we're able to train very efficiently uh learning a lot of things at once. Okay, so uh but yeah, so we pulled a, we pulled apart attention in a bunch of different ways where the turn token could attend or like be updated by uh just that turn token, the just that turn's tokens and those turn tokens, you know, were required to get the context from previous or sometimes the turn token was allowed uh to
+
+ um attend to any token that turn or T0 through TN um or uh doing kind of max um along all the um embeddings of the those tok-tokens in that turn uh and so that's the turn-based and then there's a bunch of conversational models as well using the standard one just as CLS which you only get one loss from because you're using the standard CLS, but we also did some similar stuff as those turn based models but we did conversation labeling where its job was to um not label that turn but we do sort of unions of all the labels uh in a really fancy way
+
+
+ um uh between T0 and TN uh but we'd still get uh N losses for that uh one item. It would just be learning uh those labeling uh with like the union of the labels and all of the different ones where the max between all the uh turn classifiers or having a specific turn classifier classify everything up till then Different models, or um um doing, you know mean of all the turn classifier um embeddings so there there's three turn classifiers that we had and uh Five, I think uh different architectures of um conversation classifiers uh the convers-conversation classifiers obviously have the the union of labels um that is being learned at the top after the MLP for the logits uh and yeah we're saving them and we're doing fancy um
+
+  uh robust uh thresholds not just where's the best threshold based on F two but sort of a robust such that uh you know any kind of a curve uh it's fitting the curve well instead of just finding the random peak for whatever spot the thresholds might be uh I also develop the uh system for um creating training items by humans or fixing and uh cleaning up training items
+
+   uh and I also uh yeah so we also have uh for these training items the concept of null for a uh a class such that we don't train you know we can have uh some of the classes learned but some of them not so uh let's say that we added a new class all the will be um previous training items did not have that class before so we can't assume that it's low we also can't assume that it's high so that is trained null until we are able to backfill it somehow either human backfills it or AI backfills it so uh you can see that we you know uh did a lot of good stuff cleaning all that stuff
+
+    um Uh what else did we do? So I also impl-implemented um uh PG vector with Postgres
+
+     so- and we had an endpoint to be able to embed various text and to get uh so the id- the idea is that uh you know any kind of voice agent that we have, we're using Eleven Labs voice agent um I made it so that we can uh search for any conversation uh semantics that are needed either from the uh the conversation as a whole which you'd be embedding the whole conversation both sides of the conversation or uh maybe just embed the external party's part or just embed the internal party's part so that we can get um anything we might need conversation wise in some kind of a RAG system or um
+
+
+      Also just testing uh the diversity of semantics of uh what somebody is saying. um So the RAG system of is of course uh useful for you know some subscriber or maybe the uh agent might wanna refer back to something that uh the subscriber has said either on a um unlike if the if the call ends up being fraudulent and being able to reference something uh that the they've talked about before the uh agent and the subscriber or uh maybe uh some kind of health check up you could reference uh how was your you know last week you told me uh that something something or your kid's name or something that's you know that can be on the RAG and then uh also uh you know with these vectors and PG vector we can um get some scores on how diverse uh that person's conversations are um um internally uh especially compared to everyone else so if that if some number is saying the same thing or asking the same things uh with uh semantic uh similarity score that's uh you know very not diverse uh you know um cosine similarity of all these uh different uh items that that person said and especially if there's no outliers maybe th-he hasn't said anything that is just kind of a normal conversation that's outside of uh these whatever conversations it would it's at least spam or some kind of uh
+
+       automated whatever uh so you know it we get all this information from that
+
+        uh we are embedding turns and turns with context uh so any turn that uh you know any speaker turn embed that itself and also a version of that speaker turn with the prior two speaker turns so that we get a little bit of a rich context and we can do RAG on that stuff um so yeah we our our uh conversation uh PG vector vector store is uh Pretty pretty nice. I think it-we called it like a a mini raptor rag in some sense. It's not exactly raptor, but it's doing something similar
+
+         uh what else did we do and Sentien um Yes, and uh ablations on each of our model types, each of our model-model architectures uh you know, with the various um um uh weight decays in the MLPs um you know various um LRs for the uh special tokens that we're adding we're adding special tokens for learning AWS's uh uh redacted um tokens uh so email redaction um we initialize first with uh you know a bunch of
+
+          uh prior tokens um uh so most of all the all the normal semantic tokens we have frozen uh so that they can be learned uh but uh and we we did that so that um we wouldn't have any kind of a bias in our data set which isn't big enough yet so uh we wanted to um have these learned
+
+
+           abstractly Such that the tokens themselves uh we froze the tokens and the the learning had to happen inside the transformer in the MLP uh so the tokens themselves are kind of a white blank slate but we still had to train our uh special tokens which uh we are mapping directly against what AWS would give us um and we're actually even uh doing some uh condensing so all the different numbers
+
+
+            that AWS gives us we are condensing down into a uh um a condensed uh just number token so there's something like five different uh numbers that AWS gives us and the reason we're condensing it down to a number token instead of just letting them be and training them um as their own special tokens, their own special token is that uh AWS transcribe doesn't actually keep its own context so for any chunk of audio it only transcribes that chunk of audio outside of context so if you said oh the number is one two three five six seven eight nine um that may have been a social security number, but it didn't know it was a social security number So we are uh using the abstracted versions of all these and condensing them where necessary so that uh we have learned representations that are
+
+
+             um abstract and can be um kind of uh updated by the rest of the conversation to turn that into what it needs to be instead of uh having all these you know partially but not really well defined separate um tokens And yeah, they're all initialized with good um good approximations from the prior uh uh token that with The prior tokens from that tokenizer
+
+
+              um and of course uh normalized so that you have like equal power um I think that they are what- hyper spheres, these tokens maybe. I'm not sure but um Yeah, so the turn tokens are initialized directly from the CLS th-I mean the turn classifier tokens are initialized directly from the CLS token uh the turn sep tokens are initialized directly from the sep token and then uh we also have um uh speaker
+
+
+               um speaker uh uh you know speaker tokens which is like external versus internal and those are initialized as well with um kind of uh other person like other and person or like subscriber and person and normalized uh so you average all those together and you normalize them so each you know each of our own um uh composed uh initialized tokens are also of the same kind of overall power and same kind of structure as any other token that was in uh the transformer at the beginning with
+
+
+                And you know there instead of random instead of random initializ uh random initia-initialization uh what else are we doing um So- yeah and that that also helps because you know instead of just having random these uh AWS's transcribe uh turn these you know Brackets and stuff into a bunch of tokens. It could be instead of you know, a bunch of meaningless tokens um you know, what does a bracket and all that that's actually turned into something that is semantically very relevant which helps on token count as well uh. What else are we doing here? um uh yeah of course all the various um uh ASR augmentation and um kind of whatever oth- whatev- whatever else augmentation, you know, adding random characters and stuff but making sure that we're not
+
+
+                 breaking Uh, important um important uh structural tokens. So, yeah, I'm always printing these out and making sure that's what what we're doing is visually uh creating tokens correctly I'm always visualizing these tokens and uh also seeing that their training so as we train we're also seeing uh cosine transform- or cosine similarity of the tokens initial state versus its later state so I can see how much it's trained um and yeah we're I'm watching. You know, we're doing- our training is very uh I mean, I don't know, very sophisticated, but it's sophisticated just that we have you know validation set that's pulled out uh well. It's pulled out such that um there's no crosstalk between the training set and the validation set
+
+                  and uh you know once we have some patience after a couple uh after you know it starts degrading in per- um validation uh against that two or uh whatever- what's the other um uh the normal score- What was that? What was that? What was that? The one that doesn't have the threshold, whatever it is um Actually, what is that
+
+                  Hmm. Lemme think. It sounds like maybe you're thinking of average precision or PR AUC? It's threshold-independent
+
+                   Yeah PR- AUC Yes, yes, yes, yes Exactly. Uh yep, so I'm gonna keep going Okay, so
+
+                    Let's keep going, what else have I done at them uh, yeah I also did all of the tech
+
+                     demos uh for our system where um I was uh handed over the reins to demo the system and what we would do is I would show First, what tokenizotio-tokenization looks like to our uh to any kind of investor or um new hire or whatever uh so explaining what tokenization means and how it's not just uh words that are tokens, it's any kind of uh medium that can be broken into small meaningful pieces and can be learned uh and you know these tokens can be learned kind of abstractly and some uh
+
+
+                      in some uh standard way of you know just go out and look at every piece of medium and these tokens might are you know automatically kind of figured out what's what needs to be a token based on kind of heuristics of how often things are seen and then also trained so um you first you know to make a tokenizer you build uh the tokenizer first and uh you randomly initialize all of them and pre-training will find uh you know decent versions of these tokens regardless of what uh this transformer is doing or regardless of what this model is doing anyone that uses tokens um so uh what was I talking about. Oh yeah, so I would explain you know tokens and then uh you know kind of show-a a mental map of uh token relationships I built the PCA visualizer uh where we did PCA of that of the first three dimensions right, using the first three primary um
+
+
+                       the first three dimensions that pop out of PCA and uh visualizing them and doing um- ana- analogies like uh Italy is to pasta as Japan is to what? and you know it just so happens to pop out that uh you know there's sushi or whatever so all these analogies here yeah yeah super so I built that uh and I'm demoing this and exp-and then eventually you come to these concepts of okay, if we have um the concept of some
+
+
+                        some-thing and then there's a there's a dangerous version of that uh you could also do the same thing of this other thing and the-dange- dangerous version of that so you you can map it's not just tokens that have uh kind of embeddings but you can also embed full concepts, full statements, full sentences, full conversations so uh if you can go from Italy to pasta and use that same vector use that same uh direction to go from Japan to um sushi you can also go from okay, this concept and the dangerous version of that concept and then this other concept and the dangerous version of that concept uh so that's some some kind of a helpful mental model for the um for the uh description of uh how AI works Then we talk about our system and we'd show um a brand new genera- generated system from um you know we we'd ask for a random topic and a random way that something might be dangerous over the phone that's uh you know trying to hurt a senior and our system would catch it and consider it danger uh every time that we were on there And so we did that first with the AI and then we'd call them to show that it's all built out um and I would
+
+
+                         call uh the um pr-I'd say, hey, can I have your number? whoever you know whoever's talking we would put our mics on mute so we have a zoom session going normally it's a you know all of us in our company here and all of them in uh across you know across cyberspace and Zoom and we'd we put our mics on uh mute and we would um uh talk through the phone and it'd be a normal conversation
+
+                          uh this- sounds like a normal conversation, doesn't it? and then uh you know either they would um themselves they would try to say something scammy or we would go uh read a script or something
+
+                           and uh it the system would kick in uh the old system used to show uh used to be humans jumping in at the moment of uh something dangerous happening and the human would talk to the subscriber or the um the external party and decide whether they should just kill the call. But now we have Eleven Labs with a
+
+
+                            um being able to do RAG in the system that I created uh and is able to see if that person has any cached value of whether or not the prior conversations that they have been making are all very similar to this basically all very similar in general and you know we can just say hey this guy's not really valuable to talk to- he's even dangerous to talk to probably um and of course we can see the rest of the stuff that he has said before uh this person is
+
+                             um notnot trustworthy um uh and you know you can also the agent we're using the voice agent we're using can also reference prior conversations that they've had with a- the person at that time to kind of make them feel at ease and confident, it's not just a blank a blank brain talking to it
+
+                              um so yeah, I built uh you know all these systems around uh the the the classification system and also uh you know helping the agent um be able to sound uh intelligent and be helpful and the subscriber is always very thankful. So they actually say thank you to the agent all the time. It's just kind of funny
+
+
+                               Yeah. Yeah yeah I'm gonna keep going um I just I just need to get this all transcribed
+
+                                Wooh uh yep so uh Other stuff with Sentien um there's a related project where uh basically I have um Okay, another related project is a voice um is an app that has a small neural network inside of the app. There was no external servers. It was called um Audience AI and uh I was tasked to
+
+                                 uh kind of build a um an app that would record you and help you practice being a stand-up comedian So uh I was using uh I did I decided to do it just with um uh because uh-uh the model had to be pretty small um I I was just at that point I didn't even know transformers existed. I just used um uh convolutional uh neural nets there
+
+                                  and uh you know just some DSP type stuff getting um uh- you know uh So I was- yeah- yeah DSP for all, you know, there's uh em MFCCs and uh- all that, you know, spectrums and uh FFTs so yeah um and then that would be the input and uh we would be testing uh the- the model was trained to learn uh what kind of sounds uh were funny because I you know it-it I've we found that it was actually a lot of vocal cues that were uh giving the audience a hint to um to basically laugh. So we'd have a curve that was always um EMAing to some new value um you know between zero and one and I created a really cool system uh with laugh tracks. I took out little chunks of laugh tracks and um labeled them you know between zero and six
+
+                                   where six were like super super loud laughs which is like them dying and then uh zero was completely science- silence and one was maybe like some some little background chatter and uh that would map to
+
+                                    that would map to the uh laugh score between zero and one. And uh that laugh score between zero and one would uh basically at the end of any- any MP three that was played of any laugh track, it could be a laugh track from any of those buckets. So there's like multiple um multiple uh laughs in each bucket. So, you know, the the level one just kind of whispering whatever could have you know five in there and you're gonna play a random one- At the end of any of these MP 3s you would uh immediately choose a new bucket and choose a new random one in that bucket based on where the
+
+                                     uh laugh score is at that moment So and I was also so and it's not just one set of um it's not just one laugh track that is playing at any time uh I actually had like five of these uh systems going at once so that they would overlap uh-mm And I would take time stamps of when all these things happen so that it can be reproduced in FFmpeg
+
+
+                                     . I would FFmpeg these back into the recorded video at the end uh so you would be able to see yourself and hear the laugh as it was going and then uh this whole FFmpeg that was happening on device uh before FFmpeg was removed from React Native but this uh we would- it was very complicated FFmpeg um to
+
+                                      first uh normalize the audio uh with um uh, you know, multiband um equa- equalizers then uh add the laugh track um and then normalize again and then uh add the kind of watermark so that would be the third FFmpeg is to put the- the app's watermark on to the video and then we would put
+
+                                       um uh then we would put the ending credits uh so like at the end whenever Tik Tok like bounces up and down uh we put the ending credits of the video also FFmpeg-ed in there with the user's name and our logo at the end so it was a very cute and very cool app. And uh um Yeah, that one was really cool. I did that completely by myself uh every little piece And it was a a
+
+                                        job um we had a little bit of time between projects and um It- it ended up being a really cool project uh that my bosses friend wanted him to build and uh yeah my friend really appreciated it or his friend really appreciated it
+
+                                         Um and it took like yeah, about a year, uh maybe maybe six months to a year to build that uh- what else did I do? So at Venturetech um uh so there's other full stack ap-um
+
+                                          applications um lead developer for full stack applications often integrating multipl- mobile platforms in house trained ML models and game engines uh so the other big one is sprayer inte-integrity program where I did uh many different things for SIP uh- developed across iOS and Android app. So it was React Native Expo. I've, of course, done React Native Expo and CLI as well as the native iOS and native Androids um
+
+                                          uh Vue and Laravel for the the back end and the uh portal um it basically did let's see if it's on this phone
+
+                                          Okay, so I had to keep-keep talking about spray load of the program cause you missed a lot of that unfortunately. So spray loyalty program was um a huge app that connected um, basically sprayers, spray foam sprayers uh people that needed spray foam in their house or commercially and the people that would facilitate that. So whether they're selling spray foam or selling machines or whatever uh and this app was massive. You know, you could show your products on there and some information about your products uh there was also a library of information that we we were showing uh spr ayers
+
+                                          um. There's also support uh, you know, maybe you wanted to ask some questions about the products or ask some questions about our system uh the SIP system. There's a referral program such that uh, you know, anybody you referred that person would
+
+                                           um, you know- You would also, receive 10% of what that person made for any kind of points. There's also games I made. I actually put three little mini games in there. Fishing game, some kind of spin the wheel and uh, what was the other one? Oh, like a Pin ata game which I-I made myself. So with React Native Game Engine
+
+
+                                           so, React Native game engine? Yeah, make sure you write that down some more Um. So uh Yeah, it also does tracking and tracing of all these spray barrels so you can uh first we made the barrel labels with all kinds of uh QR codes and information on them, very uh, you know clearly built from whatever the user put in the database for that item
+
+
+                                           uh you know, you can understand that this is some pretty complex stuff. And then uh
+
+                                           basically uh the barrels would have states and you would uh we would be asking them to scan the barrels and you know track and trace everything that's happening. We would be asking them uh how did things go uh different forms and we'd also be pulling all the metadata of the weather or the time of day uh light at that moment uh so that we could um you know
+
+                                           very accurately understand uh how all this stuff was working and be able to uh- Figure out what went wrong or what went right. Um, there's also estimates so that you can walk around and make an uh, these sprayers could make an estimate of the house as they went instead of having to write it down on paper uh, it could be uh faster for them
+
+                                           Uh, so yeah, you can understand this is a pretty complex app with a lot of pieces in it Um, there's also rewards, you could, you know, get clothes or Visa gift cards etc
+
+                                           Um. And yeah, so I had I built the games and there was also user levels like Journeyman or whatever- fancy slayer, you know, professional sprayer and the the points would whatever uh increase as you your state so it's kind of gamified
+
+                                           Uh, it says, Spray Integrity was built specifically for spray foam insulation contractors to make to make every job easier, faster, and more profitable. Whether you're running small crew or managing multiple projects Spray Integrity keeps everything organized in one simple app. Key features Job management, create track and manage all your spray foam projects to finish. Let's see if there's more here uh to start to finish Estimate builder, generate professional estimates on site and share them instantly with clients. Barrel tracking and rewards. Log every barrel sprayed and earn points for your performance
+
+Mm-hmm.
+
+
+Team collaboration, keep your-keep your crew aligned with real-time job updates uh customer records. Store store client details, project history, and notes for repeated business. Performance insight, track your productivity and efficiency across projects. Who spray- who is Spray Integrity uh contractors deserve- O- Oh, why Spray Integrity. Contractors deserve tools designed for the trade, Spray Integ- Spray Integrity helps cut the paperwork, win more bids, and grow your business while keeping your crew motivated with built-in reward system. Take your spray foam contracting business to the next level- Next level with Spray Integrity
+
+Mm-hmm.
+
+
+Uh What else did we do? So yeah, I was I built the apps for that and I did, you know, a lot of backend stuff. I built the system for making the um Uh the labels for the um uh for the barrels I made the estimate system
+
+
+completely Um, I made the library. I made the referral system, which is a very all these things are very elegantly um, Uh designed uh
+
+you know, were kind of recursive and elegant Um you so you-you-you can have infinite depth or whatever. Um, okay, so let's see. The next stuff that I did was um, Uh what-what was the- Was it not Scholastic? What's the other um book company that might do stuff with kids occasionally
+
+Oh, so I already- I already have, uh, I have the transcript going
+
+
+um, you know Cause all this is being transcribed. So, yeah, don't worry about it. You don't have to um, you don't have to say this back to me. Just you can just listen. Um
+
+Uh, yeah, so What was that? MH- What's MH? It's another book company
+
+Okay, let's just say it was Scholastic. Um- So, um, for Scholastic, I built games for kids, um around their reading uh kind of homework basically. It's kind- well, it's not necessarily homework, but, you know, some kind of summer camp or whatever that uh Scholastic was putting on
+
+
+Uh. A puzzle game where uh you know, they had to match um puzzle pieces uh used uh this is all in Angular
+
+I also built a train game. It was my first actual Phaser uh game engine- ex- uh use when that's whenever I became obsessed with uh building games
+
+online. It was when I was obsessed with Phaser uh Phaser JS uh it was a train game where you had to press a button and prevent the train from crashing whenever there was a wrong word or a um in opposite word of what was uh meant at that moment. Um so that was really cool
+
+. Uh, and then also there was a sticker book. where you put the stickers. Uh, you know?  Around on the screen it's kind of cute. Uh Yeah, so that one was a lot of fun, and that's whenever, you know, I got really into um, game engines and uh, you know, moving things around on a web page
+
+Okay, so Oh- There's also Red Leaf, which I made a website for somebody Um oh, I've also uh built um- Scrapers for Um scrapers for foreclosures in Connecticut, uh we had to use um kind of uh cores extensions on browsers because you don't want uh they- you know a lot of these browsers are preventing uh you know, looking at different websites from your website so uh cores extension and uh scraping and uh, you know, kind of consolidating
+
+information so that it's much easier to look instead of having to go dig deep and remember something, so bringing all that information to the top and I did the same thing with New Jersey and they're very different systems. The New Jersey didn't require the cores
+
+extension, but uh and that one was in a completely different format and those were very helpful for that client
+
+um, and now that client uses our system instead of uses the the standard government system uh because it's uh vastly more um uh more concise for that person to be able to look and make good decisions quickly and also uh export CSVs and they can you know, play with their own information at that point
+
+
+Um Yeah, what else have I done? Okay, so then back in my Rockwell Automation days, I was designing and implementing uh MES systems- Manufacturing Execution Systems for multiple 500 uh, Fortune 500 companies ensuring seamless integration between diverse industrial control systems and ERP business layer stuff So we I remember Lucid Motors down in Casa Grande. I was there uh, you know
+
+, probably 60 percent of the year
+
+uh uh, you know, integrating our MES system, integrating the various um, PLCs and other uh, robotic systems with the business layer and uh
+
+Also doing track and trace at the same time. So um, you know, uh, it's just a massive integration of everything in the building. So that was pretty cool and we- I had an Indian team under me uh
+
+- who I was feeding re-requirements to and testing their uh their code and often having to go in and uh fix the code myself
+
+or uh also uh they would ask me you know, how to do certain things. That was um actually a much better developer than they were, but they were in charge of developing. Uh for example for
+\
+Excel like they didn't know how to do some things in Excel and they were asking me how to do it, so I would teach them things like VBA and stuff
+
+Um Uh 3M. I was the uh lead uh manager of our uh integration with a police incineration uh facility that was inciner ating um all kinds of really interesting stuff
+
+um So that was also my job uh and I had to um- Basically, organize Yeah, I had to organize uh these random requirements that were very strict uh for these chemicals
+
+Um- Continental tire was uh another one. I was actually building JavaScript front ends for that. Um Or not JavaScript, it was Java. Um
+
+
+uh and HMIs and stuff uh and for Cooper Tire, I was on site helping document um uh well documenting how tires were uh being made such that we could uh map a MES system one to one against all these uh super old machines
+
+Um that was interesting. Um there's also Maple Leaf Foods. I went up to Connecticut at some point before I lived here. I think it was Connecticut actually or no, maybe it was Massachusetts
+
+um uh Green Leaf Foods was in uh in Canada Uh- What else did I do- Yeah, and that was uh- Documenting um again, it was a MES system uh with really old crappy machines and trying to figure out how we would uh do track and trace or uh execution systems
+
+there. Um- uh fewer people uh You know, more machines and more reproducible, basically
+
+Uh, what else? So, Jackson and Mars. Uh, it was a-another interesting um job that I did. I was a musician and audio engineer. I performed and designed audio systems for a pop rock pop rock cover band that played at casinos, baseball stadiums, and other high-profile venues in St. Louis. And uh I engineered a
+
+sophisticated real-time lip sync system uh that was brand new to St. Louis and nobody had actually seen that before, especially our lead singer uh this enabled vocalist to switch seamlessly between live singing and lip-syncing during the performances and the recording was using the same mic at the same volume at the same intensity so uh you know, a stomp box would switch between them
+
+at any time that the the singer was getting tired, so he could fake uh whenever he needed uh to rest so really cool. Uh I also developed a multi-channel in-ear monitoring system that delivered precise audio streams to each musician based on only what they needed- so- Maybe this person doesn't need that, but that person does need this uh so that ensured a perfect synchronization and enabling complex high energy rhythm performances because each person had exactly what they needed in their ear. Um
+
+- Uh- Yeah, so what else? Um In Korea
+
+I taught STEM curricula through English to advanced placement Korean students that often went out to KAIST or uh SNU, Seoul National University, kind of the top the top high school students that went to the top uh colleges. But I also created uh software at that point uh To help out with not only what I was doing, but to help out with what the school was doing. I created a custom application and user interface to compile and manage faculty schedules which streamlined administrative
+
+- administrative tasks and improved uh data access. So instead of having to visually search this massive document, you could just type in who you wanted to uh who you wanted to know about
+\
+or uh, you know, even the kids uh and it worked for both Korean language and English. So uh, you know, you could type in Hangul, Korean letters and it would uh search through Hangul. Which was really cool
+
+uh another job I had was uh the league manager of uh- The South Korean Frisbee League which was called Rock You I was the executive manager um I managed league operations for a nationwide sports organization. I coordinated board meetings and board members uh the venues the team captains across 11 cities and I oversaw a large sponsorship. No- no uh negotiations, uniform design, and equipment logistics ensuring operational acceler uh excellence and budget compliance. So I had a secretary who I would um
+
+- She was Korean and I would uh give her tasks to do and make sure that everything was running smoothly. And we were in charge of
+
+something like 30,000 dollars every season that we had to allocate uh well, we had to buy venues, we had to uh, You know, talk to uh, different political groups to get uh, the availability uh, you know, if we could use uh um, public grass areas or if we had to pay or whatever. So
+
+managing managing that was a a lot of hard work
+
+Um. I currently do something similar for Westchester uh WUDI- Westchester Ultimate Disc Incorporated, here in West- uh Westchester which is uh just north of New York City close to my home in St- uh in uh Stanford, Connecticut
+
+and uh here I'm doing something similar uh we are, you know, doing um a league but in in uh yeah- New York uh and that's Ultimate Frisbee as well
+
+
+So lots of management experience with uh running uh organizations. Um uh You know uh, with using- using technology as well to to run them. So all these like things that we have to do with scheduling or with um balancing teams has to be done very elegantly and I would use uh I would program uh VBA back then and now I'm using actual program- programming languages outside of Excel uh you know VBA is for Excel, but now I'm using uh more fancy uh stuff now uh
+
+Now that I'm in the in the in the U. S. So in Korea, you know, everything through Excel uh, you know, very advanced Excel use and today I'm using uh, you know More advanced. Uh JavaScript and front end stuff for browsers. Um- What else have I done? Um- So at Acclay, associ- Associazione Culturale Linguistica Educacional It was it's a uh- It's teaching English in Italy and I was a English teacher, I was a pedagogy teacher and a project manager uh for them. I developed and delivered dynamic English and pedagogy courses across 15 cities adapting curricula to diverse uh learner needs and across cultural contexts. I led project management
+
+initiatives to organize and implement educational programs and I was also their tech guy. So both hardware and software in their office or at the, uh, the various training camps. So not only did I train them pedagogically, but I was also uh the tech person um for- to facilitate these um these camps to train our teachers. So not only did I teach kids, but I taught our teachers to teach kids. Which is which was a lot a lotta fun
+
+Uh also in Italy
+
+I, uh, I was so well regarded that um, I was- Uh, I took uh, a group of 20 Italians up to Liverpool Manchester and Wales uh to do a two-week excurt- excursion um- So, you know, a lot of these were summer camps in Italy uh, you know, around 20 to 5 different cities around Italy and I was not only managing and leading those uh in Italy uh, you know, cause so like I would stay with host families
+
+and I would uh organize and manage uh all the activities for these uh- these camps and manage uh, the time and manage the- the expenses et cetera But uh this- this other example was I did the same thing bringing 20 Italians from Italy flying from Italy
+
+to England and doing this uh- this camp for two weeks with uh, you know The full blessing of all these 20 kids uh 40 parents
+
+and um- Yeah, so uh going to all these new places and planning planning tickets and planning times, how long is it going to take uh bus rides uh what's safe, what's not safe, uh allergies et cetera. So I planned and ran that as well Um that was in yeah, like I said, Liverpool, Manchester, and Wales and then flew them back. So then flew them from England back to uh back to Italy, back to their home. I think it was Milan
+
+And uh, what else have I done? Let's see-  Tsk Yeah, we can stop there

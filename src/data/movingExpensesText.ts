@@ -5,6 +5,74 @@ export type MovingExpenseTextSection = {
 
 export const movingExpenseTextSections: MovingExpenseTextSection[] = [
   {
+    title: 'Boeing Positioning / Recruiter Notes',
+    body: `Ask Doug if he has other similar positions available in STL that you could also interview for.
+Doug needs to know you are open to other positions, like Mission Systems, BT&E, and BR&T.
+Talk to the first Boeing headhunter about other grade 3-4 positions in STL now that the screening test is done.
+Send him an email.
+
+Do not stress that you only did ML.
+Talk about ML a bit, but emphasize C++, simulation, systems programming, physics, networking, and the simulation/protocol keywords.
+Stress C++ and the flight-sim-adjacent engineering experience.
+
+Minimize the Daegu stuff.
+Position the story to minimize any concern about getting a clearance.
+Can say "smaller startup"; do not say "3 people."
+
+Resume positioning notes:
+Take off the year/month of graduation.
+Consider taking off all dates until after interview and job offer.
+Combine jobs so time at each company looks longer.
+Avoid looking like job hopping.
+
+Personal projects angle:
+Talk about games written in personal time that included a lot of physics.
+Say it is very close to being up on Steam, not fully on Steam yet unless that changes.
+Get it out there after interview prep.
+
+Prep reminders:
+Count all projects worked on.
+Count how many projects you led.
+Be ready to answer whether there are questions on prep.`,
+  },
+  {
+    title: 'Boeing Offer / Negotiation Notes',
+    body: `Raw Reddit negotiation notes to organize later:
+Example scenario: level 4 Boeing STL Phantom Works offer, 13 YOE, very fast process, offer less than 5 hours after interview.
+Point: leverage is highest after offer is in hand and before accepting.
+If the role seems written for the experience and interview went well, counter respectfully.
+
+Compensation asks:
+Ask for the max or near the max; settle where comfortable.
+Experienced in-demand hires can sometimes get around 1.1x median salary for the job code.
+Counter within about 80% of top of range; let them bring it down if needed.
+If salary seems fair, ask for a signing bonus.
+Possible sign-on reference from Reddit: max without exec approval may be around $25k, but verify.
+Another comment suggested asking $5k-$10k if salary is already fair.
+
+PTO:
+Ask about enriching PTO bank / front-loaded PTO.
+Possible Reddit reference: max extra front-loaded PTO without exec approval may be 2 weeks, but verify.
+Ask for 5 extra PTO days or better accrual based on experience if needed.
+
+Relocation:
+Ask if relo money/package is included.
+L4-L6 relo package may be strong and may include lump sums.
+Relo may not cover all real moving costs, so consider sign-on bonus for uncovered selling/buying/moving expenses.
+
+Negotiation method:
+Recruiters negotiate all day; be respectful but firm.
+If likely to cave on phone, negotiate by email.
+Do not expect company to volunteer extra money.
+Do not write a huge explanation unless there is a unique circumstance.
+Mention experience, required/preferred qualifications, and after learning more about the job, compensation should be at X.
+
+Other offers / parallel interviews:
+Having another offer or ongoing interviews gives leverage.
+Boeing may not give competing internal offers, so do not rely on that as leverage without confirming.
+If interviewed for more than one site/job, be aware another offer may come but may not be usable as direct leverage.`,
+  },
+  {
     title: 'Boeing / Flight Simulation Notes',
     body: `Mention that Amanda (Flt Sim Chief Engineer) and Bruce (Flight Sim Lead Engineer) are family friends.
 
@@ -35,6 +103,41 @@ MQ28 Unmanned combat vehicle (we do some testing, integration, dev)
 
 Various Weapons
 Other`,
+  },
+  {
+    title: 'Physics / Real-World Simulation Interview Angle',
+    body: `Spend a good discussion on how you integrated physics, gravity, air currents, and ship motion into your game to make it realistic.
+
+This is true and should be emphasized.
+
+Michael Niemeyer note:
+"That is what they do"
+"A great story there will hit it out of the park"
+"Not just graphical but real world simulation"
+
+Angle:
+Do not describe the work as only graphical or visual.
+Describe it as real-world simulation.
+Connect the game/simulation work to flight simulation thinking:
+- physics
+- gravity
+- air currents
+- moving ship / moving platform behavior
+- environmental forces
+- state updates over time
+- control response
+- realistic interaction between forces and player/object motion
+
+Possible talking point:
+I have built games and simulations where the interesting problem was not just rendering something on screen. I had to model how objects respond to forces over time: gravity, environmental motion, air or current-like effects, and moving platforms. That required thinking about simulation state, time steps, control inputs, and how to make the system feel physically believable.
+
+Relate to Boeing / flight simulation:
+This is close to the mindset of flight simulation because the goal is not just a pretty display. The goal is believable behavior under changing forces, changing vehicle state, and changing environmental conditions.
+
+Project inventory note:
+Count up all the projects you worked on.
+Count how many you led.
+Use those counts later when organizing answers.`,
   },
   {
     title: 'Important Notes',
