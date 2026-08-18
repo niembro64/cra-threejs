@@ -30,4 +30,6 @@ This document describes Eric Niemeyer’s home workstation, desks, home lab, dev
 
 ## Workspace: AI Development
 
+Eric uses this local AI-development workstation for neural-network training and engineering experiments.
+
 - Workspace equipment or feature: Ubuntu Linux w/ NVIDIA & AMD GPUs for Neural Network Training

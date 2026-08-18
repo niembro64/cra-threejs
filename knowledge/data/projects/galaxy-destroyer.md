@@ -11,7 +11,7 @@
 
 Galaxy Destroyer is Eric’s browser-based take on the classic vertical space shooter. The player moves through waves of enemies, dodges projectiles, chooses weapons, and eventually confronts a boss. It supports simple mobile controls as well as desktop mouse and keyboard input, with sound and music production represented by FL Studio in the project stack.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live page opens on a “Galaxy Destroyer” start screen framed by large illustrated planets. Starting the game launches a Phaser canvas rather than a conventional form-driven web page. The portfolio and public preview show the expected scrolling-shooter loop: player movement, firing, enemy patterns, hazards, weapon variation, and a larger boss encounter.
 

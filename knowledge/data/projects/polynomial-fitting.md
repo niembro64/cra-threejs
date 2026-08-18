@@ -10,7 +10,7 @@
 
 The niemo.io project data describes this as a real-time polynomial-fitting experiment in which a genetic algorithm evolves coefficients to fit draggable data points. Its declared features include adaptive mutation variance based on fitness, weight-proportional scaling, interactive point manipulation, and configurable parameters.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live project has evolved beyond, or diverged from, that stored description. The inspected interface is an optimizer-oriented function-approximation laboratory. It plots a fitted curve and target points, reports loss, and exposes controls for weight penalty, learning rate, epsilon, momentum/Beta 1, RMSProp/Beta 2, number of weights, number of points, and simulation speed. The visitor can choose algorithms including Gradient Descent and AdamW, reset parameters or the optimizer, and generate new points.
 

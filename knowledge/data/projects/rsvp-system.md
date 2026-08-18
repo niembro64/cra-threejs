@@ -13,7 +13,7 @@ RSVP System is a database-backed event-management application with account regis
 
 The portfolio explicitly identifies validation on both the frontend and backend. That is important for a public form application: client checks improve feedback, while server checks remain authoritative and protect data integrity when browser validation is bypassed.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The public URL currently redirects to a login page titled “Users RSVP Events.” It provides new-user registration and returning-user login, lists password requirements, and links back to an about/projects area. A demonstration account is visible on the page, but credentials are intentionally omitted from this knowledge document.
 

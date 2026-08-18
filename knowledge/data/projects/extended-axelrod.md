@@ -10,7 +10,7 @@
 
 Extended Axelrod takes the iterated prisoner’s-dilemma idea behind Axelrod’s tournaments and places strategy selection inside a configurable ecological simulation. The core question is whether agents should cooperate or defect when their outcomes depend on repeated encounters and imperfect information.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The setup screen lets visitors include Always Cooperate, Always Defect, Tit-for-Tat, Tit-for-Two-Tats, Win-Stay Lose-Shift, Grim Trigger, and Random strategies. Each strategy states its rule in plain language. The simulation also exposes environmental and behavioral parameters including wandering, seeking food, fleeing, chasing, movement speed, reproduction cost, food rate, action error, and memory error.
 

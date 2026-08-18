@@ -11,7 +11,7 @@
 
 CSS Experiments is a collection of small original interactions, mini-games, and playful studies created with foundational browser technologies. It avoids a framework so that layout, transforms, hover states, event handling, selection behavior, sound effects, and visual feedback are expressed directly in HTML, CSS, and JavaScript.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live page explicitly says it is meant for desktop. Visible experiments include Cube Twist, which changes a cube through hover and click; Glass Hunt, a target-and-score interaction; Menu Slip, an animated menu; Card Grab; Pixel Play, an RGBA color modifier; CheckBox Tweak, which counts selections; and in-progress LoadBar Fill and Form Shape pieces. The site labels the content as vanilla HTML/CSS/JS.
 

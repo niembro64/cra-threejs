@@ -195,6 +195,12 @@ const workspaceLines = [
 ];
 for (const environment of data.workEnvironments) {
   workspaceLines.push(`## Workspace: ${environment.title}`, '');
+  if (environment.title === 'AI Development') {
+    workspaceLines.push(
+      'Eric uses this local AI-development workstation for neural-network training and engineering experiments.',
+      ''
+    );
+  }
   for (const detail of environment.description) workspaceLines.push(`- Workspace equipment or feature: ${detail}`);
   workspaceLines.push('');
 }

@@ -11,7 +11,7 @@
 
 TV Show Registry is a Flask application where authenticated users create television-show records and like shows contributed by other users. It combines registration and authentication with validated create/read/update/delete operations and a small community interaction around shared show entries. Passwords are hashed with bcrypt, while the project deliberately uses direct SQL queries against MySQL rather than an ORM.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The public site redirects unauthenticated visitors to a combined login and registration page. New accounts collect first name, last name, email, password, and password confirmation. A demo login is displayed on the page, but its credentials are intentionally not included in the voice-agent corpus.
 

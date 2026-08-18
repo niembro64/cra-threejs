@@ -13,7 +13,7 @@ Tanks & Gates is a free-roaming tank shooter organized around an unusual project
 
 The game supports desktop mouse and keyboard controls and two-thumb mobile controls. It includes sound and lists FL Studio in its production stack.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live page identifies itself as “Tanks Runner” on its start screen and exposes several demo or presentation controls, including color and zoom variations. The deployed title therefore differs slightly from the “Tanks & Gates” name used on niemo.io. The canonical portfolio video shows the gate-based combat concept; the start screen alone does not document every gate rule or game objective.
 

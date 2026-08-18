@@ -13,7 +13,7 @@ Smashed Fighter is a platform fighting game and a long-running experimentation g
 
 Phaser provides the browser game layer; Aseprite supports pixel-art production; FL Studio supports original sound work; and the Express/MongoDB pieces indicate a server-backed web application. BrainJS is the declared neural-network library. The public data does not specify the exact network inputs, training data, or online synchronization model, so those details should not be guessed.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live project opens on a deliberately retro “START” screen. The published interface offers Play and Watch paths, matching the portfolio’s human-play and bot-spectator framing. It supports keyboard input and USB gamepads and is marked as a desktop experience rather than a mobile game.
 

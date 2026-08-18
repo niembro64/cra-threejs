@@ -11,7 +11,7 @@
 
 Portfolio Navigator replaces a conventional project menu with a small game. A Kirby-like flying character follows the visitor’s mouse or finger and moves among destinations representing parts of Eric’s work. Phaser handles the continuous movement and game scene while React supplies the surrounding web interface and destination content.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live site advertises destinations for Music, Forms, Game, Design, and niemo.io. These correspond to other published project areas, making the experience a playful routing layer over the portfolio rather than an isolated game. The page initially displays a loading state while its media and game code initialize. Both touch and mouse input are part of the declared experience.
 

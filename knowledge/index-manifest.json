@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "documents": [
+    {
+      "path": "data/profile/work-overview.md",
+      "labels": ["work", "experience", "engineering", "programming", "software development", "career overview"],
+      "context": "A concise professional overview of Eric Niemeyer's software engineering career across Venturetec, Sentien, Rockwell Automation, Maverick Technologies, machine learning, industrial systems, and technical leadership."
+    },
+    {
+      "path": "data/profile/work-venturetec-sentien.md",
+      "labels": ["work", "experience", "engineering", "programming", "machine learning", "Venturetec", "Sentien", "SeniorSafe", "fraud detection", "RAG"],
+      "context": "Eric Niemeyer's Venturetec and Sentien work on SeniorSafe phone-fraud machine learning, transcript classification, data quality, pgvector retrieval, privacy-aware audio handling, mobile ownership, and technical demonstrations."
+    },
+    {
+      "path": "data/profile/work-audience-ai.md",
+      "labels": ["work", "experience", "engineering", "programming", "machine learning", "Audience AI", "React Native", "audio", "FFmpeg", "mobile"],
+      "context": "Eric Niemeyer's end-to-end Audience AI product: on-device neural audio analysis, responsive artificial laughter, React Native mobile UX, DSP features, and FFmpeg video export."
+    },
+    {
+      "path": "data/profile/work-spray-integrity.md",
+      "labels": ["work", "experience", "engineering", "programming", "Spray Integrity", "React Native", "Vue", "Laravel", "QR", "track and trace"],
+      "context": "Eric Niemeyer's product engineering for the Spray Integrity Program, including contractor mobile and web workflows, QR material traceability, estimates, jobs, rewards, and mini-games."
+    },
+    {
+      "path": "data/profile/work-rockwell-maverick.md",
+      "labels": ["work", "experience", "engineering", "programming", "Rockwell Automation", "Maverick Technologies", "MES", "industrial software", "manufacturing"],
+      "context": "Eric Niemeyer's industrial software work at Rockwell Automation and Maverick Technologies integrating MES, PLCs, robotics, databases, HMIs, ERP systems, and manufacturing traceability."
+    },
+    {
+      "path": "data/profile/work-leadership-delivery.md",
+      "labels": ["work", "experience", "engineering leadership", "delivery", "requirements", "stakeholders", "mentorship", "version control"],
+      "context": "Eric Niemeyer's engineering leadership practices for requirements, scope changes, meetings, parallel deadlines, mentorship, conflict resolution, Git, releases, and reproducibility."
+    },
+    {
+      "path": "data/profile/work-teaching-operations.md",
+      "labels": ["work", "experience", "teaching", "education", "operations", "leadership", "South Korea", "Italy", "Ultimate Frisbee"],
+      "context": "Eric Niemeyer's education and organizational leadership at Daegu Science High School, A.C.L.E. programs, international travel, and Republic of Korea Ultimate league operations."
+    },
+    {
+      "path": "data/profile/engineering-practices.md",
+      "labels": ["skills", "engineering", "programming", "software development", "machine learning", "RAG", "full stack", "mobile", "DSP", "C++"],
+      "context": "A technical synthesis of Eric Niemeyer's engineering practices across ML systems, contextual RAG, full-stack and mobile architecture, real-time media, game simulation, industrial software, and embedded hardware."
+    },
+    {
+      "path": "data/profile/skills-technical.md",
+      "labels": ["skills", "engineering", "programming", "software development", "machine learning", "web", "mobile", "desktop", "embedded", "game engines"],
+      "context": "Eric Niemeyer's technical skill inventory covering programming languages, frameworks, databases, AI and ML, web, mobile, desktop, embedded hardware, game engines, signal processing, deployment, and reproducibility."
+    },
+    {
+      "path": "data/profile/skills-creative-language.md",
+      "labels": ["skills", "hobbies", "interests", "human languages", "music", "audio", "art", "media"],
+      "context": "Eric Niemeyer's human-language, music, audio, visual-art, and media-production skills, kept separate from his engineering inventory so technical retrieval remains precise."
+    },
+    {
+      "path": "data/profile/education.md",
+      "labels": ["education", "computer science", "music", "background", "qualifications"],
+      "context": "Eric Niemeyer's public education background in computer science, engineering-related study, music, and international learning."
+    },
+    {
+      "path": "data/profile/workspaces-and-equipment.md",
+      "labels": ["skills", "engineering", "work environment", "workspace", "equipment", "hardware", "audio", "computers"],
+      "context": "Eric Niemeyer's workspaces, development computers, electronics equipment, audio tools, and hands-on technical environment."
+    },
+    {
+      "path": "data/profile/trivia-and-interests.md",
+      "labels": ["hobbies", "interests", "music", "Ultimate Frisbee", "trivia", "personal", "drum and bass"],
+      "context": "Public personal interests and notable trivia about Eric Niemeyer, including music, Wikipedia's drum-and-bass audio example, Ultimate Frisbee leadership, performance technology, and cryptocurrency hardware."
+    },
+    {
+      "path": "data/profile/hobbies-overview.md",
+      "labels": ["hobbies", "interests", "music", "Ultimate Frisbee", "games", "art", "audio", "personal projects"],
+      "context": "A concise overview of Eric Niemeyer's hobbies and personal interests across music, audio-visual art, live performance, Ultimate Frisbee, game development, hardware, and technical experimentation."
+    },
+    {
+      "path": "data/projects/annihilation-rts.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "C++", "game engine", "desktop game", "deterministic simulation", "Annihilation++"],
+      "context": "Eric Niemeyer's Annihilation++ project, a native cross-architecture C++ desktop RTS and custom engine with deterministic lockstep, physics, pathfinding, LOD, and spatial optimization."
+    },
+    {
+      "path": "data/projects/attention-mechanism.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "attention", "neural networks"],
+      "context": "Eric Niemeyer's interactive attention-mechanism project for visualizing how neural attention transforms inputs and weights relationships."
+    },
+    {
+      "path": "data/projects/audio-visualizations.md",
+      "labels": ["projects", "creative projects", "hobbies", "interests", "music", "audio", "visual art"],
+      "context": "Eric Niemeyer's audio-visualization artwork combining original or selected music with motion graphics and creative media tools."
+    },
+    {
+      "path": "data/projects/collision-detection.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "collision detection", "physics", "ray casting"],
+      "context": "Eric Niemeyer's interactive collision-detection lab comparing side-of-line response, discrete-update tunneling, ray casting, inside-outside tests, gravity, and multiple shapes."
+    },
+    {
+      "path": "data/projects/conv-net-chess.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "CNN", "chess", "game AI"],
+      "context": "Eric Niemeyer's convolutional-neural-network chess experiment applying learned board evaluation or policy ideas to game AI."
+    },
+    {
+      "path": "data/projects/css-experiments.md",
+      "labels": ["projects", "technical projects", "creative projects", "programming", "CSS", "web", "interaction design"],
+      "context": "Eric Niemeyer's collection of pure-CSS and browser interaction experiments with cards, movement, selections, playful mechanics, and sound-oriented presentation."
+    },
+    {
+      "path": "data/projects/embedding-pca.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "embeddings", "PCA", "visualization"],
+      "context": "Eric Niemeyer's interactive embedding and PCA project explaining semantic vector spaces and dimensionality reduction."
+    },
+    {
+      "path": "data/projects/extended-axelrod.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "game theory", "Axelrod", "simulation"],
+      "context": "Eric Niemeyer's extended Axelrod tournament simulation exploring repeated-game strategies, cooperation, competition, and emergent outcomes."
+    },
+    {
+      "path": "data/projects/galaxy-destroyer.md",
+      "labels": ["projects", "technical projects", "programming", "game development", "browser game", "arcade"],
+      "context": "Eric Niemeyer's Galaxy Destroyer game project demonstrating browser game mechanics, rendering, input, and interactive systems."
+    },
+    {
+      "path": "data/projects/genetic-algorithm-racing.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "genetic algorithm", "racing"],
+      "context": "Eric Niemeyer's genetic-algorithm racing simulation where populations evolve driving behavior across repeated trials."
+    },
+    {
+      "path": "data/projects/original-music.md",
+      "labels": ["projects", "creative projects", "hobbies", "interests", "music", "composition", "drum and bass"],
+      "context": "Eric Niemeyer's original music catalog, electronic composition, SoundCloud work, and the Niemo track used as a Wikipedia drum-and-bass example."
+    },
+    {
+      "path": "data/projects/pathfinding.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "pathfinding", "A star", "algorithms"],
+      "context": "Eric Niemeyer's interactive pathfinding project demonstrating route search, heuristics, obstacles, and algorithm behavior."
+    },
+    {
+      "path": "data/projects/pirate-crew-manager.md",
+      "labels": ["projects", "technical projects", "programming", "full stack", "React", "Express", "MongoDB", "CRUD"],
+      "context": "Eric Niemeyer's JavaScript full-stack pirate management application using React, Express, MongoDB, and CRUD operations for pirate records."
+    },
+    {
+      "path": "data/projects/polynomial-fitting.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "mathematics", "polynomial fitting", "visualization"],
+      "context": "Eric Niemeyer's interactive polynomial-fitting project for exploring mathematical approximation and visual model behavior."
+    },
+    {
+      "path": "data/projects/portfolio-navigator.md",
+      "labels": ["projects", "technical projects", "programming", "portfolio", "Three.js", "web", "interaction design"],
+      "context": "Eric Niemeyer's niemo.io portfolio navigation and presentation work, including interactive web graphics, media, and project discovery."
+    },
+    {
+      "path": "data/projects/rsvp-system.md",
+      "labels": ["projects", "technical projects", "programming", "full stack", "C#", "ASP.NET Core", "MySQL", "CRUD"],
+      "context": "Eric Niemeyer's C# ASP.NET Core and MySQL event RSVP application demonstrating CRUD and many-to-many full-stack data relationships."
+    },
+    {
+      "path": "data/projects/seouldat-shooter.md",
+      "labels": ["projects", "technical projects", "programming", "game development", "shooter", "Seoul"],
+      "context": "Eric Niemeyer's Seouldat shooter game project demonstrating game logic, rendering, controls, and themed interactive design."
+    },
+    {
+      "path": "data/projects/smashed-fighter.md",
+      "labels": ["projects", "technical projects", "engineering", "programming", "game development", "fighting game", "neural network", "multiplayer"],
+      "context": "Eric Niemeyer's Smashed Fighter game and AI work, including custom fighting mechanics, networking experiments, and neural or reinforcement-learning agents."
+    },
+    {
+      "path": "data/projects/tanks-and-gates.md",
+      "labels": ["projects", "technical projects", "programming", "game development", "strategy", "tanks"],
+      "context": "Eric Niemeyer's Tanks and Gates game project demonstrating custom strategy mechanics, units, obstacles, rendering, and interaction."
+    },
+    {
+      "path": "data/projects/tv-show-registry.md",
+      "labels": ["projects", "technical projects", "programming", "full stack", "Python", "Flask", "MySQL", "CRUD"],
+      "context": "Eric Niemeyer's Python Flask and MySQL TV show registry where users create, browse, and like shared show records through CRUD workflows."
+    }
+  ]
+}

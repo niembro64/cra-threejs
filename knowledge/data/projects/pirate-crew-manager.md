@@ -11,7 +11,7 @@
 
 Pirate Crew Manager is a deliberately playful CRUD application for maintaining a roster of pirates. A React frontend communicates with an Express backend and MongoDB data store. Users create and maintain pirates with names, traits, treasure, and other crew details. The application validates data on both the frontend and backend.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The deployed page shows a “Pirate Crew” roster of illustrated cards. Cards include pirate identity and crew details, and the interface offers an add-pirate action. A “Walk the Plank” control supplies the deletion metaphor. This presentation wraps standard database operations in a memorable theme rather than exposing them as generic administrative tables.
 

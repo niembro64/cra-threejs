@@ -16,15 +16,12 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 - Dates: 2022 - Present
 - Architecting, training, and implementing in-house AI systems to detect and prevent fraud
   - Real-time phone-fraud classification
-  - Two-source audio and transcript workflows
   - Turn-level transformer classifiers
   - Conversation-level risk classifiers
   - PGVector and Postgres semantic search
   - ElevenLabs voice-agent RAG memory
-  - AWS Transcribe redaction handling
-  - Call-recording consent workflows
-  - Short raw-audio retention policy
-  - PII-aware transcript handling
+  - Human-in-the-loop labels and ASR augmentation
+  - PII-aware transcript and audio handling
   - Robust thresholds, F2, and PR AUC
 - Diagrammed, and implemented complex fullstack web + mobile apps
   - Vue
@@ -65,93 +62,36 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - Audio Classifier
   - Conversation Classifier
   - Image Classifier
-  - Video Classifier
   - Game AI
-- Built human-in-the-loop ML data and demo systems
-  - Training-item creation tools
-  - Label cleaning and backfill workflows
-  - Null-label state design
-  - ASR text augmentation
-  - Investor and new-hire ML demos
-  - Embedding and PCA explanations
-  - Live scam-call detection demos
-  - Stakeholder system walkthroughs
-  - Semantic similarity and diversity scoring
 - Built Audience AI mobile audio product end to end
   - On-device neural audio scoring
-  - Real-time funny/not-funny scoring
   - CNN and LSTM audio classifiers
-  - Laughter-versus-speech detection
   - MFCC, FFT, and spectrum features
   - Comedy-practice audience simulation
   - Layered laugh-track engine
   - React Native iOS and Android
   - Multi-stage FFmpeg export pipeline
-  - FFmpeg audio/video rendering
-  - Watermarks and end credits
-  - Downloadable and social-ready videos
-  - No external server dependency
+  - Shareable video rendering
 - Led Spray Integrity Program product engineering
   - React Native Expo mobile app
   - Vue and Laravel web portal
   - QR barrel tracking and traceability
   - Estimate builder and job forms
   - Contractor rewards and referrals
-  - Product library and support flows
-  - Weather and job metadata capture
   - React Native Game Engine mini-games
 - Built video games for mobile & desktop
   - PhaserJS
   - React Native Game Engine
   - Material D&D
-  - Educational reading games
   - Physics and simulation systems
   - Networking and game AI
-- Delivered practical client tools and data automation
-  - Angular educational games
-  - Phaser train vocabulary game
-  - Sticker-book interactions
-  - Foreclosure-data scrapers
-  - Government-data dashboards
-  - CSV export workflows
-- Mentored interns, remote workers, and product contributors
-  - Technical onboarding
-  - Task scoping and handoff
-  - Question resolution
-  - Creative product ownership
-  - Remote-worker coordination
-  - Intern mentorship
-- Managed parallel client, startup, and release deadlines
-  - Concurrent product schedules
-  - Client delivery planning
-  - App release deadlines
+- Led engineering delivery, mentorship, and stakeholder communication
+  - Intern and remote-contributor mentorship
+  - Parallel client and release schedules
+  - Requirements and scope-change triage
   - Git release provenance
-  - iOS and Android version tracking
-  - Reproducible app builds
-  - Documentation for release state
-  - Requirement-change triage
-  - Feature-creep pushback
-  - Scope and payment impact communication
-  - Meeting recap and action items
-  - Time allocation across projects
-  - Startup-priority tradeoffs
-  - Stakeholder expectation setting
-- Led stakeholder, investor, and product demo meetings
-  - SeniorSafe classifier demos
-  - RAG voice-agent walkthroughs
-  - iOS app ownership
-  - Investor value explanations
-  - Quarterly investor progress reports
-  - Problems and steering updates
-  - Potential-client presentations
-  - Multi-person demo rooms
-- Navigated difficult client and payment-boundary conversations
-  - New-requirement triage
-  - Unpaid-scope boundaries
-  - Client relationship management
-  - Business-side tact
-  - Secretary-assisted follow-up
-  - Preserved client goodwill
+  - Investor and product demonstrations
+  - Meeting decisions and action items
 
 ### Rockwell Automation — Software Engineer II
 
@@ -168,12 +108,10 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - MES
   - ERP integration
   - PLC coordination
-  - PLC ownership alignment
   - Robotic systems
-  - HMI frontends
-  - Track and trace
-  - SQL databases
-  - Java and Python
+  - HMI and database systems
+  - Track-and-trace workflows
+  - Java, Python, and SQL
 - Led requirements, testing, and offshore handoff work
   - Lucid Casa Grande onsite integration
   - 3M evidence-material traceability
@@ -181,19 +119,8 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - Continental Tire HMI work
   - Offshore team requirements
   - Mentored newer engineers
-  - Large MES delivery deadlines
-  - Daily and weekly status meetings
-  - Client-meeting action items
-  - Pre-meeting topic collection
-  - OneNote agenda and decision tracking
+  - Agile and waterfall change management
   - Cross-company stakeholder coordination
-  - Control-team stakeholder tact
-  - Agile and Jira change tracking
-  - Waterfall change documentation
-  - Schedule-impact communication
-  - Code testing and repair
-  - VBA and Excel tooling
-  - High-consequence production workflows
 
 ### 대구과학고등학교 영재고 — High School ESL & Science Instructor
 
@@ -201,23 +128,12 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 - Dates: 2013 - 2017
 - Taught STEM-based ESL courses to gifted high-school students
   - Advanced science in English
-  - AP and gifted-level instruction
-  - Students targeting KAIST and SNU
   - Cross-cultural technical communication
-  - Teacher curriculum collaboration
   - Hands-on STEM activity planning
-  - Egg-drop resource-planning lessons
   - Mentored other teachers
-  - Holistic English assessment
-  - Communication-focused grading
-  - Assembly and classroom leadership
-  - Parent and teacher conferences
-  - Classroom continuity under disruption
 - Built custom software to compile faculty schedules
   - Searchable schedule interface
-  - Teacher and student lookup
-  - English and Hangul data
-  - Administrative workflow automation
+  - Teacher and student lookup in English and Hangul
 
 ### A.C.L.E. — ESL Lead Instructor
 
@@ -226,26 +142,13 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 - Designed and delivered English courses in 25 cities
   - Teacher-training pedagogy
   - Curriculum adaptation
-  - Camp and classroom delivery
-  - Mentored teachers on lesson design
-  - Culture-adjacent English activities
   - Multi-city camp scheduling
   - Large camps with 30-200 kids
-  - Sports Olympics activities
-  - Drama and skit performances
-  - Weather and indoor contingency plans
-  - End-of-week show adaptation
-  - Classroom disruption planning
-  - Delegated incident response
-  - Conflict resolution
-  - Student-safety logistics
+  - Teacher mentorship and contingency planning
 - Tech & software support for the office
   - Hardware support
   - Software support
-  - Training-camp operations
   - Led UK student excursion logistics
-  - Flights, meals, bedtime schedules
-  - Single-owner action items
 
 ## Education
 
@@ -435,9 +338,9 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 
 - Type: Commercial C++ Desktop RTS
 - Dates: 2025 - Ongoing
-- Description: A commercial-release-oriented desktop RTS written in C++ with a custom engine, lockstep deterministic simulation, cross-OS state hashing, force/mass/momentum physics, terrain-aware pathfinding, LOD rendering, spatial partitioning, factories, resources, fog of war, and large armies.
+- Description: A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, state-hash validation, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.
 - Technology: C++
-- Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Air, Ground & Water Friction; Terrain-Aware A* Pathfinding; Fog of War & Full-Map Simulation; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
+- Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Terrain-Aware A* Pathfinding; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
 - Public URL: https://games.niemo.io/budget-annihilation
 
 #### Seouldat Shooter

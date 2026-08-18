@@ -12,15 +12,12 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
 - Dates: 2022 - Present
 - Responsibility: Architecting, training, and implementing in-house AI systems to detect and prevent fraud
   - Technology, client, or detail: Real-time phone-fraud classification
-  - Technology, client, or detail: Two-source audio and transcript workflows
   - Technology, client, or detail: Turn-level transformer classifiers
   - Technology, client, or detail: Conversation-level risk classifiers
   - Technology, client, or detail: PGVector and Postgres semantic search
   - Technology, client, or detail: ElevenLabs voice-agent RAG memory
-  - Technology, client, or detail: AWS Transcribe redaction handling
-  - Technology, client, or detail: Call-recording consent workflows
-  - Technology, client, or detail: Short raw-audio retention policy
-  - Technology, client, or detail: PII-aware transcript handling
+  - Technology, client, or detail: Human-in-the-loop labels and ASR augmentation
+  - Technology, client, or detail: PII-aware transcript and audio handling
   - Technology, client, or detail: Robust thresholds, F2, and PR AUC
 - Responsibility: Diagrammed, and implemented complex fullstack web + mobile apps
   - Technology, client, or detail: Vue
@@ -61,93 +58,36 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: Audio Classifier
   - Technology, client, or detail: Conversation Classifier
   - Technology, client, or detail: Image Classifier
-  - Technology, client, or detail: Video Classifier
   - Technology, client, or detail: Game AI
-- Responsibility: Built human-in-the-loop ML data and demo systems
-  - Technology, client, or detail: Training-item creation tools
-  - Technology, client, or detail: Label cleaning and backfill workflows
-  - Technology, client, or detail: Null-label state design
-  - Technology, client, or detail: ASR text augmentation
-  - Technology, client, or detail: Investor and new-hire ML demos
-  - Technology, client, or detail: Embedding and PCA explanations
-  - Technology, client, or detail: Live scam-call detection demos
-  - Technology, client, or detail: Stakeholder system walkthroughs
-  - Technology, client, or detail: Semantic similarity and diversity scoring
 - Responsibility: Built Audience AI mobile audio product end to end
   - Technology, client, or detail: On-device neural audio scoring
-  - Technology, client, or detail: Real-time funny/not-funny scoring
   - Technology, client, or detail: CNN and LSTM audio classifiers
-  - Technology, client, or detail: Laughter-versus-speech detection
   - Technology, client, or detail: MFCC, FFT, and spectrum features
   - Technology, client, or detail: Comedy-practice audience simulation
   - Technology, client, or detail: Layered laugh-track engine
   - Technology, client, or detail: React Native iOS and Android
   - Technology, client, or detail: Multi-stage FFmpeg export pipeline
-  - Technology, client, or detail: FFmpeg audio/video rendering
-  - Technology, client, or detail: Watermarks and end credits
-  - Technology, client, or detail: Downloadable and social-ready videos
-  - Technology, client, or detail: No external server dependency
+  - Technology, client, or detail: Shareable video rendering
 - Responsibility: Led Spray Integrity Program product engineering
   - Technology, client, or detail: React Native Expo mobile app
   - Technology, client, or detail: Vue and Laravel web portal
   - Technology, client, or detail: QR barrel tracking and traceability
   - Technology, client, or detail: Estimate builder and job forms
   - Technology, client, or detail: Contractor rewards and referrals
-  - Technology, client, or detail: Product library and support flows
-  - Technology, client, or detail: Weather and job metadata capture
   - Technology, client, or detail: React Native Game Engine mini-games
 - Responsibility: Built video games for mobile & desktop
   - Technology, client, or detail: PhaserJS
   - Technology, client, or detail: React Native Game Engine
   - Technology, client, or detail: Material D&D
-  - Technology, client, or detail: Educational reading games
   - Technology, client, or detail: Physics and simulation systems
   - Technology, client, or detail: Networking and game AI
-- Responsibility: Delivered practical client tools and data automation
-  - Technology, client, or detail: Angular educational games
-  - Technology, client, or detail: Phaser train vocabulary game
-  - Technology, client, or detail: Sticker-book interactions
-  - Technology, client, or detail: Foreclosure-data scrapers
-  - Technology, client, or detail: Government-data dashboards
-  - Technology, client, or detail: CSV export workflows
-- Responsibility: Mentored interns, remote workers, and product contributors
-  - Technology, client, or detail: Technical onboarding
-  - Technology, client, or detail: Task scoping and handoff
-  - Technology, client, or detail: Question resolution
-  - Technology, client, or detail: Creative product ownership
-  - Technology, client, or detail: Remote-worker coordination
-  - Technology, client, or detail: Intern mentorship
-- Responsibility: Managed parallel client, startup, and release deadlines
-  - Technology, client, or detail: Concurrent product schedules
-  - Technology, client, or detail: Client delivery planning
-  - Technology, client, or detail: App release deadlines
+- Responsibility: Led engineering delivery, mentorship, and stakeholder communication
+  - Technology, client, or detail: Intern and remote-contributor mentorship
+  - Technology, client, or detail: Parallel client and release schedules
+  - Technology, client, or detail: Requirements and scope-change triage
   - Technology, client, or detail: Git release provenance
-  - Technology, client, or detail: iOS and Android version tracking
-  - Technology, client, or detail: Reproducible app builds
-  - Technology, client, or detail: Documentation for release state
-  - Technology, client, or detail: Requirement-change triage
-  - Technology, client, or detail: Feature-creep pushback
-  - Technology, client, or detail: Scope and payment impact communication
-  - Technology, client, or detail: Meeting recap and action items
-  - Technology, client, or detail: Time allocation across projects
-  - Technology, client, or detail: Startup-priority tradeoffs
-  - Technology, client, or detail: Stakeholder expectation setting
-- Responsibility: Led stakeholder, investor, and product demo meetings
-  - Technology, client, or detail: SeniorSafe classifier demos
-  - Technology, client, or detail: RAG voice-agent walkthroughs
-  - Technology, client, or detail: iOS app ownership
-  - Technology, client, or detail: Investor value explanations
-  - Technology, client, or detail: Quarterly investor progress reports
-  - Technology, client, or detail: Problems and steering updates
-  - Technology, client, or detail: Potential-client presentations
-  - Technology, client, or detail: Multi-person demo rooms
-- Responsibility: Navigated difficult client and payment-boundary conversations
-  - Technology, client, or detail: New-requirement triage
-  - Technology, client, or detail: Unpaid-scope boundaries
-  - Technology, client, or detail: Client relationship management
-  - Technology, client, or detail: Business-side tact
-  - Technology, client, or detail: Secretary-assisted follow-up
-  - Technology, client, or detail: Preserved client goodwill
+  - Technology, client, or detail: Investor and product demonstrations
+  - Technology, client, or detail: Meeting decisions and action items
 
 ## Work experience: Rockwell Automation — Software Engineer II
 
@@ -166,12 +106,10 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: MES
   - Technology, client, or detail: ERP integration
   - Technology, client, or detail: PLC coordination
-  - Technology, client, or detail: PLC ownership alignment
   - Technology, client, or detail: Robotic systems
-  - Technology, client, or detail: HMI frontends
-  - Technology, client, or detail: Track and trace
-  - Technology, client, or detail: SQL databases
-  - Technology, client, or detail: Java and Python
+  - Technology, client, or detail: HMI and database systems
+  - Technology, client, or detail: Track-and-trace workflows
+  - Technology, client, or detail: Java, Python, and SQL
 - Responsibility: Led requirements, testing, and offshore handoff work
   - Technology, client, or detail: Lucid Casa Grande onsite integration
   - Technology, client, or detail: 3M evidence-material traceability
@@ -179,19 +117,8 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: Continental Tire HMI work
   - Technology, client, or detail: Offshore team requirements
   - Technology, client, or detail: Mentored newer engineers
-  - Technology, client, or detail: Large MES delivery deadlines
-  - Technology, client, or detail: Daily and weekly status meetings
-  - Technology, client, or detail: Client-meeting action items
-  - Technology, client, or detail: Pre-meeting topic collection
-  - Technology, client, or detail: OneNote agenda and decision tracking
+  - Technology, client, or detail: Agile and waterfall change management
   - Technology, client, or detail: Cross-company stakeholder coordination
-  - Technology, client, or detail: Control-team stakeholder tact
-  - Technology, client, or detail: Agile and Jira change tracking
-  - Technology, client, or detail: Waterfall change documentation
-  - Technology, client, or detail: Schedule-impact communication
-  - Technology, client, or detail: Code testing and repair
-  - Technology, client, or detail: VBA and Excel tooling
-  - Technology, client, or detail: High-consequence production workflows
 
 ## Work experience: 대구과학고등학교 영재고 — High School ESL & Science Instructor
 
@@ -201,23 +128,12 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
 - Dates: 2013 - 2017
 - Responsibility: Taught STEM-based ESL courses to gifted high-school students
   - Technology, client, or detail: Advanced science in English
-  - Technology, client, or detail: AP and gifted-level instruction
-  - Technology, client, or detail: Students targeting KAIST and SNU
   - Technology, client, or detail: Cross-cultural technical communication
-  - Technology, client, or detail: Teacher curriculum collaboration
   - Technology, client, or detail: Hands-on STEM activity planning
-  - Technology, client, or detail: Egg-drop resource-planning lessons
   - Technology, client, or detail: Mentored other teachers
-  - Technology, client, or detail: Holistic English assessment
-  - Technology, client, or detail: Communication-focused grading
-  - Technology, client, or detail: Assembly and classroom leadership
-  - Technology, client, or detail: Parent and teacher conferences
-  - Technology, client, or detail: Classroom continuity under disruption
 - Responsibility: Built custom software to compile faculty schedules
   - Technology, client, or detail: Searchable schedule interface
-  - Technology, client, or detail: Teacher and student lookup
-  - Technology, client, or detail: English and Hangul data
-  - Technology, client, or detail: Administrative workflow automation
+  - Technology, client, or detail: Teacher and student lookup in English and Hangul
 
 ## Work experience: A.C.L.E. — ESL Lead Instructor
 
@@ -228,23 +144,10 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
 - Responsibility: Designed and delivered English courses in 25 cities
   - Technology, client, or detail: Teacher-training pedagogy
   - Technology, client, or detail: Curriculum adaptation
-  - Technology, client, or detail: Camp and classroom delivery
-  - Technology, client, or detail: Mentored teachers on lesson design
-  - Technology, client, or detail: Culture-adjacent English activities
   - Technology, client, or detail: Multi-city camp scheduling
   - Technology, client, or detail: Large camps with 30-200 kids
-  - Technology, client, or detail: Sports Olympics activities
-  - Technology, client, or detail: Drama and skit performances
-  - Technology, client, or detail: Weather and indoor contingency plans
-  - Technology, client, or detail: End-of-week show adaptation
-  - Technology, client, or detail: Classroom disruption planning
-  - Technology, client, or detail: Delegated incident response
-  - Technology, client, or detail: Conflict resolution
-  - Technology, client, or detail: Student-safety logistics
+  - Technology, client, or detail: Teacher mentorship and contingency planning
 - Responsibility: Tech & software support for the office
   - Technology, client, or detail: Hardware support
   - Technology, client, or detail: Software support
-  - Technology, client, or detail: Training-camp operations
   - Technology, client, or detail: Led UK student excursion logistics
-  - Technology, client, or detail: Flights, meals, bedtime schedules
-  - Technology, client, or detail: Single-owner action items

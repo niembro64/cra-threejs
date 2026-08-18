@@ -12,7 +12,7 @@ This experiment evolves neural-network controllers for autonomous cars without b
 
 The project is therefore a compact demonstration of neuroevolution. Fitness comes from behavior in the environment rather than a labeled training set, and model improvement is visible as successive generations negotiate more of the track.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live canvas shows many cars attempting a winding race circuit at once. Colored sensor rays make the perception inputs visible, and a panel plots generation performance. Controls include synchronizing generations, restarting the simulation, selecting car or controller types, showing rays, changing speed and steering behavior, adjusting mutation, saving a brain, and a “sexual” reproduction option. The last option appears to contrast multi-parent recombination with mutation-only inheritance; that interpretation is an inference from the label, not a published implementation specification.
 

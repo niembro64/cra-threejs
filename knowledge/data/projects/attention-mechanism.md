@@ -10,7 +10,7 @@
 
 Attention Mechanism is an interactive explanation of how token representations move through a transformer-style self-attention calculation. The portfolio describes controls for adding and removing tokens, adjusting weights, inspecting an MLP and next-token prediction, and an in-progress training mode.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The current page focuses tightly on single-head self-attention using four tokens with four-dimensional embeddings. It exposes the input embeddings and the query, key, and value weight matrices; then shows the derived Q, K, and V vectors. The next stages display scaled dot-product scores, row-wise softmax attention weights, and the final weighted combination of the value vectors. The page explicitly notes that every attention row sums to one and that the 4-by-4 input shape is preserved in the 4-by-4 output.
 

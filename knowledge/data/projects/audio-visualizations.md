@@ -11,7 +11,7 @@
 
 Audio Visualizations is a collection of branded motion-graphics and music-video pieces paired with Eric’s original music. Both the music and visual art are original. Eric produced the videos with Adobe Creative Suite: Premiere Pro for editing and sequencing, After Effects for animation and compositing, and Photoshop for still-image and graphical asset preparation.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The public URL resolves to the Niemo Audio YouTube channel. The channel presents music videos and visualization-style uploads under the same identity as the SoundCloud work. YouTube’s dynamically loaded page exposed limited descriptive text during automated inspection, so titles, counts, and upload statistics are not being inferred or frozen into this document.
 

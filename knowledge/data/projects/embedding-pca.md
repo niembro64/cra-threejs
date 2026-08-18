@@ -12,7 +12,7 @@ Embedding PCA is an interactive tool for exploring relationships among words as 
 
 The project focuses especially on analogies: relationships of the form “a is to b as c is to d.” The portfolio example is “Italy is to pasta as Japan is to ____.” Instead of showing only a predicted word, the interface places the inputs and candidate result in vector space, making direction and distance part of the explanation. Spring-physics animation helps communicate changes in the selected words or projection without abrupt jumps.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live interface provides an analogies panel and settings for projection and presentation. It explains PCA as finding axes of maximum variance, offers optional distance spheres, and can display the four-part analogy relationship. Camera instructions include middle-drag to pan, scrolling to zoom, and Alt plus middle-drag to rotate the scene. A setting can show all analogies or emphasize a selected result.
 

@@ -14,7 +14,7 @@ The naive version is intentionally stateless and discrete. On each rendered fram
 
 The raycast version performs a point-in-polygon containment test. It casts a ray from the ball and counts intersections with enclosure walls: an odd number of crossings means the point is inside, while an even number means it is outside. One crossing is simply the smallest odd case. This rule works across a variety of polygonal shapes and provides a more general inside/outside classification than checking a single line.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live canvas displays a polygonal enclosure and several colored moving balls. Controls compare naive and raycast behavior and allow the visitor to change shapes and simulation parameters such as gravity, rotation, speed, and bounce. Multiple boundary shapes make it possible to see why assumptions that work for a simple convex box can fail for irregular geometry.
 

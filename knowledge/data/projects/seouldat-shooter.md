@@ -13,7 +13,7 @@ Seouldat is a browser-based multiplayer arena shooter designed around fast keybo
 
 The portfolio specifically calls out an authoritative server, client-side prediction, and server-client reconciliation. In that networking model the server owns the accepted game state, while each client predicts its own movement immediately to hide network delay. When authoritative updates arrive, reconciliation corrects divergence. Those techniques are central to responsive real-time multiplayer and are more demanding than simply broadcasting positions between browsers.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The public URL responded, but the inspected browser frame remained blank after loading, so no additional gameplay claims can be grounded in the current landing screen. This may be a WebGL/game startup issue, a server-session requirement, or a transient deployment problem; the observation alone does not establish the cause. The project video and canonical niemo.io metadata therefore remain the authoritative public description.
 

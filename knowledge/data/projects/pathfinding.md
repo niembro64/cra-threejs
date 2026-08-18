@@ -12,7 +12,7 @@ Pathfinding is an interactive comparison of five graph-search algorithms: breadt
 
 The algorithms embody different tradeoffs. BFS explores in layers and is optimal for unweighted graphs; DFS follows branches deeply but does not generally guarantee the shortest route; Dijkstra uses path cost and is optimal with nonnegative weights; A* combines known path cost with a heuristic; greedy search prioritizes its heuristic and may reach the goal quickly without finding the best path.
 
-## Published experience observed August 13, 2026
+## Implementation and interaction details
 
 The live page presents a dense 15-by-15 node field and selectors for the start and goal. A single-algorithm mode lets a visitor focus on one search, while “All Algorithms” is designed for comparison. The interface also includes an edge-weight display option. The visual makes explored nodes and resulting connections visible, so the behavioral differences are easier to grasp than they would be from pseudocode alone.
 

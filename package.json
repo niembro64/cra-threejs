@@ -47,6 +47,7 @@
     "format": "prettier --write .",
     "generate:resume-knowledge": "node scripts/generate-resume-knowledge.mjs",
     "generate:project-atlas": "node scripts/generate-project-atlas.mjs",
+    "validate:rag-corpus": "node scripts/validate-rag-corpus.mjs",
     "typecheck": "tsc --noEmit",
     "preview:lan": "node scripts/preview-lan.mjs"
   },

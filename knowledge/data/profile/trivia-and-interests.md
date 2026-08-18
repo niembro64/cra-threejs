@@ -10,11 +10,11 @@ Niemo's track ["Small Talk (Build IV)"](https://en.wikipedia.org/wiki/File:Ars_N
 
 ## Trivia: Ultimate Frisbee
 
-Niemo plays a sport called Ultimate Frisbee, which is a competitive mixed-gender team sport. He was executive manager of [Republic of Korea Ultimate (ROK-U)](https://www.rokultimate.net/), the national ultimate frisbee league of South Korea, from 2015 - 2016. He coordinated regional leaders, board members, captains, and roughly 35 teams, and built a VBA/Excel action-item email system for weekly follow-up. He also handled weather, venue, player-safety, fair-play, captain-autonomy, and judgment calls in a different legal and cultural context. When captains disagreed or requirements changed, he used trusted side conversations and direct expectation-setting questions to understand the other perspective and keep league decisions moving. Before leaving Korea, he selected and mentored his successor on league technology, money management, executive functions, and city-stakeholder relationships. He is currently a coordinator for [Westchester Ultimate Disc Inc (WUDI)](https://www.wudi.org/), a league in Westchester, NY.
+Niemo plays a sport called Ultimate Frisbee, which is a competitive mixed-gender team sport. He was executive manager of [Republic of Korea Ultimate (ROK-U)](https://www.rokultimate.net/), the national ultimate frisbee league of South Korea, from 2015 - 2016. He coordinated regional leaders, captains, venues, budgets, and roughly 35 teams, then mentored his successor. He is currently a coordinator for [Westchester Ultimate Disc Inc (WUDI)](https://www.wudi.org/), a league in Westchester, NY.
 
 ## Trivia: Musician
 
-Niemo is a versatile [musician](https://en.wikipedia.org/wiki/Concertmaster) concert violinist, piano composer, flamenco guitarist, and electronic music DJ. He has performed with numerous orchestras, bands, and quartets and has composed music for television and video games. His DJing experience spans weddings, parties, and clubs across the USA and Korea. He also handed off live-audio and performance systems for Jackson and Mars, including why each piece mattered and how to operate the setup. In live shows, he handled unsafe crowd/stage situations and difficult sound-engineer interactions with tact so the performance could continue smoothly.
+Niemo is a versatile [musician](https://en.wikipedia.org/wiki/Concertmaster) concert violinist, piano composer, flamenco guitarist, and electronic music DJ. He has performed with orchestras, bands, and quartets; composed for television and games; and designed live-audio systems for Jackson and Mars.
 
 ## Trivia: Crypto
 
