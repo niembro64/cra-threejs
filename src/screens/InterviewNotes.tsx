@@ -205,12 +205,12 @@ const InterviewNotes: React.FC = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-zinc-950 px-4 py-8 text-zinc-100 sm:px-6 lg:px-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8">
-        <header className="border-b border-zinc-800 pb-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-300">Private route</p>
-          <h1 className="mt-3 text-3xl font-bold tracking-normal text-white sm:text-5xl">Interview STAR Notes</h1>
-          <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-300">
+    <main className="min-h-screen bg-zinc-950 px-3 py-4 text-zinc-100 sm:px-4">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4">
+        <header className="border-b border-zinc-800 pb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-300">Private route</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-normal text-white sm:text-3xl">Interview STAR Notes</h1>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-300">
             Professional interview stories arranged so each answer starts fast, spends most of its time on personal
             action, and closes with a concrete outcome.
           </p>
@@ -218,24 +218,24 @@ const InterviewNotes: React.FC = () => {
 
         <section className="grid gap-3 md:grid-cols-4" aria-label="STAR answer timing">
           {starSections.map((section) => (
-            <div key={section.label} className="rounded-md border border-zinc-800 bg-zinc-900 p-4">
-              <h2 className="text-lg font-semibold text-white">{section.label}</h2>
-              <p className="mt-2 text-sm leading-6 text-zinc-300">{section.guidance}</p>
+            <div key={section.label} className="rounded border border-zinc-800 bg-zinc-900 p-3">
+              <h2 className="text-sm font-semibold text-white">{section.label}</h2>
+              <p className="mt-1 text-xs leading-5 text-zinc-300">{section.guidance}</p>
             </div>
           ))}
         </section>
 
-        <section className="grid gap-5" aria-label="STAR stories">
+        <section className="grid gap-3" aria-label="STAR stories">
           {stories.map((story) => (
-            <article key={story.title} className="rounded-md border border-zinc-800 bg-zinc-900 p-5 shadow-lg">
-              <div className="flex flex-col gap-3 border-b border-zinc-800 pb-4 lg:flex-row lg:items-start lg:justify-between">
+            <article key={story.title} className="rounded border border-zinc-800 bg-zinc-900 p-3">
+              <div className="flex flex-col gap-2 border-b border-zinc-800 pb-3 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-normal text-white">{story.title}</h2>
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <h2 className="text-lg font-bold tracking-normal text-white">{story.title}</h2>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
                     {story.themes.map((theme) => (
                       <span
                         key={theme}
-                        className="rounded-sm border border-sky-400/30 bg-sky-400/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-sky-200"
+                        className="rounded-sm border border-sky-400/30 bg-sky-400/10 px-1.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-sky-200"
                       >
                         {theme}
                       </span>
@@ -244,20 +244,20 @@ const InterviewNotes: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-5 grid gap-5 lg:grid-cols-[0.95fr_0.95fr_2.2fr_1fr]">
+              <div className="mt-3 grid gap-3 lg:grid-cols-[0.9fr_0.9fr_2.4fr_1fr]">
                 <section>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-sky-300">Situation</h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-300">{story.situation}</p>
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-sky-300">Situation</h3>
+                  <p className="mt-1 text-xs leading-5 text-zinc-300">{story.situation}</p>
                 </section>
 
                 <section>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-sky-300">Task</h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-300">{story.task}</p>
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-sky-300">Task</h3>
+                  <p className="mt-1 text-xs leading-5 text-zinc-300">{story.task}</p>
                 </section>
 
                 <section>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-sky-300">Action</h3>
-                  <ul className="mt-2 space-y-2 text-sm leading-6 text-zinc-200">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-sky-300">Action</h3>
+                  <ul className="mt-1 space-y-1 text-xs leading-5 text-zinc-200">
                     {story.action.map((action) => (
                       <li key={action} className="border-l-2 border-sky-400/60 pl-3">
                         {action}
@@ -267,8 +267,8 @@ const InterviewNotes: React.FC = () => {
                 </section>
 
                 <section>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-sky-300">Result</h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-300">{story.result}</p>
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-sky-300">Result</h3>
+                  <p className="mt-1 text-xs leading-5 text-zinc-300">{story.result}</p>
                 </section>
               </div>
             </article>
