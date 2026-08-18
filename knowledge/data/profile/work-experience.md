@@ -84,4 +84,4 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
 - Role: ESL Lead Instructor
 - Location: Sanremo, Italy
 - Dates: 2008 - 2013
-- Responsibility: Designed and delivered english courses in 25 cities
+- Responsibility: Designed and delivered English courses in 25 cities

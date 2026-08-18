@@ -137,7 +137,7 @@ export const jobs: Job[] = [
     dates: '2008 - 2013',
     details: [
       {
-        title: 'Designed and delivered english courses in 25 cities',
+        title: 'Designed and delivered English courses in 25 cities',
         lines: [],
       },
     ],

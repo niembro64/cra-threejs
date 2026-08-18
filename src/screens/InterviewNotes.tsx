@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { movingExpenseTextSections } from '../data/movingExpensesText';
 
 type StarKey = 'Situation' | 'Task' | 'Action' | 'Result';
 
@@ -222,6 +223,18 @@ const InterviewNotes: React.FC = () => {
               <h2 className="text-sm font-semibold text-white">{section.label}</h2>
               <p className="mt-1 text-xs leading-5 text-zinc-300">{section.guidance}</p>
             </div>
+          ))}
+        </section>
+
+        <section className="grid gap-2" aria-label="Raw interview notes">
+          <h2 className="text-base font-bold text-white">Raw Notes</h2>
+          {movingExpenseTextSections.map((section) => (
+            <article key={section.title} className="rounded border border-zinc-800 bg-zinc-900 p-3">
+              <h3 className="text-sm font-semibold text-sky-300">{section.title}</h3>
+              <pre className="mt-2 whitespace-pre-wrap break-words font-mono text-[0.7rem] leading-4 text-zinc-300">
+                {section.body}
+              </pre>
+            </article>
           ))}
         </section>
 

@@ -82,7 +82,7 @@ Original Fullstack Apps, Games, and ML on Mobile, Desktop, and Cloud
 
 - Location: Sanremo, Italy
 - Dates: 2008 - 2013
-- Designed and delivered english courses in 25 cities
+- Designed and delivered English courses in 25 cities
 
 ## Education
 
