@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { resumeVoiceAgentVisibilityConfig } from '../config/resumeVoiceAgent';
 import { isThin } from './Main';
+import PixelArtText from './PixelArtText';
 
 const loadResumeVoiceAgentPanel = () => import('./ResumeVoiceAgentPanel');
 const ResumeVoiceAgentPanel = lazy(loadResumeVoiceAgentPanel);
@@ -73,9 +74,12 @@ const ResumeVoiceAgent: React.FC = () => {
           {!isActivated ? (
             <div className="flex h-full flex-col items-center justify-center">
               <p className="pixel-font mb-3 text-sm uppercase tracking-[0.28em] text-fuchsia-300">Interactive résumé</p>
-              <h2 id="resume-voice-agent-heading" className="pixel-font text-3xl text-white md:text-5xl">
-                ASK MY RÉSUMÉ
+              <h2 id="resume-voice-agent-heading" className="sr-only">
+                ASK MY RESUME
               </h2>
+              <div className="w-full max-w-2xl">
+                <PixelArtText pixelColor="#fff" text=" ASK MY RESUME " totalHorzPixels={88} />
+              </div>
               <p className="pixel-font mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-blue-200 md:text-xl">
                 Talk with an AI guide that knows about Eric.
               </p>

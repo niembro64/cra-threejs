@@ -9,6 +9,7 @@ const DrkClnBrand = lazy(() => import('./screens/DrkClnBrand'));
 const YouTubeDownloaderPage = lazy(() => import('./screens/YouTubeDownloaderPage'));
 const AudioEditor = lazy(() => import('./screens/AudioEditor'));
 const MediaConverter = lazy(() => import('./screens/MediaConverter'));
+const InterviewNotes = lazy(() => import('./screens/InterviewNotes'));
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route path="/youtube-download" element={<YouTubeDownloaderPage />} />
             <Route path="/audio-edit" element={<AudioEditor />} />
             <Route path="/media-convert" element={<MediaConverter />} />
+            <Route path="/interview" element={<InterviewNotes />} />
           </Routes>
         </Suspense>
       </div>

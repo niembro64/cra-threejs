@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import type { Callbacks } from '@elevenlabs/react';
 import ResumeAgentWaveform from './ResumeAgentWaveform';
+import PixelArtText from './PixelArtText';
 import { decodePcm16Base64 } from '../utils/audioWaveform';
 import { readJsonResponse } from '../utils/httpJson';
 
@@ -147,9 +148,12 @@ const ResumeVoiceConversation: React.FC<ResumeVoiceAgentPanelProps> = ({ autoSta
       <header className="flex shrink-0 items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="pixel-font text-xs uppercase tracking-[0.25em] text-fuchsia-300">Interactive résumé</p>
-          <h2 id="resume-voice-agent-heading" className="pixel-font mt-1 text-2xl text-white sm:text-3xl">
-            ASK MY RÉSUMÉ
+          <h2 id="resume-voice-agent-heading" className="sr-only">
+            ASK MY RESUME
           </h2>
+          <div className="mt-1 w-52 sm:w-72">
+            <PixelArtText pixelColor="#fff" text=" ASK MY RESUME " totalHorzPixels={78} />
+          </div>
         </div>
         <span
           className="pixel-font mt-1 flex shrink-0 items-center gap-2 text-xs text-blue-200 sm:text-sm"
