@@ -48,6 +48,8 @@ export const jobs: Job[] = [
           'Conversation-level risk classifiers',
           'PGVector and Postgres semantic search',
           'ElevenLabs voice-agent RAG memory',
+          'Node streaming and Python inference services',
+          'MLflow experiment tracking and early stopping',
           'Human-in-the-loop labels and ASR augmentation',
           'PII-aware transcript and audio handling',
           'Robust thresholds, F2, and PR AUC',
@@ -157,14 +159,7 @@ export const jobs: Job[] = [
     details: [
       {
         title: 'Developed manufacturing execution systems for fortune 500 companies',
-        lines: [
-          'Lucid Motors',
-          '3M',
-          'Cooper Tires',
-          'Continental Tires',
-          'Maple Leaf Foods',
-          'Green Leaf Foods',
-        ],
+        lines: ['Lucid Motors', '3M', 'Cooper Tires', 'Continental Tires', 'Maple Leaf Foods', 'Green Leaf Foods'],
       },
       {
         title: 'Integrated plant-floor systems with enterprise software',
@@ -173,6 +168,8 @@ export const jobs: Job[] = [
           'ERP integration',
           'PLC coordination',
           'Robotic systems',
+          'Torque-tool command and result integration',
+          'Operator, QA, controls, and ERP coordination',
           'HMI and database systems',
           'Track-and-trace workflows',
           'Java, Python, and SQL',
@@ -186,6 +183,8 @@ export const jobs: Job[] = [
           'Cooper Tire process mapping',
           'Continental Tire HMI work',
           'Offshore team requirements',
+          'Whiteboards, approvals, and OneNote traceability',
+          'Concurrent Lucid and 3M delivery',
           'Mentored newer engineers',
           'Agile and waterfall change management',
           'Cross-company stakeholder coordination',
@@ -211,10 +210,7 @@ export const jobs: Job[] = [
       },
       {
         title: 'Built custom software to compile faculty schedules',
-        lines: [
-          'Searchable schedule interface',
-          'Teacher and student lookup in English and Hangul',
-        ],
+        lines: ['Searchable schedule interface', 'Teacher and student lookup in English and Hangul'],
       },
     ],
   },
@@ -237,11 +233,7 @@ export const jobs: Job[] = [
       },
       {
         title: 'Tech & software support for the office',
-        lines: [
-          'Hardware support',
-          'Software support',
-          'Led UK student excursion logistics',
-        ],
+        lines: ['Hardware support', 'Software support', 'Led UK student excursion logistics'],
       },
     ],
   },
@@ -603,6 +595,8 @@ export const videogame_projects: Project[] = [
       'Keyboard & Mouse Support',
       'Custom C++ Game Engine',
       'Lockstep Deterministic Simulation',
+      'Fixed-Point Cross-CPU Math',
+      'WebRTC Multiplayer Lobbies',
       'Windows, Linux & macOS Testing',
       'Cross-CPU State Hash Validation',
       'Force, Mass & Momentum Physics',
@@ -617,7 +611,7 @@ export const videogame_projects: Project[] = [
     supportsMobile: false,
     hasSound: false,
     description:
-      'A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, state-hash validation, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.',
+      'A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, fixed-point math, state-hash validation, WebRTC lobbies, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.',
   },
 
   {
@@ -919,6 +913,7 @@ export const skills: SkillCategory[] = [
         title: 'Applications',
         details: [
           'Pytorch',
+          'MLflow',
           'BrainJS',
           'TensorFlow.js',
           'Text Classification',

@@ -18,7 +18,7 @@ This document contains Eric Niemeyer’s complete public technical, language, ar
 - AI Systems: MCP, RAG, Embeddings, Semantic Search, Vector Databases, Tool Calling, AI Agents
 - Training Paradigms: Supervised Learning, Reinforcement Learning, Self-Play, Genetic Algorithm
 - Architectures: MLP, RNN, CNN, Transformer Encoder, Transformer Decoder, Attention Mechanism
-- Applications: Pytorch, BrainJS, TensorFlow.js, Text Classification, Audio Classification, Image Classification, Game AI Bots
+- Applications: Pytorch, MLflow, BrainJS, TensorFlow.js, Text Classification, Audio Classification, Image Classification, Game AI Bots
 
 ## Skills: Web
 

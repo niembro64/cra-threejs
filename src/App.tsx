@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 import './App.scss';
 // import usePageTracking from '../src/components/usePageTracking'
 
@@ -10,7 +10,7 @@ const YouTubeDownloaderPage = lazy(() => import('./screens/YouTubeDownloaderPage
 const AudioEditor = lazy(() => import('./screens/AudioEditor'));
 const MediaConverter = lazy(() => import('./screens/MediaConverter'));
 const InterviewNotes = lazy(() => import('./screens/InterviewNotes'));
-const Notes = lazy(() => import('./screens/Notes'));
+const StarNotes = lazy(() => import('./screens/Notes'));
 
 const App: React.FC = () => {
   return (
@@ -26,7 +26,8 @@ const App: React.FC = () => {
             <Route path="/audio-edit" element={<AudioEditor />} />
             <Route path="/media-convert" element={<MediaConverter />} />
             <Route path="/interview" element={<InterviewNotes />} />
-            <Route path="/notes" element={<Notes />} />
+            <Route path="/star" element={<StarNotes />} />
+            <Route path="/notes" element={<Navigate replace to="/star" />} />
           </Routes>
         </Suspense>
       </div>

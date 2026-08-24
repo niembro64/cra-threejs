@@ -8,9 +8,15 @@ Eric is Head of Engineering and Lead Software Engineer at Venturetec, where Sent
 
 SeniorSafe detects suspicious phone conversations in near real time. Eric evolved the system from heuristics to recurrent neural networks and then to transformer-based classifiers. The data contains roughly fifty conversational labels. Turn-level models can attend bidirectionally within the current speaker turn while using only causal context from earlier turns. He has also evaluated conversation-level classifiers and combinations of turn and conversation evidence rather than assuming one architecture fits every decision.
 
+The initial product goal - determine when a call becomes dangerous and when an agent should intervene - was too ambiguous to train directly. Eric analyzed dangerous conversational behaviors, defined a broad risk taxonomy, created a higher-level Danger grouping, and built human workflows for categorizing synthetic and real calls. This converted a vague intervention idea into explicit training targets and testable product behavior.
+
+Operationally, the platform integrates two live audio sources, a Node.js streaming service, Python training and inference services, transcription, application APIs, external telephone-number metadata, database records, pgvector retrieval, iOS and Android clients, and a voice agent. Eric trained and deployed the models, exposed the machine-learning and embedding routes, and owned the iOS implementation.
+
 ## Training data and label quality
 
 Eric built human-in-the-loop workflows for creating, reviewing, cleaning, and backfilling labeled conversation data. Explicit null-label states distinguish a reviewed negative example from missing annotation. He pays attention to label imbalance, noisy labels, threshold selection, and validation splits that reflect production conditions. For fraud detection, he emphasizes recall-sensitive measures such as F2 and precision-recall behavior instead of treating raw accuracy as sufficient.
+
+He also integrated MLflow so architectures, optimizers, hyperparameters, training curves, and validation curves could be compared visually. Patience-based stopping is verified against the observed validation plateau, making training duration and experiment selection inspectable rather than implicit.
 
 ## Speech-to-text robustness
 

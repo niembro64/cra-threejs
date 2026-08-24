@@ -4,6 +4,8 @@
 
 Eric's requirements practice is to restate what he heard, identify what changed from the original plan, document the new agreement, assign action items, and explain the likely effect on schedule, cost, or product clarity. He has used this approach in startup products, client applications, and industrial projects. He is willing to push back when added choices or features would make a product harder to explain, and he distinguishes valuable adaptation from unbounded scope growth.
 
+For Spray Integrity, he whiteboarded vague requests during meetings and sent written architectural interpretations for approval. When a completed chatbot lost priority, he hid the frontend through configuration, retained stable backend APIs, documented the scope change, and redirected work. In a separate database-design disagreement, he accepted a simpler current model after confirming that the more normalized relationship was not yet required, allowing delivery without speculative complexity.
+
 ## Meetings and stakeholder alignment
 
 For larger meetings, Eric asks participants for topics in advance, merges overlapping requests into a focused agenda, sends the agenda before the meeting, and records decisions and action items in OneNote. During the meeting he moves through the list deliberately, checks for questions, and invites quieter subject-matter experts when their knowledge is relevant. This pattern has supported Rockwell client meetings, Venturetec investor communication, education programs, and sports-league governance.
@@ -11,6 +13,8 @@ For larger meetings, Eric asks participants for topics in advance, merges overla
 ## Multiple deadlines and ownership
 
 Eric breaks parallel work into explicit owners, schedules, and follow-up. At Venturetec he balances client delivery, startup priorities, application releases, and technical investigation. Rockwell MES programs brought several high-stakes integration deadlines at once. In education and sports operations he coordinated events, venues, travel, classes, and weekly action items. He also built a VBA and Excel system that grouped league tasks and emailed the responsible people, turning administrative follow-up into a repeatable workflow.
+
+One concrete industrial example combined onsite Lucid Motors engineering with concurrent 3M project leadership. Eric protected calendar buffers, stepped away for critical cross-project calls, tracked time separately, and arranged backup ownership when activities overlapped.
 
 ## Mentorship and handoff
 

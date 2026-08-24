@@ -20,6 +20,8 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - Conversation-level risk classifiers
   - PGVector and Postgres semantic search
   - ElevenLabs voice-agent RAG memory
+  - Node streaming and Python inference services
+  - MLflow experiment tracking and early stopping
   - Human-in-the-loop labels and ASR augmentation
   - PII-aware transcript and audio handling
   - Robust thresholds, F2, and PR AUC
@@ -109,6 +111,8 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - ERP integration
   - PLC coordination
   - Robotic systems
+  - Torque-tool command and result integration
+  - Operator, QA, controls, and ERP coordination
   - HMI and database systems
   - Track-and-trace workflows
   - Java, Python, and SQL
@@ -118,6 +122,8 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
   - Cooper Tire process mapping
   - Continental Tire HMI work
   - Offshore team requirements
+  - Whiteboards, approvals, and OneNote traceability
+  - Concurrent Lucid and 3M delivery
   - Mentored newer engineers
   - Agile and waterfall change management
   - Cross-company stakeholder coordination
@@ -215,7 +221,7 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 - AI Systems: MCP, RAG, Embeddings, Semantic Search, Vector Databases, Tool Calling, AI Agents
 - Training Paradigms: Supervised Learning, Reinforcement Learning, Self-Play, Genetic Algorithm
 - Architectures: MLP, RNN, CNN, Transformer Encoder, Transformer Decoder, Attention Mechanism
-- Applications: Pytorch, BrainJS, TensorFlow.js, Text Classification, Audio Classification, Image Classification, Game AI Bots
+- Applications: Pytorch, MLflow, BrainJS, TensorFlow.js, Text Classification, Audio Classification, Image Classification, Game AI Bots
 
 ### Web
 
@@ -338,9 +344,9 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 
 - Type: Commercial C++ Desktop RTS
 - Dates: 2025 - Ongoing
-- Description: A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, state-hash validation, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.
+- Description: A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, fixed-point math, state-hash validation, WebRTC lobbies, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.
 - Technology: C++
-- Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Terrain-Aware A* Pathfinding; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
+- Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Fixed-Point Cross-CPU Math; WebRTC Multiplayer Lobbies; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Terrain-Aware A* Pathfinding; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
 - Public URL: https://games.niemo.io/budget-annihilation
 
 #### Seouldat Shooter

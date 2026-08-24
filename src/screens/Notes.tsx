@@ -33,7 +33,7 @@ const cellLabels = {
   result: 'Result',
 } as const;
 
-const Notes: React.FC = () => {
+const StarNotes: React.FC = () => {
   const [query, setQuery] = useState('');
   const [rankedResults, setRankedResults] = useState<SearchResult[]>([]);
   const [searchState, setSearchState] = useState<SearchState>('idle');
@@ -41,7 +41,7 @@ const Notes: React.FC = () => {
   const activeRequestRef = useRef(0);
 
   useEffect(() => {
-    document.title = 'STAR Interview Notes | Eric Niemeyer';
+    document.title = 'STAR Interview Prep | Eric Niemeyer';
 
     const robotsName = 'robots';
     const previousRobots = document.querySelector<HTMLMetaElement>(`meta[name="${robotsName}"]`);
@@ -138,10 +138,13 @@ const Notes: React.FC = () => {
     <main className="min-h-screen bg-[#0c1015] text-slate-100">
       <section className="mx-auto flex w-full max-w-[1600px] flex-col gap-5 px-3 py-4 sm:px-5 lg:px-7">
         <header className="border-b border-slate-700/70 pb-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">Private Interview Prep</p>
-          <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">STAR Flash Cards</h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">
+            Private Flight Simulation Interview Prep
+          </p>
+          <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">Experience-Based STAR Answers</h1>
           <p className="mt-2 max-w-4xl text-sm leading-6 text-slate-300">
-            Enter the interviewer&apos;s question. The most relevant stories move to the top using semantic similarity.
+            Enter the interviewer&apos;s question. Semantic similarity moves the strongest evidence-based answers to the
+            top, prioritizing engineering, integration, simulation, and software delivery.
           </p>
         </header>
 
@@ -261,4 +264,4 @@ const Notes: React.FC = () => {
   );
 };
 
-export default Notes;
+export default StarNotes;

@@ -22,7 +22,7 @@ export const buildStarNoteSearchText = (note: StarNote): string =>
   [
     `STAR interview story: ${note.title}`,
     `Sample question: ${note.question}`,
-    `Question themes: ${note.themes.join(', ')}`,
+    `Interview competencies and technical context: ${note.themes.join(', ')}`,
     `Related interview prompts: ${note.aliases.join('; ')}`,
     `Situation: ${note.situation.join(' ')}`,
     `Task: ${note.task.join(' ')}`,

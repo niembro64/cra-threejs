@@ -6,7 +6,7 @@ Eric programs in C, C++, Assembly, C#, Java, and Python. His hardware experience
 
 ## Artificial intelligence and machine learning
 
-Eric's AI and ML skills include MCP, retrieval-augmented generation, embeddings, semantic search, vector databases, pgvector, tool calling, and voice or text agents. He has used supervised learning, reinforcement learning, self-play, and genetic algorithms with MLP, RNN, CNN, transformer encoder, transformer decoder, and attention architectures. Applications include PyTorch, BrainJS, TensorFlow.js, and text, audio, image, video, conversation, and game-agent classification.
+Eric's AI and ML skills include MCP, retrieval-augmented generation, embeddings, semantic search, vector databases, pgvector, tool calling, and voice or text agents. He has used supervised learning, reinforcement learning, self-play, and genetic algorithms with MLP, RNN, CNN, transformer encoder, transformer decoder, and attention architectures. Applications include PyTorch, MLflow, BrainJS, TensorFlow.js, and text, audio, image, video, conversation, and game-agent classification.
 
 ## Web engineering
 
@@ -18,4 +18,4 @@ Eric builds applications with React Native CLI, React Native Expo, native iOS, a
 
 ## Game and simulation engineering
 
-Eric's browser game tools include Phaser, Three.js, HTML Canvas, and custom engines. His device and desktop experience includes React Native Game Engine, Unity, custom C++ engines, N64 ROM hacking, Raspberry Pi, networking, game AI, physics, pathfinding, deterministic simulation, levels of detail, spatial acceleration, and cross-architecture testing.
+Eric's browser game tools include Phaser, Three.js, HTML Canvas, and custom engines. His device and desktop experience includes React Native Game Engine, Unity, custom C++ engines, N64 ROM hacking, Raspberry Pi, WebRTC and Socket.IO networking, game AI, physics, pathfinding, fixed-point deterministic simulation, state-hash verification, levels of detail, spatial acceleration, and cross-architecture testing.

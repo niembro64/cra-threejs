@@ -81,7 +81,7 @@ def build_search_text(note: dict[str, Any]) -> str:
         (
             f"STAR interview story: {note['title']}",
             f"Sample question: {note['question']}",
-            f"Question themes: {', '.join(note['themes'])}",
+            f"Interview competencies and technical context: {', '.join(note['themes'])}",
             f"Related interview prompts: {'; '.join(note['aliases'])}",
             f"Situation: {' '.join(note['situation'])}",
             f"Task: {' '.join(note['task'])}",

@@ -87,6 +87,6 @@ class SyncStarNotesTests(TestCase):
             call_command("sync_star_notes", path=path)
 
         current = StarNote.objects.get(note_id="current")
-        self.assertIn("Question themes: hidden theme", current.search_text)
+        self.assertIn("Interview competencies and technical context: hidden theme", current.search_text)
         self.assertIn("Related interview prompts: alternate question", current.search_text)
         self.assertFalse(StarNote.objects.get(note_id="removed").active)

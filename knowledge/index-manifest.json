@@ -7,43 +7,161 @@
       "context": "A concise professional overview of Eric Niemeyer's software engineering career across Venturetec, Sentien, Rockwell Automation, Maverick Technologies, machine learning, industrial systems, and technical leadership."
     },
     {
+      "path": "data/profile/flight-simulation-role-fit.md",
+      "labels": [
+        "work",
+        "experience",
+        "skills",
+        "engineering",
+        "programming",
+        "software development",
+        "flight simulation",
+        "C++",
+        "physics",
+        "DSP",
+        "networking",
+        "integration"
+      ],
+      "context": "A role-focused synthesis of Eric Niemeyer's transferable flight-simulation engineering experience across low-level C and C++, CPU architectures, deterministic physical simulation, DSP, real-time networking, industrial subsystem integration, testing, and technical delivery."
+    },
+    {
+      "path": "data/profile/engineering-behavioral-evidence.md",
+      "labels": [
+        "work",
+        "experience",
+        "engineering",
+        "programming",
+        "software development",
+        "STAR",
+        "behavioral examples",
+        "requirements",
+        "integration",
+        "leadership"
+      ],
+      "context": "Detailed evidence-based engineering examples from Eric Niemeyer's spoken work notes, organized by concrete situations, tasks, individual actions, and results across SeniorSafe, Venturetec, Spray Integrity, Audience AI, Rockwell, Lucid Motors, 3M, and Annihilation++."
+    },
+    {
       "path": "data/profile/work-venturetec-sentien.md",
-      "labels": ["work", "experience", "engineering", "programming", "machine learning", "Venturetec", "Sentien", "SeniorSafe", "fraud detection", "RAG"],
+      "labels": [
+        "work",
+        "experience",
+        "engineering",
+        "programming",
+        "machine learning",
+        "Venturetec",
+        "Sentien",
+        "SeniorSafe",
+        "fraud detection",
+        "RAG"
+      ],
       "context": "Eric Niemeyer's Venturetec and Sentien work on SeniorSafe phone-fraud machine learning, transcript classification, data quality, pgvector retrieval, privacy-aware audio handling, mobile ownership, and technical demonstrations."
     },
     {
       "path": "data/profile/work-audience-ai.md",
-      "labels": ["work", "experience", "engineering", "programming", "machine learning", "Audience AI", "React Native", "audio", "FFmpeg", "mobile"],
+      "labels": [
+        "work",
+        "experience",
+        "engineering",
+        "programming",
+        "machine learning",
+        "Audience AI",
+        "React Native",
+        "audio",
+        "FFmpeg",
+        "mobile"
+      ],
       "context": "Eric Niemeyer's end-to-end Audience AI product: on-device neural audio analysis, responsive artificial laughter, React Native mobile UX, DSP features, and FFmpeg video export."
     },
     {
       "path": "data/profile/work-spray-integrity.md",
-      "labels": ["work", "experience", "engineering", "programming", "Spray Integrity", "React Native", "Vue", "Laravel", "QR", "track and trace"],
+      "labels": [
+        "work",
+        "experience",
+        "engineering",
+        "programming",
+        "Spray Integrity",
+        "React Native",
+        "Vue",
+        "Laravel",
+        "QR",
+        "track and trace"
+      ],
       "context": "Eric Niemeyer's product engineering for the Spray Integrity Program, including contractor mobile and web workflows, QR material traceability, estimates, jobs, rewards, and mini-games."
     },
     {
       "path": "data/profile/work-rockwell-maverick.md",
-      "labels": ["work", "experience", "engineering", "programming", "Rockwell Automation", "Maverick Technologies", "MES", "industrial software", "manufacturing"],
+      "labels": [
+        "work",
+        "experience",
+        "engineering",
+        "programming",
+        "Rockwell Automation",
+        "Maverick Technologies",
+        "MES",
+        "industrial software",
+        "manufacturing"
+      ],
       "context": "Eric Niemeyer's industrial software work at Rockwell Automation and Maverick Technologies integrating MES, PLCs, robotics, databases, HMIs, ERP systems, and manufacturing traceability."
     },
     {
       "path": "data/profile/work-leadership-delivery.md",
-      "labels": ["work", "experience", "engineering leadership", "delivery", "requirements", "stakeholders", "mentorship", "version control"],
+      "labels": [
+        "work",
+        "experience",
+        "engineering leadership",
+        "delivery",
+        "requirements",
+        "stakeholders",
+        "mentorship",
+        "version control"
+      ],
       "context": "Eric Niemeyer's engineering leadership practices for requirements, scope changes, meetings, parallel deadlines, mentorship, conflict resolution, Git, releases, and reproducibility."
     },
     {
       "path": "data/profile/work-teaching-operations.md",
-      "labels": ["work", "experience", "teaching", "education", "operations", "leadership", "South Korea", "Italy", "Ultimate Frisbee"],
+      "labels": [
+        "work",
+        "experience",
+        "teaching",
+        "education",
+        "operations",
+        "leadership",
+        "South Korea",
+        "Italy",
+        "Ultimate Frisbee"
+      ],
       "context": "Eric Niemeyer's education and organizational leadership at Daegu Science High School, A.C.L.E. programs, international travel, and Republic of Korea Ultimate league operations."
     },
     {
       "path": "data/profile/engineering-practices.md",
-      "labels": ["skills", "engineering", "programming", "software development", "machine learning", "RAG", "full stack", "mobile", "DSP", "C++"],
+      "labels": [
+        "skills",
+        "engineering",
+        "programming",
+        "software development",
+        "machine learning",
+        "RAG",
+        "full stack",
+        "mobile",
+        "DSP",
+        "C++"
+      ],
       "context": "A technical synthesis of Eric Niemeyer's engineering practices across ML systems, contextual RAG, full-stack and mobile architecture, real-time media, game simulation, industrial software, and embedded hardware."
     },
     {
       "path": "data/profile/skills-technical.md",
-      "labels": ["skills", "engineering", "programming", "software development", "machine learning", "web", "mobile", "desktop", "embedded", "game engines"],
+      "labels": [
+        "skills",
+        "engineering",
+        "programming",
+        "software development",
+        "machine learning",
+        "web",
+        "mobile",
+        "desktop",
+        "embedded",
+        "game engines"
+      ],
       "context": "Eric Niemeyer's technical skill inventory covering programming languages, frameworks, databases, AI and ML, web, mobile, desktop, embedded hardware, game engines, signal processing, deployment, and reproducibility."
     },
     {
@@ -58,7 +176,16 @@
     },
     {
       "path": "data/profile/workspaces-and-equipment.md",
-      "labels": ["skills", "engineering", "work environment", "workspace", "equipment", "hardware", "audio", "computers"],
+      "labels": [
+        "skills",
+        "engineering",
+        "work environment",
+        "workspace",
+        "equipment",
+        "hardware",
+        "audio",
+        "computers"
+      ],
       "context": "Eric Niemeyer's workspaces, development computers, electronics equipment, audio tools, and hands-on technical environment."
     },
     {
@@ -73,12 +200,30 @@
     },
     {
       "path": "data/projects/annihilation-rts.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "C++", "game engine", "desktop game", "deterministic simulation", "Annihilation++"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "C++",
+        "game engine",
+        "desktop game",
+        "deterministic simulation",
+        "Annihilation++"
+      ],
       "context": "Eric Niemeyer's Annihilation++ project, a native cross-architecture C++ desktop RTS and custom engine with deterministic lockstep, physics, pathfinding, LOD, and spatial optimization."
     },
     {
       "path": "data/projects/attention-mechanism.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "attention", "neural networks"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "machine learning",
+        "attention",
+        "neural networks"
+      ],
       "context": "Eric Niemeyer's interactive attention-mechanism project for visualizing how neural attention transforms inputs and weights relationships."
     },
     {
@@ -88,27 +233,69 @@
     },
     {
       "path": "data/projects/collision-detection.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "collision detection", "physics", "ray casting"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "collision detection",
+        "physics",
+        "ray casting"
+      ],
       "context": "Eric Niemeyer's interactive collision-detection lab comparing side-of-line response, discrete-update tunneling, ray casting, inside-outside tests, gravity, and multiple shapes."
     },
     {
       "path": "data/projects/conv-net-chess.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "CNN", "chess", "game AI"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "machine learning",
+        "CNN",
+        "chess",
+        "game AI"
+      ],
       "context": "Eric Niemeyer's convolutional-neural-network chess experiment applying learned board evaluation or policy ideas to game AI."
     },
     {
       "path": "data/projects/css-experiments.md",
-      "labels": ["projects", "technical projects", "creative projects", "programming", "CSS", "web", "interaction design"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "creative projects",
+        "programming",
+        "CSS",
+        "web",
+        "interaction design"
+      ],
       "context": "Eric Niemeyer's collection of pure-CSS and browser interaction experiments with cards, movement, selections, playful mechanics, and sound-oriented presentation."
     },
     {
       "path": "data/projects/embedding-pca.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "embeddings", "PCA", "visualization"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "machine learning",
+        "embeddings",
+        "PCA",
+        "visualization"
+      ],
       "context": "Eric Niemeyer's interactive embedding and PCA project explaining semantic vector spaces and dimensionality reduction."
     },
     {
       "path": "data/projects/extended-axelrod.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "game theory", "Axelrod", "simulation"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "game theory",
+        "Axelrod",
+        "simulation"
+      ],
       "context": "Eric Niemeyer's extended Axelrod tournament simulation exploring repeated-game strategies, cooperation, competition, and emergent outcomes."
     },
     {
@@ -118,7 +305,15 @@
     },
     {
       "path": "data/projects/genetic-algorithm-racing.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "machine learning", "genetic algorithm", "racing"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "machine learning",
+        "genetic algorithm",
+        "racing"
+      ],
       "context": "Eric Niemeyer's genetic-algorithm racing simulation where populations evolve driving behavior across repeated trials."
     },
     {
@@ -138,7 +333,15 @@
     },
     {
       "path": "data/projects/polynomial-fitting.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "mathematics", "polynomial fitting", "visualization"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "mathematics",
+        "polynomial fitting",
+        "visualization"
+      ],
       "context": "Eric Niemeyer's interactive polynomial-fitting project for exploring mathematical approximation and visual model behavior."
     },
     {
@@ -158,7 +361,16 @@
     },
     {
       "path": "data/projects/smashed-fighter.md",
-      "labels": ["projects", "technical projects", "engineering", "programming", "game development", "fighting game", "neural network", "multiplayer"],
+      "labels": [
+        "projects",
+        "technical projects",
+        "engineering",
+        "programming",
+        "game development",
+        "fighting game",
+        "neural network",
+        "multiplayer"
+      ],
       "context": "Eric Niemeyer's Smashed Fighter game and AI work, including custom fighting mechanics, networking experiments, and neural or reinforcement-learning agents."
     },
     {

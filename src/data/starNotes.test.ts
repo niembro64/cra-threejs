@@ -4,8 +4,36 @@ const wordCount = (value: string) => value.trim().split(/\s+/).filter(Boolean).l
 
 describe('STAR note corpus', () => {
   it('has stable unique identifiers', () => {
-    expect(starNotes.length).toBeGreaterThanOrEqual(60);
+    expect(starNotes.length).toBeGreaterThanOrEqual(30);
+    expect(starNotes.length).toBeLessThanOrEqual(45);
     expect(new Set(starNotes.map((note) => note.id)).size).toBe(starNotes.length);
+  });
+
+  it('uses Boeing-style experience questions', () => {
+    starNotes.forEach((note) => {
+      expect(note.question).toMatch(/^(Tell me about|Give me an example|Describe (?:your experience|a time))/);
+      expect(note.question).toMatch(/[?.]$/);
+    });
+  });
+
+  it('omits general showcase projects without a strong interview match', () => {
+    const removedShowcaseIds = [
+      'conv-net-chess',
+      'genetic-racing',
+      'embedding-pca',
+      'attention-visualization',
+      'function-approximation',
+      'pathfinding-lab',
+      'extended-axelrod',
+      'tanks-gates',
+      'galaxy-destroyer',
+      'portfolio-navigator',
+      'css-experiments',
+      'audio-visualizations',
+      'original-music-recognition',
+    ];
+
+    expect(starNotes.filter((note) => removedShowcaseIds.includes(note.id))).toHaveLength(0);
   });
 
   it('keeps every displayed cell concise', () => {

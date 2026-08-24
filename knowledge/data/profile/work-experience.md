@@ -16,6 +16,8 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: Conversation-level risk classifiers
   - Technology, client, or detail: PGVector and Postgres semantic search
   - Technology, client, or detail: ElevenLabs voice-agent RAG memory
+  - Technology, client, or detail: Node streaming and Python inference services
+  - Technology, client, or detail: MLflow experiment tracking and early stopping
   - Technology, client, or detail: Human-in-the-loop labels and ASR augmentation
   - Technology, client, or detail: PII-aware transcript and audio handling
   - Technology, client, or detail: Robust thresholds, F2, and PR AUC
@@ -107,6 +109,8 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: ERP integration
   - Technology, client, or detail: PLC coordination
   - Technology, client, or detail: Robotic systems
+  - Technology, client, or detail: Torque-tool command and result integration
+  - Technology, client, or detail: Operator, QA, controls, and ERP coordination
   - Technology, client, or detail: HMI and database systems
   - Technology, client, or detail: Track-and-trace workflows
   - Technology, client, or detail: Java, Python, and SQL
@@ -116,6 +120,8 @@ This document contains Eric Niemeyer’s complete public niemo.io work-experienc
   - Technology, client, or detail: Cooper Tire process mapping
   - Technology, client, or detail: Continental Tire HMI work
   - Technology, client, or detail: Offshore team requirements
+  - Technology, client, or detail: Whiteboards, approvals, and OneNote traceability
+  - Technology, client, or detail: Concurrent Lucid and 3M delivery
   - Technology, client, or detail: Mentored newer engineers
   - Technology, client, or detail: Agile and waterfall change management
   - Technology, client, or detail: Cross-company stakeholder coordination

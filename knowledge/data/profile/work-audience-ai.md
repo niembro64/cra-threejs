@@ -15,3 +15,5 @@ Audience AI does not trigger one static laugh clip. Eric designed randomized lau
 ## Video and sharing pipeline
 
 After a session, Eric's FFmpeg pipeline normalizes and mixes the performer's audio with generated audience tracks, renders the video, adds branding or watermarks, and can append user, logo, or end-credit material. The output is downloadable and suitable for sharing. The pipeline is a strong example of combining real-time mobile UX, neural audio inference, DSP, media composition, and product delivery in one system.
+
+Eric defined the application, neural-model, DSP, recording, playback, and export interfaces and delivered the requested iOS and Android product end to end. The client accepted and paid for the work. A later package-ecosystem change involving the original mobile FFmpeg dependency prevented continued development in that form; that is a lifecycle and dependency constraint, not a failure of the delivered product.

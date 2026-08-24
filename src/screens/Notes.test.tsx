@@ -19,13 +19,13 @@ describe('STAR flash cards', () => {
     render(<Notes />);
 
     const checkbox = screen.getByRole('checkbox', {
-      name: 'Mark Building real-time phone-fraud detection as discussed',
+      name: 'Mark Connecting systems experience to flight simulation as discussed',
     });
     fireEvent.click(checkbox);
 
     expect(checkbox).toBeChecked();
     expect(JSON.parse(window.localStorage.getItem(STAR_NOTES_STORAGE_KEY) || '[]')).toContain(
-      'seniorsafe-fraud-platform'
+      'flight-simulation-preparation'
     );
 
     fireEvent.click(screen.getByRole('button', { name: 'Clear discussed' }));
@@ -38,21 +38,23 @@ describe('STAR flash cards', () => {
     const fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        query: 'Tell me about creative discipline',
-        results: [{ id: 'original-music-recognition', score: 0.91 }],
+        query: 'Tell me about simulation performance',
+        results: [{ id: 'annihilation-performance', score: 0.91 }],
       }),
     } as Response);
     render(<Notes />);
 
     fireEvent.change(screen.getByLabelText('Interview question'), {
-      target: { value: 'Tell me about creative discipline' },
+      target: { value: 'Tell me about simulation performance' },
     });
     act(() => jest.advanceTimersByTime(500));
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
     await waitFor(() =>
-      expect(within(screen.getAllByRole('article')[0]).getByText('Sustaining original music production')).toBeVisible()
+      expect(
+        within(screen.getAllByRole('article')[0]).getByText('Optimizing a full-map deterministic simulation')
+      ).toBeVisible()
     );
-    expect(screen.getByText('Ranked all 65 cards by semantic similarity.')).toBeVisible();
+    expect(screen.getByText('Ranked all 40 cards by semantic similarity.')).toBeVisible();
   });
 });

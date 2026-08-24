@@ -11,7 +11,7 @@
 
 Annihilation++ is a cross-architecture desktop game written in C++. It is a full-3D, physics-first real-time strategy project inspired by Total Annihilation. Players build factories, manage energy and metal, place structures, and command armies across terrain. Units are governed by force, mass, and momentum rather than merely sliding along predefined grid steps.
 
-Its most technically distinctive feature is a deterministic C++ simulation designed to execute consistently across different CPU architectures. Terrain-aware pathfinding, fog of war, resource systems, unit behavior, building placement, and physics all operate around that simulation core.
+Its most technically distinctive feature is a deterministic C++ simulation designed to execute consistently across different CPU architectures. Terrain-aware pathfinding, fog of war, resource systems, unit behavior, building placement, and physics all operate around that simulation core. Multiplayer communication includes WebRTC connections and short-lived game lobbies around the lockstep session.
 
 Eric built the game engine himself in C++ rather than relying on an existing engine. The project is designed around native desktop performance, low-level control of simulation state, and a commercial/Steam-oriented release path.
 
@@ -28,6 +28,8 @@ Pathfinding is terrain-aware and time-aware. Instead of treating A* as only shor
 Earlier multiplayer work used an authoritative-server pattern where player commands went to a single source-of-truth simulation and world state came back to clients for rendering. For Annihilation++, Eric moved toward deterministic lockstep: every client runs the same simulation and must arrive at the same state.
 
 The lockstep design is tested across Ubuntu Linux, Windows 10/11, and macOS, including x86-64 and ARM-class CPU architectures. Because normal C++ floating-point math can compile differently across CPUs and operating systems, the project treats cross-architecture math consistency as a core design problem. Tiny multiply/add differences can eventually desynchronize the simulation.
+
+Eric uses fixed-point math where deterministic cross-architecture numerical behavior is required. That choice turns precision and range into explicit design tradeoffs while avoiding CPU-specific floating-point drift in shared simulation state.
 
 To verify determinism, Eric starts games across multiple machines and compares hashes of game state at intervals. Matching hashes across operating systems and architectures indicate that the simulation state is still identical.
 

@@ -1,75 +1,153 @@
 [
   {
-    "id": "seniorsafe-fraud-platform",
-    "title": "Building real-time phone-fraud detection",
-    "question": "Describe a complex machine-learning system you built.",
-    "themes": ["machine learning", "fraud detection", "system architecture", "real-time systems"],
-    "aliases": ["technical project", "end-to-end ML system", "difficult engineering problem"],
+    "id": "flight-simulation-preparation",
+    "title": "Connecting systems experience to flight simulation",
+    "question": "Describe your experience with software relevant to flight simulation.",
+    "themes": ["flight simulation", "C++", "physics", "DSP", "CPU architecture", "Boeing role fit"],
+    "aliases": [
+      "Summarize the training skills and experience preparing you for flight simulation software.",
+      "What background makes you effective in simulation infrastructure?",
+      "Describe your experience with low-level simulation software."
+    ],
     "situation": [
-      "Heuristics missed nuanced phone-fraud patterns.",
-      "Two audio streams produced noisy live transcripts."
+      "Flight simulation combines software, hardware, mathematics, and signals.",
+      "Eric's background spans each of those engineering layers."
     ],
-    "task": ["Detect roughly fifty risks during active calls."],
+    "task": ["Build directly transferable, integrated simulation experience."],
     "action": [
-      "Replaced rules with RNN and transformer classifiers.",
-      "Combined turn-level and conversation-level risk evidence.",
-      "Connected transcription, classification, retrieval, and mobile workflows."
+      "Built a native cross-architecture C++ real-time strategy engine.",
+      "Modeled position, velocity, acceleration, forces, torque, and friction.",
+      "Applied DSP, calculus, CPU architecture, and low-level programming.",
+      "Integrated industrial controls, databases, interfaces, and business systems."
     ],
     "result": [
-      "Delivered an end-to-end fraud-protection platform.",
-      "Made model decisions useful during real conversations."
+      "Validated deterministic state across operating systems and CPUs.",
+      "Combined simulation theory with working integrated software."
     ]
   },
   {
-    "id": "seniorsafe-turn-transformers",
-    "title": "Designing turn-aware transformer attention",
-    "question": "Tell me about an innovative model architecture.",
-    "themes": ["transformers", "attention masks", "NLP", "model architecture"],
-    "aliases": ["innovative solution", "deep learning design", "conversation modeling"],
-    "situation": ["Phone conversations alternate speakers and depend on earlier context."],
-    "task": ["Classify each turn without leaking future conversation information."],
+    "id": "seniorsafe-complex-system",
+    "title": "Architecting the SeniorSafe fraud-protection platform",
+    "question": "Tell me about the most complex software system you developed.",
+    "themes": ["SeniorSafe", "complex systems", "machine learning", "streaming", "system architecture"],
+    "aliases": [
+      "Describe the most complex software program you designed.",
+      "Give me an example of a large integrated software system.",
+      "Have you ever owned a complex end-to-end platform?"
+    ],
+    "situation": [
+      "SeniorSafe needed to identify phone fraud during live calls.",
+      "Audio, transcripts, metadata, and roughly fifty risks interacted."
+    ],
+    "task": ["Build a dependable detection and intervention platform."],
     "action": [
-      "Allowed bidirectional attention within each current turn.",
-      "Restricted context attention to earlier completed turns.",
-      "Compared turn tokens, pooled states, and conversation classifiers."
+      "Architected Node streaming and Python machine-learning services.",
+      "Connected transcription, classifiers, APIs, databases, and mobile clients.",
+      "Added pgvector retrieval for contextual voice-agent responses.",
+      "Trained and deployed the classification models."
     ],
     "result": [
-      "Created models aligned with live conversational causality.",
-      "Enabled detailed architecture ablations and comparisons."
+      "Delivered real-time classification across complete conversations.",
+      "Unified distributed subsystems into one protection workflow."
     ]
   },
   {
-    "id": "seniorsafe-label-quality",
-    "title": "Fixing ambiguous training-label states",
-    "question": "Tell me about a failure mode you discovered.",
-    "themes": ["data quality", "mistake", "failure", "human-in-the-loop", "labels"],
-    "aliases": ["risk discovered", "quality improvement", "training data problem"],
-    "situation": ["Missing labels looked identical to reviewed negative examples."],
-    "task": ["Prevent unknown labels from training models incorrectly."],
+    "id": "seniorsafe-ambiguous-risk-requirements",
+    "title": "Defining dangerous conversations from ambiguous requirements",
+    "question": "Tell me about a time you received ambiguous requirements.",
+    "themes": ["requirements", "ambiguity", "SeniorSafe", "risk taxonomy", "machine learning"],
+    "aliases": [
+      "How did you determine what needed to be built?",
+      "Give me an example of turning an unclear goal into requirements.",
+      "Was there an instance where the desired behavior was undefined?"
+    ],
+    "situation": [
+      "The request to detect dangerous calls lacked precise definitions.",
+      "Intervention timing and risk categories were initially unclear."
+    ],
+    "task": ["Define actionable risks, labels, and intervention criteria."],
     "action": [
+      "Analyzed what makes real conversations dangerous.",
+      "Built an exhaustive risk taxonomy and meta-category.",
+      "Designed labeling tools for synthetic and real calls.",
+      "Trained classifiers against the clarified decision boundary."
+    ],
+    "result": [
+      "Produced a working classifier surfacing dangerous conversations.",
+      "Converted a vague product idea into testable behavior."
+    ]
+  },
+  {
+    "id": "seniorsafe-subsystem-integration",
+    "title": "Integrating SeniorSafe's software subsystems",
+    "question": "Give me an example of integrating software subsystems.",
+    "themes": ["integration", "SeniorSafe", "APIs", "streaming", "mobile", "machine learning"],
+    "aliases": [
+      "Describe several software components you combined into a functioning system.",
+      "Have you ever integrated independently deployed services?",
+      "Tell me about connecting APIs models databases and clients."
+    ],
+    "situation": [
+      "Fraud prevention required several independently deployed components.",
+      "Each component handled different timing and data constraints."
+    ],
+    "task": ["Make every subsystem cooperate during live calls."],
+    "action": [
+      "Streamed two audio sources through a Node service.",
+      "Exposed Python training, embedding, and inference routes.",
+      "Connected backend records, metadata services, and vector search.",
+      "Integrated iOS and Android intervention experiences."
+    ],
+    "result": [
+      "Enabled real-time metadata and voice classification.",
+      "Kept specialized components operationally cohesive."
+    ]
+  },
+  {
+    "id": "seniorsafe-label-root-cause",
+    "title": "Diagnosing ambiguous training-label states",
+    "question": "Tell me about a difficult technical problem whose cause was unclear.",
+    "themes": ["diagnosis", "root cause", "data quality", "labels", "machine learning"],
+    "aliases": [
+      "Describe a technical problem you had to investigate.",
+      "Give me an example of finding a hidden failure mode.",
+      "Have you ever discovered silent data corruption?"
+    ],
+    "situation": [
+      "Missing labels looked identical to reviewed negative examples.",
+      "Models could silently learn from incorrect targets."
+    ],
+    "task": ["Separate unknown annotations from confirmed negative evidence."],
+    "action": [
+      "Traced model behavior back through labeling workflows.",
       "Added explicit null states for unreviewed classifications.",
-      "Built human review, cleaning, and backfill workflows.",
-      "Separated missing annotation from confirmed negative evidence."
+      "Built human review, cleaning, and backfill tools.",
+      "Audited targets before subsequent training runs."
     ],
     "result": [
-      "Prevented silent corruption of multi-label training targets.",
-      "Made future class additions safer and auditable."
+      "Prevented silent corruption of multi-label training data.",
+      "Made later category additions safer and auditable."
     ]
   },
   {
     "id": "seniorsafe-asr-robustness",
-    "title": "Making classifiers robust to speech transcription",
-    "question": "How did you handle noisy production data?",
-    "themes": ["ASR", "data augmentation", "tokenization", "robustness", "production ML"],
-    "aliases": ["messy data", "production reliability", "speech recognition errors"],
+    "title": "Making classifiers robust to production transcripts",
+    "question": "Describe your experience with noisy production data.",
+    "themes": ["ASR", "robustness", "data augmentation", "production machine learning", "validation"],
+    "aliases": [
+      "Tell me about a time clean test data differed from production.",
+      "Give me an example of improving model reliability.",
+      "Have you ever handled speech-recognition errors?"
+    ],
     "situation": [
       "Production transcripts differed greatly from clean written text.",
       "Redactions and numbers created unusual token patterns."
     ],
     "task": ["Train models resilient to realistic recognition errors."],
     "action": [
-      "Normalized AWS-specific redaction and speaker tokens.",
+      "Normalized AWS redaction, number, and speaker tokens.",
       "Augmented training data with realistic ASR corruption.",
+      "Protected structural tokens during text perturbation.",
       "Kept validation noise separate from training corruption."
     ],
     "result": [
@@ -78,56 +156,129 @@
     ]
   },
   {
-    "id": "seniorsafe-model-evaluation",
-    "title": "Choosing fraud-detection operating thresholds",
-    "question": "Tell me about analyzing data and recommending action.",
-    "themes": ["data analysis", "metrics", "thresholds", "F2", "precision recall"],
-    "aliases": ["draw conclusions from data", "model evaluation", "tradeoff decision"],
-    "situation": ["Accuracy hid costly misses across imbalanced fraud labels."],
-    "task": ["Choose thresholds matching fraud-protection priorities."],
+    "id": "seniorsafe-mlflow-training-process",
+    "title": "Making model training observable with MLflow",
+    "question": "Tell me about a time you improved a testing process.",
+    "themes": ["MLflow", "testing process", "early stopping", "experiments", "machine learning"],
+    "aliases": [
+      "Give me an example of improving a development process.",
+      "Have you ever made experiments more reproducible?",
+      "Describe how you decide when to stop training."
+    ],
+    "situation": [
+      "Training runs varied across architectures and hyperparameters.",
+      "Stopping decisions were difficult to verify visually."
+    ],
+    "task": ["Make validation behavior comparable and repeatable."],
+    "action": [
+      "Integrated MLflow experiment tracking and visual curves.",
+      "Recorded architectures, optimizers, and hyperparameters consistently.",
+      "Compared validation improvement across training runs.",
+      "Applied patience when validation stopped improving."
+    ],
+    "result": [
+      "Made stopping decisions evidence-based and inspectable.",
+      "Improved comparison across model experiments."
+    ]
+  },
+  {
+    "id": "seniorsafe-transformer-learning",
+    "title": "Learning transformer architecture for Sentien",
+    "question": "Tell me about a time you learned a technology quickly.",
+    "themes": ["learning", "transformers", "attention", "NLP", "Sentien"],
+    "aliases": [
+      "Give me an example of entering a new technical domain.",
+      "Have you ever learned complex technology under delivery pressure?",
+      "Describe your experience with transformer encoders."
+    ],
+    "situation": [
+      "Sentien needed deeper conversational understanding than earlier models.",
+      "Eric's earlier neural work focused heavily on audio."
+    ],
+    "task": ["Master transformer encoders and adapt them conversationally."],
+    "action": [
+      "Studied and recomposed transformer encoder internals.",
+      "Rewrote attention masks for multi-turn supervision.",
+      "Inspected token behavior instead of treating models opaquely.",
+      "Compared several turn and conversation architectures."
+    ],
+    "result": [
+      "Delivered turn-aware conversational classifiers.",
+      "Built deep working knowledge of attention behavior."
+    ]
+  },
+  {
+    "id": "seniorsafe-threshold-decision",
+    "title": "Selecting fraud-detection operating thresholds",
+    "question": "Give me an example of using data to recommend action.",
+    "themes": ["data analysis", "thresholds", "F2", "precision recall", "decision making"],
+    "aliases": [
+      "Tell me about a technical decision based on evidence.",
+      "Describe your experience balancing precision and recall.",
+      "Have you ever challenged a misleading metric?"
+    ],
+    "situation": [
+      "Accuracy hid costly misses across imbalanced fraud labels.",
+      "A single validation peak could produce brittle thresholds."
+    ],
+    "task": ["Choose operating points matching protection priorities."],
     "action": [
       "Measured precision-recall behavior for every label.",
       "Emphasized recall-sensitive F2 alongside PR AUC.",
-      "Selected robust thresholds instead of isolated validation peaks."
+      "Compared thresholds across validation behavior.",
+      "Identified labels needing stronger training evidence."
     ],
     "result": [
-      "Operating decisions matched real protection goals.",
-      "Evaluation exposed weak labels needing better data."
+      "Aligned model decisions with real protection goals.",
+      "Made weak labels visible for future improvement."
     ]
   },
   {
     "id": "seniorsafe-vector-retrieval",
-    "title": "Building pgvector conversation intelligence",
-    "question": "Describe your retrieval-augmented generation experience.",
+    "title": "Building pgvector conversation retrieval",
+    "question": "Describe your experience with semantic search and retrieval.",
     "themes": ["RAG", "pgvector", "embeddings", "semantic search", "voice agents"],
-    "aliases": ["vector database", "semantic retrieval", "ElevenLabs memory", "AI agent"],
-    "situation": [
-      "Agents needed relevant evidence from many conversations.",
-      "Repeated questions also required conversational memory."
+    "aliases": [
+      "Tell me about a retrieval-augmented generation system.",
+      "Give me an example of vector database architecture.",
+      "Have you ever built conversational memory?"
     ],
-    "task": ["Retrieve useful context without loading entire documents."],
+    "situation": [
+      "Agents needed evidence from many prior conversations.",
+      "Repeated questions also required conversational continuity."
+    ],
+    "task": ["Retrieve context without loading complete document histories."],
     "action": [
       "Embedded conversations, speakers, turns, and contextual turns.",
-      "Ranked evidence using pgvector cosine similarity.",
-      "Added conversation-aware novelty without discarding prior evidence."
+      "Ranked passages using pgvector cosine similarity.",
+      "Added conversation-aware novelty without discarding prior evidence.",
+      "Structured retrieved titles, categories, and passage content."
     ],
     "result": [
       "Grounded voice responses in relevant source passages.",
-      "Supported similarity, outliers, spam, and memory analysis."
+      "Supported similarity, outlier, repetition, and memory analysis."
     ]
   },
   {
     "id": "seniorsafe-privacy-retention",
-    "title": "Reducing raw voice-data retention",
-    "question": "Tell me about an ethical technical recommendation.",
-    "themes": ["privacy", "ethics", "PII", "retention", "voice data"],
-    "aliases": ["judgment call", "customer privacy", "responsible data handling"],
-    "situation": ["Transcripts could redact PII; raw recordings could not."],
-    "task": ["Preserve debugging value while minimizing privacy exposure."],
+    "title": "Limiting sensitive voice-data retention",
+    "question": "Tell me about a time you made an ethical technical recommendation.",
+    "themes": ["privacy", "ethics", "PII", "voice data", "retention"],
+    "aliases": [
+      "Give me an example of balancing product value and privacy.",
+      "Have you ever reduced unnecessary sensitive-data storage?",
+      "Describe your experience with responsible data handling."
+    ],
+    "situation": [
+      "Transcripts could redact PII; raw recordings could not.",
+      "Audio still helped verify transcription problems briefly."
+    ],
+    "task": ["Preserve debugging value while reducing privacy exposure."],
     "action": [
       "Separated transcript retention from raw-audio retention.",
-      "Kept recordings briefly for transcription verification.",
-      "Recommended deletion after the short verification window."
+      "Kept recordings only through the verification window.",
+      "Recommended deletion after transcription checks.",
+      "Considered consent announcements within product design."
     ],
     "result": [
       "Reduced unnecessary storage of sensitive spoken information.",
@@ -135,302 +286,342 @@
     ]
   },
   {
-    "id": "audience-ai-product",
-    "title": "Creating Audience AI from an ambiguous idea",
-    "question": "Describe a difficult assignment beyond your experience.",
-    "themes": ["Audience AI", "ambiguity", "ownership", "React Native", "product engineering"],
-    "aliases": ["built from scratch", "learned quickly", "independent action"],
-    "situation": ["A comedy concept lacked an existing technical blueprint."],
-    "task": ["Build cross-platform practice, feedback, and sharing workflows."],
+    "id": "lucid-mes-integration",
+    "title": "Integrating Lucid Motors production subsystems",
+    "question": "Give me an example of integrating subsystems across disciplines.",
+    "themes": ["Lucid Motors", "MES", "integration", "PLCs", "ERP", "cross-functional"],
+    "aliases": [
+      "Describe working with systems test hardware product or operations.",
+      "Tell me about integrating several components into a functioning system.",
+      "Have you ever connected software with industrial hardware?"
+    ],
+    "situation": [
+      "Vehicle assembly crossed controls, quality, operators, and business systems.",
+      "Every physical step needed trustworthy digital state."
+    ],
+    "task": ["Translate production requirements into reliable MES workflows."],
     "action": [
-      "Whiteboarded recording, inference, playback, and export stages.",
-      "Built the React Native application end-to-end.",
-      "Integrated neural audio, layered laughter, and video rendering."
+      "Mapped requirements to bay-level production actions.",
+      "Connected scans, databases, PLCs, torque tools, and ERP.",
+      "Issued tool instructions and captured actual completion values.",
+      "Coordinated controls, QA, operators, and business teams."
     ],
     "result": [
-      "Delivered a working iOS and Android product.",
-      "Turned an ambiguous concept into coherent architecture."
+      "Created traceable command-and-confirm vehicle assembly workflows.",
+      "Aligned physical work with dependable digital state."
     ]
   },
   {
-    "id": "audience-ai-audio-model",
-    "title": "Scoring comedy through on-device audio",
-    "question": "Tell me about real-time machine learning on mobile.",
-    "themes": ["audio ML", "on-device inference", "CNN", "LSTM", "signal processing"],
-    "aliases": ["mobile AI", "MFCC", "FFT", "real-time classifier"],
-    "situation": ["Written semantics alone could not model performance delivery."],
-    "task": ["Estimate audience response continuously from microphone audio."],
-    "action": [
-      "Tested CNN and LSTM audio classifiers.",
-      "Extracted MFCC, spectrum, loudness, and vocal features.",
-      "Ran responsive inference directly on the device."
+    "id": "lucid-hmi-interface",
+    "title": "Designing an approved Lucid torque-tool HMI",
+    "question": "Tell me about a time you improved an interface or API.",
+    "themes": ["HMI", "interface design", "Lucid Motors", "requirements", "approval"],
+    "aliases": [
+      "Describe a time you defined software architecture or an interface.",
+      "Give me an example of validating a design before implementation.",
+      "Have you ever redesigned an operator interface?"
     ],
-    "result": ["Produced continuously changing funniness estimates.", "Avoided dependency on remote inference latency."]
-  },
-  {
-    "id": "audience-ai-laugh-engine",
-    "title": "Simulating a responsive artificial audience",
-    "question": "Describe a creative system you designed.",
-    "themes": ["audio systems", "simulation", "creative engineering", "user experience"],
-    "aliases": ["innovative feature", "sound design", "real-time feedback"],
-    "situation": ["One repeated laugh clip sounded mechanical and predictable."],
-    "task": ["Make synthetic audience reactions feel dynamic."],
+    "situation": ["A Lucid torque-tool workflow needed new operator controls."],
+    "task": ["Define the interaction clearly before implementation."],
     "action": [
-      "Grouped laughter into intensity-based randomized buckets.",
-      "Layered overlapping clips with varied timing.",
-      "Smoothed score changes while preserving meaningful reactions."
-    ],
-    "result": ["Audience responses built and decayed naturally.", "Reduced repetition across comedy practice sessions."]
-  },
-  {
-    "id": "audience-ai-ffmpeg",
-    "title": "Engineering a multi-stage FFmpeg export",
-    "question": "Tell me about a complex media pipeline.",
-    "themes": ["FFmpeg", "video", "audio mixing", "media processing", "mobile"],
-    "aliases": ["technical problem", "video rendering", "shareable output"],
-    "situation": ["Live reactions needed to become polished shareable videos."],
-    "task": ["Combine recordings, laughs, branding, and user identity."],
-    "action": [
-      "Normalized raw media before mixing selected laughs.",
-      "Placed audio clips at scored performance timestamps.",
-      "Added watermarks, logos, usernames, and closing media."
+      "Diagrammed screens and navigation before coding.",
+      "Presented the design to client and project leadership.",
+      "Captured explicit approval through email.",
+      "Implemented the approved human-machine interface."
     ],
     "result": [
-      "Produced downloadable cross-platform performance videos.",
-      "Connected live inference with durable user content."
+      "Delivered the approved torque-tool HMI.",
+      "Preserved a traceable requirement-to-implementation decision."
     ]
   },
   {
-    "id": "spray-integrity-platform",
-    "title": "Leading Spray Integrity product engineering",
-    "question": "Describe a full-stack product you led.",
-    "themes": ["full stack", "mobile", "Vue", "Laravel", "React Native"],
-    "aliases": ["architecture ownership", "business application", "cross-platform product"],
-    "situation": ["Contractors needed connected field and office workflows."],
-    "task": ["Unify operations across mobile and web products."],
+    "id": "lucid-three-m-concurrent-work",
+    "title": "Balancing onsite Lucid engineering and 3M leadership",
+    "question": "Tell me about a time you managed concurrent priorities.",
+    "themes": ["prioritization", "multitasking", "Lucid Motors", "3M", "time management"],
+    "aliases": [
+      "How did you prioritize multiple important activities?",
+      "Give me an example of supporting concurrent projects.",
+      "Was there an instance where two clients needed you simultaneously?"
+    ],
+    "situation": [
+      "Lucid required onsite engineering while 3M needed project leadership.",
+      "Important meetings occasionally competed for the same time."
+    ],
+    "task": ["Keep both high-stakes industrial projects moving."],
     "action": [
-      "Built React Native Expo field experiences.",
-      "Connected Vue and Laravel administrative workflows.",
-      "Integrated customers, teams, jobs, support, and rewards."
+      "Protected meetings and buffers on a shared calendar.",
+      "Stepped away from onsite work for critical calls.",
+      "Assigned backup owners for unavoidable overlaps.",
+      "Tracked time and responsibilities separately."
     ],
     "result": [
-      "Delivered one coherent contractor product ecosystem.",
-      "Supported field work beyond simple marketing features."
+      "Sustained Lucid and 3M responsibilities concurrently.",
+      "Prevented schedule conflicts from becoming ownership gaps."
     ]
   },
   {
-    "id": "spray-integrity-qr",
-    "title": "Tracking physical materials with QR workflows",
-    "question": "Tell me about improving traceability.",
-    "themes": ["QR codes", "traceability", "inventory", "mobile workflows"],
-    "aliases": ["process improvement", "physical digital integration", "field data"],
-    "situation": ["Spray-foam barrels moved through distributed contractor workflows."],
-    "task": ["Connect physical materials with reliable digital records."],
+    "id": "sip-ambiguous-requirements",
+    "title": "Clarifying Spray Integrity's greenfield requirements",
+    "question": "Tell me about a time you received incomplete requirements.",
+    "themes": ["requirements discovery", "Spray Integrity", "whiteboarding", "client communication"],
+    "aliases": [
+      "How did you determine what the customer actually needed?",
+      "Give me an example of clarifying a vague request.",
+      "Was there an instance where requirements needed sign-off?"
+    ],
+    "situation": [
+      "A greenfield contractor platform began with shifting, vague requests.",
+      "Different workflows became priorities at different times."
+    ],
+    "task": ["Turn each request into approved, buildable behavior."],
     "action": [
-      "Designed scanning flows around meaningful material states.",
-      "Linked barrels, jobs, contractors, and product records.",
-      "Captured contextual field details for later review."
+      "Led detailed questioning during client meetings.",
+      "Whiteboarded workflows while stakeholders explained needs.",
+      "Sent minutes, summaries, and architectural interpretations.",
+      "Requested sign-off before implementation began."
     ],
     "result": [
-      "Improved material visibility throughout contractor operations.",
-      "Made field traceability practical through phone scanning."
+      "Converted vague requests into approved implementations.",
+      "Created a shared record of requirement decisions."
     ]
   },
   {
-    "id": "spray-integrity-field-ux",
-    "title": "Turning field operations into mobile workflows",
-    "question": "Tell me about solving a customer workflow problem.",
-    "themes": ["customer focus", "mobile UX", "field operations", "forms"],
-    "aliases": ["process problem", "user-centered design", "contractor application"],
-    "situation": ["Contractors worked away from desks under changing conditions."],
-    "task": ["Make complex job administration usable on phones."],
-    "action": [
-      "Converted estimates and jobs into structured mobile flows.",
-      "Supported teams, customers, products, and referrals.",
-      "Favored scanning and guided forms over free text."
+    "id": "sip-database-tradeoff",
+    "title": "Choosing delivery over speculative database complexity",
+    "question": "Describe a time schedule competed with software quality.",
+    "themes": ["tradeoff", "database design", "schedule", "quality", "Spray Integrity"],
+    "aliases": [
+      "Tell me about balancing reliability and a deadline.",
+      "Give me an example of disagreeing over architecture.",
+      "Have you ever accepted a less-perfect technical design?"
     ],
-    "result": ["Reduced friction during real field work.", "Made operational records easier to complete consistently."]
+    "situation": [
+      "A barrel record combined one physical item with usage.",
+      "Eric favored normalization; a teammate favored faster delivery."
+    ],
+    "task": ["Protect maintainability without building unrequested behavior."],
+    "action": [
+      "Explained the one-to-many relational distinction.",
+      "Verified repeated use was not a current requirement.",
+      "Accepted the simpler design for the release.",
+      "Kept the future refactor trigger explicit."
+    ],
+    "result": ["Shipped the requested system on schedule.", "Avoided complexity that remained unnecessary afterward."]
   },
   {
-    "id": "spray-integrity-games",
-    "title": "Adding games inside a contractor platform",
-    "question": "Describe an unconventional product feature you delivered.",
-    "themes": ["gamification", "React Native Game Engine", "rewards", "mobile games"],
-    "aliases": ["creative solution", "engagement", "mini-games"],
-    "situation": ["The contractor program needed engaging reward experiences."],
-    "task": ["Integrate games without separating them from accounts."],
+    "id": "sip-changing-priorities",
+    "title": "Adapting when a completed feature lost priority",
+    "question": "Tell me about a time priorities changed during development.",
+    "themes": ["changing requirements", "configuration", "Spray Integrity", "scope", "adaptability"],
+    "aliases": [
+      "Describe a project whose requirements changed after work began.",
+      "Give me an example of handling deprecated functionality.",
+      "Have you ever hidden rather than deleted a completed feature?"
+    ],
+    "situation": [
+      "Spray Integrity deprioritized a chatbot after development began.",
+      "The completed work still represented paid effort."
+    ],
+    "task": ["Adapt safely while preserving delivered value and history."],
     "action": [
-      "Built fishing, spinning, and piñata interactions.",
-      "Used React Native Game Engine for gameplay.",
-      "Connected rewards and referrals with broader workflows."
+      "Hid the frontend behind configuration.",
+      "Kept stable backend APIs available.",
+      "Documented completed effort and changed scope.",
+      "Redirected development toward the new priority."
+    ],
+    "result": ["Moved forward without destructive rework.", "Maintained a strong ongoing client relationship."]
+  },
+  {
+    "id": "three-m-documentation-negotiation",
+    "title": "Using project records during a difficult 3M negotiation",
+    "question": "Give me an example of documentation resolving a difficult situation.",
+    "themes": ["3M", "documentation", "negotiation", "OneNote", "requirements", "accountability"],
+    "aliases": [
+      "Tell me about a time careful records protected a project.",
+      "Have you ever documented rapidly changing requirements?",
+      "Describe your experience with difficult project negotiations."
+    ],
+    "situation": [
+      "A 3M project accumulated chaotic requirements and changing commitments.",
+      "The engagement ultimately required a termination negotiation."
+    ],
+    "task": ["Preserve an objective history of decisions and effort."],
+    "action": [
+      "Recorded timestamped meeting notes in OneNote.",
+      "Tracked decisions, action items, and requirement changes.",
+      "Mapped completed effort to documented requests.",
+      "Used those records during commercial discussions."
     ],
     "result": [
-      "Added memorable engagement inside a business application.",
-      "Demonstrated game integration beyond standalone entertainment."
+      "Supported an evidence-based project-termination negotiation.",
+      "Made completed work and changing commitments visible."
     ]
   },
   {
-    "id": "venturetec-architecture",
-    "title": "Leading cross-platform architecture at Venturetec",
-    "question": "Tell me about your technical leadership experience.",
-    "themes": ["technical leadership", "architecture", "full stack", "mobile", "AWS"],
-    "aliases": ["head of engineering", "lead software engineer", "system design"],
-    "situation": ["Products spanned web, mobile, ML, media, and games."],
-    "task": ["Turn stakeholder ideas into maintainable delivered systems."],
+    "id": "three-m-traceability-quality",
+    "title": "Protecting controlled-material traceability at 3M",
+    "question": "Tell me about a time quality and detail were critical.",
+    "themes": ["3M", "traceability", "quality", "controlled materials", "industrial software"],
+    "aliases": [
+      "Give me an example of high-consequence software work.",
+      "Have you ever mapped physical evidence into digital state?",
+      "Describe your experience with traceability systems."
+    ],
+    "situation": [
+      "Evidence and chemical materials required strict incineration tracking.",
+      "Physical state needed an equally trustworthy digital history."
+    ],
+    "task": ["Preserve traceability through every workflow transition."],
     "action": [
-      "Diagrammed architectures before implementing product slices.",
-      "Selected technologies around each product constraint.",
-      "Stayed hands-on across frontend, backend, and deployment."
+      "Mapped physical steps to explicit digital states.",
+      "Organized strict integration requirements for developers.",
+      "Tested delivered code against process expectations.",
+      "Fixed implementation defects directly when needed."
     ],
     "result": [
-      "Led delivery across unusually diverse technical platforms.",
-      "Connected product ownership with implementation depth."
+      "Improved confidence in material and evidence history.",
+      "Reduced ambiguity inside a high-consequence workflow."
     ]
   },
   {
-    "id": "venturetec-scope",
-    "title": "Controlling scope with a difficult client",
-    "question": "Tell me about disagreeing with a customer.",
-    "themes": ["scope", "difficult customer", "conflict", "communication", "payment"],
-    "aliases": ["pushback", "changed requirements", "customer relationship"],
-    "situation": ["Clients requested expansions before earlier work was settled."],
-    "task": ["Protect delivery while preserving the relationship."],
-    "action": [
-      "Restated requests in concrete product language.",
-      "Separated required work from optional expansion.",
-      "Documented schedule, cost, and approval consequences."
+    "id": "audience-ai-end-to-end",
+    "title": "Delivering Audience AI from concept through release",
+    "question": "Tell me about a project you executed end to end.",
+    "themes": ["Audience AI", "ownership", "React Native", "DSP", "machine learning", "FFmpeg"],
+    "aliases": [
+      "How did you know an independently owned project succeeded?",
+      "Give me an example of building a product from scratch.",
+      "Have you ever owned architecture through delivery?"
     ],
-    "result": ["Prevented uncontrolled scope growth.", "Kept customer conversations constructive and traceable."]
+    "situation": [
+      "A comedy-practice concept had no existing technical blueprint.",
+      "Audio intelligence, mobile UX, and export all interacted."
+    ],
+    "task": ["Define and deliver the complete standalone product."],
+    "action": [
+      "Defined application, model, and DSP interfaces.",
+      "Built React Native recording and playback workflows.",
+      "Developed neural scoring and layered audience reactions.",
+      "Composed shareable videos through staged FFmpeg processing."
+    ],
+    "result": ["Delivered the requested iOS and Android product.", "Client accepted and paid for completed work."]
   },
   {
-    "id": "venturetec-deadlines",
-    "title": "Balancing parallel startup deadlines",
-    "question": "Describe managing multiple competing priorities.",
-    "themes": ["multiple deadlines", "prioritization", "pressure", "ownership"],
-    "aliases": ["time management", "parallel projects", "release deadlines"],
-    "situation": ["Several client products needed progress simultaneously."],
-    "task": ["Prevent urgent requests from starving other releases."],
-    "action": [
-      "Separated release-critical, support, and speculative tasks.",
-      "Protected integration, testing, and deployment time.",
-      "Used small demonstrations to expose misunderstandings early."
+    "id": "venturetec-technical-demo",
+    "title": "Explaining SeniorSafe to investors",
+    "question": "Tell me about a time you explained a complex system.",
+    "themes": ["presentation", "investors", "communication", "SeniorSafe", "technical demonstration"],
+    "aliases": [
+      "Give me an example of adapting technical communication.",
+      "Have you ever demonstrated software to mixed audiences?",
+      "Describe your experience presenting technical work."
     ],
-    "result": ["Kept multiple products moving predictably.", "Reduced late surprises and rework."]
-  },
-  {
-    "id": "venturetec-demos",
-    "title": "Explaining AI systems to mixed audiences",
-    "question": "Tell me about an important technical presentation.",
-    "themes": ["presentation", "investors", "communication", "demonstration", "feedback"],
-    "aliases": ["public speaking", "technical demo", "adapted communication"],
-    "situation": ["Investors needed product value before architectural detail."],
-    "task": ["Explain complex ML clearly without losing credibility."],
+    "situation": [
+      "Investors needed product value before architecture detail.",
+      "Technical audiences still expected credible implementation evidence."
+    ],
+    "task": ["Explain fraud detection clearly across audience backgrounds."],
     "action": [
       "Started with observable scam-detection behavior.",
+      "Demonstrated classification, retrieval, and mobile workflows.",
       "Used visual analogies for tokens and embeddings.",
-      "Reserved architecture depth for audience follow-up."
+      "Reserved architecture depth for technical follow-up."
     ],
     "result": [
-      "Made demonstrations clearer for mixed audiences.",
-      "Still supported detailed technical questions with evidence."
+      "Made demonstrations understandable without oversimplifying.",
+      "Supported detailed questions with working evidence."
     ]
   },
   {
     "id": "venturetec-mentorship",
-    "title": "Mentoring contributors without taking ownership back",
-    "question": "Tell me about training or mentoring someone.",
-    "themes": ["mentorship", "delegation", "team relationships", "handoff"],
-    "aliases": ["developing coworkers", "positive relationship", "knowledge transfer"],
-    "situation": ["Interns and remote contributors needed bounded ownership."],
-    "task": ["Support delivery while growing independent judgment."],
+    "title": "Mentoring contributors toward independent delivery",
+    "question": "Tell me about a time you mentored a teammate.",
+    "themes": ["mentorship", "delegation", "technical leadership", "handoff", "team development"],
+    "aliases": [
+      "Give me an example of helping someone grow.",
+      "Have you ever trained an intern or remote contributor?",
+      "Describe your experience developing teammates."
+    ],
+    "situation": [
+      "Interns and remote contributors needed bounded product ownership.",
+      "Taking their work back would limit independent judgment."
+    ],
+    "task": ["Support delivery while growing contributor confidence."],
     "action": [
-      "Scoped tasks with clear goals and interfaces.",
-      "Explained architectural reasons, not only implementation steps.",
-      "Answered questions without reclaiming creative ownership."
+      "Scoped tasks around clear goals and interfaces.",
+      "Explained architectural reasons behind implementation choices.",
+      "Answered blockers without reclaiming creative ownership.",
+      "Reviewed results and clarified next steps."
     ],
     "result": ["Contributors delivered useful product work.", "Reduced dependence on undocumented personal context."]
   },
   {
-    "id": "venturetec-client-tools",
-    "title": "Building pragmatic client automation quickly",
-    "question": "Tell me about delivering value with limited time.",
-    "themes": ["automation", "client delivery", "scraping", "dashboards", "games"],
-    "aliases": ["pragmatic solution", "rapid delivery", "education client"],
-    "situation": ["Clients sometimes needed narrow custom tools quickly."],
-    "task": ["Deliver useful outcomes without overbuilding platforms."],
-    "action": [
-      "Built education games around specific learning goals.",
-      "Created scrapers and CSV-export dashboards.",
-      "Selected lightweight architectures matching actual scope."
+    "id": "venturetec-scope-boundary",
+    "title": "Setting a constructive client scope boundary",
+    "question": "Tell me about a time you disagreed with a customer.",
+    "themes": ["client conflict", "scope", "payment", "communication", "boundaries"],
+    "aliases": [
+      "Give me an example of pushing back professionally.",
+      "Have you ever protected delivery from uncontrolled scope?",
+      "Describe your experience with a difficult client."
     ],
-    "result": ["Delivered targeted value on constrained timelines.", "Avoided unnecessary enterprise complexity."]
+    "situation": [
+      "A client requested expansion before earlier work was settled.",
+      "The relationship and prior delivery both needed protection."
+    ],
+    "task": ["Clarify scope without escalating the disagreement."],
+    "action": [
+      "Restated the new request in concrete terms.",
+      "Separated prior commitments from optional expansion.",
+      "Documented schedule, cost, and approval consequences.",
+      "Held the payment boundary tactfully."
+    ],
+    "result": ["Prevented uncontrolled scope growth.", "Kept the client conversation constructive and traceable."]
   },
   {
-    "id": "lucid-mes-integration",
-    "title": "Integrating MES at Lucid Motors",
-    "question": "Describe cooperating across engineering disciplines.",
-    "themes": ["Lucid Motors", "MES", "PLCs", "robotics", "ERP", "automotive"],
-    "aliases": ["cross-functional engineering", "onsite integration", "complex stakeholders"],
-    "situation": ["Automotive production crossed controls, robotics, quality, and business systems."],
-    "task": ["Align real factory behavior with MES workflows."],
-    "action": [
-      "Investigated processes onsite in Casa Grande.",
-      "Coordinated PLC, robotic, database, and ERP boundaries.",
-      "Implemented track-and-trace and business-layer integrations."
+    "id": "release-reproducibility",
+    "title": "Making mobile releases reproducible",
+    "question": "Give me an example of improving engineering quality.",
+    "themes": ["Git", "releases", "reproducibility", "documentation", "quality"],
+    "aliases": [
+      "Tell me about a process improvement you introduced.",
+      "Have you ever made shipped artifacts traceable?",
+      "Describe your experience with version control discipline."
     ],
-    "result": [
-      "Supported connected production workflows across disciplines.",
-      "Turned physical operations into reliable digital state."
-    ]
-  },
-  {
-    "id": "three-m-traceability",
-    "title": "Protecting controlled-material traceability",
-    "question": "Tell me when quality and detail were critical.",
-    "themes": ["3M", "traceability", "quality", "safety", "controlled materials"],
-    "aliases": ["attention to detail", "high consequence system", "evidence workflow"],
-    "situation": ["Evidence and chemical materials required strict tracking."],
-    "task": ["Preserve trustworthy state through an incineration workflow."],
-    "action": [
-      "Mapped physical steps to explicit digital transitions.",
-      "Organized strict integration requirements for developers.",
-      "Tested delivered code and fixed defects directly."
+    "situation": [
+      "Ambiguous files obscured which source produced mobile releases.",
+      "Future debugging could begin from the wrong state."
     ],
-    "result": [
-      "Improved confidence in material history and process evidence.",
-      "Reduced ambiguity within a high-consequence workflow."
-    ]
-  },
-  {
-    "id": "tire-food-manufacturing",
-    "title": "Modernizing legacy manufacturing workflows",
-    "question": "Describe working with old systems and constraints.",
-    "themes": ["manufacturing", "legacy systems", "Java", "HMI", "databases"],
-    "aliases": ["Continental Tire", "Cooper Tire", "food manufacturing", "integration"],
-    "situation": ["Existing equipment constrained new MES behavior."],
-    "task": ["Modernize workflows without ignoring proven operations."],
+    "task": ["Make released builds traceable and reproducible."],
     "action": [
-      "Documented Cooper Tire processes onsite.",
-      "Built Continental Tire Java and HMI functionality.",
-      "Handled backend, database, and food-system testing."
+      "Recorded repository states for mobile releases.",
+      "Used sortable explicit versions instead of final names.",
+      "Documented build provenance and release markers.",
+      "Applied the practice across professional and personal repositories."
     ],
-    "result": [
-      "Mapped modern software onto real production constraints.",
-      "Supported automotive and food manufacturing clients."
-    ]
+    "result": ["Debugging began from known source states.", "Handoffs no longer depended on filename guesses."]
   },
   {
     "id": "mes-controls-cooperation",
     "title": "Earning cooperation from protective controls teams",
-    "question": "Tell me about a hesitant technical stakeholder.",
-    "themes": ["stakeholders", "PLCs", "conflict", "interviewing", "cooperation"],
-    "aliases": ["resistant stakeholder", "technical cooperation", "requirements discovery"],
-    "situation": ["Controls owners protected revenue-critical PLC systems."],
-    "task": ["Learn interfaces without dismissing operational concerns."],
+    "question": "Tell me about a time a technical stakeholder resisted you.",
+    "themes": ["stakeholders", "PLCs", "conflict", "requirements", "industrial controls"],
+    "aliases": [
+      "Give me an example of working with an uncooperative partner.",
+      "Have you ever needed access to a protected system?",
+      "Describe your experience resolving cross-team resistance."
+    ],
+    "situation": [
+      "Controls owners protected revenue-critical PLC systems.",
+      "MES integration requests could feel like surrendered ownership."
+    ],
+    "task": ["Discover interfaces without dismissing operational concerns."],
     "action": [
       "Asked targeted signal and failure-state questions.",
       "Explained MES boundaries before requesting changes.",
-      "Documented ownership and escalation paths clearly."
+      "Separated observation needs from control responsibilities.",
+      "Documented ownership and escalation paths."
     ],
     "result": [
       "Collected reliable requirements without unnecessary conflict.",
@@ -438,233 +629,25 @@
     ]
   },
   {
-    "id": "mes-requirements-change",
-    "title": "Managing changed industrial requirements",
-    "question": "Tell me about a major change in direction.",
-    "themes": ["requirements", "change management", "agile", "waterfall", "scope"],
-    "aliases": ["adaptability", "schedule change", "project management"],
-    "situation": ["Factory discoveries changed requirements after planning began."],
-    "task": ["Adapt without silently resetting commitments."],
-    "action": [
-      "Restated the changed agreement and assumptions.",
-      "Used Jira and sprints for agile work.",
-      "Documented schedule consequences for waterfall delivery."
+    "id": "rockwell-meeting-facilitation",
+    "title": "Turning large engineering meetings into action",
+    "question": "Give me an example of leading a stakeholder meeting.",
+    "themes": ["meetings", "facilitation", "Rockwell", "stakeholders", "action items"],
+    "aliases": [
+      "Tell me about coordinating many technical stakeholders.",
+      "Have you ever kept a large meeting focused?",
+      "Describe your experience facilitating cross-functional decisions."
     ],
-    "result": [
-      "Kept stakeholders aligned around revised commitments.",
-      "Converted surprises into explicit managed work."
-    ]
-  },
-  {
-    "id": "release-reproducibility",
-    "title": "Making releases reproducible",
-    "question": "Tell me about improving engineering quality.",
-    "themes": ["version control", "Git", "quality", "documentation", "releases"],
-    "aliases": ["process improvement", "attention to detail", "traceability"],
-    "situation": ["Ambiguous files obscured which source produced releases."],
-    "task": ["Make shipped artifacts traceable and rebuildable."],
-    "action": [
-      "Recorded repository states for mobile releases.",
-      "Used sortable explicit versions instead of final names.",
-      "Documented release markers and build provenance."
+    "situation": [
+      "Industrial stakeholders arrived with overlapping priorities and expertise.",
+      "Unstructured discussion risked losing decisions and ownership."
     ],
-    "result": ["Future debugging began from known source states.", "Handoffs no longer depended on filename guesses."]
-  },
-  {
-    "id": "daegu-stem-teaching",
-    "title": "Teaching advanced STEM across languages",
-    "question": "Describe communicating technical ideas cross-culturally.",
-    "themes": ["teaching", "South Korea", "communication", "STEM", "cross-cultural"],
-    "aliases": ["different background", "technical communication", "curriculum"],
-    "situation": ["Gifted Korean students learned science through English."],
-    "task": ["Teach technical content across language differences."],
+    "task": ["Use limited meeting time to produce action."],
     "action": [
-      "Designed active STEM lessons with visible outcomes.",
-      "Connected planning, science, and English communication.",
-      "Collaborated with teachers on curriculum expectations."
-    ],
-    "result": [
-      "Students practiced advanced concepts through authentic communication.",
-      "Teachers gained reusable lesson structures."
-    ]
-  },
-  {
-    "id": "daegu-scheduling-tool",
-    "title": "Automating bilingual faculty scheduling",
-    "question": "Tell me about going beyond your responsibilities.",
-    "themes": ["initiative", "automation", "scheduling", "bilingual software", "education"],
-    "aliases": ["process improvement", "independent action", "custom application"],
-    "situation": ["Faculty schedule lookup created recurring administrative work."],
-    "task": ["Reduce manual searching for teachers and students."],
-    "action": [
-      "Built a custom searchable scheduling interface.",
-      "Supported both English and Hangul names.",
-      "Designed output for nontechnical school staff."
-    ],
-    "result": ["Streamlined faculty and student schedule lookup.", "Added operational value beyond classroom duties."]
-  },
-  {
-    "id": "daegu-grading-judgment",
-    "title": "Assessing communication fairly",
-    "question": "Tell me about a difficult fairness decision.",
-    "themes": ["ethics", "fairness", "assessment", "judgment", "teaching"],
-    "aliases": ["gray area", "grading decision", "student evaluation"],
-    "situation": ["Exact grammar scores misrepresented practical communication ability."],
-    "task": ["Evaluate English performance fairly and consistently."],
-    "action": [
-      "Considered clarity, command, effort, and real-world needs.",
-      "Separated communicative success from minor grammar errors.",
-      "Applied a consistent holistic evaluation framework."
-    ],
-    "result": [
-      "Grades better reflected meaningful language capability.",
-      "Students received more useful performance feedback."
-    ]
-  },
-  {
-    "id": "acle-cross-cultural-leadership",
-    "title": "Leading English programs across Italy",
-    "question": "Describe working across different cultures.",
-    "themes": ["Italy", "cross-cultural", "leadership", "teaching", "communication"],
-    "aliases": ["international experience", "diverse teams", "adaptability"],
-    "situation": ["Programs varied across cities, ages, and local expectations."],
-    "task": ["Deliver consistent learning without forcing one approach."],
-    "action": [
-      "Adapted curricula to each learner group.",
-      "Trained teachers in pedagogy and activity planning.",
-      "Supported office hardware and camp technology."
-    ],
-    "result": [
-      "Delivered programs across numerous Italian cities.",
-      "Balanced local context with dependable program outcomes."
-    ]
-  },
-  {
-    "id": "acle-contingency-planning",
-    "title": "Keeping camps running through disruptions",
-    "question": "Tell me about adapting under sudden pressure.",
-    "themes": ["contingency", "pressure", "children", "leadership", "adaptability"],
-    "aliases": ["unexpected change", "absent performer", "difficult student"],
-    "situation": ["Weather, absences, or behavior could disrupt performances."],
-    "task": ["Protect safety while keeping programs moving."],
-    "action": [
-      "Prepared alternate roles before problems occurred.",
-      "Delegated individual incidents to available teachers.",
-      "Reworked lessons and shows around changing participants."
-    ],
-    "result": [
-      "Camps continued without one problem consuming everyone.",
-      "Students still completed visible performances."
-    ]
-  },
-  {
-    "id": "acle-uk-trip",
-    "title": "Coordinating an international student trip",
-    "question": "Describe managing many deadlines simultaneously.",
-    "themes": ["logistics", "United Kingdom", "travel", "scheduling", "leadership"],
-    "aliases": ["multiple deadlines", "student safety", "project coordination"],
-    "situation": ["Students traveled internationally under structured supervision."],
-    "task": ["Coordinate transportation, meals, routines, and safety."],
-    "action": [
-      "Built schedules covering flights and daily activities.",
-      "Assigned responsibilities to specific adult leaders.",
-      "Adjusted plans when travel conditions changed."
-    ],
-    "result": ["Completed the excursion with coordinated student support.", "Kept many dependencies visible and owned."]
-  },
-  {
-    "id": "roku-national-operations",
-    "title": "Operating a national sports league",
-    "question": "Tell me about leading a complex organization.",
-    "themes": ["leadership", "operations", "South Korea", "ultimate frisbee", "budget"],
-    "aliases": ["large organization", "ownership", "stakeholder management"],
-    "situation": ["A national league connected cities, teams, captains, and sponsors."],
-    "task": ["Keep seasons fair, funded, scheduled, and operational."],
-    "action": [
-      "Coordinated venues, uniforms, equipment, and budgets.",
-      "Ran captain and elected-board meetings.",
-      "Managed sponsorship, events, and regional relationships."
-    ],
-    "result": [
-      "Sustained organized play across roughly thirty-five teams.",
-      "Built repeatable national league operations."
-    ]
-  },
-  {
-    "id": "roku-action-emailer",
-    "title": "Automating league action-item follow-up",
-    "question": "Tell me about making a process more efficient.",
-    "themes": ["Excel", "VBA", "automation", "process improvement", "follow-up"],
-    "aliases": ["administrative efficiency", "action items", "ownership"],
-    "situation": ["Meeting decisions repeatedly required manual follow-up emails."],
-    "task": ["Make owners and deadlines easier to track."],
-    "action": [
-      "Built an Excel and VBA email generator.",
-      "Grouped tasks by responsible person.",
-      "Standardized owners, actions, dates, and decisions."
-    ],
-    "result": ["Reduced repetitive administrative writing.", "Made board follow-up more reliable."]
-  },
-  {
-    "id": "roku-weather-crisis",
-    "title": "Recovering events after weather changes",
-    "question": "Describe performing under time pressure.",
-    "themes": ["pressure", "weather", "venues", "prioritization", "safety"],
-    "aliases": ["crisis", "last-minute change", "rapid decision"],
-    "situation": ["Weather and field access sometimes changed immediately."],
-    "task": ["Choose safe alternatives without creating confusion."],
-    "action": [
-      "Checked fields, forecasts, travel, and captain availability.",
-      "Reduced choices to executable alternatives.",
-      "Communicated schedule and venue changes quickly."
-    ],
-    "result": ["Events continued with clearer instructions.", "Created a repeatable disruption-response pattern."]
-  },
-  {
-    "id": "roku-captain-conflict",
-    "title": "Aligning a resistant team captain",
-    "question": "Tell me about resolving conflict with a teammate.",
-    "themes": ["conflict", "difficult teammate", "captain", "persuasion", "relationships"],
-    "aliases": ["uncooperative stakeholder", "disagreement", "motivation"],
-    "situation": ["A captain resisted a league-wide decision publicly."],
-    "task": ["Preserve consistency without escalating the disagreement."],
-    "action": [
-      "Moved discussion into a private conversation.",
-      "Restated the captain's actual concern.",
-      "Explained fairness, precedent, and workable compliance paths."
-    ],
-    "result": ["Maintained the rule and working relationship.", "Avoided turning disagreement into public conflict."]
-  },
-  {
-    "id": "roku-fairness-safety",
-    "title": "Balancing player autonomy, fairness, and safety",
-    "question": "Tell me about an ethical leadership judgment.",
-    "themes": ["ethics", "fairness", "safety", "sports", "international leadership"],
-    "aliases": ["gray area", "difficult decision", "player welfare"],
-    "situation": ["Written rules missed playing-time and participant-safety questions."],
-    "task": ["Act fairly without inventing retroactive punishment."],
-    "action": [
-      "Asked captains how they included less-experienced players.",
-      "Avoided penalties unsupported by established expectations.",
-      "Set clearer safety and participation expectations afterward."
-    ],
-    "result": [
-      "Preserved captain autonomy and league fairness.",
-      "Improved future communication around player welfare."
-    ]
-  },
-  {
-    "id": "large-meeting-facilitation",
-    "title": "Turning large meetings into action",
-    "question": "How do you lead large stakeholder meetings?",
-    "themes": ["meetings", "facilitation", "stakeholders", "communication", "action items"],
-    "aliases": ["large groups", "public speaking", "collaboration"],
-    "situation": ["Large groups often arrived with competing priorities."],
-    "task": ["Use limited meeting time to create decisions."],
-    "action": [
-      "Collected topics before meetings.",
-      "Merged overlaps into circulated agendas.",
-      "Invited quieter experts and recorded action items."
+      "Collected requested topics before meetings.",
+      "Merged overlaps into a circulated agenda.",
+      "Recorded decisions and owners in OneNote.",
+      "Invited quieter experts when their knowledge mattered."
     ],
     "result": [
       "Participants arrived prepared and understood ownership.",
@@ -672,80 +655,74 @@
     ]
   },
   {
-    "id": "live-audio-system",
-    "title": "Engineering synchronized live-performance audio",
-    "question": "Describe building a new technical system.",
-    "themes": ["audio engineering", "electronics", "live performance", "monitoring", "innovation"],
-    "aliases": ["modified system", "hardware", "signal routing"],
-    "situation": ["High-energy performances required precise synchronized audio."],
-    "task": ["Support live vocals, playback, and individual monitoring."],
+    "id": "legacy-manufacturing-constraints",
+    "title": "Modernizing software around legacy manufacturing",
+    "question": "Describe your experience with legacy systems and constraints.",
+    "themes": ["legacy systems", "manufacturing", "MES", "Java", "databases", "integration"],
+    "aliases": [
+      "Tell me about adapting software to existing equipment.",
+      "Give me an example of modernizing a constrained system.",
+      "Have you ever integrated with older industrial machines?"
+    ],
+    "situation": [
+      "Existing factory equipment constrained new MES behavior.",
+      "Production could not simply stop for a clean rewrite."
+    ],
+    "task": ["Modernize workflows without ignoring proven operations."],
     "action": [
-      "Built foot-controlled live and playback switching.",
-      "Matched microphone and prerecorded signal intensity.",
-      "Created musician-specific multichannel in-ear mixes."
+      "Documented Cooper Tire processes onsite.",
+      "Built Continental Tire Java and HMI functionality.",
+      "Handled food-system backend, database, and testing work.",
+      "Mapped new software onto existing equipment behavior."
     ],
     "result": [
-      "Enabled synchronized performances at major venues.",
-      "Transferred the system through documented teaching."
+      "Supported modernization across automotive and food manufacturing.",
+      "Preserved reliable operations while software evolved."
     ]
   },
   {
-    "id": "live-performance-conflict",
-    "title": "Handling unsafe live-performance conflicts",
-    "question": "Tell me about an uncooperative customer or partner.",
-    "themes": ["conflict", "safety", "tact", "live events", "customers"],
-    "aliases": ["difficult stakeholder", "crowd control", "sound engineer"],
-    "situation": ["Crowd and sound issues threatened safe performances."],
-    "task": ["Resolve danger without stopping the show."],
-    "action": [
-      "Guided unsafe guests away calmly.",
-      "Used tact with resistant sound engineers.",
-      "Kept performers informed through monitoring systems."
+    "id": "coding-dojo-rapid-learning",
+    "title": "Learning three full-stack architectures rapidly",
+    "question": "Tell me about a time you learned several technologies quickly.",
+    "themes": ["Coding Dojo", "rapid learning", "Python", "MERN", "C#", "full stack"],
+    "aliases": [
+      "Give me an example of succeeding in intensive technical training.",
+      "Have you ever switched between several software stacks?",
+      "Describe your experience at Coding Dojo."
     ],
-    "result": ["Protected safety while performances continued.", "Preserved working relationships under pressure."]
-  },
-  {
-    "id": "coding-dojo-learning",
-    "title": "Completing an intensive multi-stack program",
-    "question": "Tell me about learning new technologies quickly.",
-    "themes": ["Coding Dojo", "learning", "full stack", "adaptability", "education"],
-    "aliases": ["new skill", "rapid learning", "outside experience"],
-    "situation": ["A compressed program covered several unfamiliar web stacks."],
-    "task": ["Build working applications across three architectures."],
+    "situation": [
+      "A compressed program covered three unfamiliar full-stack architectures.",
+      "Each stack required complete working applications."
+    ],
+    "task": ["Become productive across Python, MERN, and C# stacks."],
     "action": [
       "Completed sustained eighty-hour learning weeks.",
-      "Built Python, MERN, and C# applications.",
-      "Compared direct SQL, MongoDB, and ORM approaches."
+      "Built applications in all three architectures.",
+      "Compared direct SQL, MongoDB, and ORM approaches.",
+      "Applied industrial engineering habits to web delivery."
     ],
-    "result": ["Graduated with highest honors.", "Expanded industrial experience into modern full-stack delivery."]
+    "result": ["Graduated with highest honors.", "Expanded into modern full-stack product engineering."]
   },
   {
-    "id": "annihilation-engine",
-    "title": "Building a native C++ RTS engine",
-    "question": "Describe your most ambitious engineering project.",
-    "themes": ["C++", "game engine", "desktop", "systems programming", "RTS"],
-    "aliases": ["Annihilation++", "commercial game", "custom engine"],
-    "situation": ["A physics-first RTS required low-level simulation control."],
-    "task": ["Build a cross-platform engine without existing frameworks."],
-    "action": [
-      "Implemented the engine directly in C++.",
-      "Integrated terrain, resources, construction, units, and combat.",
-      "Targeted native Windows, Linux, and macOS desktops."
-    ],
-    "result": ["Created a cohesive full-3D strategy simulation.", "Gained precise control over state and performance."]
-  },
-  {
-    "id": "annihilation-lockstep",
-    "title": "Choosing cross-architecture deterministic lockstep",
+    "id": "annihilation-lockstep-decision",
+    "title": "Choosing deterministic lockstep for Annihilation++",
     "question": "Tell me about a far-reaching technical decision.",
-    "themes": ["determinism", "lockstep", "networking", "CPU architecture", "C++"],
-    "aliases": ["architecture decision", "multiplayer", "cross-platform consistency"],
-    "situation": ["Authoritative networking limited the intended simulation architecture."],
-    "task": ["Keep every client simulation exactly synchronized."],
+    "themes": ["Annihilation++", "C++", "determinism", "lockstep", "networking", "CPU architecture"],
+    "aliases": [
+      "Give me an example of an architecture decision with broad consequences.",
+      "Have you ever designed deterministic cross-platform software?",
+      "Describe your experience with lockstep simulation."
+    ],
+    "situation": [
+      "Authoritative state streaming conflicted with the intended RTS scale.",
+      "Every client instead needed identical local simulation."
+    ],
+    "task": ["Keep multiplayer state synchronized across CPU architectures."],
     "action": [
-      "Moved clients toward deterministic lockstep execution.",
-      "Controlled floating-point behavior across CPU architectures.",
-      "Compared periodic game-state hashes across machines."
+      "Selected deterministic lockstep execution.",
+      "Used fixed-point math for cross-architecture consistency.",
+      "Compared periodic game-state hashes across machines.",
+      "Tested Windows, Linux, macOS, x86-64, and ARM."
     ],
     "result": [
       "Verified matching state across operating systems.",
@@ -753,16 +730,24 @@
     ]
   },
   {
-    "id": "annihilation-physics",
-    "title": "Modeling physically grounded strategy units",
-    "question": "Describe a difficult simulation problem.",
-    "themes": ["physics", "simulation", "forces", "interpolation", "game development"],
-    "aliases": ["F equals MA", "complex technical problem", "movement systems"],
-    "situation": ["Grid-like movement conflicted with physics-first gameplay."],
+    "id": "annihilation-physics-simulation",
+    "title": "Modeling physically grounded RTS units",
+    "question": "Describe your experience with modeling a physical simulation.",
+    "themes": ["Annihilation++", "physics", "simulation", "C++", "calculus", "interpolation"],
+    "aliases": [
+      "Tell me about a difficult simulation problem.",
+      "Give me an example of modeling motion and forces.",
+      "Have you ever simulated position velocity and acceleration?"
+    ],
+    "situation": [
+      "Grid-like movement conflicted with physics-first strategy gameplay.",
+      "Units crossed ground, water, and air continuously."
+    ],
     "task": ["Make varied units move plausibly across terrain."],
     "action": [
-      "Modeled mass, force, momentum, and friction.",
-      "Blended ground, water, and air locomotion fractionally.",
+      "Modeled mass, force, torque, momentum, and friction.",
+      "Blended locomotion across partially occupied media.",
+      "Tracked position, velocity, rotation, and rotational velocity.",
       "Interpolated lower simulation ticks for smooth rendering."
     ],
     "result": [
@@ -772,49 +757,76 @@
   },
   {
     "id": "annihilation-performance",
-    "title": "Scaling a large deterministic RTS world",
-    "question": "How did you optimize a performance-critical system?",
-    "themes": ["performance", "pathfinding", "LOD", "spatial grids", "optimization"],
-    "aliases": ["scalability", "A star", "rendering optimization", "collision performance"],
-    "situation": ["Large worlds required simulation beyond visible entities."],
-    "task": ["Maintain speed across zoom levels and combat density."],
-    "action": [
-      "Used terrain-time heuristics for A-star pathfinding.",
-      "Applied size-aware rendering levels of detail.",
-      "Partitioned collisions and projectiles with spatial grids."
+    "title": "Optimizing a full-map deterministic simulation",
+    "question": "Tell me about a time you optimized critical software.",
+    "themes": ["Annihilation++", "performance", "LOD", "spatial grids", "A star", "optimization"],
+    "aliases": [
+      "Give me an example of performance engineering.",
+      "Have you ever optimized a large simulation?",
+      "Describe your experience with spatial partitioning."
     ],
-    "result": ["Avoided expensive all-entity interaction checks.", "Kept performance steadier across camera scales."]
-  },
-  {
-    "id": "conv-net-chess",
-    "title": "Training a chess engine through self-play",
-    "question": "Describe an end-to-end reinforcement-learning project.",
-    "themes": ["reinforcement learning", "self-play", "chess", "MCTS", "PyTorch"],
-    "aliases": ["machine learning lifecycle", "browser inference", "model visualization"],
-    "situation": ["A chess project needed learning without human games."],
-    "task": ["Train, search, deploy, and explain neural decisions."],
+    "situation": [
+      "Large worlds required simulation beyond visible entities.",
+      "Zoom and combat density changed workloads dramatically."
+    ],
+    "task": ["Maintain speed without weakening deterministic behavior."],
     "action": [
-      "Built a convolutional policy-value network.",
-      "Generated experience through self-play and MCTS.",
-      "Exported browser inference and Three.js visualizations."
+      "Partitioned collisions and projectiles with spatial grids.",
+      "Applied screen-aware rendering levels of detail.",
+      "Used traversal-time heuristics for A-star pathfinding.",
+      "Interpolated rendering between lower-rate simulation ticks."
     ],
     "result": [
-      "Delivered a playable, inspectable neural chess application.",
-      "Owned data generation through product presentation."
+      "Avoided expensive all-entity interaction checks.",
+      "Kept full-map simulation practical across camera scales."
+    ]
+  },
+  {
+    "id": "collision-detection-diagnosis",
+    "title": "Exposing discrete collision tunneling",
+    "question": "Give me an example of diagnosing a simulation limitation.",
+    "themes": ["collision detection", "raycasting", "discrete simulation", "tunneling", "geometry"],
+    "aliases": [
+      "Tell me about a simulation failure caused by frame rate.",
+      "Have you ever compared collision-detection approaches?",
+      "Describe your experience with point-in-polygon tests."
+    ],
+    "situation": [
+      "Frame-sampled line-side tests missed fast wall crossings.",
+      "Objects could appear beyond boundaries between updates."
+    ],
+    "task": ["Make the failure understandable and compare containment methods."],
+    "action": [
+      "Visualized stateless side-of-line collision behavior.",
+      "Varied speed, gravity, rotation, and boundary shapes.",
+      "Implemented odd-even ray-intersection containment.",
+      "Compared failures under identical interactive conditions."
+    ],
+    "result": [
+      "Made discrete-update tunneling directly reproducible.",
+      "Demonstrated a more robust inside-outside test."
     ]
   },
   {
     "id": "seouldat-networking",
-    "title": "Keeping a multiplayer shooter responsive",
-    "question": "Describe a responsive distributed system.",
-    "themes": ["networking", "WebSockets", "Socket.IO", "prediction", "reconciliation"],
-    "aliases": ["latency", "authoritative server", "real-time multiplayer"],
-    "situation": ["Network delay made immediate shooter controls difficult."],
-    "task": ["Preserve responsiveness and authoritative state."],
+    "title": "Keeping a networked shooter responsive",
+    "question": "Describe your experience with real-time networking.",
+    "themes": ["networking", "WebSockets", "Socket.IO", "prediction", "reconciliation", "latency"],
+    "aliases": [
+      "Tell me about handling network latency.",
+      "Give me an example of authoritative distributed state.",
+      "Have you ever implemented client-side prediction?"
+    ],
+    "situation": [
+      "Network delay made immediate shooter controls difficult.",
+      "Clients still needed one authoritative shared state."
+    ],
+    "task": ["Preserve responsiveness without surrendering server authority."],
     "action": [
       "Kept accepted game state server-authoritative.",
       "Predicted local movement before acknowledgments arrived.",
-      "Reconciled clients against authoritative updates."
+      "Reconciled clients against authoritative updates.",
+      "Used Socket.IO for real-time message exchange."
     ],
     "result": [
       "Controls responded immediately despite network latency.",
@@ -822,282 +834,173 @@
     ]
   },
   {
-    "id": "smashed-fighter",
-    "title": "Using a fighting game as an AI laboratory",
-    "question": "Tell me about a long-running technical project.",
-    "themes": ["game AI", "Phaser", "BrainJS", "physics", "creative engineering"],
-    "aliases": ["Smashed Fighter", "neural bots", "game development"],
-    "situation": ["A platform fighter became an extended experimentation environment."],
-    "task": ["Combine playable combat with learned opponents."],
-    "action": [
-      "Built controls, animation, collision, and physics.",
-      "Added scripted and neural-network bot experiments.",
-      "Created original pixel art, sound, and services."
+    "id": "daegu-technical-communication",
+    "title": "Teaching technical ideas across language differences",
+    "question": "Tell me about a time you communicated across cultures.",
+    "themes": ["communication", "South Korea", "STEM", "teaching", "cross-cultural"],
+    "aliases": [
+      "Give me an example of adapting technical communication.",
+      "Have you ever explained science across language barriers?",
+      "Describe your experience working internationally."
     ],
-    "result": ["Produced a playable game and ML testbed.", "Integrated many creative and technical disciplines."]
-  },
-  {
-    "id": "collision-detection-lab",
-    "title": "Demonstrating discrete collision tunneling",
-    "question": "Explain a computer-science experiment you built.",
-    "themes": ["collision detection", "raycasting", "geometry", "physics", "Canvas"],
-    "aliases": ["point in polygon", "odd even rule", "tunneling"],
-    "situation": ["Frame-sampled side tests missed fast wall crossings."],
-    "task": ["Compare naive and geometric containment approaches."],
+    "situation": [
+      "Gifted Korean students learned advanced science through English.",
+      "Language differences could obscure technical understanding."
+    ],
+    "task": ["Teach rigorous concepts through accessible communication."],
     "action": [
-      "Visualized stateless line-side collision behavior.",
-      "Implemented odd-even ray intersection containment.",
-      "Exposed gravity, speed, rotation, and shape controls."
+      "Designed active STEM lessons with visible outcomes.",
+      "Connected planning, science, and English practice.",
+      "Adjusted explanations using student feedback.",
+      "Collaborated with teachers on curriculum expectations."
     ],
     "result": [
-      "Made tunneling failures directly reproducible.",
-      "Connected geometry rules with visible simulation behavior."
+      "Students practiced advanced concepts through authentic communication.",
+      "Teachers gained reusable lesson structures."
     ]
   },
   {
-    "id": "genetic-racing",
-    "title": "Evolving neural drivers without backpropagation",
-    "question": "Describe using genetic algorithms.",
-    "themes": ["genetic algorithms", "neural networks", "racing", "sensors", "evolution"],
-    "aliases": ["machine learning experiment", "fitness", "mutation"],
-    "situation": ["Random neural drivers initially failed a winding track."],
-    "task": ["Evolve successful control without gradient training."],
+    "id": "daegu-scheduling-initiative",
+    "title": "Automating bilingual faculty scheduling",
+    "question": "Give me an example of taking initiative beyond your role.",
+    "themes": ["initiative", "automation", "scheduling", "bilingual software", "South Korea"],
+    "aliases": [
+      "Tell me about improving a process without being asked.",
+      "Have you ever built software outside your formal responsibilities?",
+      "Describe your experience automating administrative work."
+    ],
+    "situation": [
+      "Faculty schedule lookup created recurring administrative work.",
+      "Records needed both English and Hangul names."
+    ],
+    "task": ["Reduce manual searching for teachers and students."],
     "action": [
-      "Fed distance sensors into steering networks.",
-      "Selected performers using track-based fitness.",
-      "Mutated inherited weights across visible generations."
+      "Built a custom searchable scheduling interface.",
+      "Supported English and Hangul name lookup.",
+      "Designed output for nontechnical school staff.",
+      "Introduced the tool beyond classroom duties."
+    ],
+    "result": ["Streamlined faculty and student schedule lookup.", "Added operational value beyond the teaching role."]
+  },
+  {
+    "id": "acle-contingency-planning",
+    "title": "Keeping Italian camps running through disruptions",
+    "question": "Tell me about a time you adapted unexpectedly.",
+    "themes": ["adaptability", "Italy", "contingency", "leadership", "pressure"],
+    "aliases": [
+      "Give me an example of responding to sudden change.",
+      "Have you ever kept an operation running during disruption?",
+      "Describe your experience with contingency planning."
+    ],
+    "situation": [
+      "Weather, absences, and behavior could disrupt large camps.",
+      "Lessons and final performances still had to continue."
+    ],
+    "task": ["Protect safety while preserving program continuity."],
+    "action": [
+      "Prepared alternate roles before problems occurred.",
+      "Delegated individual incidents to available teachers.",
+      "Moved outdoor activities indoors when weather changed.",
+      "Reworked shows around missing participants."
     ],
     "result": [
-      "Drivers progressively navigated farther around the course.",
-      "Made evolutionary learning observable and interactive."
+      "Camps continued without one issue consuming everyone.",
+      "Students still completed visible performances."
     ]
   },
   {
-    "id": "embedding-pca",
-    "title": "Visualizing high-dimensional embedding structure",
-    "question": "Tell me about explaining complex data visually.",
-    "themes": ["embeddings", "PCA", "dimensionality reduction", "visualization", "machine learning"],
-    "aliases": ["semantic space", "data analysis", "vector visualization"],
-    "situation": ["Embedding relationships were difficult to inspect numerically."],
-    "task": ["Make semantic neighborhoods understandable interactively."],
+    "id": "acle-cross-cultural-leadership",
+    "title": "Leading education programs across Italy",
+    "question": "Describe your experience with leading diverse teams.",
+    "themes": ["Italy", "leadership", "cross-cultural", "teaching", "operations"],
+    "aliases": [
+      "Tell me about leading people from different backgrounds.",
+      "Give me an example of adapting leadership across locations.",
+      "Have you ever managed international programs?"
+    ],
+    "situation": [
+      "Programs varied across cities, ages, and local expectations.",
+      "Camp sizes ranged from small groups to hundreds."
+    ],
+    "task": ["Deliver consistent learning without forcing one approach."],
     "action": [
-      "Projected high-dimensional vectors through PCA.",
-      "Plotted tokens within navigable visual space.",
-      "Connected distance with observable semantic grouping."
+      "Adapted curricula to each learner group.",
+      "Trained teachers in pedagogy and activity planning.",
+      "Scheduled multi-city camps and remote logistics.",
+      "Supported office hardware and camp technology."
+    ],
+    "result": ["Delivered programs across numerous Italian cities.", "Balanced local context with dependable outcomes."]
+  },
+  {
+    "id": "roku-captain-conflict",
+    "title": "Aligning a resistant league captain",
+    "question": "Tell me about a time you resolved team conflict.",
+    "themes": ["conflict", "teamwork", "leadership", "captain", "persuasion"],
+    "aliases": [
+      "Give me an example of handling an uncooperative teammate.",
+      "Have you ever preserved a relationship during disagreement?",
+      "Describe your experience resolving public conflict."
+    ],
+    "situation": [
+      "A captain resisted a league-wide decision publicly.",
+      "Escalation risked damaging consistency and trust."
+    ],
+    "task": ["Preserve the rule and working relationship."],
+    "action": [
+      "Moved discussion into a private conversation.",
+      "Restated the captain's actual concern.",
+      "Explained fairness, precedent, and workable compliance paths.",
+      "Used trusted peers to understand perspective."
+    ],
+    "result": ["Maintained the rule and working relationship.", "Avoided turning disagreement into broader conflict."]
+  },
+  {
+    "id": "roku-fairness-safety",
+    "title": "Balancing fairness, autonomy, and safety",
+    "question": "Tell me about a time you made an ethical decision.",
+    "themes": ["ethics", "fairness", "safety", "leadership", "judgment"],
+    "aliases": [
+      "Give me an example of a difficult judgment call.",
+      "Have you ever avoided retroactive punishment?",
+      "Describe your experience balancing policy and autonomy."
+    ],
+    "situation": [
+      "A championship team excluded several lower-level players.",
+      "No advance rule defined required playing time."
+    ],
+    "task": ["Improve inclusion without inventing retroactive punishment."],
+    "action": [
+      "Respected captain ownership under existing rules.",
+      "Asked future captains about expected playing time.",
+      "Explored strategy, injury, and planning explanations.",
+      "Clarified participation expectations going forward."
     ],
     "result": [
-      "Made abstract vector relationships easier to explain.",
-      "Supported demonstrations of embedding behavior."
+      "Preserved fairness while respecting established authority.",
+      "Improved future communication around player inclusion."
     ]
   },
   {
-    "id": "attention-visualization",
-    "title": "Making transformer attention inspectable",
-    "question": "Describe teaching a complicated technical concept.",
-    "themes": ["transformers", "attention", "education", "matrix operations", "visualization"],
-    "aliases": ["QKV", "softmax", "explainability", "interactive learning"],
-    "situation": ["Self-attention equations obscured how values propagated."],
-    "task": ["Turn matrix operations into an interactive explanation."],
-    "action": [
-      "Exposed embeddings and query-key-value weights.",
-      "Visualized scores, softmax, and weighted outputs.",
-      "Allowed users to perturb individual matrix values."
+    "id": "roku-action-emailer",
+    "title": "Automating organizational action-item follow-up",
+    "question": "Give me an example of making a process more efficient.",
+    "themes": ["automation", "Excel", "VBA", "process improvement", "action items"],
+    "aliases": [
+      "Tell me about automating repetitive work.",
+      "Have you ever improved follow-through after meetings?",
+      "Describe your experience building practical internal tools."
     ],
-    "result": [
-      "Users can trace changes through every attention stage.",
-      "Preserved mathematical detail without static pseudocode."
-    ]
-  },
-  {
-    "id": "function-approximation",
-    "title": "Visualizing iterative function approximation",
-    "question": "Describe an optimization experiment you built.",
-    "themes": ["optimization", "gradient descent", "AdamW", "polynomial fitting", "visualization"],
-    "aliases": ["function approximation", "hyperparameters", "genetic optimization"],
-    "situation": ["Optimizer behavior remained abstract in equations alone."],
-    "task": ["Make parameter updates and loss visibly interactive."],
-    "action": [
-      "Plotted changing curves against target points.",
-      "Exposed learning rate, momentum, and regularization controls.",
-      "Compared basic and adaptive optimization behavior."
+    "situation": [
+      "League decisions repeatedly required manual follow-up emails.",
+      "Owners and deadlines could become difficult to track."
     ],
-    "result": ["Made fitting tradeoffs observable in real time.", "Supported hands-on hyperparameter experimentation."]
-  },
-  {
-    "id": "pathfinding-lab",
-    "title": "Comparing classic pathfinding algorithms",
-    "question": "Tell me about demonstrating algorithm tradeoffs.",
-    "themes": ["algorithms", "A star", "Dijkstra", "BFS", "DFS"],
-    "aliases": ["pathfinding", "graph search", "computer science visualization"],
-    "situation": ["Search algorithms differ in guarantees and exploration."],
-    "task": ["Make those differences visible and reproducible."],
+    "task": ["Make action ownership easier to maintain."],
     "action": [
-      "Implemented five graph-search strategies.",
-      "Animated exploration across weighted obstacles.",
-      "Added shared start, goal, and comparison controls."
+      "Built an Excel and VBA email generator.",
+      "Grouped tasks by responsible person.",
+      "Standardized owners, actions, dates, and decisions.",
+      "Generated recurring follow-up with one action."
     ],
-    "result": ["Users can compare routes and search effort directly.", "Clarified optimality and heuristic tradeoffs."]
-  },
-  {
-    "id": "extended-axelrod",
-    "title": "Exploring cooperation through repeated games",
-    "question": "Describe a simulation used for strategic analysis.",
-    "themes": ["game theory", "Axelrod", "simulation", "cooperation", "strategy"],
-    "aliases": ["prisoners dilemma", "emergent behavior", "agent strategies"],
-    "situation": ["Repeated interactions produce counterintuitive cooperative behavior."],
-    "task": ["Let users compare strategies across evolving populations."],
-    "action": [
-      "Implemented repeated prisoner-dilemma strategy tournaments.",
-      "Visualized scores and population changes.",
-      "Exposed parameters affecting long-term cooperation."
-    ],
-    "result": ["Made emergent strategy dynamics interactive.", "Connected simple rules with population-level outcomes."]
-  },
-  {
-    "id": "tanks-gates",
-    "title": "Designing projectile-transforming gates",
-    "question": "Describe an original gameplay mechanic.",
-    "themes": ["game design", "projectile physics", "Phaser", "geometry", "mobile controls"],
-    "aliases": ["Tanks and Gates", "creative engineering", "simulation rules"],
-    "situation": ["Ordinary tank projectiles offered limited tactical variety."],
-    "task": ["Create depth through consistent geometric transformations."],
-    "action": [
-      "Built mirroring, transmitting, refracting, and multiplying gates.",
-      "Supported desktop and two-thumb mobile controls.",
-      "Integrated aiming, collision, camera, and original audio."
-    ],
-    "result": ["Produced richer tactics from compact rules.", "Delivered the mechanic across input platforms."]
-  },
-  {
-    "id": "galaxy-destroyer",
-    "title": "Building a complete scrolling shooter",
-    "question": "Tell me about shipping a polished game project.",
-    "themes": ["Phaser", "shooter", "game development", "boss design", "audio"],
-    "aliases": ["Galaxy Destroyer", "complete gameplay loop", "creative project"],
-    "situation": ["A shooter needed cohesive progression and presentation."],
-    "task": ["Build movement, combat, hazards, and boss encounters."],
-    "action": [
-      "Implemented player controls and weapon variation.",
-      "Created enemy patterns, obstacles, and progression.",
-      "Integrated visual presentation and original sound."
-    ],
-    "result": ["Delivered a recognizable complete arcade loop.", "Combined gameplay systems with audiovisual polish."]
-  },
-  {
-    "id": "rsvp-system",
-    "title": "Modeling many-to-many event attendance",
-    "question": "Describe a relational full-stack application.",
-    "themes": ["C#", "ASP.NET Core", "MySQL", "Entity Framework", "CRUD"],
-    "aliases": ["RSVP", "many-to-many", "authentication", "full stack"],
-    "situation": ["Users needed shared events and attendance tracking."],
-    "task": ["Build secure relational CRUD across users and events."],
-    "action": [
-      "Implemented registration and authentication.",
-      "Modeled many-to-many attendance through Entity Framework.",
-      "Validated inputs on browsers and servers."
-    ],
-    "result": [
-      "Delivered a working event-management application.",
-      "Demonstrated full-stack C# relational architecture."
-    ]
-  },
-  {
-    "id": "tv-show-registry",
-    "title": "Building authenticated Flask CRUD",
-    "question": "Describe a Python full-stack application.",
-    "themes": ["Python", "Flask", "MySQL", "authentication", "CRUD"],
-    "aliases": ["TV registry", "direct SQL", "bcrypt", "likes"],
-    "situation": ["Users needed to share and endorse television records."],
-    "task": ["Build authenticated relational workflows without an ORM."],
-    "action": [
-      "Implemented sessions and bcrypt password handling.",
-      "Wrote parameterized MySQL queries directly.",
-      "Added validated CRUD and user-to-show likes."
-    ],
-    "result": ["Delivered a secure community registry.", "Demonstrated direct-SQL Python application design."]
-  },
-  {
-    "id": "pirate-crew-manager",
-    "title": "Building a MERN pirate roster",
-    "question": "Describe a JavaScript full-stack CRUD project.",
-    "themes": ["React", "Express", "MongoDB", "MERN", "validation"],
-    "aliases": ["pirate manager", "CRUD", "full stack JavaScript"],
-    "situation": ["A themed roster needed persistent validated records."],
-    "task": ["Connect responsive forms with backend data integrity."],
-    "action": [
-      "Built React cards and creation forms.",
-      "Implemented Express routes and MongoDB persistence.",
-      "Validated data across frontend and backend."
-    ],
-    "result": ["Delivered complete create, read, and delete workflows.", "Made standard CRUD architecture memorable."]
-  },
-  {
-    "id": "portfolio-navigator",
-    "title": "Turning portfolio navigation into gameplay",
-    "question": "Describe combining two different technologies.",
-    "themes": ["Phaser", "React", "navigation", "integration", "interaction design"],
-    "aliases": ["portfolio game", "imperative declarative integration", "touch controls"],
-    "situation": ["Conventional project menus did not express creative engineering."],
-    "task": ["Make navigation playful across mouse and touch."],
-    "action": [
-      "Integrated Phaser movement inside React interfaces.",
-      "Mapped destinations to portfolio properties.",
-      "Supported continuous pointer and touch interaction."
-    ],
-    "result": [
-      "Created a memorable interactive project index.",
-      "Bridged real-time and component-based application models."
-    ]
-  },
-  {
-    "id": "css-experiments",
-    "title": "Learning interface behavior through CSS experiments",
-    "question": "Tell me about developing frontend design skills.",
-    "themes": ["CSS", "frontend", "interaction", "animation", "experimentation"],
-    "aliases": ["UI experiments", "learning project", "web design"],
-    "situation": ["Small interactions required focused visual experimentation."],
-    "task": ["Explore motion, selection, cards, and sound affordances."],
-    "action": [
-      "Built isolated CSS-driven interface experiments.",
-      "Tested animated cards and interactive controls.",
-      "Connected visual feedback with small playful behaviors."
-    ],
-    "result": ["Expanded practical frontend interaction vocabulary.", "Reused lessons throughout later products."]
-  },
-  {
-    "id": "audio-visualizations",
-    "title": "Producing original audiovisual work",
-    "question": "Describe combining creative and technical disciplines.",
-    "themes": ["After Effects", "Premiere Pro", "visual art", "music", "media"],
-    "aliases": ["audio visualization", "creative suite", "video production"],
-    "situation": ["Original music needed a coherent visual identity."],
-    "task": ["Create branded motion pieces from original assets."],
-    "action": [
-      "Composed and produced the underlying music.",
-      "Animated and composited visuals in After Effects.",
-      "Edited, sequenced, and rendered with Premiere Pro."
-    ],
-    "result": [
-      "Published a cohesive audiovisual body of work.",
-      "Built media skills reused across product experiences."
-    ]
-  },
-  {
-    "id": "original-music-recognition",
-    "title": "Sustaining original music production",
-    "question": "Tell me about long-term creative discipline.",
-    "themes": ["music", "composition", "FL Studio", "Wikipedia", "recognition"],
-    "aliases": ["Small Talk", "drum and bass", "external validation"],
-    "situation": ["Original composition remained a long-term independent practice."],
-    "task": ["Compose, arrange, mix, and publish distinctive music."],
-    "action": [
-      "Produced classical and electronic work over many years.",
-      "Handled synthesis, sequencing, arrangement, and mixing.",
-      "Published Small Talk under the Niemo identity."
-    ],
-    "result": [
-      "Wikipedia editors selected it as a genre example.",
-      "Creative audio skills strengthened games and media projects."
-    ]
+    "result": ["Reduced repetitive administrative writing.", "Made board follow-up more reliable."]
   }
 ]
