@@ -41,13 +41,13 @@ export const jobs: Job[] = [
     dates: '2022 - Present',
     details: [
       {
-        title: 'Architecting, training, and implementing in-house AI systems to detect and prevent fraud',
+        title: 'Architecting, training, and implementing in-house machine learning systems to detect and prevent fraud',
         lines: [
           'Real-time phone-fraud classification',
           'Turn-level transformer classifiers',
           'Conversation-level risk classifiers',
           'PGVector and Postgres semantic search',
-          'ElevenLabs voice-agent RAG memory',
+          'Voice-agent RAG memory',
           'Node streaming and Python inference services',
           'MLflow experiment tracking and early stopping',
           'Human-in-the-loop labels and ASR augmentation',
