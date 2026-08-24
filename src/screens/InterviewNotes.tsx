@@ -27,6 +27,11 @@ const publicAssetBasePath = process.env.PUBLIC_URL && process.env.PUBLIC_URL !==
 
 const rawTranscriptSources: RawTranscriptSource[] = [
   {
+    title: 'Flight Simulation Interview Answer Transcript',
+    sourceLabel: 'text.txt',
+    path: `${publicAssetBasePath}/interview/flight_simulation_interview_answers.txt`,
+  },
+  {
     title: 'Eric Work Info Transcript',
     sourceLabel: 'D:\\Downloads_SSD\\eric_work_info.txt',
     path: `${publicAssetBasePath}/interview/eric_work_info.txt`,
