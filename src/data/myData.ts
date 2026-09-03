@@ -588,7 +588,7 @@ export const videogame_projects: Project[] = [
     dates: '2025 - Ongoing',
     projectStatus: 'ok',
     title: 'Annihilation++ RTS',
-    url: 'https://games.niemo.io/budget-annihilation',
+    url: 'https://annihilationplusplus.info/',
     stack: ['C++'],
     type: 'Commercial C++ Desktop RTS',
     bullets: [

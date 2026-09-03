@@ -347,7 +347,7 @@ Fullstack Apps, ML, Industrial Systems, Games, and Simulation
 - Description: A cross-architecture C++ desktop RTS with a custom engine, deterministic lockstep, fixed-point math, state-hash validation, WebRTC lobbies, physics, terrain-aware pathfinding, LOD rendering, factories, resources, fog of war, and large armies.
 - Technology: C++
 - Features: Keyboard & Mouse Support; Custom C++ Game Engine; Lockstep Deterministic Simulation; Fixed-Point Cross-CPU Math; WebRTC Multiplayer Lobbies; Windows, Linux & macOS Testing; Cross-CPU State Hash Validation; Force, Mass & Momentum Physics; Terrain-Aware A* Pathfinding; LOD Rendering & Spatial Grids; Steam / Commercial Release Prep
-- Public URL: https://games.niemo.io/budget-annihilation
+- Public URL: https://annihilationplusplus.info/
 
 #### Seouldat Shooter
 
