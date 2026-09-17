@@ -1,17 +1,21 @@
-Thank you again for the offer-I am very enthusiastic about joining Boeing’s Flight Simulation Labs team. Before accepting, I would like to request consideration for Level 4 because my combined engineering education, professional software experience, technical leadership, and long-term independent development align closely with the senior-level scope described in the posting.
+Subject: Request for Level 4 Consideration – JR2026517936
 
-- My technical work since graduating in with my second bachelors degree 2018 in formal software-engineering roles-combined with earlier technical employment and continuous independent development-should get me there directly relevant experience under the posting’s “equivalent combination of education and experience” standard.
+Hi Jesenia,
 
-- I have owned architecture, requirements, interfaces, implementation, integration, testing, and production delivery for complex systems, including real-time ML platforms and manufacturing systems connecting databases, ERP software, PLCs, robotic
-equipment, HMIs, and torque tools.
+Thank you again for the offer—I am excited about the opportunity to join Boeing’s Flight Simulation Labs team. Before accepting, I would appreciate consideration for Level 4 based on my engineering responsibilities, mentoring experience, and software development both before and since earning my computer engineering degree.
 
-- My experience with C, C++, C#, Python, Java, signal processing, networking, cross-architecture applications, real-time messaging, simulations, and AI systems maps directly to Boeing’s simulation infrastructure, subsystem communication, modeling, and
-testing work.
 
-- I regularly helped other engineers, interns, and remote contributors at both Rockwell Automation and Venturetec, helping them understand and develop technical judgment and progress toward independent delivery.
+- As head of engineering, I operate with broad product ownership and decision making, lead technical demos, and serve as the technical point-of-contact with clients, investors, and other integrators.
 
-- As a lead engineer and head of engineering, I have operated with broad ownership, coordinated multiple workstreams, regularly led technical decisions and demonstrations, and served as the technical representative with clients, investors, and cross-functional stakeholders.
+- At both Rockwell Automation and Venturetec, I regularly managed other engineers, interns, and other contributors, explained unfamiliar concepts, whiteboarded technical issues, and gave people ownership of appropriately scoped work - so that they could eventually deliver independently.
 
-- I have been certified to teach high-school computer science and science since my first bachelors degree in 2013 and taught approximately eight semesters at a selective science high schools, in addition to training other teachers - experience that directly supports mentoring, knowledge transfer, and clear technical communication.
+- My software development experience began well before my 2018 B.S. in Computer Engineering: while working in education, I built and maintained many websites and custom tools that solved real operational problems well before I was a professional "engineer". 
 
-I would be grateful if the hiring team could review my qualifications for Level 4 before I make my final decision. I remain very excited about the opportunity and would be happy to discuss these points further.
+- I earned high-school computer science and science teaching certifications in 2013 and taught STEM and STEM-adjacent subjects at selective science high schools for many years, in addition to training and mentoring other teachers. That experience strengthened my ability to explain complex concepts clearly, lead groups, and help less-experienced colleagues develop.
+
+- Engineering is also my main hobby, and I estimate that the amount of code I have written for independent projects may rival my professional work. These passion projects include very relevant physics simulations / games. 
+
+Level 4 is particularly meaningful to me because it would recognize both the engineering responsibility I have carried in the past and the leadership contribution I would bring to the team. I would be grateful if you could share this request with the hiring team, and I would welcome the opportunity to discuss it further.
+
+Best,
+Eric
