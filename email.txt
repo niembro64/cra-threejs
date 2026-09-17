@@ -1,0 +1,17 @@
+Thank you again for the offer-I am very enthusiastic about joining Boeing’s Flight Simulation Labs team. Before accepting, I would like to request consideration for Level 4 because my combined engineering education, professional software experience, technical leadership, and long-term independent development align closely with the senior-level scope described in the posting.
+
+- My technical work since graduating in with my second bachelors degree 2018 in formal software-engineering roles-combined with earlier technical employment and continuous independent development-should get me there directly relevant experience under the posting’s “equivalent combination of education and experience” standard.
+
+- I have owned architecture, requirements, interfaces, implementation, integration, testing, and production delivery for complex systems, including real-time ML platforms and manufacturing systems connecting databases, ERP software, PLCs, robotic
+equipment, HMIs, and torque tools.
+
+- My experience with C, C++, C#, Python, Java, signal processing, networking, cross-architecture applications, real-time messaging, simulations, and AI systems maps directly to Boeing’s simulation infrastructure, subsystem communication, modeling, and
+testing work.
+
+- I regularly helped other engineers, interns, and remote contributors at both Rockwell Automation and Venturetec, helping them understand and develop technical judgment and progress toward independent delivery.
+
+- As a lead engineer and head of engineering, I have operated with broad ownership, coordinated multiple workstreams, regularly led technical decisions and demonstrations, and served as the technical representative with clients, investors, and cross-functional stakeholders.
+
+- I have been certified to teach high-school computer science and science since my first bachelors degree in 2013 and taught approximately eight semesters at a selective science high schools, in addition to training other teachers - experience that directly supports mentoring, knowledge transfer, and clear technical communication.
+
+I would be grateful if the hiring team could review my qualifications for Level 4 before I make my final decision. I remain very excited about the opportunity and would be happy to discuss these points further.
