@@ -2,20 +2,21 @@ Subject: Request for Level 4 Consideration – JR2026517936
 
 Hi Jesenia,
 
-Thank you again for the offer—I am excited about the opportunity to join Boeing’s Flight Simulation Labs team. Before accepting, I would appreciate consideration for Level 4 based on my engineering responsibilities, mentoring experience, and software development both before and since earning my computer engineering degree.
+Thank you again, I am very enthusiastic about this offer from Boeing’s Flt-Sim Labs team. After looking in depth at your attached documents, I was really just wondering if the Level 4 grade level for the position might somehow still get "worked in", considering: 
 
 
-- As head of engineering, I operate with broad product ownership and decision making, lead technical demos, and serve as the technical point-of-contact with clients, investors, and other integrators.
+- As head of engineering, I operate with broad product ownership and decision making, lead technical demos, and serve as the technical point-of-contact with third-party integrations, clients, investors.
 
-- At both Rockwell Automation and Venturetec, I regularly managed other engineers, interns, and other contributors, explained unfamiliar concepts, whiteboarded technical issues, and gave people ownership of appropriately scoped work - so that they could eventually deliver independently.
-
-- My software development experience began well before my 2018 B.S. in Computer Engineering: while working in education, I built and maintained many websites and custom tools that solved real operational problems well before I was a professional "engineer". 
+- At both Rockwell Automation and Venturetec, I regularly manage other engineers, interns, and other contributors, explain unfamiliar concepts, whiteboard technical issues, and give people ownership of appropriately scoped work - such that they eventually deliver independently.
 
 - I earned high-school computer science and science teaching certifications in 2013 and taught STEM and STEM-adjacent subjects at selective science high schools for many years, in addition to training and mentoring other teachers. That experience strengthened my ability to explain complex concepts clearly, lead groups, and help less-experienced colleagues develop.
 
-- Engineering is also my main hobby, and I estimate that the amount of code I have written for independent projects may rival my professional work. These passion projects include very relevant physics simulations / games. 
+- My actual software development experience began well before my 2018 B.S. in Computer Engineering: while working in education, I built and maintained many websites and custom tools that solved real operational problems well before I was a professional "engineer". 
 
-Level 4 is particularly meaningful to me because it would recognize both the engineering responsibility I have carried in the past and the leadership contribution I would bring to the team. I would be grateful if you could share this request with the hiring team, and I would welcome the opportunity to discuss it further.
+- Engineering is also my main hobby, and I estimate that the amount of code I have written for independent projects may actually rival my professional work. These passion projects include very relevant physics simulations / games. 
+
+
+Please contact me at 618-616-3380 if any further clarifications or finalizing discussion would help for this reconsideration detail, and I look forward to accepting this opportunity and joining the Boeing team!
 
 Best,
 Eric
